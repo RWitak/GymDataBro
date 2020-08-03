@@ -9,13 +9,16 @@ import androidx.room.ForeignKey;
             @ForeignKey(
                 entity = Exercise.class,
                 parentColumns = "id",
-                childColumns = "exercise_id"),
+                childColumns = "exercise_id"
+            ),
             @ForeignKey(
                 entity = MuscleGroup.class,
                 parentColumns = "name",
                 childColumns = "muscle_group_name"
-            )},
-        primaryKeys = {"exercise_id", "muscle_group_name"} )
+            )
+        },
+        primaryKeys = {"exercise_id", "muscle_group_name"}
+        )
 public class MuscleInvolvement {
     @ColumnInfo(name = "exercise_id")
     public int exerciseID;

@@ -11,7 +11,9 @@ import androidx.room.PrimaryKey;
         foreignKeys = @ForeignKey(
                 entity = Exercise.class,
                 parentColumns = "id",
-                childColumns = "exercise_id"))
+                childColumns = "exercise_id"
+        )
+)
 public class ExerciseName {
     @PrimaryKey
     public String name;
