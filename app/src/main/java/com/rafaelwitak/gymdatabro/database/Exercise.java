@@ -30,5 +30,5 @@ public class Exercise {
     public File imgB;
 
     @ColumnInfo
-    private String equipment;
+    public String equipment;
 }
