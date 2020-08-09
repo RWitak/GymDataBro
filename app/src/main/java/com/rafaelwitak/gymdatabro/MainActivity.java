@@ -6,10 +6,10 @@ import androidx.room.Room;
 
 import android.os.Bundle;
 
-import com.rafaelwitak.gymdatabro.database.GymDatabase;
+import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 
 public class MainActivity extends AppCompatActivity {
-    public GymDatabase database;
+    public GymBroDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         database = Room
-                .databaseBuilder(getApplicationContext(), GymDatabase.class, "gym_data")
+                .databaseBuilder(getApplicationContext(), GymBroDatabase.class, "gym_data")
                 .allowMainThreadQueries()
                 .build();
 
