@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WorkoutStepActivity">
+
+    <GridLayout
+        android:id="@+id/WorkoutStepGrid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="3"
+        tools:layout_editor_absoluteX="-98dp"
+        tools:layout_editor_absoluteY="122dp"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            tools:text="Workout Name" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="1"
+            android:paddingHorizontal="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            tools:text="(32%)" />
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            tools:text="Exercise Name" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="1"
+            android:paddingHorizontal="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            tools:text="1/3" />
+
+
+
+    </GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
