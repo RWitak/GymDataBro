@@ -29,7 +29,10 @@ public class Set {
     public float weight;
 
     @ColumnInfo
-    public int seconds;
+    public int seconds_performed;
+
+    @ColumnInfo
+    public int seconds_rested;
 
     @ColumnInfo
     public float rpe;
