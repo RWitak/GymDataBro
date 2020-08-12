@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -47,7 +46,180 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             tools:text="1/3" />
 
+        <LinearLayout
+            android:id="@+id/step_reps_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="3"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/step_reps_title"
+                tools:text="Reps" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/step_reps_prescribed"
+                tools:text="12" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/step_reps_performed"
+                android:inputType="numberSigned"
+                android:hint="12"
+                tools:text="1234"/>
+        </LinearLayout>
 
+
+        <LinearLayout
+            android:id="@+id/step_weight_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_weight_title"
+                tools:text="Weight" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_weight_prescribed"
+                tools:text="50" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_weight_kg1"
+                android:text="kg"/>
+
+            <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/step_weight_performed"
+            android:inputType="numberSigned"
+            android:autofillHints="50"
+            android:hint="50"/>
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/step_weight_kg2"
+            android:text="kg" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/step_rpe_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_rpe_title"
+                android:text="RPE" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_rpe_prescribed"
+                tools:text="8" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_rpe_performed"
+                android:inputType="number"
+                android:hint="8" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/step_duration_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_columnSpan="3" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_duration_title"
+                android:text="Duration" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_duration_prescribed"
+                tools:text="30" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_duration_s1"
+                android:text="s"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_duration_performed"
+                android:inputType="number"
+                android:hint="30"
+                android:autofillHints="30" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_duration_s2"
+                android:text="s" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/step_rest_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_rest_title"
+                android:text="Rest" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_rest_prescribed"
+                tools:text="3" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_rest_seconds1"
+                android:text="s" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_rest_performed"
+                android:autofillHints="30"
+                tools:text="30" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_rest_seconds2"
+                android:text="s" />
+
+
+        </LinearLayout>
 
     </GridLayout>
 
