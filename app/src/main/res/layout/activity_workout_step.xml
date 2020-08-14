@@ -68,7 +68,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/step_reps_performed"
                 android:inputType="numberSigned"
-                android:hint="12"
+                android:hint="@null"
+                android:autofillHints="@null"
                 tools:text="1234"/>
         </LinearLayout>
 
@@ -102,8 +103,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/step_weight_performed"
             android:inputType="numberSigned"
-            android:autofillHints="50"
-            android:hint="50"/>
+            android:autofillHints="@null"
+            android:hint="@null"/>
             <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -135,9 +136,10 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints="@null"
                 android:id="@+id/step_rpe_performed"
                 android:inputType="number"
-                android:hint="8" />
+                android:hint="@null" />
 
         </LinearLayout>
 
@@ -171,8 +173,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/step_duration_performed"
                 android:inputType="number"
-                android:hint="30"
-                android:autofillHints="30" />
+                android:hint="@null"
+                android:autofillHints="@null" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -210,7 +212,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/step_rest_performed"
-                android:autofillHints="30"
+                android:inputType="number"
+                android:autofillHints="@null"
+                android:hint="@null"
                 tools:text="30" />
             <TextView
                 android:layout_width="wrap_content"
@@ -218,8 +222,39 @@
                 android:id="@+id/step_rest_seconds2"
                 android:text="s" />
 
-
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/step_notes_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="3"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_notes_title"
+                android:text="Notes" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_notes_input"
+                android:inputType="textMultiLine"
+                tools:text="Here is some text to fit in the Notes /n might be too long!"
+                android:imeOptions="actionDone"
+                android:hint="Notes on this set"
+                android:autofillHints="@null" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/step_btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="3"
+            android:text="Next Step" />
 
     </GridLayout>
 
