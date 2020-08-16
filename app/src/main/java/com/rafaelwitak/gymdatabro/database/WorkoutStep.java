@@ -3,7 +3,7 @@ package com.rafaelwitak.gymdatabro.database;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
+import androidx.room.Index;
 
 @Entity(
         tableName = "workout_steps",
@@ -19,6 +19,9 @@ import androidx.room.PrimaryKey;
                         parentColumns = "id",
                         childColumns = "exercise_id"
                 )
+        },
+        indices = {
+                @Index(value = {"exercise_id", "number"})
         })
 public class WorkoutStep {
     @ColumnInfo(name = "workout_id")

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(
@@ -12,11 +13,15 @@ import androidx.room.PrimaryKey;
                 entity = Exercise.class,
                 parentColumns = "id",
                 childColumns = "exercise_id"
+        ),
+        indices = {
+                @Index(value = "exercise_id")
+        }
         )
-)
 public class ExerciseName {
     @PrimaryKey
-    public String name;
+    @NonNull
+    public String name = "";
 
     @ColumnInfo(name = "is_main_name")
     public Boolean isMainName;

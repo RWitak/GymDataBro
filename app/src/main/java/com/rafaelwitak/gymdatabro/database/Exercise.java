@@ -5,9 +5,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.io.File;
-import java.util.List;
-
 @Entity(tableName = "exercises")
 public class Exercise {
 
@@ -18,16 +15,16 @@ public class Exercise {
     public float pr;
 
     @ColumnInfo
-    public List<String> cues;
+    public String cues;
 
     @ColumnInfo
-    public List<String> links;
+    public String links;
 
     @ColumnInfo(name = "img_a")
-    public File imgA;
+    public String imgA_URI;
 
     @ColumnInfo(name = "img_b")
-    public File imgB;
+    public String imgB_URI;
 
     @ColumnInfo
     public String equipment;

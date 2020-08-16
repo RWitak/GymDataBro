@@ -18,7 +18,7 @@ public class Program {
     public String source;
 
     @ColumnInfo
-    public List<String> links;
+    public String links;
 
     @ColumnInfo
     public String infos;
