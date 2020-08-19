@@ -2,11 +2,9 @@ package com.rafaelwitak.gymdatabro.database;
 
 import android.content.Context;
 
-import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -39,7 +37,7 @@ public abstract class GymBroDatabase extends RoomDatabase {
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static GymBroDatabase getDatabase(final Context context) {
+    public static GymBroDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (GymBroDatabase.class) {
                 if (INSTANCE == null) {
