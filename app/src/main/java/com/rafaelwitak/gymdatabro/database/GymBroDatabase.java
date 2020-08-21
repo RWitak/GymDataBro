@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
                 WorkoutStep.class
         },
         version = 1,
-        exportSchema = false
+        exportSchema = true
 )
 public abstract class GymBroDatabase extends RoomDatabase {
     public abstract ExerciseDAO exerciseDAO();
@@ -37,6 +37,7 @@ public abstract class GymBroDatabase extends RoomDatabase {
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
+    // nice Singleton getter that's never used and doesn't build from asset (see MainActivity!)
     public static GymBroDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (GymBroDatabase.class) {

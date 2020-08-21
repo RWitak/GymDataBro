@@ -1,5 +1,6 @@
 package com.rafaelwitak.gymdatabro.database;
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -34,19 +35,24 @@ public class WorkoutStep {
     public int exerciseID;
 
     @ColumnInfo
-    public int reps;
+    @Nullable
+    public Integer reps;
 
     @ColumnInfo
-    public float weight;
+    @Nullable
+    public Float weight;
 
     @ColumnInfo
-    public float rpe;
+    @Nullable
+    public Float rpe;
 
     @ColumnInfo(name = "duration_seconds")
-    public int durationSeconds;
+    @Nullable
+    public Integer durationSeconds;
 
     @ColumnInfo(name = "rest_seconds")
-    public int restSeconds;
+    @Nullable
+    public Integer restSeconds;
 
     @ColumnInfo
     public String details;

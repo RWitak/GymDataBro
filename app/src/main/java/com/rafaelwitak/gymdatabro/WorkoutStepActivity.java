@@ -28,6 +28,9 @@ public class WorkoutStepActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        //TODO check all entities for possibly nullable primitively-valued columns
+        //TODO rebuild database and update schema in IDE50
+        //TODO hide Items with Null values
 
         binding.stepRepsPrescribed.setText(currentWorkoutStep.reps);
         binding.stepWeightPrescribed.setText(String.valueOf(currentWorkoutStep.weight));
