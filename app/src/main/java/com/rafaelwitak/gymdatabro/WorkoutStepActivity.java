@@ -28,15 +28,42 @@ public class WorkoutStepActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        //TODO check all entities for possibly nullable primitively-valued columns
         //TODO rebuild database and update schema in IDE50
-        //TODO hide Items with Null values
 
-        binding.stepRepsPrescribed.setText(currentWorkoutStep.reps);
-        binding.stepWeightPrescribed.setText(String.valueOf(currentWorkoutStep.weight));
-        binding.stepRpePrescribed.setText(String.valueOf(currentWorkoutStep.rpe));
-        binding.stepDurationPrescribed.setText(currentWorkoutStep.durationSeconds);
-        binding.stepRestPrescribed.setText(String.valueOf(currentWorkoutStep.restSeconds));
+        if (currentWorkoutStep.reps == null) {
+            binding.stepRepsRow.setVisibility(View.GONE);
+        }
+        else {
+            binding.stepRepsPrescribed.setText(currentWorkoutStep.reps);
+        }
+
+        if (currentWorkoutStep.weight == null) {
+            binding.stepWeightRow.setVisibility(View.GONE);
+        }
+        else {
+            binding.stepWeightPrescribed.setText(String.valueOf(currentWorkoutStep.weight));
+        }
+
+        if (currentWorkoutStep.rpe == null) {
+            binding.stepRpeRow.setVisibility(View.GONE);
+        }
+        else {
+            binding.stepRpePrescribed.setText(String.valueOf(currentWorkoutStep.rpe));
+        }
+
+        if (currentWorkoutStep.durationSeconds == null) {
+            binding.stepDurationRow.setVisibility(View.GONE);
+        }
+        else {
+            binding.stepDurationPrescribed.setText(currentWorkoutStep.durationSeconds);
+        }
+
+        if (currentWorkoutStep.restSeconds == null) {
+            binding.stepRestRow.setVisibility(View.GONE);
+        }
+        else {
+            binding.stepRestPrescribed.setText(String.valueOf(currentWorkoutStep.restSeconds));
+        }
     }
 
 

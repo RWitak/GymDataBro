@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b63d5d9eaeee7d3341dc0ad630e71180",
+    "identityHash": "f029379895c2838133ecc9bac984de76",
     "entities": [
       {
         "tableName": "exercises",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `pr` REAL NOT NULL, `cues` TEXT, `links` TEXT, `img_a` TEXT, `img_b` TEXT, `equipment` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `pr` REAL, `cues` TEXT, `links` TEXT, `img_a` TEXT, `img_b` TEXT, `equipment` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -18,7 +18,7 @@
             "fieldPath": "pr",
             "columnName": "pr",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "cues",
@@ -135,7 +135,7 @@
       },
       {
         "tableName": "muscle_involvements",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`exercise_id` INTEGER NOT NULL, `muscle_group_name` TEXT NOT NULL, `involvement_level` REAL NOT NULL, `details` TEXT, PRIMARY KEY(`exercise_id`, `muscle_group_name`), FOREIGN KEY(`exercise_id`) REFERENCES `exercises`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`muscle_group_name`) REFERENCES `muscle_groups`(`name`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`exercise_id` INTEGER NOT NULL, `muscle_group_name` TEXT NOT NULL, `involvement_level` REAL, `details` TEXT, PRIMARY KEY(`exercise_id`, `muscle_group_name`), FOREIGN KEY(`exercise_id`) REFERENCES `exercises`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`muscle_group_name`) REFERENCES `muscle_groups`(`name`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "exerciseID",
@@ -153,7 +153,7 @@
             "fieldPath": "involvementLevel",
             "columnName": "involvement_level",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "details",
@@ -214,7 +214,7 @@
       },
       {
         "tableName": "programs",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `source` TEXT, `links` TEXT, `infos` TEXT, `notes` TEXT, `number_workouts` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `source` TEXT, `links` TEXT, `infos` TEXT, `notes` TEXT, `number_workouts` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -226,7 +226,7 @@
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "source",
@@ -270,7 +270,7 @@
       },
       {
         "tableName": "sets",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `timestamp` INTEGER NOT NULL, `exercise_id` INTEGER NOT NULL, `reps` INTEGER NOT NULL, `weight` REAL NOT NULL, `seconds_performed` INTEGER NOT NULL, `seconds_rested` INTEGER NOT NULL, `rpe` REAL NOT NULL, `pain_level` REAL NOT NULL, `notes` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`exercise_id`) REFERENCES `exercises`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `timestamp` INTEGER NOT NULL, `exercise_id` INTEGER NOT NULL, `reps` INTEGER, `weight` REAL, `seconds_performed` INTEGER, `seconds_rested` INTEGER, `rpe` REAL, `pain_level` REAL NOT NULL, `notes` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`exercise_id`) REFERENCES `exercises`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -294,31 +294,31 @@
             "fieldPath": "reps",
             "columnName": "reps",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "weight",
             "columnName": "weight",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "seconds_performed",
             "columnName": "seconds_performed",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "seconds_rested",
             "columnName": "seconds_rested",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "rpe",
             "columnName": "rpe",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "painLevel",
@@ -365,7 +365,7 @@
       },
       {
         "tableName": "workouts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `program_id` INTEGER NOT NULL, `name` TEXT, `details` TEXT, `notes` TEXT, FOREIGN KEY(`program_id`) REFERENCES `programs`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `program_id` INTEGER, `name` TEXT NOT NULL, `details` TEXT, `notes` TEXT, FOREIGN KEY(`program_id`) REFERENCES `programs`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -377,13 +377,13 @@
             "fieldPath": "programID",
             "columnName": "program_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "details",
@@ -430,7 +430,7 @@
       },
       {
         "tableName": "workout_steps",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`workout_id` INTEGER NOT NULL, `number` INTEGER NOT NULL, `exercise_id` INTEGER NOT NULL, `reps` INTEGER NOT NULL, `weight` REAL NOT NULL, `rpe` REAL NOT NULL, `duration_seconds` INTEGER NOT NULL, `rest_seconds` INTEGER NOT NULL, `details` TEXT, `notes` TEXT, PRIMARY KEY(`workout_id`, `number`), FOREIGN KEY(`workout_id`) REFERENCES `workouts`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`exercise_id`) REFERENCES `exercises`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`workout_id` INTEGER NOT NULL, `number` INTEGER NOT NULL, `exercise_id` INTEGER NOT NULL, `reps` INTEGER, `weight` REAL, `rpe` REAL, `duration_seconds` INTEGER, `rest_seconds` INTEGER, `details` TEXT, `notes` TEXT, PRIMARY KEY(`workout_id`, `number`), FOREIGN KEY(`workout_id`) REFERENCES `workouts`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`exercise_id`) REFERENCES `exercises`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "workoutID",
@@ -454,31 +454,31 @@
             "fieldPath": "reps",
             "columnName": "reps",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "weight",
             "columnName": "weight",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "rpe",
             "columnName": "rpe",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "durationSeconds",
             "columnName": "duration_seconds",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "restSeconds",
             "columnName": "rest_seconds",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "details",
@@ -540,7 +540,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b63d5d9eaeee7d3341dc0ad630e71180')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f029379895c2838133ecc9bac984de76')"
     ]
   }
 }

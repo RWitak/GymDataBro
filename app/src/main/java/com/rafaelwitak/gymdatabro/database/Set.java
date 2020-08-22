@@ -1,6 +1,7 @@
 package com.rafaelwitak.gymdatabro.database;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -28,23 +29,30 @@ public class Set {
     public int exerciseID;
 
     @ColumnInfo
-    public int reps;
+    @Nullable
+    public Integer reps;
 
     @ColumnInfo
-    public float weight;
+    @Nullable
+    public Float weight;
 
     @ColumnInfo
-    public int seconds_performed;
+    @Nullable
+    public Integer seconds_performed;
 
     @ColumnInfo
-    public int seconds_rested;
+    @Nullable
+    public Integer seconds_rested;
 
     @ColumnInfo
-    public float rpe;
+    @Nullable
+    public Float rpe;
 
     @ColumnInfo(name = "pain_level")
-    public float painLevel;
+    @NonNull
+    public Double painLevel = 0.0;
 
     @ColumnInfo
+    @Nullable
     public String notes;
 }

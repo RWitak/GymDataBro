@@ -1,5 +1,7 @@
 package com.rafaelwitak.gymdatabro.database;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -21,14 +23,18 @@ public class Workout {
     public int id;
 
     @ColumnInfo(name = "program_id")
-    public int programID;
+    @Nullable
+    public Integer programID;
 
     @ColumnInfo
-    public String name;
+    @NonNull
+    public String name = "Freestyle Workout";
 
     @ColumnInfo
+    @Nullable
     public String details;
 
     @ColumnInfo
+    @Nullable
     public String notes;
 }

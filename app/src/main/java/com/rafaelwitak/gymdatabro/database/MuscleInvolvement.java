@@ -1,6 +1,7 @@
 package com.rafaelwitak.gymdatabro.database;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -38,9 +39,11 @@ public class MuscleInvolvement {
     public String muscleGroupName = "";
 
     @ColumnInfo(name = "involvement_level")
-    public float involvementLevel;
+    @Nullable
+    public Float involvementLevel;
 
     @ColumnInfo
+    @Nullable
     public String details;
 }
 
