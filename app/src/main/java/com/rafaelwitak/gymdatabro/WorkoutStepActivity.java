@@ -30,11 +30,17 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
         //TODO rebuild database and update schema in IDE50
 
+        setupWorkoutStepViewRows();
+    }
+
+    private void setupWorkoutStepViewRows() {
+
         if (currentWorkoutStep.reps == null) {
             binding.stepRepsRow.setVisibility(View.GONE);
         }
         else {
             binding.stepRepsPrescribed.setText(currentWorkoutStep.reps);
+            binding.stepRepsPerformed.setText(currentWorkoutStep.reps);
         }
 
         if (currentWorkoutStep.weight == null) {
@@ -42,6 +48,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
         }
         else {
             binding.stepWeightPrescribed.setText(String.valueOf(currentWorkoutStep.weight));
+            binding.stepWeightPerformed.setText(String.valueOf(currentWorkoutStep.weight));
         }
 
         if (currentWorkoutStep.rpe == null) {
@@ -49,6 +56,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
         }
         else {
             binding.stepRpePrescribed.setText(String.valueOf(currentWorkoutStep.rpe));
+            binding.stepRpePerformed.setText(String.valueOf(currentWorkoutStep.rpe));
         }
 
         if (currentWorkoutStep.durationSeconds == null) {
@@ -56,6 +64,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
         }
         else {
             binding.stepDurationPrescribed.setText(currentWorkoutStep.durationSeconds);
+            binding.stepDurationPerformed.setText(currentWorkoutStep.durationSeconds);
         }
 
         if (currentWorkoutStep.restSeconds == null) {
@@ -63,6 +72,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
         }
         else {
             binding.stepRestPrescribed.setText(String.valueOf(currentWorkoutStep.restSeconds));
+            binding.stepRestPerformed.setText(String.valueOf(currentWorkoutStep.restSeconds));
         }
     }
 
