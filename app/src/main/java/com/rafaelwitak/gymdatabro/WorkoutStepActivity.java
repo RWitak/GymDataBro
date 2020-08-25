@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LiveData;
 
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
@@ -27,6 +28,12 @@ public class WorkoutStepActivity extends AppCompatActivity {
         binding = ActivityWorkoutStepBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        Toolbar toolbar = binding.toolbar.getRoot();
+        setSupportActionBar(toolbar);
+
+        toolbar.setTitle("Current Workout Name");
+        toolbar.setSubtitle("Current Exercise");
 
         //TODO rebuild database and update schema in IDE50
 

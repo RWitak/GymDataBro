@@ -1,76 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".WorkoutStepActivity">
 
-    <GridLayout
-        android:id="@+id/WorkoutStepGrid"
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:id="@+id/WorkoutStepLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnCount="3"
-        tools:layout_editor_absoluteX="-98dp"
-        tools:layout_editor_absoluteY="122dp"
+        android:orientation="vertical"
         android:padding="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_columnSpan="2"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            tools:text="Workout Name" />
+            android:textColor="@color/colorPrimary"
+            tools:text="Workout Name Workout Name Workout Name" />
 
-        <TextView
+        <!--        <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    tools:text="(32%)" />-->
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_columnSpan="1"
-            android:paddingHorizontal="10dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            tools:text="(32%)" />
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="284dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textColor="@color/colorAccent"
+                tools:text="Exercise Name Exercise Name Exercise Name" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnSpan="2"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            tools:text="Exercise Name" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_columnSpan="1"
-            android:paddingHorizontal="10dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            tools:text="1/3" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="left|fill_vertical"
+                android:paddingHorizontal="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/colorPrimaryDark"
+                tools:text="1/3" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/step_reps_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_columnSpan="3"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/step_reps_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
                 tools:text="Reps" />
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/step_reps_prescribed"
-                tools:text="12" />
-            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                tools:text="12" />
+
+            <EditText
                 android:id="@+id/step_reps_performed"
-                android:inputType="numberSigned"
-                android:hint="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
                 android:autofillHints="@null"
-                tools:text="1234"/>
+                android:hint="@null"
+                android:inputType="numberSigned"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                tools:text="1234" />
         </LinearLayout>
 
 
@@ -78,38 +96,40 @@
             android:id="@+id/step_weight_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_columnSpan="3"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/step_weight_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/step_weight_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
                 tools:text="Weight" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/step_weight_prescribed"
-                tools:text="50" />
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                tools:text="50" />
+
+            <TextView
                 android:id="@+id/step_weight_kg1"
-                android:text="kg"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="kg" />
 
             <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/step_weight_performed"
-            android:inputType="numberSigned"
-            android:autofillHints="@null"
-            android:hint="@null"/>
+                android:id="@+id/step_weight_performed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autofillHints="@null"
+                android:hint="@null"
+                android:inputType="numberSigned" />
+
             <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/step_weight_kg2"
-            android:text="kg" />
+                android:id="@+id/step_weight_kg2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="kg" />
 
         </LinearLayout>
 
@@ -118,28 +138,28 @@
             android:id="@+id/step_rpe_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_columnSpan="3"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/step_rpe_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/step_rpe_title"
-                android:text="RPE" />
+                android:text="RPE"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
             <TextView
+                android:id="@+id/step_rpe_prescribed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/step_rpe_prescribed"
                 tools:text="8" />
 
             <EditText
+                android:id="@+id/step_rpe_performed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints="@null"
-                android:id="@+id/step_rpe_performed"
-                android:inputType="number"
-                android:hint="@null" />
+                android:hint="@null"
+                android:inputType="number" />
 
         </LinearLayout>
 
@@ -148,37 +168,40 @@
             android:id="@+id/step_duration_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_columnSpan="3" >
+            android:layout_columnSpan="3"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/step_duration_title"
-                android:text="Duration" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Duration"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/step_duration_prescribed"
-                tools:text="30" />
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                tools:text="30" />
+
+            <TextView
                 android:id="@+id/step_duration_s1"
-                android:text="s"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="s" />
 
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/step_duration_performed"
-                android:inputType="number"
-                android:hint="@null"
-                android:autofillHints="@null" />
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints="@null"
+                android:hint="@null"
+                android:inputType="number" />
+
+            <TextView
                 android:id="@+id/step_duration_s2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="s" />
 
         </LinearLayout>
@@ -188,38 +211,40 @@
             android:id="@+id/step_rest_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_columnSpan="3"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/step_rest_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/step_rest_title"
-                android:text="Rest" />
+                android:text="Rest"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/step_rest_prescribed"
-                tools:text="3" />
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                tools:text="3" />
+
+            <TextView
                 android:id="@+id/step_rest_seconds1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="s" />
 
             <EditText
+                android:id="@+id/step_rest_performed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/step_rest_performed"
-                android:inputType="number"
                 android:autofillHints="@null"
                 android:hint="@null"
+                android:inputType="number"
                 tools:text="30" />
+
             <TextView
+                android:id="@+id/step_rest_seconds2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/step_rest_seconds2"
                 android:text="s" />
 
         </LinearLayout>
@@ -228,24 +253,23 @@
             android:id="@+id/step_notes_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_columnSpan="3"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/step_notes_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/step_notes_title"
                 android:text="Notes" />
 
             <EditText
+                android:id="@+id/step_notes_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/step_notes_input"
-                android:inputType="textMultiLine"
-                tools:text="Here is some text to fit in the Notes /n might be too long!"
-                android:imeOptions="actionDone"
+                android:autofillHints="@null"
                 android:hint="Notes on this set"
-                android:autofillHints="@null" />
+                android:imeOptions="actionDone"
+                android:inputType="textMultiLine"
+                tools:text="Here is some text to fit in the Notes /n might be too long!" />
         </LinearLayout>
 
 
@@ -253,9 +277,8 @@
             android:id="@+id/step_btn_next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_columnSpan="3"
             android:text="Next Step" />
 
-    </GridLayout>
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
