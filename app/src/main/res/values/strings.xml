@@ -12,4 +12,14 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="kg">kg</string>
+    <string name="rpe">RPE</string>
+    <string name="duration">Duration</string>
+    <string name="s">s</string>
+    <string name="rest">Rest</string>
+    <string name="notes">Notes</string>
+    <string name="pain_level">Pain Level</string>
+    <string name="none">none</string>
+    <string name="max">max</string>
+    <string name="next_step">Next Step</string>
 </resources>
