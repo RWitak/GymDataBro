@@ -63,4 +63,3 @@ public class WorkoutStep {
     @ColumnInfo
     public String notes;
 }
-// TODO include pain level row / seekbar

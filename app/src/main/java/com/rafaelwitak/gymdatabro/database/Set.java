@@ -50,7 +50,7 @@ public class Set {
 
     @ColumnInfo(name = "pain_level")
     @NonNull
-    public Double painLevel = 0.0;
+    public Integer painLevel = 0;
 
     @ColumnInfo
     @Nullable
