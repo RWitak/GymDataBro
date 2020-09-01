@@ -1,6 +1,9 @@
 package com.rafaelwitak.gymdatabro;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.SeekBar;
 
@@ -30,7 +33,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
         database = MainActivity.database;
         performedSet = new Set();
 
-        // bind all Views with IDs automatically
+        // automatically bind all Views with IDs
         binding = ActivityWorkoutStepBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -43,9 +46,9 @@ public class WorkoutStepActivity extends AppCompatActivity {
         painSlider = binding.stepPainSlider;
         painSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if (painLevelInsideBounds(i)) {
-                    performedSet.painLevel = i;
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (painLevelInsideBounds(progress)) {
+                    performedSet.painLevel = progress;
                 }
                 else {
                     throw new IndexOutOfBoundsException("Pain Level out of bounds");
@@ -53,12 +56,10 @@ public class WorkoutStepActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
         toolbar.setTitle("Current Workout Name");
@@ -76,14 +77,42 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return (0 <= painLevel && painLevel <= getResources().getInteger(R.integer.pain_max));
     }
 
+    // Set visibility and/or data for the WorkoutStep's View's Rows
     private void setupWorkoutStepViewRows() {
-
+        // TODO refactor
         if (currentWorkoutStep.reps == null) {
             binding.stepRepsRow.setVisibility(View.GONE);
         }
         else {
             binding.stepRepsPrescribed.setText(currentWorkoutStep.reps);
             binding.stepRepsPerformed.setText(currentWorkoutStep.reps);
+            binding.stepRepsPerformed.setKeyListener(new KeyListener() {
+                @Override
+                public int getInputType() {
+                    return 0;
+                }
+
+                @Override
+                public boolean onKeyDown(View view, Editable editable, int i, KeyEvent keyEvent) {
+                    return false;
+                }
+
+                @Override
+                public boolean onKeyUp(View view, Editable editable, int i, KeyEvent keyEvent) {
+                    performedSet.reps = editable.getChars();
+                    return false;
+                }
+
+                @Override
+                public boolean onKeyOther(View view, Editable editable, KeyEvent keyEvent) {
+                    return false;
+                }
+
+                @Override
+                public void clearMetaKeyState(View view, Editable editable, int i) {
+
+                }
+            });
         }
 
         if (currentWorkoutStep.weight == null) {
