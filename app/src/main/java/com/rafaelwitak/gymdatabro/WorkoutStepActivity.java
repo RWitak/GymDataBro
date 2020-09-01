@@ -15,6 +15,12 @@ import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.Set;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
+import com.rafaelwitak.gymdatabro.workoutStepRows.RepsRow;
+import com.rafaelwitak.gymdatabro.workoutStepRows.WeightRow;
+import com.rafaelwitak.gymdatabro.workoutStepRows.WorkoutStepRow;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class WorkoutStepActivity extends AppCompatActivity {
 
@@ -24,6 +30,8 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private Set performedSet;
     private Toolbar toolbar;
     private SeekBar painSlider;
+
+    private ArrayList <WorkoutStepRow> rows;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +45,14 @@ public class WorkoutStepActivity extends AppCompatActivity {
         binding = ActivityWorkoutStepBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        // populate rows
+        // TODO populate
+        rows.addAll(Arrays.asList(
+                new RepsRow(this, binding, currentWorkoutStep),
+                new WeightRow(this, binding, currentWorkoutStep)
+                )
+        );
 
         // set up Toolbar
         toolbar = binding.toolbar.getRoot();
@@ -68,9 +84,16 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
 
         // TODO rebuild database and update schema in IDE50
-        // TODO include pain level row / seekbar
 
         setupWorkoutStepViewRows();
+
+        binding.stepBtnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // TODO: implement
+            }
+        });
     }
 
     private boolean painLevelInsideBounds(Integer painLevel) {
@@ -79,50 +102,13 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     // Set visibility and/or data for the WorkoutStep's View's Rows
     private void setupWorkoutStepViewRows() {
-        // TODO refactor
-        if (currentWorkoutStep.reps == null) {
-            binding.stepRepsRow.setVisibility(View.GONE);
-        }
-        else {
-            binding.stepRepsPrescribed.setText(currentWorkoutStep.reps);
-            binding.stepRepsPerformed.setText(currentWorkoutStep.reps);
-            binding.stepRepsPerformed.setKeyListener(new KeyListener() {
-                @Override
-                public int getInputType() {
-                    return 0;
-                }
 
-                @Override
-                public boolean onKeyDown(View view, Editable editable, int i, KeyEvent keyEvent) {
-                    return false;
-                }
-
-                @Override
-                public boolean onKeyUp(View view, Editable editable, int i, KeyEvent keyEvent) {
-                    performedSet.reps = editable.getChars();
-                    return false;
-                }
-
-                @Override
-                public boolean onKeyOther(View view, Editable editable, KeyEvent keyEvent) {
-                    return false;
-                }
-
-                @Override
-                public void clearMetaKeyState(View view, Editable editable, int i) {
-
-                }
-            });
+        for ( WorkoutStepRow row : rows ) {
+            row.setup();
         }
 
-        if (currentWorkoutStep.weight == null) {
-            binding.stepWeightRow.setVisibility(View.GONE);
-        }
-        else {
-            binding.stepWeightPrescribed.setText(String.valueOf(currentWorkoutStep.weight));
-            binding.stepWeightPerformed.setText(String.valueOf(currentWorkoutStep.weight));
-        }
 
+        // TODO refactor (see WorkoutStepRow.java)
         if (currentWorkoutStep.rpe == null) {
             binding.stepRpeRow.setVisibility(View.GONE);
         }
@@ -147,7 +133,6 @@ public class WorkoutStepActivity extends AppCompatActivity {
             binding.stepRestPerformed.setText(String.valueOf(currentWorkoutStep.restSeconds));
         }
     }
-
 
     private WorkoutStep getCurrentWorkoutStep() {
         int workoutID = getIntent().getIntExtra("workoutID", 0);
