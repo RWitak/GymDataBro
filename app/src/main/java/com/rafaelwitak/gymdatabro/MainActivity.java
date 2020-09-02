@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
         database = Room
                 .databaseBuilder(getApplicationContext(), GymBroDatabase.class, "gym_data")
-                //TODO .createFromAsset("")
+                .createFromAsset("gymdata.db")
                 .allowMainThreadQueries()
                 .build();
 

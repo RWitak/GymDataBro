@@ -27,7 +27,7 @@ public class Program {
 
     @ColumnInfo
     @Nullable
-    public String infos;
+    public String info;
 
     @ColumnInfo
     @Nullable

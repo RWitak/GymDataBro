@@ -50,7 +50,6 @@ public class WorkoutStepActivity extends AppCompatActivity {
         setContentView(view);
 
         // populate rows
-        // TODO populate
         rows.addAll(Arrays.asList(
                 new RepsRow(this, binding, currentWorkoutStep),
                 new WeightRow(this, binding, currentWorkoutStep),
@@ -87,17 +86,13 @@ public class WorkoutStepActivity extends AppCompatActivity {
         toolbar.setTitle("Current Workout Name");
         toolbar.setSubtitle("Current Exercise");
 
-
-
-        // TODO rebuild database and update schema in IDE50
-
         setupWorkoutStepViewRows();
 
         binding.stepBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // TODO: implement
+                // TODO: implement next-Button onClick behaviour
             }
         });
     }
