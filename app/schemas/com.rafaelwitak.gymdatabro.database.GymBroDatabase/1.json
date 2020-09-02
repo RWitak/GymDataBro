@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f029379895c2838133ecc9bac984de76",
+    "identityHash": "5058b0c15696ff7d9d425a8592ac9274",
     "entities": [
       {
         "tableName": "exercises",
@@ -214,7 +214,7 @@
       },
       {
         "tableName": "programs",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `source` TEXT, `links` TEXT, `infos` TEXT, `notes` TEXT, `number_workouts` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `source` TEXT, `links` TEXT, `info` TEXT, `notes` TEXT, `number_workouts` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -241,8 +241,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "infos",
-            "columnName": "infos",
+            "fieldPath": "info",
+            "columnName": "info",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -270,7 +270,7 @@
       },
       {
         "tableName": "sets",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `timestamp` INTEGER NOT NULL, `exercise_id` INTEGER NOT NULL, `reps` INTEGER, `weight` REAL, `seconds_performed` INTEGER, `seconds_rested` INTEGER, `rpe` REAL, `pain_level` REAL NOT NULL, `notes` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`exercise_id`) REFERENCES `exercises`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `timestamp` INTEGER NOT NULL, `exercise_id` INTEGER NOT NULL, `reps` INTEGER, `weight` REAL, `seconds_performed` INTEGER, `seconds_rested` INTEGER, `rpe` REAL, `pain_level` INTEGER NOT NULL, `notes` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`exercise_id`) REFERENCES `exercises`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -323,7 +323,7 @@
           {
             "fieldPath": "painLevel",
             "columnName": "pain_level",
-            "affinity": "REAL",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -540,7 +540,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f029379895c2838133ecc9bac984de76')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5058b0c15696ff7d9d425a8592ac9274')"
     ]
   }
 }

@@ -15,7 +15,10 @@ import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.Set;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
+import com.rafaelwitak.gymdatabro.workoutStepRows.DurationRow;
+import com.rafaelwitak.gymdatabro.workoutStepRows.RPERow;
 import com.rafaelwitak.gymdatabro.workoutStepRows.RepsRow;
+import com.rafaelwitak.gymdatabro.workoutStepRows.RestRow;
 import com.rafaelwitak.gymdatabro.workoutStepRows.WeightRow;
 import com.rafaelwitak.gymdatabro.workoutStepRows.WorkoutStepRow;
 
@@ -50,7 +53,10 @@ public class WorkoutStepActivity extends AppCompatActivity {
         // TODO populate
         rows.addAll(Arrays.asList(
                 new RepsRow(this, binding, currentWorkoutStep),
-                new WeightRow(this, binding, currentWorkoutStep)
+                new WeightRow(this, binding, currentWorkoutStep),
+                new RPERow(this, binding, currentWorkoutStep),
+                new DurationRow(this, binding, currentWorkoutStep),
+                new RestRow(this, binding, currentWorkoutStep)
                 )
         );
 
@@ -105,32 +111,6 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
         for ( WorkoutStepRow row : rows ) {
             row.setup();
-        }
-
-
-        // TODO refactor (see WorkoutStepRow.java)
-        if (currentWorkoutStep.rpe == null) {
-            binding.stepRpeRow.setVisibility(View.GONE);
-        }
-        else {
-            binding.stepRpePrescribed.setText(String.valueOf(currentWorkoutStep.rpe));
-            binding.stepRpePerformed.setText(String.valueOf(currentWorkoutStep.rpe));
-        }
-
-        if (currentWorkoutStep.durationSeconds == null) {
-            binding.stepDurationRow.setVisibility(View.GONE);
-        }
-        else {
-            binding.stepDurationPrescribed.setText(currentWorkoutStep.durationSeconds);
-            binding.stepDurationPerformed.setText(currentWorkoutStep.durationSeconds);
-        }
-
-        if (currentWorkoutStep.restSeconds == null) {
-            binding.stepRestRow.setVisibility(View.GONE);
-        }
-        else {
-            binding.stepRestPrescribed.setText(String.valueOf(currentWorkoutStep.restSeconds));
-            binding.stepRestPerformed.setText(String.valueOf(currentWorkoutStep.restSeconds));
         }
     }
 
