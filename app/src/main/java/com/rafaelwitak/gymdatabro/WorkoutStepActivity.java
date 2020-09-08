@@ -1,5 +1,6 @@
 package com.rafaelwitak.gymdatabro;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.method.KeyListener;
@@ -13,6 +14,7 @@ import androidx.lifecycle.LiveData;
 
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.Set;
+import com.rafaelwitak.gymdatabro.database.Workout;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.workoutStepRows.DurationRow;
@@ -24,6 +26,8 @@ import com.rafaelwitak.gymdatabro.workoutStepRows.WorkoutStepRow;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class WorkoutStepActivity extends AppCompatActivity {
 
@@ -93,8 +97,27 @@ public class WorkoutStepActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // TODO: implement next-Button onClick behaviour
+                if (isLastWorkoutStep(currentWorkoutStep)){
+                    // TODO: return to home screen
+                }
+                else {
+                    startNextWorkoutStep();
+                }
             }
         });
+    }
+
+    private void startNextWorkoutStep() {
+        // TODO: implement (use extras "workoutID" and "nextStepNumber")
+    }
+
+
+    public boolean isLastWorkoutStep(WorkoutStep currentWorkoutStep) {
+
+        final Workout currentWorkout = database.workoutDAO().getWorkoutByID(currentWorkoutStep.workoutID);
+        final List<WorkoutStep> workoutSteps = database.workoutStepDAO().getAllStepsForWorkout(currentWorkout.id).getValue();
+        final int numberOfStepsInWorkout = Objects.requireNonNull(workoutSteps).size();
+        return (currentWorkoutStep.number + 1 == numberOfStepsInWorkout);
     }
 
     private boolean painLevelInsideBounds(Integer painLevel) {
