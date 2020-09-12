@@ -32,44 +32,78 @@ import java.util.Objects;
 public class WorkoutStepActivity extends AppCompatActivity {
 
     private GymBroDatabase database;
-    private ActivityWorkoutStepBinding binding;
+    private Workout currentWorkout;
     private WorkoutStep currentWorkoutStep;
     private Set performedSet;
-    private Toolbar toolbar;
-    private SeekBar painSlider;
 
     private ArrayList <WorkoutStepRow> rows;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_workout_step);
-        currentWorkoutStep = getCurrentWorkoutStep();
+
         database = MainActivity.database;
+        currentWorkout = getCurrentWorkout();
+        currentWorkoutStep = getCurrentWorkoutStep();
         performedSet = new Set();
 
         // automatically bind all Views with IDs
-        binding = ActivityWorkoutStepBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+        setContentView(R.layout.activity_workout_step);
+        com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding binding =
+                ActivityWorkoutStepBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        // populate rows
-        rows.addAll(Arrays.asList(
-                new RepsRow(this, binding, currentWorkoutStep),
-                new WeightRow(this, binding, currentWorkoutStep),
-                new RPERow(this, binding, currentWorkoutStep),
-                new DurationRow(this, binding, currentWorkoutStep),
-                new RestRow(this, binding, currentWorkoutStep)
-                )
-        );
+        populateRows(binding);
 
         // set up Toolbar
-        toolbar = binding.toolbar.getRoot();
+        Toolbar toolbar = binding.toolbar.getRoot();
         setSupportActionBar(toolbar);
+        toolbar.setTitle(currentWorkout.name);
+        toolbar.setSubtitle(getCurrentExerciseName());
 
         // set up painSlider SeekBar
-        painSlider = binding.stepPainSlider;
-        painSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        SeekBar painSlider = binding.stepPainSlider;
+        painSlider.setOnSeekBarChangeListener(getSeekBarChangeListener());
+
+        setupWorkoutStepViewRows();
+
+        binding.stepBtnNext.setOnClickListener(getViewOnClickListener());
+    }
+
+    private String getCurrentExerciseName() {
+        return database.exerciseNameDAO().getMainNameByID(currentWorkoutStep.exerciseID);
+    }
+
+    private Workout getCurrentWorkout() {
+        return database.workoutDAO().getWorkoutByID(currentWorkoutStep.workoutID);
+    }
+
+    private View.OnClickListener getViewOnClickListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentWorkoutStepSavable()) {
+                    saveCurrentWorkoutStep();
+
+                    if (isLastWorkoutStep(currentWorkoutStep)){
+                        finish();
+                    }
+                    else {
+                        startNextWorkoutStep();
+                    }
+                }
+            }
+        };
+    }
+
+    private boolean currentWorkoutStepSavable() {
+        // TODO implement
+        return false;
+    }
+
+    private SeekBar.OnSeekBarChangeListener getSeekBarChangeListener() {
+
+        return new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (painLevelInsideBounds(progress)) {
@@ -85,38 +119,45 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
-        });
+        };
+    }
 
-        toolbar.setTitle("Current Workout Name");
-        toolbar.setSubtitle("Current Exercise");
+    private void populateRows(com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding binding) {
+        rows.addAll(Arrays.asList(
+                new RepsRow(this, binding, currentWorkoutStep),
+                new WeightRow(this, binding, currentWorkoutStep),
+                new RPERow(this, binding, currentWorkoutStep),
+                new DurationRow(this, binding, currentWorkoutStep),
+                new RestRow(this, binding, currentWorkoutStep)
+                )
+        );
+    }
 
-        setupWorkoutStepViewRows();
+    private void saveCurrentWorkoutStep() {
+        // TODO implement
 
-        binding.stepBtnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // TODO: implement next-Button onClick behaviour
-                if (isLastWorkoutStep(currentWorkoutStep)){
-                    // TODO: return to home screen
-                }
-                else {
-                    startNextWorkoutStep();
-                }
-            }
-        });
     }
 
     private void startNextWorkoutStep() {
-        // TODO: implement (use extras "workoutID" and "nextStepNumber")
+        Intent intent = getIntentWithExtras();
+
+        startActivity(intent);
     }
 
+    private Intent getIntentWithExtras() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("workoutID", currentWorkoutStep.workoutID);
+        intent.putExtra("nextStepNumber", currentWorkoutStep.number + 1);
+
+        return intent;
+    }
 
     public boolean isLastWorkoutStep(WorkoutStep currentWorkoutStep) {
 
         final Workout currentWorkout = database.workoutDAO().getWorkoutByID(currentWorkoutStep.workoutID);
         final List<WorkoutStep> workoutSteps = database.workoutStepDAO().getAllStepsForWorkout(currentWorkout.id).getValue();
         final int numberOfStepsInWorkout = Objects.requireNonNull(workoutSteps).size();
+
         return (currentWorkoutStep.number + 1 == numberOfStepsInWorkout);
     }
 
@@ -135,9 +176,11 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private WorkoutStep getCurrentWorkoutStep() {
         int workoutID = getIntent().getIntExtra("workoutID", 0);
         int stepNumber = getIntent().getIntExtra("nextStepNumber", 0);
+
         LiveData<WorkoutStep> step = database
                 .workoutStepDAO()
                 .getWorkoutStep(workoutID, stepNumber);
+
         return step.getValue();
     }
 }
