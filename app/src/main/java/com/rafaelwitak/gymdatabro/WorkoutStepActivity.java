@@ -2,9 +2,6 @@ package com.rafaelwitak.gymdatabro;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.method.KeyListener;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.SeekBar;
 
@@ -12,8 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LiveData;
 
+import com.rafaelwitak.gymdatabro.database.PerformanceSet;
+import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
+
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
-import com.rafaelwitak.gymdatabro.database.Set;
 import com.rafaelwitak.gymdatabro.database.Workout;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
@@ -34,7 +33,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private GymBroDatabase database;
     private Workout currentWorkout;
     private WorkoutStep currentWorkoutStep;
-    private Set performedSet;
+    private PerformanceSet performedSet;
 
     private ArrayList <WorkoutStepRow> rows;
 
@@ -45,7 +44,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
         database = MainActivity.database;
         currentWorkout = getCurrentWorkout();
         currentWorkoutStep = getCurrentWorkoutStep();
-        performedSet = new Set();
+        performedSet = new PerformanceSet();
 
         // automatically bind all Views with IDs
         setContentView(R.layout.activity_workout_step);

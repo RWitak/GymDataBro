@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
                 MuscleGroup.class,
                 MuscleInvolvement.class,
                 Program.class,
-                Set.class,
+                PerformanceSet.class,
                 Workout.class,
                 WorkoutStep.class
         },
@@ -28,7 +28,7 @@ public abstract class GymBroDatabase extends RoomDatabase {
     public abstract MuscleGroupDAO muscleGroupDAO();
     public abstract MuscleInvolvementDAO muscleInvolvementDAO();
     public abstract ProgramDAO programDAO();
-    public abstract SetDAO setDAO();
+    public abstract PerformanceSetDAO setDAO();
     public abstract WorkoutDAO workoutDAO();
     public abstract WorkoutStepDAO workoutStepDAO();
 

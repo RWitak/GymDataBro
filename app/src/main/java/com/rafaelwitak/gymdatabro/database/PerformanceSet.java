@@ -18,7 +18,7 @@ import androidx.room.PrimaryKey;
                 @Index(value = "exercise_id")
         }
 )
-public class Set {
+public class PerformanceSet {
     @PrimaryKey
     public int id;
 
