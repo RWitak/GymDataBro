@@ -1,6 +1,7 @@
 package com.rafaelwitak.gymdatabro.workoutStepRows;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 

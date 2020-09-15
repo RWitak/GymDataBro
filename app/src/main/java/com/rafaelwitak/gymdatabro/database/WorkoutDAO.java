@@ -20,7 +20,7 @@ public interface WorkoutDAO {
     public Workout getWorkoutByID(int id);
 
     @Query("SELECT * FROM workouts WHERE name=:name")
-    public Workout getWorkoutbyName(String name);
+    public Workout getWorkoutByName(String name);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertWorkout(Workout workout);

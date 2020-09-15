@@ -2,6 +2,7 @@ package com.rafaelwitak.gymdatabro;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 
@@ -15,7 +16,7 @@ import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.Workout;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
-import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
+
 import com.rafaelwitak.gymdatabro.workoutStepRows.DurationRow;
 import com.rafaelwitak.gymdatabro.workoutStepRows.RPERow;
 import com.rafaelwitak.gymdatabro.workoutStepRows.RepsRow;
@@ -32,52 +33,71 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     private GymBroDatabase database;
     private Workout currentWorkout;
-    private WorkoutStep currentWorkoutStep;
+    public WorkoutStep currentWorkoutStep; // FIXME public for access by RepsRow
     private PerformanceSet performedSet;
 
-    private ArrayList <WorkoutStepRow> rows;
+    private ArrayList <WorkoutStepRow> rows = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         database = MainActivity.database;
-        currentWorkout = getCurrentWorkout();
         currentWorkoutStep = getCurrentWorkoutStep();
+        currentWorkout = getCurrentWorkout();
         performedSet = new PerformanceSet();
 
         // automatically bind all Views with IDs
-        setContentView(R.layout.activity_workout_step);
         com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding binding =
                 ActivityWorkoutStepBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         populateRows(binding);
+        setUpToolbar(binding);
+        setUpPainSlider(binding);
 
-        // set up Toolbar
-        Toolbar toolbar = binding.toolbar.getRoot();
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(currentWorkout.name);
-        toolbar.setSubtitle(getCurrentExerciseName());
-
-        // set up painSlider SeekBar
-        SeekBar painSlider = binding.stepPainSlider;
-        painSlider.setOnSeekBarChangeListener(getSeekBarChangeListener());
-
-        setupWorkoutStepViewRows();
+        setUpWorkoutStepViewRows();
 
         binding.stepBtnNext.setOnClickListener(getViewOnClickListener());
     }
 
+    private void setUpPainSlider(com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding binding) {
+        SeekBar painSlider = binding.stepPainSlider;
+        painSlider.setOnSeekBarChangeListener(getSeekBarChangeListener());
+    }
+
+    private void setUpToolbar(com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding binding) {
+        Toolbar toolbar = binding.toolbar.getRoot();
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(currentWorkout.name);
+        toolbar.setSubtitle(getCurrentExerciseName());
+    }
+
     private String getCurrentExerciseName() {
-        return database.exerciseNameDAO().getMainNameByID(currentWorkoutStep.exerciseID);
+        // TODO am I clean?
+        try {
+            return database.exerciseNameDAO().getMainNameByID(currentWorkoutStep.exerciseID);
+        }
+        catch (NullPointerException npe) {
+            Log.d("GymDataBro", "No ExerciseName found!");
+            return "Unnamed Exercise";
+        }
     }
 
     private Workout getCurrentWorkout() {
-        return database.workoutDAO().getWorkoutByID(currentWorkoutStep.workoutID);
+        // TODO am I clean?
+        try {
+            return database.workoutDAO().getWorkoutByID(currentWorkoutStep.workoutID);
+        }
+        catch (NullPointerException npe) {
+            Log.d("GymDataBro", "No Workout found!");
+            return new Workout();
+        }
+
     }
 
     private View.OnClickListener getViewOnClickListener() {
+        //noinspection Convert2Lambda
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,8 +116,8 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private boolean currentWorkoutStepSavable() {
-        // TODO implement
-        return false;
+        // currently, WorkoutSteps are always savable per definition
+        return true;
     }
 
     private SeekBar.OnSeekBarChangeListener getSeekBarChangeListener() {
@@ -133,8 +153,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private void saveCurrentWorkoutStep() {
-        // TODO implement
-
+        database.workoutStepDAO().insertWorkoutStep(currentWorkoutStep);
     }
 
     private void startNextWorkoutStep() {
@@ -165,7 +184,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     // Set visibility and/or data for the WorkoutStep's View's Rows
-    private void setupWorkoutStepViewRows() {
+    private void setUpWorkoutStepViewRows() {
 
         for ( WorkoutStepRow row : rows ) {
             row.setup();
@@ -173,13 +192,21 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private WorkoutStep getCurrentWorkoutStep() {
+        // TODO am I clean?
+        // FIXME Catch block not reached, apparently returns empty value in try block!
         int workoutID = getIntent().getIntExtra("workoutID", 0);
         int stepNumber = getIntent().getIntExtra("nextStepNumber", 0);
 
-        LiveData<WorkoutStep> step = database
-                .workoutStepDAO()
-                .getWorkoutStep(workoutID, stepNumber);
+        try {
+            LiveData<WorkoutStep> step = database
+                    .workoutStepDAO()
+                    .getWorkoutStep(workoutID, stepNumber);
 
-        return step.getValue();
+            return step.getValue();
+        }
+        catch (NullPointerException npe) {
+            Log.d("GymDataBro", "No WorkoutStep found!");
+            return new WorkoutStep();
+        }
     }
 }
