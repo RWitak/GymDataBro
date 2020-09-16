@@ -15,11 +15,18 @@ public interface WorkoutStepDAO {
     public LiveData<List<WorkoutStep>> getAllWorkoutSteps();
 
     @Query("SELECT * FROM workout_steps WHERE workout_id=:workoutID")
-    public LiveData<List<WorkoutStep>> getAllStepsForWorkout(int workoutID);
+    public LiveData<List<WorkoutStep>> getAllStepsForWorkoutAsLiveData(int workoutID);
 
     @Query("SELECT * FROM workout_steps WHERE workout_id=:workoutID "
             + "AND number=:stepNumber")
-    public LiveData<WorkoutStep> getWorkoutStep(int workoutID, int stepNumber);
+    public LiveData<WorkoutStep> getWorkoutStepAsLiveData(int workoutID, int stepNumber);
+
+    @Query("SELECT * FROM workout_steps WHERE workout_id=:workoutID")
+    public List<WorkoutStep> getAllStepsForWorkoutSynchronously(int workoutID);
+
+    @Query("SELECT * FROM workout_steps WHERE workout_id=:workoutID "
+            + "AND number=:stepNumber")
+    public WorkoutStep getWorkoutStepSynchronously(int workoutID, int stepNumber);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertWorkoutStep(WorkoutStep workoutStep);

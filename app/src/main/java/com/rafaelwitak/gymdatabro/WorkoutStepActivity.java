@@ -2,21 +2,17 @@ package com.rafaelwitak.gymdatabro;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.LiveData;
-
-import com.rafaelwitak.gymdatabro.database.PerformanceSet;
-import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
+import com.rafaelwitak.gymdatabro.database.PerformanceSet;
 import com.rafaelwitak.gymdatabro.database.Workout;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
-
+import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.workoutStepRows.DurationRow;
 import com.rafaelwitak.gymdatabro.workoutStepRows.RPERow;
 import com.rafaelwitak.gymdatabro.workoutStepRows.RepsRow;
@@ -33,7 +29,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     private GymBroDatabase database;
     private Workout currentWorkout;
-    public WorkoutStep currentWorkoutStep; // FIXME public for access by RepsRow
+    private WorkoutStep currentWorkoutStep;
     private PerformanceSet performedSet;
 
     private ArrayList <WorkoutStepRow> rows = new ArrayList<>();
@@ -74,26 +70,25 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private String getCurrentExerciseName() {
-        // TODO am I clean?
-        try {
-            return database.exerciseNameDAO().getMainNameByID(currentWorkoutStep.exerciseID);
-        }
-        catch (NullPointerException npe) {
-            Log.d("GymDataBro", "No ExerciseName found!");
+       String currentExerciseName = database
+               .exerciseNameDAO()
+               .getMainNameByID(currentWorkoutStep.exerciseID);
+
+        if (currentExerciseName == null) {
             return "Unnamed Exercise";
         }
+
+        return currentExerciseName;
     }
 
     private Workout getCurrentWorkout() {
-        // TODO am I clean?
-        try {
-            return database.workoutDAO().getWorkoutByID(currentWorkoutStep.workoutID);
-        }
-        catch (NullPointerException npe) {
-            Log.d("GymDataBro", "No Workout found!");
+        Workout currentWorkout = database.workoutDAO().getWorkoutByID(currentWorkoutStep.workoutID);
+
+        if (currentWorkout == null) {
             return new Workout();
         }
 
+        return currentWorkout;
     }
 
     private View.OnClickListener getViewOnClickListener() {
@@ -172,8 +167,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     public boolean isLastWorkoutStep(WorkoutStep currentWorkoutStep) {
 
-        final Workout currentWorkout = database.workoutDAO().getWorkoutByID(currentWorkoutStep.workoutID);
-        final List<WorkoutStep> workoutSteps = database.workoutStepDAO().getAllStepsForWorkout(currentWorkout.id).getValue();
+        final List<WorkoutStep> workoutSteps = database.workoutStepDAO().getAllStepsForWorkoutAsLiveData(currentWorkout.id).getValue();
         final int numberOfStepsInWorkout = Objects.requireNonNull(workoutSteps).size();
 
         return (currentWorkoutStep.number + 1 == numberOfStepsInWorkout);
@@ -192,21 +186,17 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private WorkoutStep getCurrentWorkoutStep() {
-        // TODO am I clean?
-        // FIXME Catch block not reached, apparently returns empty value in try block!
         int workoutID = getIntent().getIntExtra("workoutID", 0);
         int stepNumber = getIntent().getIntExtra("nextStepNumber", 0);
 
-        try {
-            LiveData<WorkoutStep> step = database
-                    .workoutStepDAO()
-                    .getWorkoutStep(workoutID, stepNumber);
+        WorkoutStep step = database
+                .workoutStepDAO()
+                .getWorkoutStepSynchronously(workoutID, stepNumber);
 
-            return step.getValue();
-        }
-        catch (NullPointerException npe) {
-            Log.d("GymDataBro", "No WorkoutStep found!");
+        if (step == null) {
             return new WorkoutStep();
         }
+
+        return step;
     }
 }
