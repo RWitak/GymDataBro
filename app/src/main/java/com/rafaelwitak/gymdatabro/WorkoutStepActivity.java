@@ -12,7 +12,9 @@ import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.PerformanceSet;
 import com.rafaelwitak.gymdatabro.database.Workout;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
+
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
+
 import com.rafaelwitak.gymdatabro.workoutStepRows.DurationRow;
 import com.rafaelwitak.gymdatabro.workoutStepRows.RPERow;
 import com.rafaelwitak.gymdatabro.workoutStepRows.RepsRow;
@@ -32,6 +34,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private WorkoutStep currentWorkoutStep;
     private PerformanceSet performedSet;
 
+    private ActivityWorkoutStepBinding binding;
     private ArrayList <WorkoutStepRow> rows = new ArrayList<>();
 
     @Override
@@ -44,11 +47,10 @@ public class WorkoutStepActivity extends AppCompatActivity {
         performedSet = new PerformanceSet();
 
         // automatically bind all Views with IDs
-        com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding binding =
-                ActivityWorkoutStepBinding.inflate(getLayoutInflater());
+        binding = ActivityWorkoutStepBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        populateRows(binding);
+        populateRows();
         setUpToolbar(binding);
         setUpPainSlider(binding);
 
@@ -136,13 +138,13 @@ public class WorkoutStepActivity extends AppCompatActivity {
         };
     }
 
-    private void populateRows(com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding binding) {
+    private void populateRows() {
         rows.addAll(Arrays.asList(
-                new RepsRow(this, binding, currentWorkoutStep),
-                new WeightRow(this, binding, currentWorkoutStep),
-                new RPERow(this, binding, currentWorkoutStep),
-                new DurationRow(this, binding, currentWorkoutStep),
-                new RestRow(this, binding, currentWorkoutStep)
+                new RepsRow(binding, currentWorkoutStep),
+                new WeightRow(binding, currentWorkoutStep),
+                new RPERow(binding, currentWorkoutStep),
+                new DurationRow(binding, currentWorkoutStep),
+                new RestRow(binding, currentWorkoutStep)
                 )
         );
     }

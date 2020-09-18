@@ -1,6 +1,5 @@
 package com.rafaelwitak.gymdatabro.workoutStepRows;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -8,23 +7,17 @@ import android.widget.TextView;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 
-// FIXME extending View unnecessary!
-public abstract class WorkoutStepRow extends View {
+public abstract class WorkoutStepRow{
     protected final ActivityWorkoutStepBinding binding;
-    protected final Context context;
     protected final WorkoutStep currentWorkoutStep;
     protected final View rowView;
     protected final TextView expectedValueView;
     protected final EditText actualValueView;
 
     public WorkoutStepRow(
-            Context context,
             ActivityWorkoutStepBinding binding,
             WorkoutStep workoutStep) {
 
-        super(context);
-
-        this.context = context;
         this.currentWorkoutStep = workoutStep;
         this.binding = binding;
 

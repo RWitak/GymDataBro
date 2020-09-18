@@ -1,6 +1,5 @@
 package com.rafaelwitak.gymdatabro.workoutStepRows;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -9,8 +8,8 @@ import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 
 public class RestRow extends WorkoutStepRow {
-    public RestRow(Context context, ActivityWorkoutStepBinding binding, WorkoutStep workoutStep) {
-        super(context, binding, workoutStep);
+    public RestRow(ActivityWorkoutStepBinding binding, WorkoutStep workoutStep) {
+        super(binding, workoutStep);
     }
 
     @Override
