@@ -2,6 +2,7 @@ package com.rafaelwitak.gymdatabro.workoutStepRows;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,6 +22,11 @@ public class RepsRow extends WorkoutStepRow {
     @Override
     protected Object getExpectedValue() {
         return currentWorkoutStep.reps;
+    }
+
+    @Override
+    protected View getRowViewFromBinding() {
+        return binding.stepRepsRow;
     }
 
     @Override

@@ -8,10 +8,12 @@ import android.widget.TextView;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 
+// FIXME extending View unnecessary!
 public abstract class WorkoutStepRow extends View {
     protected final ActivityWorkoutStepBinding binding;
     protected final Context context;
     protected final WorkoutStep currentWorkoutStep;
+    protected final View rowView;
     protected final TextView expectedValueView;
     protected final EditText actualValueView;
 
@@ -26,9 +28,12 @@ public abstract class WorkoutStepRow extends View {
         this.currentWorkoutStep = workoutStep;
         this.binding = binding;
 
+        this.rowView = getRowViewFromBinding();
         this.expectedValueView = getExpectedValueView();
         this.actualValueView = getActualValueView();
     }
+
+    protected abstract View getRowViewFromBinding();
 
     public void setup() {
         if (this.shouldBeVisible()) {
@@ -37,7 +42,7 @@ public abstract class WorkoutStepRow extends View {
         else {
             this.makeInvisible();
         }
-    };
+    }
 
     protected void setAllViewTexts() {
         expectedValueView.setText(this.getExpectedValue().toString());
@@ -45,7 +50,7 @@ public abstract class WorkoutStepRow extends View {
     }
 
     public void makeInvisible() {
-        this.setVisibility(View.GONE);
+        this.rowView.setVisibility(View.GONE);
     }
 
     protected abstract boolean shouldBeVisible();
@@ -54,7 +59,7 @@ public abstract class WorkoutStepRow extends View {
 
     public Object getActualValue() {
         return this.actualValueView.getText();
-    };
+    }
 
     protected abstract TextView getExpectedValueView();
 

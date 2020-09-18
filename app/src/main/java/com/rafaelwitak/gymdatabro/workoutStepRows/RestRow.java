@@ -1,6 +1,7 @@
 package com.rafaelwitak.gymdatabro.workoutStepRows;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -20,6 +21,11 @@ public class RestRow extends WorkoutStepRow {
     @Override
     protected Object getExpectedValue() {
         return currentWorkoutStep.restSeconds;
+    }
+
+    @Override
+    protected View getRowViewFromBinding() {
+        return binding.stepRestRow;
     }
 
     @Override
