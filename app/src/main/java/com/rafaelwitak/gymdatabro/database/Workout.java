@@ -28,7 +28,7 @@ public class Workout {
 
     @ColumnInfo
     @NonNull
-    public String name = "Freestyle Workout";
+    public String name = "Unnamed Workout";
 
     @ColumnInfo
     @Nullable

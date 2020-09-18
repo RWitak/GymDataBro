@@ -15,15 +15,9 @@ import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 
-import com.rafaelwitak.gymdatabro.workoutStepRows.DurationRow;
-import com.rafaelwitak.gymdatabro.workoutStepRows.RPERow;
-import com.rafaelwitak.gymdatabro.workoutStepRows.RepsRow;
-import com.rafaelwitak.gymdatabro.workoutStepRows.RestRow;
-import com.rafaelwitak.gymdatabro.workoutStepRows.WeightRow;
 import com.rafaelwitak.gymdatabro.workoutStepRows.WorkoutStepRow;
+import com.rafaelwitak.gymdatabro.workoutStepRows.WorkoutStepRowHolder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,9 +27,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private Workout currentWorkout;
     private WorkoutStep currentWorkoutStep;
     private PerformanceSet performedSet;
-
     private ActivityWorkoutStepBinding binding;
-    private ArrayList <WorkoutStepRow> rows = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,72 +42,40 @@ public class WorkoutStepActivity extends AppCompatActivity {
         binding = ActivityWorkoutStepBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        populateRows();
-        setUpToolbar(binding);
-        setUpPainSlider(binding);
-
-        setUpWorkoutStepViewRows();
-
-        binding.stepBtnNext.setOnClickListener(getViewOnClickListener());
+        setUpViews();
     }
 
-    private void setUpPainSlider(com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding binding) {
+
+    private void setUpViews() {
+        setUpToolbar();
+        setUpWorkoutStepViewRows();
+        setUpPainSlider();
+        setUpButton();
+    }
+
+    private void setUpToolbar() {
+        Toolbar toolbar = binding.toolbar.getRoot();
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(getCurrentWorkoutName());
+        toolbar.setSubtitle(getCurrentExerciseName());
+    }
+
+    // Set visibility and/or data for the WorkoutStep's View's Rows
+    private void setUpWorkoutStepViewRows() {
+        for ( WorkoutStepRow row : WorkoutStepRowHolder.getRows(binding, currentWorkoutStep) ) {
+            row.setup();
+        }
+    }
+
+    private void setUpPainSlider() {
         SeekBar painSlider = binding.stepPainSlider;
         painSlider.setOnSeekBarChangeListener(getSeekBarChangeListener());
     }
 
-    private void setUpToolbar(com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding binding) {
-        Toolbar toolbar = binding.toolbar.getRoot();
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(currentWorkout.name);
-        toolbar.setSubtitle(getCurrentExerciseName());
+    private void setUpButton() {
+        binding.stepBtnNext.setOnClickListener(getViewOnClickListener());
     }
 
-    private String getCurrentExerciseName() {
-       String currentExerciseName = database
-               .exerciseNameDAO()
-               .getMainNameByID(currentWorkoutStep.exerciseID);
-
-        if (currentExerciseName == null) {
-            return "Unnamed Exercise";
-        }
-
-        return currentExerciseName;
-    }
-
-    private Workout getCurrentWorkout() {
-        Workout currentWorkout = database.workoutDAO().getWorkoutByID(currentWorkoutStep.workoutID);
-
-        if (currentWorkout == null) {
-            return new Workout();
-        }
-
-        return currentWorkout;
-    }
-
-    private View.OnClickListener getViewOnClickListener() {
-        //noinspection Convert2Lambda
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentWorkoutStepSavable()) {
-                    saveCurrentWorkoutStep();
-
-                    if (isLastWorkoutStep(currentWorkoutStep)){
-                        finish();
-                    }
-                    else {
-                        startNextWorkoutStep();
-                    }
-                }
-            }
-        };
-    }
-
-    private boolean currentWorkoutStepSavable() {
-        // currently, WorkoutSteps are always savable per definition
-        return true;
-    }
 
     private SeekBar.OnSeekBarChangeListener getSeekBarChangeListener() {
 
@@ -138,19 +98,50 @@ public class WorkoutStepActivity extends AppCompatActivity {
         };
     }
 
-    private void populateRows() {
-        rows.addAll(Arrays.asList(
-                new RepsRow(binding, currentWorkoutStep),
-                new WeightRow(binding, currentWorkoutStep),
-                new RPERow(binding, currentWorkoutStep),
-                new DurationRow(binding, currentWorkoutStep),
-                new RestRow(binding, currentWorkoutStep)
-                )
-        );
+    private View.OnClickListener getViewOnClickListener() {
+        //noinspection Convert2Lambda
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentWorkoutStepSavable()) {
+                    saveCurrentWorkoutStep();
+
+                    if (isLastWorkoutStep(currentWorkoutStep)){
+                        finish();
+                    }
+                    else {
+                        startNextWorkoutStep();
+                    }
+                }
+            }
+        };
     }
+
+    public boolean isLastWorkoutStep(WorkoutStep currentWorkoutStep) {
+        final List<WorkoutStep> workoutSteps =
+                database
+                        .workoutStepDAO()
+                        .getAllStepsForWorkoutAsLiveData(currentWorkout.id)
+                        .getValue();
+
+        final int numberOfStepsInWorkout = Objects.requireNonNull(workoutSteps).size();
+
+        return (currentWorkoutStep.number + 1 == numberOfStepsInWorkout);
+    }
+
+    private boolean painLevelInsideBounds(Integer painLevel) {
+        return (0 <= painLevel && painLevel <= getResources().getInteger(R.integer.pain_max));
+    }
+
+
 
     private void saveCurrentWorkoutStep() {
         database.workoutStepDAO().insertWorkoutStep(currentWorkoutStep);
+    }
+
+    private boolean currentWorkoutStepSavable() {
+        // currently, WorkoutSteps are always savable per definition
+        return true;
     }
 
     private void startNextWorkoutStep() {
@@ -167,25 +158,6 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return intent;
     }
 
-    public boolean isLastWorkoutStep(WorkoutStep currentWorkoutStep) {
-
-        final List<WorkoutStep> workoutSteps = database.workoutStepDAO().getAllStepsForWorkoutAsLiveData(currentWorkout.id).getValue();
-        final int numberOfStepsInWorkout = Objects.requireNonNull(workoutSteps).size();
-
-        return (currentWorkoutStep.number + 1 == numberOfStepsInWorkout);
-    }
-
-    private boolean painLevelInsideBounds(Integer painLevel) {
-        return (0 <= painLevel && painLevel <= getResources().getInteger(R.integer.pain_max));
-    }
-
-    // Set visibility and/or data for the WorkoutStep's View's Rows
-    private void setUpWorkoutStepViewRows() {
-
-        for ( WorkoutStepRow row : rows ) {
-            row.setup();
-        }
-    }
 
     private WorkoutStep getCurrentWorkoutStep() {
         int workoutID = getIntent().getIntExtra("workoutID", 0);
@@ -200,5 +172,32 @@ public class WorkoutStepActivity extends AppCompatActivity {
         }
 
         return step;
+    }
+
+    private Workout getCurrentWorkout() {
+        Workout currentWorkout = database.workoutDAO().getWorkoutByID(currentWorkoutStep.workoutID);
+
+        if (currentWorkout == null) {
+            return new Workout();
+        }
+
+        return currentWorkout;
+    }
+
+
+    private String getCurrentWorkoutName() {
+        return currentWorkout.name;
+    }
+
+    private String getCurrentExerciseName() {
+        String currentExerciseName = database
+                .exerciseNameDAO()
+                .getMainNameByID(currentWorkoutStep.exerciseID);
+
+        if (currentExerciseName == null) {
+            return "Unnamed Exercise";
+        }
+
+        return currentExerciseName;
     }
 }
