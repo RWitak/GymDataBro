@@ -2,6 +2,7 @@ package com.rafaelwitak.gymdatabro;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 
@@ -56,7 +57,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private void setUpToolbar() {
         Toolbar toolbar = binding.toolbar.getRoot();
         setSupportActionBar(toolbar);
-        toolbar.setTitle(getCurrentWorkoutName());
+        this.setTitle(getCurrentWorkoutName()); // otherwise toolbar always just displays app name
         toolbar.setSubtitle(getCurrentExerciseName());
     }
 
@@ -161,16 +162,25 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
 
     private WorkoutStep getCurrentWorkoutStep() {
-        int workoutID = getIntent().getIntExtra("workoutID", 0);
+        int workoutID = getIntent().getIntExtra("workoutID", 1);
         int stepNumber = getIntent().getIntExtra("nextStepNumber", 0);
+
+        Log.d("GymDataBro", "Fetching Workout " +
+                    + workoutID
+                    + ", Step "
+                    + stepNumber);
 
         WorkoutStep step = database
                 .workoutStepDAO()
                 .getWorkoutStepSynchronously(workoutID, stepNumber);
 
         if (step == null) {
+            Log.w("GymDataBro",
+                    "getCurrentWorkoutStep returned null, empty WorkoutStep created.");
             return new WorkoutStep();
         }
+
+        Log.i("GymDataBro", "WorkoutStep fetched successfully.");
 
         return step;
     }
@@ -187,6 +197,9 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
 
     private String getCurrentWorkoutName() {
+        if (currentWorkout.name.isEmpty()) {
+            return "Unnamed Workout";
+        }
         return currentWorkout.name;
     }
 
