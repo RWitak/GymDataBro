@@ -316,8 +316,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="25"
                 android:value="0"
-                android:valueFrom="0"
-                android:valueTo="@integer/pain_max" />
+                android:max="@integer/pain_max" />
 
 
             <TextView

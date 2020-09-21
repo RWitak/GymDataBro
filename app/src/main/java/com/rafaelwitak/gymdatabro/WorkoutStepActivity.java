@@ -86,7 +86,8 @@ public class WorkoutStepActivity extends AppCompatActivity {
                     performedSet.painLevel = progress;
                 }
                 else {
-                    throw new IndexOutOfBoundsException("Pain Level out of bounds");
+                    throw new IndexOutOfBoundsException("Pain Level out of bounds: "
+                            + progress);
                 }
             }
 
