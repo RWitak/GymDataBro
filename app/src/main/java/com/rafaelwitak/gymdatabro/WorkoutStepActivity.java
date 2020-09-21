@@ -56,7 +56,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private void setUpToolbar() {
         Toolbar toolbar = binding.toolbar.getRoot();
         setSupportActionBar(toolbar);
-        toolbar.setTitle(getCurrentWorkoutName());
+        this.setTitle(getCurrentWorkoutName()); // otherwise toolbar always just displays app name
         toolbar.setSubtitle(getCurrentExerciseName());
     }
 
