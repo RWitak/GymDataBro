@@ -22,4 +22,6 @@
     <string name="none">none</string>
     <string name="max">max</string>
     <string name="next_step">Next Step</string>
+    <string name="weight">Weight</string>
+    <string name="reps">Reps</string>
 </resources>
