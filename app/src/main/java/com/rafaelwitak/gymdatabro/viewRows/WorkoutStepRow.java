@@ -1,4 +1,4 @@
-package com.rafaelwitak.gymdatabro.workoutStepRows;
+package com.rafaelwitak.gymdatabro.viewRows;
 
 import android.view.View;
 import android.widget.EditText;

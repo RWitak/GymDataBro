@@ -1,4 +1,4 @@
-package com.rafaelwitak.gymdatabro;
+package com.rafaelwitak.gymdatabro.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,8 +18,8 @@ import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 
-import com.rafaelwitak.gymdatabro.workoutStepRows.WorkoutStepRow;
-import com.rafaelwitak.gymdatabro.workoutStepRows.WorkoutStepRowHolder;
+import com.rafaelwitak.gymdatabro.viewRows.WorkoutStepRow;
+import com.rafaelwitak.gymdatabro.viewRows.WorkoutStepRowHolder;
 
 import java.util.List;
 import java.util.Objects;

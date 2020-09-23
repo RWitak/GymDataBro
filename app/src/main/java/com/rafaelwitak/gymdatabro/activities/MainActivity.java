@@ -1,4 +1,4 @@
-package com.rafaelwitak.gymdatabro;
+package com.rafaelwitak.gymdatabro.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.room.Room;
 
+import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 
 public class MainActivity extends AppCompatActivity {
