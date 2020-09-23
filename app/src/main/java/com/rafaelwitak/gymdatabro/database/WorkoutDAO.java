@@ -22,6 +22,10 @@ public interface WorkoutDAO {
     @Query("SELECT * FROM workouts WHERE name=:name")
     public Workout getWorkoutByName(String name);
 
+    @Query("SELECT COUNT(exercise_id) FROM workout_steps " +
+            "WHERE exercise_id=:exerciseID AND workout_id=:workoutID")
+    public Integer getOccurancesOfExerciseInWorkout(int exerciseID, int workoutID);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertWorkout(Workout workout);
 

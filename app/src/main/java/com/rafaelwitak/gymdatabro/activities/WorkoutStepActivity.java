@@ -9,6 +9,8 @@ import android.widget.SeekBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.rafaelwitak.gymdatabro.viewRows.ExerciseNameRow;
+import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.PerformanceSet;
 import com.rafaelwitak.gymdatabro.database.Workout;
@@ -49,6 +51,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     private void setUpViews() {
         setUpToolbar();
+        setUpExerciseNameRow();
         setUpWorkoutStepViewRows();
         setUpPainSlider();
         setUpButton();
@@ -58,7 +61,24 @@ public class WorkoutStepActivity extends AppCompatActivity {
         Toolbar toolbar = binding.toolbar.getRoot();
         setSupportActionBar(toolbar);
         this.setTitle(getCurrentWorkoutName()); // otherwise toolbar always just displays app name
-        toolbar.setSubtitle(getCurrentExerciseName());
+
+        String programName = getCurrentProgramName();
+        if (programName != null) {
+            toolbar.setSubtitle(programName);
+        }
+    }
+
+    private void setUpExerciseNameRow() {
+        new ExerciseNameRow(binding, currentWorkoutStep).setup();
+
+        Log.d("GymDataBro",
+                "Current exercise = "
+                        + binding.stepExerciseNameTitle.getText()
+                        + ", progress ratio = "
+                        + binding.stepExerciseNameProgressRatio.getText()
+                        + ", ratio's visibility = "
+                        + binding.stepExerciseNameProgressRatio.getVisibility()
+                        + ".");
     }
 
     // Set visibility and/or data for the WorkoutStep's View's Rows
@@ -203,15 +223,11 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return currentWorkout.name;
     }
 
-    private String getCurrentExerciseName() {
-        String currentExerciseName = database
-                .exerciseNameDAO()
-                .getMainNameByID(currentWorkoutStep.exerciseID);
-
-        if (currentExerciseName == null) {
-            return "Unnamed Exercise";
+    private String getCurrentProgramName() {
+        Integer id = currentWorkout.programID;
+        if (id != null) {
+            return database.programDAO().getProgramByID(id).name;
         }
-
-        return currentExerciseName;
+        return null;
     }
 }
