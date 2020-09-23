@@ -50,7 +50,7 @@ public class ExerciseNameRow {
 
     private String getProgress() {
         int currentNumber = this.currentWorkoutStep.number;
-        int totalNumber = database.workoutDAO().getOccurancesOfExerciseInWorkout(
+        int totalNumber = database.workoutDAO().getOccurrencesOfExerciseInWorkout(
                 currentWorkoutStep.exerciseID, currentWorkoutStep.workoutID);
 
         if (totalNumber <= 1) {

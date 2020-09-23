@@ -1,4 +1,4 @@
-package com.rafaelwitak.gymdatabro.workoutStepRows;
+package com.rafaelwitak.gymdatabro.viewRows.workoutStepRows;
 
 import android.view.View;
 import android.widget.EditText;
@@ -6,34 +6,35 @@ import android.widget.TextView;
 
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
+import com.rafaelwitak.gymdatabro.viewRows.WorkoutStepRow;
 
-public class DurationRow extends WorkoutStepRow {
-    public DurationRow(ActivityWorkoutStepBinding binding, WorkoutStep workoutStep) {
+public class RestRow extends WorkoutStepRow {
+    public RestRow(ActivityWorkoutStepBinding binding, WorkoutStep workoutStep) {
         super(binding, workoutStep);
     }
 
     @Override
     protected boolean shouldBeVisible() {
-        return (currentWorkoutStep.durationSeconds != null);
+        return (currentWorkoutStep.restSeconds != null);
     }
 
     @Override
     protected Object getExpectedValue() {
-        return currentWorkoutStep.durationSeconds;
+        return currentWorkoutStep.restSeconds;
     }
 
     @Override
     protected View getRowViewFromBinding() {
-        return binding.stepDurationRow;
+        return binding.stepRestRow;
     }
 
     @Override
     protected TextView getExpectedValueView() {
-        return binding.stepDurationPrescribed;
+        return binding.stepRestPrescribed;
     }
 
     @Override
     protected EditText getActualValueView() {
-        return binding.stepDurationPerformed;
+        return binding.stepRestPerformed;
     }
 }
