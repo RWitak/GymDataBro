@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingHorizontal="5dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/colorAccent"
             tools:text="Exercise Name Exercise Name" />
 
@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:paddingHorizontal="20dp">
 
             <RelativeLayout
                 android:id="@+id/step_reps_row"
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/step_reps_title"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     tools:text="12" />
 
                 <TextView
@@ -94,7 +94,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:text="@string/reps"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <EditText
                     android:id="@+id/step_reps_performed"
@@ -104,7 +104,7 @@
                     android:autofillHints="@null"
                     android:hint="@null"
                     android:inputType="numberSigned"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     tools:text="1234" />
             </RelativeLayout>
 
@@ -121,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/step_weight_kg1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     tools:text="50" />
 
                 <TextView
@@ -141,7 +141,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:text="@string/weight"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <EditText
                     android:id="@+id/step_weight_performed"
@@ -152,7 +152,7 @@
                     android:autofillHints="@null"
                     android:hint="@null"
                     android:inputType="numberSigned"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     tools:text="50" />
 
                 <TextView
@@ -162,7 +162,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/step_weight_performed"
                     android:text="@string/kg"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             </RelativeLayout>
 
@@ -179,7 +179,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/step_rpe_title"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     tools:text="8" />
 
                 <TextView
@@ -190,7 +190,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:text="@string/rpe"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <EditText
                     android:id="@+id/step_rpe_performed"
@@ -201,7 +201,7 @@
                     android:autofillHints="@null"
                     android:hint="@null"
                     android:inputType="number"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     tools:text="8" />
 
             </RelativeLayout>
@@ -219,7 +219,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/step_duration_s1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     tools:text="30" />
 
                 <TextView
@@ -239,7 +239,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:text="@string/duration"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <EditText
                     android:id="@+id/step_duration_performed"
@@ -250,7 +250,7 @@
                     android:autofillHints="@null"
                     android:hint="@null"
                     android:inputType="number"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     tools:text="30" />
 
                 <TextView
@@ -260,7 +260,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/step_duration_performed"
                     android:text="@string/s"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             </RelativeLayout>
 
@@ -277,7 +277,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/step_rest_seconds1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     tools:text="30" />
 
                 <TextView
@@ -297,7 +297,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:text="@string/rest"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <EditText
                     android:id="@+id/step_rest_performed"
@@ -308,7 +308,7 @@
                     android:autofillHints="@null"
                     android:hint="@null"
                     android:inputType="number"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     tools:text="30" />
 
                 <TextView
@@ -318,32 +318,18 @@
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/step_rest_performed"
                     android:text="@string/s"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/step_notes_row"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/step_notes_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints="@null"
-                    android:hint="@string/notes"
-                    android:imeOptions="actionDone"
-                    android:inputType="textMultiLine"
-                    tools:text="Here is some text to fit in the Notes /n might be too long!" />
-
-            </LinearLayout>
+            <View style="@style/Divider"
+                android:layout_margin="10dp"/>
 
             <LinearLayout
                 android:id="@+id/step_pain_row"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -384,6 +370,24 @@
                     android:textAlignment="gravity"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     android:textColor="@color/colorBad" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/step_notes_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/step_notes_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="@null"
+                    android:hint="@string/notes"
+                    android:imeOptions="actionDone"
+                    android:inputType="textMultiLine"
+                    tools:text="Here is some text to fit in the Notes /n might be too long!" />
 
             </LinearLayout>
 
