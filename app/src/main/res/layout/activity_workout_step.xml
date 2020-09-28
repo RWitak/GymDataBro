@@ -140,7 +140,8 @@
                 android:id="@+id/step_reps_barrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:barrierDirection="top" />
+                app:barrierDirection="top"
+                app:constraint_referenced_ids="step_reps_prescribed, step_reps_title, step_reps_performed"/>
 
 
             <androidx.constraintlayout.widget.Group
@@ -220,7 +221,8 @@
                 android:id="@+id/step_weight_barrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:barrierDirection="top" />
+                app:barrierDirection="top"
+                app:constraint_referenced_ids="step_rpe_prescribed, step_rpe_title, step_rpe_performed"/>
 
 
             <androidx.constraintlayout.widget.Group
@@ -277,7 +279,8 @@
                 android:id="@+id/step_rpe_barrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:barrierDirection="top" />
+                app:barrierDirection="top"
+                app:constraint_referenced_ids="step_duration_prescribed, step_duration_s1, step_duration_title, step_duration_performed, step_duration_s2"/>
 
 
             <androidx.constraintlayout.widget.Group
@@ -360,8 +363,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="top"
-                tools:layout_editor_absoluteX="20dp"
-                tools:layout_editor_absoluteY="148dp" />
+                app:constraint_referenced_ids="step_rest_prescribed, step_rest_seconds1, step_rest_title, step_rest_performed, step_rest_seconds2"/>
 
 
             <androidx.constraintlayout.widget.Group
@@ -445,8 +447,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="top"
-                tools:layout_editor_absoluteX="20dp"
-                tools:layout_editor_absoluteY="148dp" />
+                app:constraint_referenced_ids="step_pain_row"/>
 
             <LinearLayout
                 android:id="@+id/step_pain_row"
