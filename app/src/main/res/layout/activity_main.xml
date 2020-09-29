@@ -59,6 +59,22 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/main_button_continue"
+        android:onClick="resumeWorkout"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@android:drawable/ic_media_play"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="16dp" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/main_button_choose"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@android:drawable/ic_menu_agenda"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_margin="16dp" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/main_button_add"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:src="@android:drawable/ic_input_add"
