@@ -32,4 +32,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, WorkoutStepActivity.class);
         startActivity(intent);
     }
+
+    public void chooseProgram(View view) {
+        Intent intent = new Intent(this, ChooseProgramActivity.class);
+        startActivity(intent);
+    }
 }

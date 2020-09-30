@@ -68,6 +68,7 @@
         android:layout_margin="16dp" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/main_button_choose"
+        android:onClick="chooseProgram"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:src="@android:drawable/ic_menu_agenda"
