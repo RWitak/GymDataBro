@@ -24,4 +24,5 @@
     <string name="next_step">Next Step</string>
     <string name="weight">Weight</string>
     <string name="reps">Reps</string>
+    <string name="choose_program_toolbar_title">Choose Program</string>
 </resources>
