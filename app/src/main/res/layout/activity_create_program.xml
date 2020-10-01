@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.CreateProgramActivity">
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/create_program_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/create_program_table"
+        android:orientation="vertical"
+        android:gravity="top"
+        app:layout_constraintTop_toBottomOf="@+id/create_program_toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/create_program_button_create"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TableRow android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/create_program_name_label"
+                android:labelFor="@+id/create_program_name_edit"
+                android:text="@string/create_program_label_name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                tools:text="BlindText" />
+
+            <EditText
+                android:id="@+id/create_program_name_edit"
+                android:autofillHints="@null"
+                android:gravity="end"
+                android:inputType="textCapCharacters"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        </TableRow>
+
+        <TableRow android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/create_program_source_label"
+                android:labelFor="@+id/create_program_source_edit"
+                android:text="@string/create_program_label_source"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                tools:text="BlindText" />
+
+            <EditText
+                android:id="@+id/create_program_source_edit"
+                android:autofillHints="@null"
+                android:gravity="end"
+                android:inputType="text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        </TableRow>
+
+        <TableRow android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/create_program_links_label"
+                android:labelFor="@+id/create_program_links_edit"
+                android:text="@string/create_program_label_links"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                tools:text="BlindText" />
+
+            <EditText
+                android:id="@+id/create_program_links_edit"
+                android:autofillHints="@null"
+                android:gravity="end"
+                android:inputType="textMultiLine"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        </TableRow>
+
+        <TableRow android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/create_program_info_label"
+                android:labelFor="@+id/create_program_info_edit"
+                android:text="@string/create_program_label_info"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                tools:text="BlindText" />
+
+            <EditText
+                android:id="@+id/create_program_info_edit"
+                android:autofillHints="@null"
+                android:gravity="end"
+                android:inputType="textMultiLine"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        </TableRow>
+
+        <TableRow android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/create_program_notes_label"
+                android:labelFor="@+id/create_program_notes_edit"
+                android:text="@string/create_program_label_notes"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                tools:text="BlindText" />
+
+            <EditText
+                android:id="@+id/create_program_notes_edit"
+                android:autofillHints="@null"
+                android:gravity="end"
+                android:inputType="textMultiLine"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        </TableRow>
+
+        <TableRow android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/create_program_number_workouts_label"
+                android:labelFor="@+id/create_program_number_workouts_edit"
+                android:text="@string/create_program_label_number_of_workouts"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                tools:text="BlindText" />
+
+            <EditText
+                android:id="@+id/create_program_number_workouts_edit"
+                android:autofillHints="@null"
+                android:gravity="end"
+                android:inputType="number"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/create_program_button_create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="40dp"
+        android:text="@string/create_program_button_create_text"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
