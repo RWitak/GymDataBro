@@ -40,12 +40,9 @@ public class ChooseProgramActivity extends AppCompatActivity {
     }
 
     private void setupFAB(Context context) {
-        createProgramFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, MainActivity.class);
-                startActivity(intent);
-            }
+        createProgramFAB.setOnClickListener(view -> {
+            Intent intent = new Intent(context, MainActivity.class);
+            startActivity(intent);
         });
     }
 
