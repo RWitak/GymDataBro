@@ -3,7 +3,6 @@ package com.rafaelwitak.gymdatabro.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.rafaelwitak.gymdatabro.R;
@@ -27,7 +26,8 @@ public class ChooseProgramActivity extends AppCompatActivity {
 
     private void setupRows() {
         for (Program program : database.programDAO().getAllPrograms()) {
-            ChooseProgramRow chooseProgramRow = new ChooseProgramRow(this, getProgramName(program));
+            ChooseProgramRow chooseProgramRow = new ChooseProgramRow(this);
+            chooseProgramRow.setTextViewText(getProgramName(program));
             programList.addView(chooseProgramRow);
         }
     }

@@ -2,9 +2,5 @@
 <com.rafaelwitak.gymdatabro.viewRows.ChooseProgramRow xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/row_choose_program_text"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textAlignment="center"
-    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-    android:textStyle="bold"
-    tools:text="Program Row PLACEHOLDER" />
+    tools:text="Program Row PLACEHOLDER"
+    style="@style/ChooseProgramRow" />
