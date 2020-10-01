@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".activities.ChooseProgramActivity"></activity>
+        <activity android:name=".activities.ChooseProgramActivity" android:theme="@style/AppTheme" />
         <activity android:name=".activities.WorkoutStepActivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>

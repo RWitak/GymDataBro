@@ -3,38 +3,39 @@ package com.rafaelwitak.gymdatabro.viewRows;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
-import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.activities.WorkoutStepActivity;
 
 public class ChooseProgramRow extends androidx.appcompat.widget.AppCompatTextView {
 
-    public ChooseProgramRow(@NonNull Context context, String text) {
-        super(context);
+    private static int defStyleAttr = R.attr.chooseProgramRowStyle;
 
-        this.setTextViewText(text);
-        this.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, WorkoutStepActivity.class);
-                context.startActivity(intent);
-            }
+    public ChooseProgramRow(@NonNull Context context) {
+        this(context, null, defStyleAttr);
+    }
+
+    public ChooseProgramRow(@NonNull Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, defStyleAttr);
+    }
+
+    public ChooseProgramRow(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        setupOnClickStartActivity(context);
+    }
+
+
+    private void setupOnClickStartActivity(@NonNull Context context) {
+        this.setOnClickListener(view -> {
+            Intent intent = new Intent(context, WorkoutStepActivity.class);
+            context.startActivity(intent);
         });
     }
 
-    public ChooseProgramRow(Context context) {
-        super(context);
-    }
-
-    public ChooseProgramRow(Context context, AttributeSet attributeSet) {
-        super(context, attributeSet);
-    }
-
-
-    private void setTextViewText(String text) {
+    public void setTextViewText(String text) {
         setText(text);
     }
 }
