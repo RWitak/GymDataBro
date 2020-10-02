@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
-
+//TODO do we actually use entered text anywhere???
 public abstract class WorkoutStepRow{
     protected final ActivityWorkoutStepBinding binding;
     protected final WorkoutStep currentWorkoutStep;
@@ -39,6 +39,7 @@ public abstract class WorkoutStepRow{
 
     protected void setAllViewTexts() {
         expectedValueView.setText(this.getExpectedValue().toString());
+        //TODO check this behavior:
         actualValueView.setHint(this.getActualValue().toString());
     }
 
