@@ -22,7 +22,7 @@ public class PerformanceSet {
     @PrimaryKey
     public int id;
 
-    @ColumnInfo
+    @ColumnInfo(defaultValue = "CURRENT_TIMESTAMP")
     public long timestamp;
 
     @ColumnInfo(name = "exercise_id")
@@ -36,13 +36,13 @@ public class PerformanceSet {
     @Nullable
     public Float weight;
 
-    @ColumnInfo
+    @ColumnInfo(name = "seconds_performed")
     @Nullable
-    public Integer seconds_performed;
+    public Integer secondsPerformed;
 
-    @ColumnInfo
+    @ColumnInfo(name = "seconds_rested")
     @Nullable
-    public Integer seconds_rested;
+    public Integer secondsRested;
 
     @ColumnInfo
     @Nullable
@@ -55,4 +55,92 @@ public class PerformanceSet {
     @ColumnInfo
     @Nullable
     public String notes;
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public int getExerciseID() {
+        return exerciseID;
+    }
+
+    public void setExerciseID(int exerciseID) {
+        this.exerciseID = exerciseID;
+    }
+
+    @Nullable
+    public Integer getReps() {
+        return reps;
+    }
+
+    public void setReps(@Nullable Integer reps) {
+        this.reps = reps;
+    }
+
+    @Nullable
+    public Float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(@Nullable Float weight) {
+        this.weight = weight;
+    }
+
+    @Nullable
+    public Integer getSecondsPerformed() {
+        return secondsPerformed;
+    }
+
+    public void setSecondsPerformed(@Nullable Integer secondsPerformed) {
+        this.secondsPerformed = secondsPerformed;
+    }
+
+    @Nullable
+    public Integer getSecondsRested() {
+        return secondsRested;
+    }
+
+    public void setSecondsRested(@Nullable Integer secondsRested) {
+        this.secondsRested = secondsRested;
+    }
+
+    @Nullable
+    public Float getRpe() {
+        return rpe;
+    }
+
+    public void setRpe(@Nullable Float rpe) {
+        this.rpe = rpe;
+    }
+
+    @NonNull
+    public Integer getPainLevel() {
+        return painLevel;
+    }
+
+    public void setPainLevel(@NonNull Integer painLevel) {
+        this.painLevel = painLevel;
+    }
+
+    @Nullable
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(@Nullable String notes) {
+        this.notes = notes;
+    }
 }
