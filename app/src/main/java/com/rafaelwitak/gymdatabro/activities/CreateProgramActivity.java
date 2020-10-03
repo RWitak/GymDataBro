@@ -35,13 +35,7 @@ public class CreateProgramActivity extends AppCompatActivity {
 
     private void saveProgramToDatabase() {
         GymBroDatabase database = MainActivity.database;
-        try {
-            database.programDAO().insertProgram(getProgram());
-        }
-        catch (Exception e) {
-            throw e;
-            //TODO make good catch
-        }
+        database.programDAO().insertProgram(getProgram());
     }
 
     private Program getProgram() {

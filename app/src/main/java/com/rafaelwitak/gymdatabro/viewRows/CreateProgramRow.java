@@ -3,7 +3,6 @@ package com.rafaelwitak.gymdatabro.viewRows;
 import android.widget.EditText;
 
 import com.rafaelwitak.gymdatabro.databinding.ActivityCreateProgramBinding;
-//TODO implement children
 public abstract class CreateProgramRow {
     protected EditText editText;
 
