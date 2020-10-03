@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.rafaelwitak.gymdatabro.database.Program;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 //TODO do we actually use entered text anywhere???

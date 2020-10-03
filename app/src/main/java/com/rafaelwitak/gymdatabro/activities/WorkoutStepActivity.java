@@ -125,10 +125,10 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentWorkoutStep = getUpdatedCurrentWorkoutStep();
+                performedSet = getPerformedSet();
 
-                if (currentWorkoutStepSavable()) {
-                    saveCurrentWorkoutStep();
+                if (currentPerformanceSetSavable()) {
+                    savePerformanceSet();
 
                     if (isLastWorkoutStep(currentWorkoutStep)){
                         finish();
@@ -141,9 +141,9 @@ public class WorkoutStepActivity extends AppCompatActivity {
         };
     }
 
-    private WorkoutStep getUpdatedCurrentWorkoutStep() {
-        currentWorkoutStep = WorkoutStepUpdateHandler().update(currentWorkoutStep);
-        return currentWorkoutStep;
+    private PerformanceSet getPerformedSet() {
+        //TODO implement
+        return null;
     }
 
     public boolean isLastWorkoutStep(WorkoutStep currentWorkoutStep) {
@@ -164,12 +164,12 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
 
 
-    private void saveCurrentWorkoutStep() {
-        database.workoutStepDAO().insertWorkoutStep(currentWorkoutStep);
+    private void savePerformanceSet() {
+        database.performanceSetDAO().insertSet(performedSet);
     }
 
-    private boolean currentWorkoutStepSavable() {
-        // currently, WorkoutSteps are always savable per definition
+    private boolean currentPerformanceSetSavable() {
+        //TODO currently, PerformanceSets are always savable per definition
         return true;
     }
 

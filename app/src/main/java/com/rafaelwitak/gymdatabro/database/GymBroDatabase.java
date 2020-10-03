@@ -28,7 +28,7 @@ public abstract class GymBroDatabase extends RoomDatabase {
     public abstract MuscleGroupDAO muscleGroupDAO();
     public abstract MuscleInvolvementDAO muscleInvolvementDAO();
     public abstract ProgramDAO programDAO();
-    public abstract PerformanceSetDAO setDAO();
+    public abstract PerformanceSetDAO performanceSetDAO();
     public abstract WorkoutDAO workoutDAO();
     public abstract WorkoutStepDAO workoutStepDAO();
 
