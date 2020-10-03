@@ -39,7 +39,6 @@ public abstract class WorkoutStepRow{
 
     protected void setAllViewTexts() {
         expectedValueView.setText(this.getExpectedValue().toString());
-        //TODO check this behavior:
         actualValueView.setHint(this.getActualValue().toString());
     }
 

@@ -125,6 +125,8 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                currentWorkoutStep = getUpdatedCurrentWorkoutStep();
+
                 if (currentWorkoutStepSavable()) {
                     saveCurrentWorkoutStep();
 
@@ -137,6 +139,11 @@ public class WorkoutStepActivity extends AppCompatActivity {
                 }
             }
         };
+    }
+
+    private WorkoutStep getUpdatedCurrentWorkoutStep() {
+        currentWorkoutStep = WorkoutStepUpdateHandler().update(currentWorkoutStep);
+        return currentWorkoutStep;
     }
 
     public boolean isLastWorkoutStep(WorkoutStep currentWorkoutStep) {
