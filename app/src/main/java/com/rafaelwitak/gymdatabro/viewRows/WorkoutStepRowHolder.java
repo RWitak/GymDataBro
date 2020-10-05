@@ -1,8 +1,5 @@
 package com.rafaelwitak.gymdatabro.viewRows;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.rafaelwitak.gymdatabro.PerformanceSetDataProvider;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
@@ -12,55 +9,75 @@ import com.rafaelwitak.gymdatabro.viewRows.workoutStepRows.RepsRow;
 import com.rafaelwitak.gymdatabro.viewRows.workoutStepRows.RestRow;
 import com.rafaelwitak.gymdatabro.viewRows.workoutStepRows.WeightRow;
 
+import java.util.Arrays;
+import java.util.List;
 
-public abstract class WorkoutStepRowHolder implements PerformanceSetDataProvider {
+
+public class WorkoutStepRowHolder implements PerformanceSetDataProvider {
 
     //TODO implement PerformanceSetDataProvider methods
+    //TODO find way to integrate other Rows
 
-    public static List<WorkoutStepRow> getRows(ActivityWorkoutStepBinding binding,
-                                               WorkoutStep currentWorkoutStep) {
+    private RepsRow repsRow;
+    private WeightRow weightRow;
+    private RPERow rpeRow;
+    private DurationRow durationRow;
+    private RestRow restRow;
+
+    public WorkoutStepRowHolder(ActivityWorkoutStepBinding binding,
+                                WorkoutStep currentWorkoutStep) {
+        this.repsRow = new RepsRow(binding, currentWorkoutStep);
+        this.weightRow = new WeightRow(binding, currentWorkoutStep);
+        this.rpeRow = new RPERow(binding, currentWorkoutStep);
+        this.durationRow = new DurationRow(binding, currentWorkoutStep);
+        this.restRow = new RestRow(binding, currentWorkoutStep);
+    }
+
+    public List<WorkoutStepRow> getRows() {
         return Arrays.asList(
-                new RepsRow(binding, currentWorkoutStep),
-                new WeightRow(binding, currentWorkoutStep),
-                new RPERow(binding, currentWorkoutStep),
-                new DurationRow(binding, currentWorkoutStep),
-                new RestRow(binding, currentWorkoutStep)
+            this.repsRow,
+            this.weightRow,
+            this.rpeRow,
+            this.durationRow,
+            this.restRow
         );
     }
 
     @Override
     public int getExerciseID() {
+        //TODO implement
         return 0;
     }
 
     @Override
     public Integer getReps() {
-        return 0;
+        return (Integer) this.repsRow.getActualValue();
     }
 
     @Override
     public Float getWeight() {
-        return null;
+        return (Float) this.weightRow.getActualValue();
     }
 
     @Override
     public Integer getSecondsPerformed() {
-        return null;
+        return (Integer) this.durationRow.getActualValue();
     }
 
     @Override
     public Integer getSecondsRested() {
-        return null;
+        return (Integer) this.restRow.getActualValue();
     }
 
     @Override
     public Float getRpe() {
-        return null;
+        return (Float) this.rpeRow.getActualValue();
     }
 
     @Override
     public Integer getPainLevel() {
-        return null;
+        //TODO implement
+        return 0;
     }
 
     @Override
