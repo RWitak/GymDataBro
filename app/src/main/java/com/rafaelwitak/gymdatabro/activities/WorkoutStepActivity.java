@@ -20,6 +20,7 @@ import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 
 import com.rafaelwitak.gymdatabro.viewRows.WorkoutStepRow;
 import com.rafaelwitak.gymdatabro.viewRows.WorkoutStepRowHolder;
+import com.rafaelwitak.gymdatabro.viewRows.workoutStepRows.PainSlider;
 
 import java.util.List;
 import java.util.Objects;
@@ -83,13 +84,14 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     // Set visibility and/or data for the WorkoutStep's View's Rows
     private void setUpWorkoutStepViewRows() {
-        for ( WorkoutStepRow row : WorkoutStepRowHolder.getRows(binding, currentWorkoutStep) ) {
+        WorkoutStepRowHolder rowHolder = new WorkoutStepRowHolder(binding, currentWorkoutStep);
+        for ( WorkoutStepRow row : rowHolder.getRows() ) {
             row.setup();
         }
     }
 
     private void setUpPainSlider() {
-        SeekBar painSlider = binding.stepPainSlider;
+        PainSlider painSlider = new PainSlider(binding);
         painSlider.setOnSeekBarChangeListener(getSeekBarChangeListener());
     }
 

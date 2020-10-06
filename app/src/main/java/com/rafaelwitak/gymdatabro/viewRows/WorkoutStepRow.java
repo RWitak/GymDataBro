@@ -4,14 +4,20 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.rafaelwitak.gymdatabro.PerformanceSetUserInputProvider;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
-public abstract class WorkoutStepRow{
+public abstract class WorkoutStepRow implements PerformanceSetUserInputProvider {
     protected final ActivityWorkoutStepBinding binding;
     protected final WorkoutStep currentWorkoutStep;
     protected final View rowView;
     protected final TextView expectedValueView;
     protected final EditText actualValueView;
+
+    @Override
+    public Object getUserInput() {
+        return this.getActualValue();
+    }
 
     public WorkoutStepRow(
             ActivityWorkoutStepBinding binding,
