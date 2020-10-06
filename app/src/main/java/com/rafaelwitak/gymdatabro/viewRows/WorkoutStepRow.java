@@ -4,10 +4,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.rafaelwitak.gymdatabro.PerformanceSetDataHolder;
 import com.rafaelwitak.gymdatabro.PerformanceSetUserInputProvider;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
-public abstract class WorkoutStepRow implements PerformanceSetUserInputProvider {
+public abstract class WorkoutStepRow implements PerformanceSetDataHolder {
     protected final ActivityWorkoutStepBinding binding;
     protected final WorkoutStep currentWorkoutStep;
     protected final View rowView;
@@ -15,7 +16,7 @@ public abstract class WorkoutStepRow implements PerformanceSetUserInputProvider 
     protected final EditText actualValueView;
 
     @Override
-    public Object getUserInput() {
+    public Object getCurrentValue() {
         return this.getActualValue();
     }
 

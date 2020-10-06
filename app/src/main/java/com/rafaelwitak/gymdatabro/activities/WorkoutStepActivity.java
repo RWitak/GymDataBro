@@ -9,6 +9,7 @@ import android.widget.SeekBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.rafaelwitak.gymdatabro.PerformanceSetDataProvider;
 import com.rafaelwitak.gymdatabro.viewRows.ExerciseNameRow;
 import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
@@ -144,8 +145,21 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private PerformanceSet getPerformedSet() {
-        //TODO implement
+        performedSet = new PerformanceSet();
+        updatePerformedSetViaDataProvider(new PerformanceSetDataProvider(this.binding));
         return null;
+    }
+
+
+    public void updatePerformedSetViaDataProvider(PerformanceSetDataProvider dataProvider) {
+        performedSet.exerciseID = dataProvider.getExerciseID();
+        performedSet.reps = dataProvider.getReps();
+        performedSet.weight = dataProvider.getWeight();
+        performedSet.secondsPerformed = dataProvider.getSecondsPerformed();
+        performedSet.secondsRested = dataProvider.getSecondsRested();
+        performedSet.rpe = dataProvider.getRpe();
+        performedSet.painLevel = dataProvider.getPainLevel();
+        performedSet.notes = dataProvider.getNotes();
     }
 
     public boolean isLastWorkoutStep(WorkoutStep currentWorkoutStep) {

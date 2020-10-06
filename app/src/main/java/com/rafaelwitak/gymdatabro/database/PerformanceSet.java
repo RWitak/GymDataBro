@@ -8,6 +8,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.rafaelwitak.gymdatabro.PerformanceSetDataProvider;
+
 @Entity(
         tableName = "sets",
         foreignKeys = @ForeignKey(
@@ -36,6 +38,38 @@ public class PerformanceSet {
     @Nullable
     public Float weight;
 
+    public void setExerciseID(int exerciseID) {
+        this.exerciseID = exerciseID;
+    }
+
+    public void setReps(@Nullable Integer reps) {
+        this.reps = reps;
+    }
+
+    public void setWeight(@Nullable Float weight) {
+        this.weight = weight;
+    }
+
+    public void setSecondsPerformed(@Nullable Integer secondsPerformed) {
+        this.secondsPerformed = secondsPerformed;
+    }
+
+    public void setSecondsRested(@Nullable Integer secondsRested) {
+        this.secondsRested = secondsRested;
+    }
+
+    public void setRpe(@Nullable Float rpe) {
+        this.rpe = rpe;
+    }
+
+    public void setPainLevel(@NonNull Integer painLevel) {
+        this.painLevel = painLevel;
+    }
+
+    public void setNotes(@Nullable String notes) {
+        this.notes = notes;
+    }
+
     @ColumnInfo(name = "seconds_performed")
     @Nullable
     public Integer secondsPerformed;
@@ -55,92 +89,4 @@ public class PerformanceSet {
     @ColumnInfo
     @Nullable
     public String notes;
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public int getExerciseID() {
-        return exerciseID;
-    }
-
-    public void setExerciseID(int exerciseID) {
-        this.exerciseID = exerciseID;
-    }
-
-    @Nullable
-    public Integer getReps() {
-        return reps;
-    }
-
-    public void setReps(@Nullable Integer reps) {
-        this.reps = reps;
-    }
-
-    @Nullable
-    public Float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(@Nullable Float weight) {
-        this.weight = weight;
-    }
-
-    @Nullable
-    public Integer getSecondsPerformed() {
-        return secondsPerformed;
-    }
-
-    public void setSecondsPerformed(@Nullable Integer secondsPerformed) {
-        this.secondsPerformed = secondsPerformed;
-    }
-
-    @Nullable
-    public Integer getSecondsRested() {
-        return secondsRested;
-    }
-
-    public void setSecondsRested(@Nullable Integer secondsRested) {
-        this.secondsRested = secondsRested;
-    }
-
-    @Nullable
-    public Float getRpe() {
-        return rpe;
-    }
-
-    public void setRpe(@Nullable Float rpe) {
-        this.rpe = rpe;
-    }
-
-    @NonNull
-    public Integer getPainLevel() {
-        return painLevel;
-    }
-
-    public void setPainLevel(@NonNull Integer painLevel) {
-        this.painLevel = painLevel;
-    }
-
-    @Nullable
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(@Nullable String notes) {
-        this.notes = notes;
-    }
 }
