@@ -3,22 +3,15 @@ package com.rafaelwitak.gymdatabro.viewRows;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.rafaelwitak.gymdatabro.PerformanceSetDataHolder;
-import com.rafaelwitak.gymdatabro.PerformanceSetUserInputProvider;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
-public abstract class WorkoutStepRow implements PerformanceSetDataHolder {
+
+public abstract class WorkoutStepRow {
     protected final ActivityWorkoutStepBinding binding;
     protected final WorkoutStep currentWorkoutStep;
     protected final View rowView;
     protected final TextView expectedValueView;
     protected final EditText actualValueView;
-
-    @Override
-    public Object getCurrentValue() {
-        return this.getActualValue();
-    }
 
     public WorkoutStepRow(
             ActivityWorkoutStepBinding binding,

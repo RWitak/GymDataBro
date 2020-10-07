@@ -1,15 +1,10 @@
 package com.rafaelwitak.gymdatabro.viewRows.workoutStepRows;
 
-import android.content.Context;
-import android.view.View;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatSeekBar;
 
-import com.rafaelwitak.gymdatabro.PerformanceSetUserInputProvider;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 
-public class PainSlider implements PerformanceSetUserInputProvider {
+public class PainSlider {
 
     private final AppCompatSeekBar seekBar;
 
@@ -19,10 +14,5 @@ public class PainSlider implements PerformanceSetUserInputProvider {
 
     public void setOnSeekBarChangeListener(AppCompatSeekBar.OnSeekBarChangeListener changeListener) {
         this.seekBar.setOnSeekBarChangeListener(changeListener);
-    }
-
-    @Override
-    public Object getUserInput() {
-        return seekBar.getProgress();
     }
 }

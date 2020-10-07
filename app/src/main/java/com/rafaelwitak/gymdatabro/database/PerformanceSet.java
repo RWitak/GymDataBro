@@ -8,8 +8,6 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import com.rafaelwitak.gymdatabro.PerformanceSetDataProvider;
-
 @Entity(
         tableName = "sets",
         foreignKeys = @ForeignKey(
@@ -37,6 +35,27 @@ public class PerformanceSet {
     @ColumnInfo
     @Nullable
     public Float weight;
+
+    @ColumnInfo(name = "seconds_performed")
+    @Nullable
+    public Integer secondsPerformed;
+
+    @ColumnInfo(name = "seconds_rested")
+    @Nullable
+    public Integer secondsRested;
+
+    @ColumnInfo
+    @Nullable
+    public Float rpe;
+
+    @ColumnInfo(name = "pain_level")
+    @NonNull
+    public Integer painLevel = 0;
+
+    @ColumnInfo
+    @Nullable
+    public String notes;
+
 
     public void setExerciseID(int exerciseID) {
         this.exerciseID = exerciseID;
@@ -69,24 +88,4 @@ public class PerformanceSet {
     public void setNotes(@Nullable String notes) {
         this.notes = notes;
     }
-
-    @ColumnInfo(name = "seconds_performed")
-    @Nullable
-    public Integer secondsPerformed;
-
-    @ColumnInfo(name = "seconds_rested")
-    @Nullable
-    public Integer secondsRested;
-
-    @ColumnInfo
-    @Nullable
-    public Float rpe;
-
-    @ColumnInfo(name = "pain_level")
-    @NonNull
-    public Integer painLevel = 0;
-
-    @ColumnInfo
-    @Nullable
-    public String notes;
 }

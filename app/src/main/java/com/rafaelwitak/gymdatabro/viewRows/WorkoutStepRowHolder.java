@@ -1,6 +1,5 @@
 package com.rafaelwitak.gymdatabro.viewRows;
 
-import com.rafaelwitak.gymdatabro.PerformanceSetDataProvider;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.viewRows.workoutStepRows.DurationRow;
@@ -13,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class WorkoutStepRowHolder implements PerformanceSetDataProvider {
+public class WorkoutStepRowHolder{
 
     //TODO implement PerformanceSetDataProvider methods
     //TODO find way to integrate other Rows
@@ -41,47 +40,5 @@ public class WorkoutStepRowHolder implements PerformanceSetDataProvider {
             this.durationRow,
             this.restRow
         );
-    }
-
-    @Override
-    public int getExerciseID() {
-        //TODO implement
-        return 0;
-    }
-
-    @Override
-    public Integer getReps() {
-        return (Integer) this.repsRow.getActualValue();
-    }
-
-    @Override
-    public Float getWeight() {
-        return (Float) this.weightRow.getActualValue();
-    }
-
-    @Override
-    public Integer getSecondsPerformed() {
-        return (Integer) this.durationRow.getActualValue();
-    }
-
-    @Override
-    public Integer getSecondsRested() {
-        return (Integer) this.restRow.getActualValue();
-    }
-
-    @Override
-    public Float getRpe() {
-        return (Float) this.rpeRow.getActualValue();
-    }
-
-    @Override
-    public Integer getPainLevel() {
-        //TODO implement
-        return 0;
-    }
-
-    @Override
-    public String getNotes() {
-        return null;
     }
 }

@@ -9,7 +9,8 @@ import android.widget.SeekBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.rafaelwitak.gymdatabro.PerformanceSetDataProvider;
+import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetDataProviderHolder;
+import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetMaker;
 import com.rafaelwitak.gymdatabro.viewRows.ExerciseNameRow;
 import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
@@ -71,7 +72,8 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private void setUpExerciseNameRow() {
-        new ExerciseNameRow(binding, currentWorkoutStep).setup();
+        ExerciseNameRow exerciseNameRow = new ExerciseNameRow(binding, currentWorkoutStep);
+        exerciseNameRow.setup();
 
         Log.d("GymDataBro",
                 "Current exercise = "
@@ -106,10 +108,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (painLevelInsideBounds(progress)) {
-                    performedSet.painLevel = progress;
-                }
-                else {
+                if (!painLevelInsideBounds(progress)) {
                     throw new IndexOutOfBoundsException("Pain Level out of bounds: "
                             + progress);
                 }
@@ -145,21 +144,11 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private PerformanceSet getPerformedSet() {
-        performedSet = new PerformanceSet();
-        updatePerformedSetViaDataProvider(new PerformanceSetDataProvider(this.binding));
-        return null;
+        return PerformanceSetMaker.getPerformanceSet(getPerformanceSetDataProviderHolder());
     }
 
-
-    public void updatePerformedSetViaDataProvider(PerformanceSetDataProvider dataProvider) {
-        performedSet.exerciseID = dataProvider.getExerciseID();
-        performedSet.reps = dataProvider.getReps();
-        performedSet.weight = dataProvider.getWeight();
-        performedSet.secondsPerformed = dataProvider.getSecondsPerformed();
-        performedSet.secondsRested = dataProvider.getSecondsRested();
-        performedSet.rpe = dataProvider.getRpe();
-        performedSet.painLevel = dataProvider.getPainLevel();
-        performedSet.notes = dataProvider.getNotes();
+    private PerformanceSetDataProviderHolder getPerformanceSetDataProviderHolder() {
+        return new PerformanceSetDataProviderHolder(this.binding, this.currentWorkoutStep);
     }
 
     public boolean isLastWorkoutStep(WorkoutStep currentWorkoutStep) {

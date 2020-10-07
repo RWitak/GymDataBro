@@ -82,5 +82,5 @@ public class ExerciseNameRow {
 
         return "Unnamed Exercise";
     }
-}
 
+}

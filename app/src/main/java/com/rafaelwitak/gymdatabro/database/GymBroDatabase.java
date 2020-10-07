@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
                 Workout.class,
                 WorkoutStep.class
         },
-        version = 2,
+        version = 3,
         exportSchema = true
 )
 public abstract class GymBroDatabase extends RoomDatabase {
