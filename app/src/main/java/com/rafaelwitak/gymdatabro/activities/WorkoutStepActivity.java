@@ -32,7 +32,6 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private GymBroDatabase database;
     private Workout currentWorkout;
     private WorkoutStep currentWorkoutStep;
-    private PerformanceSet performedSet;
     private ActivityWorkoutStepBinding binding;
 
     @Override
@@ -42,7 +41,6 @@ public class WorkoutStepActivity extends AppCompatActivity {
         database = MainActivity.database;
         currentWorkoutStep = getCurrentWorkoutStep();
         currentWorkout = getCurrentWorkout();
-        performedSet = new PerformanceSet();
 
         // automatically bind all Views with IDs
         binding = ActivityWorkoutStepBinding.inflate(getLayoutInflater());
@@ -127,17 +125,13 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                performedSet = getPerformedSet();
+                savePerformanceSet(getPerformedSet());
 
-                if (currentPerformanceSetSavable()) {
-                    savePerformanceSet();
-
-                    if (isLastWorkoutStep(currentWorkoutStep)){
-                        finish();
-                    }
-                    else {
-                        startNextWorkoutStep();
-                    }
+                if (isLastWorkoutStep(currentWorkoutStep)){
+                    finish();
+                }
+                else {
+                    startNextWorkoutStep();
                 }
             }
         };
@@ -168,14 +162,8 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
 
-
-    private void savePerformanceSet() {
-        database.performanceSetDAO().insertSet(performedSet);
-    }
-
-    private boolean currentPerformanceSetSavable() {
-        //TODO currently, PerformanceSets are always savable per definition
-        return true;
+    private void savePerformanceSet(PerformanceSet performanceSet) {
+        database.performanceSetDAO().insertSet(performanceSet);
     }
 
     private void startNextWorkoutStep() {
