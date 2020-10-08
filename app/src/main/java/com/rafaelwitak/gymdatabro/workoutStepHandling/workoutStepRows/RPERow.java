@@ -1,4 +1,4 @@
-package com.rafaelwitak.gymdatabro.viewRows.workoutStepRows;
+package com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows;
 
 import android.view.View;
 import android.widget.EditText;
@@ -6,9 +6,9 @@ import android.widget.TextView;
 
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
-import com.rafaelwitak.gymdatabro.viewRows.WorkoutStepRow;
+import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepTextInputRow;
 
-public class RPERow extends WorkoutStepRow {
+public class RPERow extends WorkoutStepTextInputRow {
     public RPERow(ActivityWorkoutStepBinding binding, WorkoutStep workoutStep) {
         super(binding, workoutStep);
     }
@@ -29,12 +29,12 @@ public class RPERow extends WorkoutStepRow {
     }
 
     @Override
-    protected TextView getExpectedValueView() {
+    protected TextView getExpectedValueTextView() {
         return binding.stepRpePrescribed;
     }
 
     @Override
-    protected EditText getActualValueView() {
+    protected EditText getActualValueEditText() {
         return binding.stepRpePerformed;
     }
 }

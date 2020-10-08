@@ -17,7 +17,7 @@ public class CreateProgramRowHolder {
     private final NotesRow notesRow;
     private final NumberWorkoutsRow numberWorkoutsRow;
 
-    public CreateProgramRowHolder(ActivityCreateProgramBinding binding) {
+    public CreateProgramRowHolder(com.rafaelwitak.gymdatabro.databinding.ActivityCreateProgramBinding binding) {
         nameRow = new NameRow(binding);
         sourceRow = new SourceRow(binding);
         linksRow = new LinksRow(binding);

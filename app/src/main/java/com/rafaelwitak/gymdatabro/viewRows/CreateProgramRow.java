@@ -6,7 +6,7 @@ import com.rafaelwitak.gymdatabro.databinding.ActivityCreateProgramBinding;
 public abstract class CreateProgramRow {
     protected EditText editText;
 
-    public CreateProgramRow(ActivityCreateProgramBinding binding) {
+    public CreateProgramRow(com.rafaelwitak.gymdatabro.databinding.ActivityCreateProgramBinding binding) {
         editText = getEditTextFromBinding(binding);
     }
 
@@ -17,5 +17,5 @@ public abstract class CreateProgramRow {
         return editText.getText();
     }
 
-    protected abstract EditText getEditTextFromBinding(ActivityCreateProgramBinding binding);
+    protected abstract EditText getEditTextFromBinding(com.rafaelwitak.gymdatabro.databinding.ActivityCreateProgramBinding binding);
 }

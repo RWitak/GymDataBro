@@ -1,4 +1,4 @@
-package com.rafaelwitak.gymdatabro.viewRows.workoutStepRows;
+package com.rafaelwitak.gymdatabro.workoutStepHandling;
 
 import androidx.appcompat.widget.AppCompatSeekBar;
 

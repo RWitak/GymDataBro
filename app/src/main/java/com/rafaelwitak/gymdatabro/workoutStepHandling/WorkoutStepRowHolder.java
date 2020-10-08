@@ -1,12 +1,12 @@
-package com.rafaelwitak.gymdatabro.viewRows;
+package com.rafaelwitak.gymdatabro.workoutStepHandling;
 
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
-import com.rafaelwitak.gymdatabro.viewRows.workoutStepRows.DurationRow;
-import com.rafaelwitak.gymdatabro.viewRows.workoutStepRows.RPERow;
-import com.rafaelwitak.gymdatabro.viewRows.workoutStepRows.RepsRow;
-import com.rafaelwitak.gymdatabro.viewRows.workoutStepRows.RestRow;
-import com.rafaelwitak.gymdatabro.viewRows.workoutStepRows.WeightRow;
+import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.DurationRow;
+import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.RPERow;
+import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.RepsRow;
+import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.RestRow;
+import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.WeightRow;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +14,6 @@ import java.util.List;
 
 public class WorkoutStepRowHolder{
 
-    //TODO implement PerformanceSetDataProvider methods
     //TODO find way to integrate other Rows
 
     private RepsRow repsRow;
