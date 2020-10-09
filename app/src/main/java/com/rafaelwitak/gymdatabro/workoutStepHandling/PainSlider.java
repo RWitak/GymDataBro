@@ -1,18 +1,30 @@
 package com.rafaelwitak.gymdatabro.workoutStepHandling;
 
-import androidx.appcompat.widget.AppCompatSeekBar;
+import android.view.View;
 
+import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 
-public class PainSlider {
+public class PainSlider extends WorkoutStepRow{
 
-    private final AppCompatSeekBar seekBar;
-
-    public PainSlider(ActivityWorkoutStepBinding binding) {
-        this.seekBar = binding.stepPainSlider;
+    public PainSlider(ActivityWorkoutStepBinding binding, WorkoutStep workoutStep) {
+        super(binding, workoutStep);
     }
 
-    public void setOnSeekBarChangeListener(AppCompatSeekBar.OnSeekBarChangeListener changeListener) {
-        this.seekBar.setOnSeekBarChangeListener(changeListener);
+    @Override
+    protected View getRowViewFromBinding() {
+        return binding.stepPainRow;
+    }
+
+    @Override
+    public void setup() {
+        // Currently no setup necessary
+    }
+
+
+    @Override
+    protected boolean shouldBeVisible() {
+        // Currently no adverse conditions
+        return true;
     }
 }

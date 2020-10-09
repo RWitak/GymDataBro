@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.SeekBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,7 +11,6 @@ import androidx.appcompat.widget.Toolbar;
 import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetDataProviderHolder;
 import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetMaker;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.ExerciseNameRow;
-import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.PerformanceSet;
 import com.rafaelwitak.gymdatabro.database.Workout;
@@ -22,7 +20,6 @@ import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRow;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRowHolder;
-import com.rafaelwitak.gymdatabro.workoutStepHandling.PainSlider;
 
 import java.util.List;
 import java.util.Objects;
@@ -54,7 +51,6 @@ public class WorkoutStepActivity extends AppCompatActivity {
         setUpToolbar();
         setUpExerciseNameRow();
         setUpWorkoutStepViewRows();
-        setUpPainSlider();
         setUpButton();
     }
 
@@ -91,34 +87,10 @@ public class WorkoutStepActivity extends AppCompatActivity {
         }
     }
 
-    private void setUpPainSlider() {
-        PainSlider painSlider = new PainSlider(binding);
-        painSlider.setOnSeekBarChangeListener(getSeekBarChangeListener());
-    }
-
     private void setUpButton() {
         binding.stepBtnNext.setOnClickListener(getViewOnClickListener());
     }
 
-
-    private SeekBar.OnSeekBarChangeListener getSeekBarChangeListener() {
-
-        return new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (!painLevelInsideBounds(progress)) {
-                    throw new IndexOutOfBoundsException("Pain Level out of bounds: "
-                            + progress);
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        };
-    }
 
     private View.OnClickListener getViewOnClickListener() {
         //noinspection Convert2Lambda
@@ -155,10 +127,6 @@ public class WorkoutStepActivity extends AppCompatActivity {
         final int numberOfStepsInWorkout = Objects.requireNonNull(workoutSteps).size();
 
         return (currentWorkoutStep.number + 1 == numberOfStepsInWorkout);
-    }
-
-    private boolean painLevelInsideBounds(Integer painLevel) {
-        return (0 <= painLevel && painLevel <= getResources().getInteger(R.integer.pain_max));
     }
 
 

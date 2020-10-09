@@ -21,6 +21,7 @@ public class WorkoutStepRowHolder{
     private RPERow rpeRow;
     private DurationRow durationRow;
     private RestRow restRow;
+    private PainSlider painSlider;
 
     public WorkoutStepRowHolder(ActivityWorkoutStepBinding binding,
                                 WorkoutStep currentWorkoutStep) {
@@ -29,6 +30,7 @@ public class WorkoutStepRowHolder{
         this.rpeRow = new RPERow(binding, currentWorkoutStep);
         this.durationRow = new DurationRow(binding, currentWorkoutStep);
         this.restRow = new RestRow(binding, currentWorkoutStep);
+        this.painSlider = new PainSlider(binding, currentWorkoutStep);
     }
 
     public List<WorkoutStepRow> getRows() {
@@ -37,7 +39,8 @@ public class WorkoutStepRowHolder{
             this.weightRow,
             this.rpeRow,
             this.durationRow,
-            this.restRow
+            this.restRow,
+            this.painSlider
         );
     }
 }
