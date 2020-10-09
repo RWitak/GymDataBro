@@ -38,8 +38,7 @@ public abstract class WorkoutStepTextInputRow extends WorkoutStepRow {
     }
 
     public Object getActualValueHint() {
-        //TODO get a better hint
-        return this.actualValueEditText.getText();
+        return this.expectedValueTextView.getText();
     }
 
     protected abstract Object getExpectedValue();
