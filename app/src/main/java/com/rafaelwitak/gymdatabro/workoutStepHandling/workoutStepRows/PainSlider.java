@@ -1,11 +1,12 @@
-package com.rafaelwitak.gymdatabro.workoutStepHandling;
+package com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows;
 
 import android.view.View;
 
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
+import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRow;
 
-public class PainSlider extends WorkoutStepRow{
+public class PainSlider extends WorkoutStepRow {
 
     public PainSlider(ActivityWorkoutStepBinding binding, WorkoutStep workoutStep) {
         super(binding, workoutStep);
@@ -20,7 +21,6 @@ public class PainSlider extends WorkoutStepRow{
     public void setup() {
         // Currently no setup necessary
     }
-
 
     @Override
     protected boolean shouldBeVisible() {

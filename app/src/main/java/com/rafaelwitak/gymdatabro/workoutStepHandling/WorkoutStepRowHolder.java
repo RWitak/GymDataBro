@@ -3,6 +3,8 @@ package com.rafaelwitak.gymdatabro.workoutStepHandling;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.DurationRow;
+import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.ExerciseNameRow;
+import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.PainSlider;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.RPERow;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.RepsRow;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.RestRow;
@@ -14,8 +16,7 @@ import java.util.List;
 
 public class WorkoutStepRowHolder{
 
-    //TODO find way to integrate other Rows
-
+    private ExerciseNameRow exerciseNameRow;
     private RepsRow repsRow;
     private WeightRow weightRow;
     private RPERow rpeRow;
@@ -25,6 +26,7 @@ public class WorkoutStepRowHolder{
 
     public WorkoutStepRowHolder(ActivityWorkoutStepBinding binding,
                                 WorkoutStep currentWorkoutStep) {
+        this.exerciseNameRow = new ExerciseNameRow(binding, currentWorkoutStep);
         this.repsRow = new RepsRow(binding, currentWorkoutStep);
         this.weightRow = new WeightRow(binding, currentWorkoutStep);
         this.rpeRow = new RPERow(binding, currentWorkoutStep);
@@ -35,6 +37,7 @@ public class WorkoutStepRowHolder{
 
     public List<WorkoutStepRow> getRows() {
         return Arrays.asList(
+            this.exerciseNameRow,
             this.repsRow,
             this.weightRow,
             this.rpeRow,

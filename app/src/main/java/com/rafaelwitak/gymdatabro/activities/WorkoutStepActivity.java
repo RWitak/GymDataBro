@@ -10,7 +10,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetDataProviderHolder;
 import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetMaker;
-import com.rafaelwitak.gymdatabro.workoutStepHandling.ExerciseNameRow;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.PerformanceSet;
 import com.rafaelwitak.gymdatabro.database.Workout;
@@ -49,7 +48,6 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     private void setUpViews() {
         setUpToolbar();
-        setUpExerciseNameRow();
         setUpWorkoutStepViewRows();
         setUpButton();
     }
@@ -63,20 +61,6 @@ public class WorkoutStepActivity extends AppCompatActivity {
         if (programName != null) {
             toolbar.setSubtitle(programName);
         }
-    }
-
-    private void setUpExerciseNameRow() {
-        ExerciseNameRow exerciseNameRow = new ExerciseNameRow(binding, currentWorkoutStep);
-        exerciseNameRow.setup();
-
-        Log.d("GymDataBro",
-                "Current exercise = "
-                        + binding.stepExerciseNameTitle.getText()
-                        + ", progress ratio = "
-                        + binding.stepExerciseNameProgressRatio.getText()
-                        + ", ratio's visibility = "
-                        + binding.stepExerciseNameProgressRatio.getVisibility()
-                        + ".");
     }
 
     // Set visibility and/or data for the WorkoutStep's View's Rows
