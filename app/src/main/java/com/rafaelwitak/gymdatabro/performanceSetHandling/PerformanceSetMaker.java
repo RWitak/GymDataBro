@@ -14,7 +14,6 @@ public class PerformanceSetMaker {
         }
 
         //FIXME ID is always 0, not unique
-        //FIXME All Integer values are returned as null
         Log.i("GymDataBro", "New PerformanceSet created: " +
                 "\nID=" + performanceSet.id +
                 "\nExerciseId=" + performanceSet.exerciseID +

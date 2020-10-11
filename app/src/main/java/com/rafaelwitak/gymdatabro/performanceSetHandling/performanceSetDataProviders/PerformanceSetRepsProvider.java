@@ -23,6 +23,8 @@ public class PerformanceSetRepsProvider extends PerformanceSetProviderEditText {
     }
 
     private Integer getRepsAsInteger() {
-        return Integer.getInteger(getInputFromEditText().toString());
+        //TODO Handle exceptions in separate method (.valueOf throws NumberFormatException!)
+        //TODO Do this for all PerformanceSet___Providers
+        return Integer.valueOf(getInputFromEditText().toString());
     }
 }
