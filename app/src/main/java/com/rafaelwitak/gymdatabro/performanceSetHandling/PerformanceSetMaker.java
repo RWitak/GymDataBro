@@ -16,6 +16,7 @@ public class PerformanceSetMaker {
         //FIXME ID is always 0, not unique
         Log.i("GymDataBro", "New PerformanceSet created: " +
                 "\nID=" + performanceSet.id +
+                "\nTimestamp=" + performanceSet.timestamp +
                 "\nExerciseId=" + performanceSet.exerciseID +
                 "\nReps=" + performanceSet.reps +
                 "\nWeight=" + performanceSet.weight +

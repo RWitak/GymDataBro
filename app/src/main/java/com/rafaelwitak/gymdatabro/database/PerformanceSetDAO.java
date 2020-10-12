@@ -20,7 +20,26 @@ public interface PerformanceSetDAO {
     @Query("SELECT * FROM sets WHERE timestamp BETWEEN :from AND :to")
     public LiveData<List<PerformanceSet>> getAllBetweenTimestamps(int from, int to);
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    //TODO make query with all non-default fields as placeholders
+    @Query("INSERT INTO sets " +
+                "(exercise_id, " +
+                "reps, " +
+                "weight, " +
+                "seconds_performed, " +
+                "seconds_rested, " +
+                "rpe, " +
+                "pain_level, " +
+                "notes) " +
+            "VALUES(" +
+                ":exercise_id, " +
+                ":reps, " +
+                ":weight, " +
+                ":seconds_performed, " +
+                ":seconds_rested, " +
+                ":rpe, " +
+                ":pain_level, " +
+                ":notes) "
+            , exerciseID=performanceSet.exerciseID,   onConflict = OnConflictStrategy.ABORT)
     public void insertSet(PerformanceSet performanceSet);
 
     @Update
