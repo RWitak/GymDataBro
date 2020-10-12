@@ -18,7 +18,7 @@ public class PerformanceSetSecondsRestedProvider extends PerformanceSetProviderE
     @Override
     public PerformanceSet getUpdatedPerformanceSet(PerformanceSet performanceSet) {
         performanceSet.setSecondsRested(
-                Integer.getInteger(getInputFromEditText().toString())
+                Integer.valueOf(getInputFromEditText().toString())
         );
         return performanceSet;
     }

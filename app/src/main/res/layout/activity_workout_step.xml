@@ -130,7 +130,7 @@
                 android:layout_toEndOf="@+id/step_reps_title"
                 android:autofillHints="@null"
                 android:hint="@null"
-                android:inputType="numberSigned"
+                android:inputType="number"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintBottom_toTopOf="@id/step_reps_barrier"
                 app:layout_constraintEnd_toStartOf="@id/step_right_guideline"
