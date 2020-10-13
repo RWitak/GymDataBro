@@ -10,13 +10,13 @@ import java.util.List;
 @Dao
 public interface PerformanceSetDAO {
     @Query("SELECT * FROM sets")
-    public LiveData<List<PerformanceSet>> getAllSets();
+    LiveData<List<PerformanceSet>> getAllSets();
 
     @Query("SELECT * FROM sets WHERE exercise_id=:exerciseID")
-    public LiveData<List<PerformanceSet>> getAllByExerciseID(int exerciseID);
+    LiveData<List<PerformanceSet>> getAllByExerciseID(int exerciseID);
 
     @Query("SELECT * FROM sets WHERE timestamp BETWEEN :from AND :to")
-    public LiveData<List<PerformanceSet>> getAllBetweenTimestamps(int from, int to);
+    LiveData<List<PerformanceSet>> getAllBetweenTimestamps(int from, int to);
 
     @Query("INSERT INTO sets " +
                 "(exercise_id, " +
@@ -46,5 +46,5 @@ public interface PerformanceSetDAO {
                    String notes);
 
     @Update
-    public void updateSet(PerformanceSet performanceSet);
+    void updateSet(PerformanceSet performanceSet);
 }

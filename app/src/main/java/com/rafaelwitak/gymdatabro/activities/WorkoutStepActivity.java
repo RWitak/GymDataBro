@@ -106,7 +106,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
                         .getAllStepsForWorkoutAsLiveData(currentWorkout.id)
                         .getValue();
 
-        final int numberOfStepsInWorkout = Objects.requireNonNull(workoutSteps).size();
+        final int numberOfStepsInWorkout = workoutSteps != null ? workoutSteps.size() : 0;
 
         return (currentWorkoutStep.number + 1 == numberOfStepsInWorkout);
     }
