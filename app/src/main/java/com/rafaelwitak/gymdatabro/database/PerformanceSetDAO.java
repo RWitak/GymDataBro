@@ -2,8 +2,6 @@ package com.rafaelwitak.gymdatabro.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -20,7 +18,6 @@ public interface PerformanceSetDAO {
     @Query("SELECT * FROM sets WHERE timestamp BETWEEN :from AND :to")
     public LiveData<List<PerformanceSet>> getAllBetweenTimestamps(int from, int to);
 
-    //TODO make query with all non-default fields as placeholders
     @Query("INSERT INTO sets " +
                 "(exercise_id, " +
                 "reps, " +
@@ -38,9 +35,15 @@ public interface PerformanceSetDAO {
                 ":seconds_rested, " +
                 ":rpe, " +
                 ":pain_level, " +
-                ":notes) "
-            , exerciseID=performanceSet.exerciseID,   onConflict = OnConflictStrategy.ABORT)
-    public void insertSet(PerformanceSet performanceSet);
+                ":notes) ")
+    void insertSet(int exercise_id,
+                   Integer reps,
+                   Float weight,
+                   Integer seconds_performed,
+                   Integer seconds_rested,
+                   Float rpe,
+                   Integer pain_level,
+                   String notes);
 
     @Update
     public void updateSet(PerformanceSet performanceSet);

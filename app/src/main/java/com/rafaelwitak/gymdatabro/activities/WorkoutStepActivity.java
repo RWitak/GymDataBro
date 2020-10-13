@@ -8,20 +8,18 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetDataProviderHolder;
-import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetMaker;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.PerformanceSet;
 import com.rafaelwitak.gymdatabro.database.Workout;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
-
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
-
+import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetDataProviderHolder;
+import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetMaker;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRow;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRowHolder;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class WorkoutStepActivity extends AppCompatActivity {
 
@@ -115,7 +113,20 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
 
     private void savePerformanceSet(PerformanceSet performanceSet) {
-        database.performanceSetDAO().insertSet(performanceSet);
+        database.performanceSetDAO().insertSet(
+                performanceSet.exerciseID,
+                performanceSet.reps,
+                performanceSet.weight,
+                performanceSet.secondsPerformed,
+                performanceSet.secondsRested,
+                performanceSet.rpe,
+                performanceSet.painLevel,
+                performanceSet.notes);
+
+        //FIXME No Sets created?
+        Log.d("GymDataBro", "Created Set:" +
+                "\n" +
+                Arrays.deepToString(database.performanceSetDAO().getAllSets().getValue().toArray()));
     }
 
     private void startNextWorkoutStep() {
