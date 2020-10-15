@@ -12,6 +12,9 @@ public interface PerformanceSetDAO {
     @Query("SELECT * FROM sets")
     LiveData<List<PerformanceSet>> getAllSets();
 
+    @Query("SELECT * FROM sets WHERE rowid = :rowId")
+    PerformanceSet getSetByRowId(long rowId);
+
     @Query("SELECT * FROM sets WHERE exercise_id=:exerciseID")
     LiveData<List<PerformanceSet>> getAllByExerciseID(int exerciseID);
 
@@ -36,7 +39,7 @@ public interface PerformanceSetDAO {
                 ":rpe, " +
                 ":pain_level, " +
                 ":notes) ")
-    void insertSet(int exercise_id,
+    long insertSet(int exercise_id,
                    Integer reps,
                    Float weight,
                    Integer seconds_performed,

@@ -18,7 +18,6 @@ import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetMaker;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRow;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRowHolder;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class WorkoutStepActivity extends AppCompatActivity {
@@ -113,7 +112,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
 
     private void savePerformanceSet(PerformanceSet performanceSet) {
-        database.performanceSetDAO().insertSet(
+        long savedSetRowId = database.performanceSetDAO().insertSet(
                 performanceSet.exerciseID,
                 performanceSet.reps,
                 performanceSet.weight,
@@ -123,10 +122,10 @@ public class WorkoutStepActivity extends AppCompatActivity {
                 performanceSet.painLevel,
                 performanceSet.notes);
 
-        //FIXME No Sets created?
-        Log.d("GymDataBro", "Created Set:" +
-                "\n" +
-                Arrays.deepToString(database.performanceSetDAO().getAllSets().getValue().toArray()));
+        Log.d("GymDataBro", "PerformanceSet successfully saved to database by "
+                + "WorkoutStepActivity.savePerformanceSet():"
+                + "\n"
+                + database.performanceSetDAO().getSetByRowId(savedSetRowId).toString());
     }
 
     private void startNextWorkoutStep() {

@@ -13,18 +13,8 @@ public class PerformanceSetMaker {
             performanceSet = dp.getUpdatedPerformanceSet(performanceSet);
         }
 
-        //FIXME ID is always 0, not unique
-        Log.i("GymDataBro", "New PerformanceSet created: " +
-                "\nID=" + performanceSet.id +
-                "\nTimestamp=" + performanceSet.timestamp +
-                "\nExerciseId=" + performanceSet.exerciseID +
-                "\nReps=" + performanceSet.reps +
-                "\nWeight=" + performanceSet.weight +
-                "\nDuration=" + performanceSet.secondsPerformed +
-                "\nRest=" + performanceSet.secondsRested +
-                "\nRPE=" + performanceSet.rpe +
-                "\nPainLevel=" + performanceSet.painLevel +
-                "\nNotes=" + performanceSet.notes
+        Log.i("GymDataBro", "New PerformanceSet created by PerformanceSetMaker:\n"
+                + performanceSet.toString()
                 );
         return performanceSet;
     }

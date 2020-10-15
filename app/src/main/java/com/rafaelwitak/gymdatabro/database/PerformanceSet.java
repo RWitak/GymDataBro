@@ -23,7 +23,7 @@ public class PerformanceSet {
     public int id;
 
     @ColumnInfo(defaultValue = "CURRENT_TIMESTAMP")
-    public long timestamp;
+    public String timestamp;
 
     @ColumnInfo(name = "exercise_id")
     public int exerciseID;
@@ -87,5 +87,30 @@ public class PerformanceSet {
 
     public void setNotes(@Nullable String notes) {
         this.notes = notes;
+    }
+
+
+    @Override
+    public String toString() {
+        return this.id
+                + " (ID)\n"
+                + this.timestamp
+                + " (timestamp)\n"
+                + this.exerciseID
+                + " (exerciseID)\n"
+                + this.reps
+                + " (reps)\n"
+                + this.weight
+                + " (weight)\n"
+                + this.secondsPerformed
+                + " (secondsPerformed)\n"
+                + this.secondsRested
+                + " (secondsRested)\n"
+                + this.rpe
+                + " (rpe)\n"
+                + this.painLevel
+                + " (painLevel)\n"
+                + this.notes
+                + " (notes)\n";
     }
 }
