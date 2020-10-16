@@ -25,12 +25,12 @@ public class EditProgramActivity extends AppCompatActivity {
     }
 
     private void setupViews() {
-        setupCreateButton();
+        setupEditButton();
     }
 
-    private void setupCreateButton() {
-        Button createButton = binding.createProgramButtonCreate;
-        createButton.setOnClickListener(view -> saveProgramToDatabase());
+    private void setupEditButton() {
+        Button editButton = binding.editProgramButtonEdit;
+        editButton.setOnClickListener(view -> saveProgramToDatabase());
     }
 
     private void saveProgramToDatabase() {
