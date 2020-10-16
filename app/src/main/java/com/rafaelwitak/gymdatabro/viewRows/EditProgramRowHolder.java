@@ -1,15 +1,15 @@
 package com.rafaelwitak.gymdatabro.viewRows;
 
 import com.rafaelwitak.gymdatabro.database.Program;
-import com.rafaelwitak.gymdatabro.databinding.ActivityCreateProgramBinding;
-import com.rafaelwitak.gymdatabro.viewRows.createProgramRows.InfoRow;
-import com.rafaelwitak.gymdatabro.viewRows.createProgramRows.LinksRow;
-import com.rafaelwitak.gymdatabro.viewRows.createProgramRows.NameRow;
-import com.rafaelwitak.gymdatabro.viewRows.createProgramRows.NotesRow;
-import com.rafaelwitak.gymdatabro.viewRows.createProgramRows.NumberWorkoutsRow;
-import com.rafaelwitak.gymdatabro.viewRows.createProgramRows.SourceRow;
+import com.rafaelwitak.gymdatabro.databinding.ActivityEditProgramBinding;
+import com.rafaelwitak.gymdatabro.viewRows.editProgramRows.InfoRow;
+import com.rafaelwitak.gymdatabro.viewRows.editProgramRows.LinksRow;
+import com.rafaelwitak.gymdatabro.viewRows.editProgramRows.NameRow;
+import com.rafaelwitak.gymdatabro.viewRows.editProgramRows.NotesRow;
+import com.rafaelwitak.gymdatabro.viewRows.editProgramRows.NumberWorkoutsRow;
+import com.rafaelwitak.gymdatabro.viewRows.editProgramRows.SourceRow;
 
-public class CreateProgramRowHolder {
+public class EditProgramRowHolder {
     private final NameRow nameRow;
     private final SourceRow sourceRow;
     private final LinksRow linksRow;
@@ -17,7 +17,7 @@ public class CreateProgramRowHolder {
     private final NotesRow notesRow;
     private final NumberWorkoutsRow numberWorkoutsRow;
 
-    public CreateProgramRowHolder(com.rafaelwitak.gymdatabro.databinding.ActivityCreateProgramBinding binding) {
+    public EditProgramRowHolder(ActivityEditProgramBinding binding) {
         nameRow = new NameRow(binding);
         sourceRow = new SourceRow(binding);
         linksRow = new LinksRow(binding);

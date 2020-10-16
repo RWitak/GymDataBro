@@ -7,18 +7,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.Program;
-import com.rafaelwitak.gymdatabro.databinding.ActivityCreateProgramBinding;
-import com.rafaelwitak.gymdatabro.viewRows.CreateProgramRowHolder;
+import com.rafaelwitak.gymdatabro.databinding.ActivityEditProgramBinding;
+import com.rafaelwitak.gymdatabro.viewRows.EditProgramRowHolder;
 
-public class CreateProgramActivity extends AppCompatActivity {
+public class EditProgramActivity extends AppCompatActivity {
 
-    private ActivityCreateProgramBinding binding;
+    private ActivityEditProgramBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityCreateProgramBinding.inflate(getLayoutInflater());
+        binding = ActivityEditProgramBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setupViews();
 
@@ -39,7 +39,7 @@ public class CreateProgramActivity extends AppCompatActivity {
     }
 
     private Program getProgram() {
-        CreateProgramRowHolder holder = new CreateProgramRowHolder(binding);
+        EditProgramRowHolder holder = new EditProgramRowHolder(binding);
         return holder.getProgram();
     }
 }

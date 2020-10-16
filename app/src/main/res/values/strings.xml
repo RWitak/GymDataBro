@@ -31,5 +31,5 @@
     <string name="create_program_label_info">Info</string>
     <string name="create_program_label_notes">Notes</string>
     <string name="create_program_label_number_of_workouts">Number of Workouts</string>
-    <string name="create_program_button_create_text">Create Program</string>
+    <string name="create_program_button_save_text">Save Program</string>
 </resources>

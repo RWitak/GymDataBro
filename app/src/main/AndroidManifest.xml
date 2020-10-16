@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <activity
-            android:name=".activities.CreateProgramActivity"
+            android:name=".activities.EditProgramActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.ChooseProgramActivity"
