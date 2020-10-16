@@ -11,24 +11,27 @@ import java.util.List;
 @Dao
 public interface WorkoutDAO {
     @Query("SELECT * FROM workouts")
-    public List<Workout> getAllWorkouts();
+    List<Workout> getAllWorkouts();
 
     @Query("SELECT * FROM workouts WHERE program_id=:programID")
-    public List<Workout> getAllByProgram(int programID);
+    List<Workout> getAllByProgram(int programID);
+
+    @Query("SELECT COUNT(*) FROM workouts WHERE program_id=:programID")
+    Integer getNumberOfWorkoutsByProgram(int programID);
 
     @Query("SELECT * FROM workouts WHERE id=:id")
-    public Workout getWorkoutByID(int id);
+    Workout getWorkoutByID(int id);
 
     @Query("SELECT * FROM workouts WHERE name=:name")
-    public Workout getWorkoutByName(String name);
+    Workout getWorkoutByName(String name);
 
     @Query("SELECT COUNT(exercise_id) FROM workout_steps " +
             "WHERE exercise_id=:exerciseID AND workout_id=:workoutID")
-    public Integer getOccurrencesOfExerciseInWorkout(int exerciseID, int workoutID);
+    Integer getOccurrencesOfExerciseInWorkout(int exerciseID, int workoutID);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertWorkout(Workout workout);
+    void insertWorkout(Workout workout);
 
     @Update
-    public void updateWorkout(Workout workout);
+    void updateWorkout(Workout workout);
 }

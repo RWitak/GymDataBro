@@ -91,6 +91,7 @@ public class PerformanceSet {
 
 
     @Override
+    @NonNull
     public String toString() {
         return this.id
                 + " (ID)\n"
