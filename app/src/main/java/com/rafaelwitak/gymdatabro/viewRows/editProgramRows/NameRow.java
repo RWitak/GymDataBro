@@ -12,6 +12,6 @@ public class NameRow extends EditProgramRow {
 
     @Override
     protected EditText getEditTextFromBinding(ActivityEditProgramBinding binding) {
-        return binding.createProgramNameEdit;
+        return binding.editProgramNameEdit;
     }
 }

@@ -12,6 +12,6 @@ public class SourceRow extends EditProgramRow {
 
     @Override
     protected EditText getEditTextFromBinding(ActivityEditProgramBinding binding) {
-        return binding.createProgramSourceEdit;
+        return binding.editProgramSourceEdit;
     }
 }
