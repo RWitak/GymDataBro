@@ -12,169 +12,185 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="top"
-        app:layout_constraintBottom_toTopOf="@+id/edit_program_table"
+        app:layout_constraintBottom_toTopOf="@+id/edit_program_table_scrollview"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TableLayout
-        android:id="@+id/edit_program_table"
-        android:layout_width="match_parent"
+    <ScrollView
+        android:id="@+id/edit_program_table_scrollview"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="top"
-        android:isScrollContainer="true"
-        android:orientation="vertical"
-        android:stretchColumns="*"
         app:layout_constraintBottom_toTopOf="@+id/edit_program_button_edit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_program_toolbar">
 
-        <TableRow android:layout_margin="10dp">
+        <TableLayout
+            android:id="@+id/edit_program_table"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:isScrollContainer="true"
+            android:orientation="vertical"
+            android:stretchColumns="*"
+            app:layout_constraintBottom_toTopOf="@+id/edit_program_button_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_program_toolbar">
 
-            <TextView
-                android:id="@+id/edit_program_name_label"
-                android:layout_width="0dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:labelFor="@+id/edit_program_name_edit"
-                android:text="@string/edit_program_label_name"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+            <TableRow android:layout_margin="10dp">
 
-            <EditText
-                android:id="@+id/edit_program_name_edit"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:autofillHints="@null"
-                android:gravity="end"
-                android:inputType="textCapCharacters"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/edit_program_name_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_program_name_edit"
+                    android:text="@string/edit_program_label_name"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-        <TableRow android:layout_margin="10dp">
+                <EditText
+                    android:id="@+id/edit_program_name_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="textCapCharacters"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/edit_program_source_label"
-                android:layout_width="0dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:labelFor="@+id/edit_program_source_edit"
-                android:text="@string/edit_program_label_source"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+            <TableRow android:layout_margin="10dp">
 
-            <EditText
-                android:id="@+id/edit_program_source_edit"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:autofillHints="@null"
-                android:gravity="end"
-                android:inputType="text"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/edit_program_source_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_program_source_edit"
+                    android:text="@string/edit_program_label_source"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-        <TableRow android:layout_margin="10dp">
+                <EditText
+                    android:id="@+id/edit_program_source_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="text"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/edit_program_links_label"
-                android:layout_width="0dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:labelFor="@+id/edit_program_links_edit"
-                android:text="@string/edit_program_label_links"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+            <TableRow android:layout_margin="10dp">
 
-            <EditText
-                android:id="@+id/edit_program_links_edit"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:autofillHints="@null"
-                android:gravity="end"
-                android:inputType="textMultiLine"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/edit_program_links_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_program_links_edit"
+                    android:text="@string/edit_program_label_links"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-        <TableRow android:layout_margin="10dp">
+                <EditText
+                    android:id="@+id/edit_program_links_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/edit_program_info_label"
-                android:layout_width="0dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:labelFor="@+id/edit_program_info_edit"
-                android:text="@string/edit_program_label_info"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+            <TableRow android:layout_margin="10dp">
 
-            <EditText
-                android:id="@+id/edit_program_info_edit"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:autofillHints="@null"
-                android:gravity="end"
-                android:inputType="textMultiLine"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/edit_program_info_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_program_info_edit"
+                    android:text="@string/edit_program_label_info"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-        <TableRow android:layout_margin="10dp">
+                <EditText
+                    android:id="@+id/edit_program_info_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/edit_program_notes_label"
-                android:layout_width="0dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:labelFor="@+id/edit_program_notes_edit"
-                android:text="@string/edit_program_label_notes"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+            <TableRow android:layout_margin="10dp">
 
-            <EditText
-                android:id="@+id/edit_program_notes_edit"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:autofillHints="@null"
-                android:gravity="end"
-                android:inputType="textMultiLine"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/edit_program_notes_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_program_notes_edit"
+                    android:text="@string/edit_program_label_notes"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-        <TableRow android:layout_margin="10dp"
-            android:visibility="gone">
+                <EditText
+                    android:id="@+id/edit_program_notes_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/edit_program_number_workouts_label"
-                android:layout_width="0dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:labelFor="@+id/edit_program_number_workouts_edit"
-                android:text="@string/edit_program_label_number_of_workouts"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            <TableRow
+                android:layout_margin="10dp"
+                android:visibility="gone">
 
-            <EditText
-                android:id="@+id/edit_program_number_workouts_edit"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:autofillHints="@null"
-                android:gravity="end"
-                android:inputType="number"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/edit_program_number_workouts_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_program_number_workouts_edit"
+                    android:text="@string/edit_program_label_number_of_workouts"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    </TableLayout>
+                <EditText
+                    android:id="@+id/edit_program_number_workouts_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:autofillHints="@null"
+                    android:gravity="end"
+                    android:inputType="number"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
+
+        </TableLayout>
+
+    </ScrollView>
 
     <Button
         android:id="@+id/edit_program_button_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="40dp"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginVertical="20dp"
         android:text="@string/edit_program_button_save_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/edit_program_table_scrollview"
+        tools:layout_editor_absoluteX="40dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

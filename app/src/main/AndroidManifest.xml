@@ -11,11 +11,13 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <activity
             android:name=".activities.EditProgramActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activities.ChooseProgramActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activities.WorkoutStepActivity" />
+        <activity
+            android:name=".activities.WorkoutStepActivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

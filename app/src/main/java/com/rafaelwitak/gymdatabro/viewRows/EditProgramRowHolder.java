@@ -36,11 +36,11 @@ public class EditProgramRowHolder {
     }
 
     private Program setupProgramFromRowsInputs(Program program) {
-        program.name = (String) this.nameRow.getEditTextValue();
-        program.source = (String) this.sourceRow.getEditTextValue();
-        program.links = (String) this.linksRow.getEditTextValue();
-        program.info = (String) this.infoRow.getEditTextValue();
-        program.notes = (String) this.notesRow.getEditTextValue();
+        program.name = this.nameRow.getEditTextValue().toString();
+        program.source = this.sourceRow.getEditTextValue().toString();
+        program.links = this.linksRow.getEditTextValue().toString();
+        program.info = this.infoRow.getEditTextValue().toString();
+        program.notes = this.notesRow.getEditTextValue().toString();
         program.number_workouts = database.workoutDAO()
                 .getNumberOfWorkoutsByProgram(program.id);
 
