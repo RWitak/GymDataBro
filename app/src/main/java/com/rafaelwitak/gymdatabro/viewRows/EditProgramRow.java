@@ -15,10 +15,14 @@ public abstract class EditProgramRow {
     }
 
     public Object getEditTextValue() {
-        if (editText.getText().toString().isEmpty()) {
+        return editText.getText();
+    }
+
+    public String getEditTextValueAsString() {
+        if (getEditTextValue().toString().isEmpty()) {
             return null;
         }
-        return editText.getText();
+        return getEditTextValue().toString();
     }
 
     protected abstract EditText getEditText();

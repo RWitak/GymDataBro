@@ -1,5 +1,6 @@
 package com.rafaelwitak.gymdatabro.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -14,21 +15,35 @@ import com.rafaelwitak.gymdatabro.viewRows.EditProgramRowHolder;
 public class EditProgramActivity extends AppCompatActivity {
 
     private ActivityEditProgramBinding binding;
-    private int programID;
+    private Program program;
     private boolean isNewProgram;
     private EditProgramRowHolder holder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        programID = getIntent().getIntExtra("programID", -1);
+
+        int programID = getIntent().getIntExtra("programID", -1);
         isNewProgram = (programID == -1);
+
+        this.program = getProgramByID(programID);
 
         binding = ActivityEditProgramBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        this.holder = new EditProgramRowHolder(binding);
+        this.holder = getEditProgramRowHolder();
         setupViews();
 
+    }
+
+    private Program getProgramByID(int programID) {
+        if (isNewProgram) {
+            return new Program();
+        }
+        return MainActivity.database.programDAO().getProgramByID(programID);
+    }
+
+    private EditProgramRowHolder getEditProgramRowHolder() {
+        return new EditProgramRowHolder(binding, program);
     }
 
     private void setupViews() {
@@ -39,7 +54,7 @@ public class EditProgramActivity extends AppCompatActivity {
 
     private void setupRows() {
         if (!isNewProgram) {
-            this.holder.setupRowTexts(MainActivity.database.programDAO().getProgramByID(programID));
+            this.holder.setupRowTexts(this.program);
         }
     }
 
@@ -51,15 +66,22 @@ public class EditProgramActivity extends AppCompatActivity {
 
     private void setupEditButton() {
         Button editButton = binding.editProgramButtonEdit;
-        editButton.setOnClickListener(view -> saveProgramToDatabase());
+        editButton.setOnClickListener(view -> saveAndReturn());
+    }
+
+    private void saveAndReturn() {
+        saveProgramToDatabase();
+
+        Intent intent = new Intent(this, ChooseProgramActivity.class);
+        startActivity(intent);
     }
 
     private void saveProgramToDatabase() {
         GymBroDatabase database = MainActivity.database;
-        database.programDAO().insertProgram(getProgram());
+        database.programDAO().insertProgram(getProgramFromRowHolder());
     }
 
-    private Program getProgram() {
+    private Program getProgramFromRowHolder() {
         return this.holder.getProgram();
     }
 }

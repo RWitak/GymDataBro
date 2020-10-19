@@ -14,6 +14,8 @@ import java.util.List;
 import static com.rafaelwitak.gymdatabro.activities.MainActivity.database;
 
 public class EditProgramRowHolder {
+    private final Program program;
+
     private final NameRow nameRow;
     private final SourceRow sourceRow;
     private final LinksRow linksRow;
@@ -23,12 +25,14 @@ public class EditProgramRowHolder {
 //    out of use:
 //    private final NumberWorkoutsRow numberWorkoutsRow;
 
-    public EditProgramRowHolder(ActivityEditProgramBinding binding) {
-        nameRow = new NameRow(binding);
-        sourceRow = new SourceRow(binding);
-        linksRow = new LinksRow(binding);
-        infoRow = new InfoRow(binding);
-        notesRow = new NotesRow(binding);
+    public EditProgramRowHolder(ActivityEditProgramBinding binding, Program program) {
+        this.program = program;
+
+        this.nameRow = new NameRow(binding);
+        this.sourceRow = new SourceRow(binding);
+        this.linksRow = new LinksRow(binding);
+        this.infoRow = new InfoRow(binding);
+        this.notesRow = new NotesRow(binding);
 
 //        out of use:
 //        numberWorkoutsRow = new NumberWorkoutsRow(binding);
@@ -45,15 +49,15 @@ public class EditProgramRowHolder {
     }
 
     public Program getProgram() {
-        return setupProgramFromRowsInputs(new Program());
+        return setupProgramFromRowsInputs();
     }
 
-    private Program setupProgramFromRowsInputs(Program program) {
-        program.name = this.nameRow.getEditTextValue().toString();
-        program.source = this.sourceRow.getEditTextValue().toString();
-        program.links = this.linksRow.getEditTextValue().toString();
-        program.info = this.infoRow.getEditTextValue().toString();
-        program.notes = this.notesRow.getEditTextValue().toString();
+    private Program setupProgramFromRowsInputs() {
+        program.name = this.nameRow.getEditTextValueAsString();
+        program.source = this.sourceRow.getEditTextValueAsString();
+        program.links = this.linksRow.getEditTextValueAsString();
+        program.info = this.infoRow.getEditTextValueAsString();
+        program.notes = this.notesRow.getEditTextValueAsString();
         program.number_workouts = database.workoutDAO()
                 .getNumberOfWorkoutsByProgram(program.id);
 
