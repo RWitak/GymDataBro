@@ -6,8 +6,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.List;
-
 @Entity(tableName = "programs")
 public class Program {
     @PrimaryKey(autoGenerate = true)
@@ -15,6 +13,7 @@ public class Program {
 
     @ColumnInfo
     @NonNull
+    //FIXME make unique and rework naming if name empty
     public String name = "Freestyle Program";
 
     @ColumnInfo

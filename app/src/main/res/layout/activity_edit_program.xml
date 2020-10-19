@@ -60,7 +60,7 @@
                     android:layout_weight="1.618"
                     android:autofillHints="@null"
                     android:gravity="start"
-                    android:inputType="textCapCharacters"
+                    android:inputType="textCapWords"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
             </TableRow>
 
