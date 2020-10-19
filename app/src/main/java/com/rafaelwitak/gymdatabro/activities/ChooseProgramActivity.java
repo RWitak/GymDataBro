@@ -42,7 +42,7 @@ public class ChooseProgramActivity extends AppCompatActivity {
 
     private void setupFAB(Context context) {
         createProgramFAB.setOnClickListener(view -> {
-            Intent intent = new Intent(context, MainActivity.class);
+            Intent intent = new Intent(context, EditProgramActivity.class);
             startActivity(intent);
         });
     }

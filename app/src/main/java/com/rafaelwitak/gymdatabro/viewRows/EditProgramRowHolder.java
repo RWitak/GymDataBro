@@ -8,6 +8,9 @@ import com.rafaelwitak.gymdatabro.viewRows.editProgramRows.NameRow;
 import com.rafaelwitak.gymdatabro.viewRows.editProgramRows.NotesRow;
 import com.rafaelwitak.gymdatabro.viewRows.editProgramRows.SourceRow;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static com.rafaelwitak.gymdatabro.activities.MainActivity.database;
 
 public class EditProgramRowHolder {
@@ -31,6 +34,16 @@ public class EditProgramRowHolder {
 //        numberWorkoutsRow = new NumberWorkoutsRow(binding);
     }
 
+    public List<EditProgramRow> getRows() {
+        return Arrays.asList(
+                this.nameRow,
+                this.sourceRow,
+                this.linksRow,
+                this.infoRow,
+                this.notesRow
+        );
+    }
+
     public Program getProgram() {
         return setupProgramFromRowsInputs(new Program());
     }
@@ -48,5 +61,11 @@ public class EditProgramRowHolder {
 //        program.number_workouts = (Integer) this.numberWorkoutsRow.getEditTextValue();
 
         return program;
+    }
+
+    public void setupRowTexts(Program program) {
+        for ( EditProgramRow row : getRows() ) {
+            row.setPreFilledText(program);
+        }
     }
 }
