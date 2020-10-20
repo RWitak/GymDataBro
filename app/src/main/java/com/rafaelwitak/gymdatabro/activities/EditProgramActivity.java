@@ -12,6 +12,8 @@ import com.rafaelwitak.gymdatabro.database.Program;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditProgramBinding;
 import com.rafaelwitak.gymdatabro.viewRows.EditProgramRowHolder;
 
+import java.util.List;
+
 public class EditProgramActivity extends AppCompatActivity {
 
     private ActivityEditProgramBinding binding;
@@ -35,6 +37,7 @@ public class EditProgramActivity extends AppCompatActivity {
 
     }
 
+
     private Program getProgramByID(int programID) {
         if (isNewProgram) {
             return new Program();
@@ -45,6 +48,11 @@ public class EditProgramActivity extends AppCompatActivity {
     private EditProgramRowHolder getEditProgramRowHolder() {
         return new EditProgramRowHolder(binding, program);
     }
+
+    private Program getProgramFromRowHolder() {
+        return this.holder.getProgram();
+    }
+
 
     private void setupViews() {
         setupToolbar();
@@ -66,22 +74,51 @@ public class EditProgramActivity extends AppCompatActivity {
 
     private void setupEditButton() {
         Button editButton = binding.editProgramButtonEdit;
-        editButton.setOnClickListener(view -> saveAndReturn());
+        editButton.setOnClickListener(view -> {
+            Program program = getProgramFromRowHolder();
+            if (isSavableProgram(program)) {
+                saveAndReturn(program);
+            }
+            else {
+                holder.displayNameError("Enter a unique and meaningful name!");
+            }
+        });
     }
 
-    private void saveAndReturn() {
-        saveProgramToDatabase();
+
+    private boolean isSavableProgram(Program program) {
+        return (isValidProgramName(program) && isUniqueProgramName(program));
+    }
+
+    private boolean isValidProgramName(Program currentProgram) {
+        return currentProgram.name.length() > 2;
+    }
+
+    private boolean isUniqueProgramName(Program currentProgram) {
+        String name = currentProgram.name;
+        List<Program> programs = MainActivity.database.programDAO().getAllPrograms();
+
+        for ( Program program : programs) {
+            if (name.equalsIgnoreCase(program.name)) {
+                if (currentProgram.id != program.id) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+
+    private void saveAndReturn(Program program) {
+        saveProgramToDatabase(program);
 
         Intent intent = new Intent(this, ChooseProgramActivity.class);
         startActivity(intent);
     }
 
-    private void saveProgramToDatabase() {
+    private void saveProgramToDatabase(Program program) {
         GymBroDatabase database = MainActivity.database;
-        database.programDAO().insertProgram(getProgramFromRowHolder());
-    }
-
-    private Program getProgramFromRowHolder() {
-        return this.holder.getProgram();
+        database.programDAO().insertProgram(program);
     }
 }

@@ -13,7 +13,6 @@ public class Program {
 
     @ColumnInfo
     @NonNull
-    //FIXME make unique and rework naming if name empty
     public String name = "Freestyle Program";
 
     @ColumnInfo

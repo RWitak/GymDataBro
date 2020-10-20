@@ -20,12 +20,17 @@ public abstract class EditProgramRow {
 
     public String getEditTextValueAsString() {
         if (getEditTextValue().toString().isEmpty()) {
-            return null;
+            return "";
         }
-        return getEditTextValue().toString();
+        return getEditTextValue().toString().trim();
     }
 
     protected abstract EditText getEditText();
+
+    public void showErrorText(CharSequence error) {
+        this.editText.setError(error);
+        this.editText.requestFocus();
+    }
 
     public abstract void setPreFilledText(Program program);
 }

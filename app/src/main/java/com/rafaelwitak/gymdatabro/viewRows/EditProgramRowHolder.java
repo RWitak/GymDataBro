@@ -72,4 +72,8 @@ public class EditProgramRowHolder {
             row.setPreFilledText(program);
         }
     }
+
+    public void displayNameError(CharSequence error) {
+        this.nameRow.showErrorText(error);
+    }
 }
