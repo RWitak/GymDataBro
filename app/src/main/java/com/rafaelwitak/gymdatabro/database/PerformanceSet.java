@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey;
         }
 )
 public class PerformanceSet {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
 
     @ColumnInfo(defaultValue = "CURRENT_TIMESTAMP")
