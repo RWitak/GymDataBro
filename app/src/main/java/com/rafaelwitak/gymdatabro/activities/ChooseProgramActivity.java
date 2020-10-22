@@ -13,7 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.Program;
-import com.rafaelwitak.gymdatabro.viewRows.ChooseProgramRow;
+import com.rafaelwitak.gymdatabro.programHandling.ChooseProgramRow;
 
 public class ChooseProgramActivity extends AppCompatActivity {
     GymBroDatabase database;

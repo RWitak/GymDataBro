@@ -10,7 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.Program;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditProgramBinding;
-import com.rafaelwitak.gymdatabro.viewRows.EditProgramRowHolder;
+import com.rafaelwitak.gymdatabro.programHandling.EditProgramRowHolder;
 
 import java.util.List;
 

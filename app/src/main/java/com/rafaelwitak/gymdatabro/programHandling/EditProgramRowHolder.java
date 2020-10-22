@@ -1,12 +1,12 @@
-package com.rafaelwitak.gymdatabro.viewRows;
+package com.rafaelwitak.gymdatabro.programHandling;
 
 import com.rafaelwitak.gymdatabro.database.Program;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditProgramBinding;
-import com.rafaelwitak.gymdatabro.viewRows.editProgramRows.InfoRow;
-import com.rafaelwitak.gymdatabro.viewRows.editProgramRows.LinksRow;
-import com.rafaelwitak.gymdatabro.viewRows.editProgramRows.NameRow;
-import com.rafaelwitak.gymdatabro.viewRows.editProgramRows.NotesRow;
-import com.rafaelwitak.gymdatabro.viewRows.editProgramRows.SourceRow;
+import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.InfoRow;
+import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.LinksRow;
+import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.NameRow;
+import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.NotesRow;
+import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.SourceRow;
 
 import java.util.Arrays;
 import java.util.List;

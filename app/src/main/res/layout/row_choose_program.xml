@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.rafaelwitak.gymdatabro.viewRows.ChooseProgramRow xmlns:android="http://schemas.android.com/apk/res/android"
+<com.rafaelwitak.gymdatabro.programHandling.ChooseProgramRow xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/row_choose_program_text"
     tools:text="Program Row PLACEHOLDER"

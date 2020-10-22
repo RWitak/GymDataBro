@@ -1,4 +1,4 @@
-package com.rafaelwitak.gymdatabro.viewRows;
+package com.rafaelwitak.gymdatabro.programHandling;
 
 import android.content.Context;
 import android.content.Intent;
