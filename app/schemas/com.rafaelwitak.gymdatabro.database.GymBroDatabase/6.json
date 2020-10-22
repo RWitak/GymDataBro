@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "81299906d1a0f17bcdafe729a19346d6",
+    "identityHash": "5e3a543bb5adb885d926f5d6296cc6ec",
     "entities": [
       {
         "tableName": "exercises",
@@ -270,7 +270,7 @@
       },
       {
         "tableName": "sets",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `timestamp` TEXT DEFAULT CURRENT_TIMESTAMP, `exercise_id` INTEGER NOT NULL, `reps` INTEGER, `weight` REAL, `seconds_performed` INTEGER, `seconds_rested` INTEGER, `rpe` REAL, `pain_level` INTEGER NOT NULL, `notes` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`exercise_id`) REFERENCES `exercises`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `timestamp` TEXT DEFAULT CURRENT_TIMESTAMP, `exercise_id` INTEGER NOT NULL, `reps` INTEGER, `weight` REAL, `seconds_performed` INTEGER, `seconds_rested` INTEGER, `rpe` REAL, `pain_level` INTEGER NOT NULL, `notes` TEXT, FOREIGN KEY(`exercise_id`) REFERENCES `exercises`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -338,7 +338,7 @@
           "columnNames": [
             "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [
           {
@@ -541,7 +541,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '81299906d1a0f17bcdafe729a19346d6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5e3a543bb5adb885d926f5d6296cc6ec')"
     ]
   }
 }
