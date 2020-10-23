@@ -1,6 +1,5 @@
 package com.rafaelwitak.gymdatabro.database;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -8,6 +7,40 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "exercises")
 public class Exercise {
+
+    public Exercise(
+            int id,
+            @Nullable Float pr,
+            @Nullable String cues,
+            @Nullable String links,
+            @Nullable String imgA_URI,
+            @Nullable String imgB_URI,
+            @Nullable String equipment) {
+        this.id = id;
+        this.pr = pr;
+        this.cues = cues;
+        this.links = links;
+        this.imgA_URI = imgA_URI;
+        this.imgB_URI = imgB_URI;
+        this.equipment = equipment;
+    }
+
+    public Exercise(
+            @Nullable Float pr,
+            @Nullable String cues,
+            @Nullable String links,
+            @Nullable String imgA_URI,
+            @Nullable String imgB_URI,
+            @Nullable String equipment) {
+        this.pr = pr;
+        this.cues = cues;
+        this.links = links;
+        this.imgA_URI = imgA_URI;
+        this.imgB_URI = imgB_URI;
+        this.equipment = equipment;
+    }
+
+    public Exercise() {}
 
     @PrimaryKey(autoGenerate = true)
     public int id;
