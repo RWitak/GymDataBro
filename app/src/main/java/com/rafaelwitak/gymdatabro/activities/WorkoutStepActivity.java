@@ -98,7 +98,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return new PerformanceSetDataProviderHolder(this.binding, this.currentWorkoutStep);
     }
 
-    public boolean isLastWorkoutStep(WorkoutStep currentWorkoutStep) {
+    private boolean isLastWorkoutStep(WorkoutStep currentWorkoutStep) {
         final List<WorkoutStep> workoutSteps =
                 database
                         .workoutStepDAO()
