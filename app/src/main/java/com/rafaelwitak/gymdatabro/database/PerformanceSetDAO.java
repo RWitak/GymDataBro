@@ -1,6 +1,5 @@
 package com.rafaelwitak.gymdatabro.database;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -10,16 +9,16 @@ import java.util.List;
 @Dao
 public interface PerformanceSetDAO {
     @Query("SELECT * FROM sets")
-    LiveData<List<PerformanceSet>> getAllSets();
+    List<PerformanceSet> getAllSets();
 
     @Query("SELECT * FROM sets WHERE rowid = :rowId")
     PerformanceSet getSetByRowId(long rowId);
 
     @Query("SELECT * FROM sets WHERE exercise_id=:exerciseID")
-    LiveData<List<PerformanceSet>> getAllByExerciseID(int exerciseID);
+    List<PerformanceSet> getAllByExerciseID(int exerciseID);
 
     @Query("SELECT * FROM sets WHERE timestamp BETWEEN :from AND :to")
-    LiveData<List<PerformanceSet>> getAllBetweenTimestamps(int from, int to);
+    List<PerformanceSet> getAllBetweenTimestamps(int from, int to);
 
     @Query("INSERT INTO sets " +
                 "(exercise_id, " +
