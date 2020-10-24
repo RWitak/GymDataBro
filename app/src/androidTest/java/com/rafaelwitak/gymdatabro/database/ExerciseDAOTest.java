@@ -9,6 +9,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 public class ExerciseDAOTest extends DaoTest {
     List<Exercise> exercises = new ArrayList<>();
+    private ExerciseDAO dao;
 
     public void populateDb() {
         Exercise regularCase = new Exercise(
@@ -98,5 +99,10 @@ public class ExerciseDAOTest extends DaoTest {
         Exercise updatedTestExercise = dao.getExerciseByID(2);
 
         assertThat(updatedTestExercise.cues).isEqualTo(testString);
+    }
+
+    @Override
+    protected void setDao() {
+        this.dao = database.exerciseDAO();
     }
 }

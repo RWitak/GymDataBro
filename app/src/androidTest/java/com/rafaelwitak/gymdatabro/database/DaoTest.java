@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 public abstract class DaoTest {
 
     protected GymBroDatabase database;
-    protected ExerciseDAO dao;
 
     @Before
     public void setup() {
@@ -24,8 +23,10 @@ public abstract class DaoTest {
         ).allowMainThreadQueries()
         .build();
 
-        this.dao = database.exerciseDAO();
+        setDao();
     }
+
+    protected abstract void setDao(); //TODO: Make me nicer! Eg. create GymDataBroDAO superclass?
 
     @After
     public void teardown() {
