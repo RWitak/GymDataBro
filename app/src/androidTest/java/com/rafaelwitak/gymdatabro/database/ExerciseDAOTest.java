@@ -69,13 +69,12 @@ public class ExerciseDAOTest extends DaoTest {
 
     @Test
     public void getExerciseByID() {
-        //FIXME: Currently deals with LiveData!
         Exercise newestExercise = new Exercise();
         newestExercise.id = 247365;
         newestExercise.cues = "Test for getExerciseById";
         dao.insertNewExercise(newestExercise);
 
-        Exercise insertedExercise = dao.getExerciseByID(newestExercise.id).getValue();
+        Exercise insertedExercise = dao.getExerciseByID(newestExercise.id);
 
         assertThat(insertedExercise).isNotNull();
         assertThat(insertedExercise.cues).isEqualTo(newestExercise.cues);
@@ -88,6 +87,16 @@ public class ExerciseDAOTest extends DaoTest {
 
     @Test
     public void updateExercise() {
-        //TODO
+        populateDb();
+        Exercise testExercise = dao.getExerciseByID(2);
+
+        String testString = "Exercise update successful";
+        testExercise.cues = testString;
+
+        dao.updateExercise(testExercise);
+
+        Exercise updatedTestExercise = dao.getExerciseByID(2);
+
+        assertThat(updatedTestExercise.cues).isEqualTo(testString);
     }
 }
