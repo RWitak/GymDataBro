@@ -1,6 +1,5 @@
 package com.rafaelwitak.gymdatabro.database;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -12,17 +11,17 @@ import java.util.List;
 @Dao
 public interface ExerciseDAO {
     @Query("SELECT * FROM exercises")
-    public List<Exercise> getAllExercises();
+    List<Exercise> getAllExercises();
 
     @Query("SELECT * FROM exercises WHERE id = :id")
-    public LiveData<Exercise> getExerciseByID(int id);
+    Exercise getExerciseByID(int id);
 
     @Query("SELECT * FROM exercises WHERE equipment = :equipment")
-    public List<Exercise> getExerciseListByEquipment(String equipment);
+    List<Exercise> getExerciseListByEquipment(String equipment);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertNewExercise(Exercise exercise);
+    void insertNewExercise(Exercise exercise);
 
     @Update
-    public void updateExercise(Exercise exercise);
+    void updateExercise(Exercise exercise);
 }
