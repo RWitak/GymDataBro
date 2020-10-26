@@ -82,11 +82,6 @@ public class ExerciseDAOTest extends DaoTest {
     }
 
     @Test
-    public void getExerciseListByEquipment() {
-        //TODO
-    }
-
-    @Test
     public void updateExercise() {
         populateDb();
         Exercise testExercise = dao.getExerciseByID(2);

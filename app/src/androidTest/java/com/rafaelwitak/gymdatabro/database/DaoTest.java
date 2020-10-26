@@ -26,7 +26,7 @@ public abstract class DaoTest {
         setDao();
     }
 
-    protected abstract void setDao(); //TODO: Make me nicer! Eg. create GymDataBroDAO superclass?
+    protected abstract void setDao();
 
     @After
     public void teardown() {

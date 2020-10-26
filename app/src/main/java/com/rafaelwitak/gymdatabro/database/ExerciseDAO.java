@@ -16,9 +16,6 @@ public interface ExerciseDAO {
     @Query("SELECT * FROM exercises WHERE id = :id")
     Exercise getExerciseByID(int id);
 
-    @Query("SELECT * FROM exercises WHERE equipment = :equipment")
-    List<Exercise> getExerciseListByEquipment(String equipment);
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNewExercise(Exercise exercise);
 
