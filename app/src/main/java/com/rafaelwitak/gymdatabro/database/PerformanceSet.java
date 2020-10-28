@@ -20,7 +20,7 @@ import androidx.room.PrimaryKey;
 )
 public class PerformanceSet {
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    public Integer id; //TODO: Test me!
 
     @ColumnInfo(defaultValue = "CURRENT_TIMESTAMP")
     public String timestamp;
@@ -56,6 +56,30 @@ public class PerformanceSet {
     @Nullable
     public String notes;
 
+    public PerformanceSet() {}
+
+    public PerformanceSet(@Nullable Integer id,
+                          String timestamp,
+                          int exerciseID,
+                          @Nullable Integer reps,
+                          @Nullable Float weight,
+                          @Nullable Integer secondsPerformed,
+                          @Nullable Integer secondsRested,
+                          @Nullable Float rpe,
+                          @NonNull Integer painLevel,
+                          @Nullable String notes) {
+        this.id = id;
+        this.timestamp = timestamp;
+        this.exerciseID = exerciseID;
+        this.reps = reps;
+        this.weight = weight;
+        this.secondsPerformed = secondsPerformed;
+        this.secondsRested = secondsRested;
+        this.rpe = rpe;
+        this.painLevel = painLevel;
+        this.notes = notes;
+    }
+
 
     public void setExerciseID(int exerciseID) {
         this.exerciseID = exerciseID;
@@ -88,7 +112,6 @@ public class PerformanceSet {
     public void setNotes(@Nullable String notes) {
         this.notes = notes;
     }
-
 
     @Override
     @NonNull
