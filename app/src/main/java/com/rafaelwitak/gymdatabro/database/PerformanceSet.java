@@ -20,10 +20,10 @@ import androidx.room.PrimaryKey;
 )
 public class PerformanceSet {
     @PrimaryKey(autoGenerate = true)
-    public Integer id; //TODO: Test me!
+    public Integer id;
 
     @ColumnInfo(defaultValue = "CURRENT_TIMESTAMP")
-    public String timestamp;
+    public String timestamp; //FIXME: defaults to null
 
     @ColumnInfo(name = "exercise_id")
     public int exerciseID;

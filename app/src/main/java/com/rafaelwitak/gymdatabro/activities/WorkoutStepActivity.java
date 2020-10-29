@@ -112,15 +112,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
 
     private void savePerformanceSet(PerformanceSet performanceSet) {
-        long savedSetRowId = database.performanceSetDAO().insertSet(
-                performanceSet.exerciseID,
-                performanceSet.reps,
-                performanceSet.weight,
-                performanceSet.secondsPerformed,
-                performanceSet.secondsRested,
-                performanceSet.rpe,
-                performanceSet.painLevel,
-                performanceSet.notes);
+        long savedSetRowId = database.performanceSetDAO().insertSet(performanceSet);
 
         Log.d("GymDataBro", "PerformanceSet successfully saved to database by "
                 + "WorkoutStepActivity.savePerformanceSet():"

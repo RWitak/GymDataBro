@@ -1,6 +1,7 @@
 package com.rafaelwitak.gymdatabro.database;
 
 import androidx.room.Dao;
+import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -20,32 +21,8 @@ public interface PerformanceSetDAO {
     @Query("SELECT * FROM sets WHERE timestamp BETWEEN :from AND :to")
     List<PerformanceSet> getAllBetweenTimestamps(int from, int to);
 
-    @Query("INSERT INTO sets " +
-                "(exercise_id, " +
-                "reps, " +
-                "weight, " +
-                "seconds_performed, " +
-                "seconds_rested, " +
-                "rpe, " +
-                "pain_level, " +
-                "notes) " +
-            "VALUES(" +
-                ":exercise_id, " +
-                ":reps, " +
-                ":weight, " +
-                ":seconds_performed, " +
-                ":seconds_rested, " +
-                ":rpe, " +
-                ":pain_level, " +
-                ":notes) ")
-    long insertSet(int exercise_id,
-                   Integer reps,
-                   Float weight,
-                   Integer seconds_performed,
-                   Integer seconds_rested,
-                   Float rpe,
-                   Integer pain_level,
-                   String notes);
+    @Insert
+    long insertSet(PerformanceSet performanceSet);
 
     @Update
     void updateSet(PerformanceSet performanceSet);
