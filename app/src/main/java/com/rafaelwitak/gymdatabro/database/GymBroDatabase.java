@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,9 +20,10 @@ import java.util.concurrent.Executors;
                 Workout.class,
                 WorkoutStep.class
         },
-        version = 7,
+        version = 8,
         exportSchema = true
 )
+@TypeConverters({Converters.class})
 public abstract class GymBroDatabase extends RoomDatabase {
     public abstract ExerciseDAO exerciseDAO();
     public abstract ExerciseNameDAO exerciseNameDAO();

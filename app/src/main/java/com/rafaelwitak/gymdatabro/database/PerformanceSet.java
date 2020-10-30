@@ -8,6 +8,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(
         tableName = "sets",
         foreignKeys = @ForeignKey(
@@ -22,8 +24,8 @@ public class PerformanceSet {
     @PrimaryKey(autoGenerate = true)
     public Integer id;
 
-    @ColumnInfo(defaultValue = "CURRENT_TIMESTAMP")
-    public String timestamp; //FIXME: defaults to null
+    @ColumnInfo
+    public Date timestamp;
 
     @ColumnInfo(name = "exercise_id")
     public int exerciseID;
@@ -50,16 +52,14 @@ public class PerformanceSet {
 
     @ColumnInfo(name = "pain_level")
     @NonNull
-    public Integer painLevel = 0;
+    public Integer painLevel;
 
     @ColumnInfo
     @Nullable
     public String notes;
 
-    public PerformanceSet() {}
-
     public PerformanceSet(@Nullable Integer id,
-                          String timestamp,
+                          @Nullable Date timestamp,
                           int exerciseID,
                           @Nullable Integer reps,
                           @Nullable Float weight,
@@ -69,7 +69,7 @@ public class PerformanceSet {
                           @NonNull Integer painLevel,
                           @Nullable String notes) {
         this.id = id;
-        this.timestamp = timestamp;
+        this.timestamp = timestamp == null ? getTimestamp() : timestamp;
         this.exerciseID = exerciseID;
         this.reps = reps;
         this.weight = weight;
@@ -78,6 +78,25 @@ public class PerformanceSet {
         this.rpe = rpe;
         this.painLevel = painLevel;
         this.notes = notes;
+    }
+
+    public PerformanceSet() {
+        this(
+                null,
+                null,
+                -1,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                null
+        );
+    }
+
+    private Date getTimestamp() {
+        return new Date();
     }
 
 

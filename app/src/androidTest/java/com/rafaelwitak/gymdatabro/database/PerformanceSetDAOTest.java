@@ -1,7 +1,10 @@
 package com.rafaelwitak.gymdatabro.database;
 
+import android.database.sqlite.SQLiteConstraintException;
+
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -9,26 +12,20 @@ import static com.google.common.truth.Truth.assertThat;
 public class PerformanceSetDAOTest extends DaoTest {
 
     private PerformanceSetDAO dao;
+    private static final int TEST_EXERCISE_ID = 123;
+
+    @Override
+    public void setup() {
+        super.setup();
+        createEmptyExerciseWithTestExerciseId();
+    }
 
     @Test
-    public void constructorShouldWorkWithPartialInput() {
-        PerformanceSet psEmpty = new PerformanceSet();
-        PerformanceSet psNullEverywhere = new PerformanceSet(
-                null,
-                "TIMESTAMP",
-                123,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-                );
+    public void constructorShouldWorkWithFullInput() {
         PerformanceSet psAllValues = new PerformanceSet(
                 23,
-                "2020-08-13",
-                123,
+                new Date(),
+                TEST_EXERCISE_ID,
                 10,
                 22.5f,
                 12,
@@ -37,24 +34,61 @@ public class PerformanceSetDAOTest extends DaoTest {
                 0,
                 "Notes");
 
-        createExerciseWithId123();
-
         assertThat(dao.insertSet(psAllValues)).isNotNull();
-        assertThat(dao.insertSet(psNullEverywhere)).isNotNull();
-        assertThat(dao.insertSet(psEmpty)).isNotNull();
     }
 
-    private void createExerciseWithId123() {
+    @Test
+    public void constructorShouldNotWorkWithBarePerformanceSet() {
+        PerformanceSet psEmpty = new PerformanceSet();
+
+        SQLiteConstraintException expectedException = null;
+
+        try {
+            dao.insertSet(psEmpty);
+        }
+        catch (SQLiteConstraintException thrownException) {
+            expectedException = thrownException;
+        }
+        finally {
+            assertThat(expectedException).isNotNull();
+        }
+    }
+
+    private void createEmptyExerciseWithTestExerciseId() {
         database.exerciseDAO().insertNewExercise(
                 new Exercise(
-                        123,
-                        88.6f,
+                        TEST_EXERCISE_ID,
+                        null,
                         null,
                         null,
                         null,
                         null,
                         null
                         ));
+    }
+
+    @Test
+    public void nullTimestampShouldBeSetToCurrentDatetime() {
+        Date timestampBefore = new Date();
+
+        long rowId = dao.insertSet(new PerformanceSet(
+                15,
+                null,
+                TEST_EXERCISE_ID,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                null
+                )
+        );
+
+        PerformanceSet savedSet = dao.getSetByRowId(rowId);
+
+        assertThat(savedSet.timestamp).isAtLeast(timestampBefore);
+        assertThat(savedSet.timestamp).isAtMost(new Date());
     }
 
     @Test
@@ -84,7 +118,6 @@ public class PerformanceSetDAOTest extends DaoTest {
 
     @Test
     public void nullIdGetsAutoFilled() {
-        createExerciseWithId123();
         insertSetWithNullId();
 
         List<PerformanceSet> performanceSetList = dao.getAllSets();
@@ -94,7 +127,6 @@ public class PerformanceSetDAOTest extends DaoTest {
 
     @Test
     public void nullIdGetsAutoIncremented() {
-        createExerciseWithId123();
         insertSetWithNullId();
         insertSetWithNullId();
 

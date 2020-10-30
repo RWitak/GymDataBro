@@ -5,6 +5,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -19,7 +20,7 @@ public interface PerformanceSetDAO {
     List<PerformanceSet> getAllByExerciseID(int exerciseID);
 
     @Query("SELECT * FROM sets WHERE timestamp BETWEEN :from AND :to")
-    List<PerformanceSet> getAllBetweenTimestamps(int from, int to);
+    List<PerformanceSet> getAllBetweenTimestamps(Date from, Date to);
 
     @Insert
     long insertSet(PerformanceSet performanceSet);
