@@ -3,9 +3,9 @@ package com.rafaelwitak.gymdatabro.performanceSetHandling.performanceSetDataProv
 import android.text.Editable;
 import android.widget.EditText;
 
-import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetDataProvider;
 import com.rafaelwitak.gymdatabro.database.PerformanceSet;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
+import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetDataProvider;
 
 public abstract class PerformanceSetProviderEditText implements PerformanceSetDataProvider {
     protected ActivityWorkoutStepBinding binding;
@@ -20,6 +20,7 @@ public abstract class PerformanceSetProviderEditText implements PerformanceSetDa
 
     protected Editable getInputFromEditText() {
         return this.editText.getEditableText();
+        //FIXME: Returns empty fields as empty Strings -> Integer.valueOf() is undefined!
     }
 
     @Override
