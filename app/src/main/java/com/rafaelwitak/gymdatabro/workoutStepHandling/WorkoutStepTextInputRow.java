@@ -34,7 +34,7 @@ public abstract class WorkoutStepTextInputRow extends WorkoutStepRow {
 
     protected void setAllViewTexts() {
         expectedValueTextView.setText(this.getExpectedValue().toString());
-        actualValueEditText.setHint(this.getActualValueHint().toString());
+        actualValueEditText.setText(this.getActualValueHint().toString());
     }
 
     public Object getActualValueHint() {
