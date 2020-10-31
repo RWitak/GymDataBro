@@ -42,4 +42,5 @@ public abstract class WorkoutStepTextInputRow extends WorkoutStepRow {
     }
 
     protected abstract Object getExpectedValue();
+
 }

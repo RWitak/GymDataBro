@@ -1,6 +1,5 @@
 package com.rafaelwitak.gymdatabro.performanceSetHandling.performanceSetDataProviders;
 
-import android.text.Editable;
 import android.widget.EditText;
 
 import com.rafaelwitak.gymdatabro.database.PerformanceSet;
@@ -18,9 +17,20 @@ public abstract class PerformanceSetProviderEditText implements PerformanceSetDa
 
     protected abstract EditText getEditTextFromBinding();
 
-    protected Editable getInputFromEditText() {
-        return this.editText.getEditableText();
-        //FIXME: Returns empty fields as empty Strings -> Integer.valueOf() is undefined!
+    protected String getStringFromEditText() {
+        return this.editText.getEditableText().toString();
+    }
+
+    protected Integer getIntegerOrNullFromString(String s) {
+        return (s == null || s.isEmpty()) ? null : Integer.valueOf(s);
+    }
+
+    protected Float getFloatOrNullFromString(String s) {
+        return (s == null || s.isEmpty()) ? null : Float.parseFloat(s);
+    }
+
+    protected String getStringOrNullFromString(String s) {
+        return (s == null || s.isEmpty()) ? null : s;
     }
 
     @Override

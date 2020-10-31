@@ -17,8 +17,11 @@ public class PerformanceSetSecondsPerformedProvider extends PerformanceSetProvid
 
     @Override
     public PerformanceSet getUpdatedPerformanceSet(PerformanceSet performanceSet) {
-        performanceSet.setSecondsPerformed(
-                Integer.valueOf(getInputFromEditText().toString()));
+        performanceSet.setSecondsPerformed(getSecondsPerformedAsInteger());
         return performanceSet;
+    }
+
+    private Integer getSecondsPerformedAsInteger() {
+        return getIntegerOrNullFromString(getStringFromEditText());
     }
 }

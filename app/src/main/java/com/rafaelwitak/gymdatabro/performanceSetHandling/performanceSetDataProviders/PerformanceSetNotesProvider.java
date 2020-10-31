@@ -17,7 +17,11 @@ public class PerformanceSetNotesProvider extends PerformanceSetProviderEditText 
 
     @Override
     public PerformanceSet getUpdatedPerformanceSet(PerformanceSet performanceSet) {
-        performanceSet.setNotes(getInputFromEditText().toString());
+        performanceSet.setNotes(getNotesAsString());
         return performanceSet;
+    }
+
+    private String getNotesAsString() {
+        return getStringOrNullFromString(getStringFromEditText());
     }
 }

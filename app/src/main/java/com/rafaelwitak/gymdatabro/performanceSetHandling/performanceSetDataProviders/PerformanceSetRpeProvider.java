@@ -17,7 +17,11 @@ public class PerformanceSetRpeProvider extends PerformanceSetProviderEditText {
 
     @Override
     public PerformanceSet getUpdatedPerformanceSet(PerformanceSet performanceSet) {
-        performanceSet.setRpe(Float.parseFloat(getInputFromEditText().toString()));
+        performanceSet.setRpe(getRpeAsFloat());
         return performanceSet;
+    }
+
+    private Float getRpeAsFloat() {
+        return getFloatOrNullFromString(getStringFromEditText());
     }
 }

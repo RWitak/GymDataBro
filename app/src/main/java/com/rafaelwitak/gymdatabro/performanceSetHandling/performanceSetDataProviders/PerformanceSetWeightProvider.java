@@ -17,7 +17,11 @@ public class PerformanceSetWeightProvider extends PerformanceSetProviderEditText
 
     @Override
     public PerformanceSet getUpdatedPerformanceSet(PerformanceSet performanceSet) {
-        performanceSet.setWeight(Float.parseFloat(getInputFromEditText().toString()));
+        performanceSet.setWeight(getWeightAsFloat());
         return performanceSet;
+    }
+
+    private Float getWeightAsFloat() {
+        return getFloatOrNullFromString(getStringFromEditText());
     }
 }
