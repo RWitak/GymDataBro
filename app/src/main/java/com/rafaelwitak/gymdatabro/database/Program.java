@@ -11,7 +11,7 @@ public class Program {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-    @ColumnInfo
+    @ColumnInfo(defaultValue = "Freestyle Program")
     @NonNull
     public String name = "Freestyle Program";
 
@@ -31,7 +31,7 @@ public class Program {
     @Nullable
     public String notes;
 
-    @ColumnInfo
+    @ColumnInfo(defaultValue = "1")
     @NonNull
     public Integer number_workouts = 1;
 }
