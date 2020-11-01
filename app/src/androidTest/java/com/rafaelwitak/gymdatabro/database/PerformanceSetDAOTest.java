@@ -10,13 +10,16 @@ import java.util.List;
 import static com.google.common.truth.Truth.assertThat;
 
 public class PerformanceSetDAOTest extends DaoTest {
+    private static final int TEST_EXERCISE_ID = 123;
 
+    private static final int EMPTY_PS_EXERCISE_ID = new PerformanceSet().exerciseID;
+    final int TEST_SIZE = 42;
     private PerformanceSetDAO dao;
 
-    final int TEST_SIZE = 42;
-    private static final int TEST_EXERCISE_ID = 123;
-    private static final int EMPTY_PS_EXERCISE_ID = new PerformanceSet().exerciseID;
-
+    @Override
+    protected void setDao() {
+        this.dao = database.performanceSetDAO();
+    }
 
     @Override
     public void setup() {
@@ -24,8 +27,9 @@ public class PerformanceSetDAOTest extends DaoTest {
         createEmptyExerciseWithId(TEST_EXERCISE_ID);
     }
 
+
     @Test
-    public void constructorShouldWorkWithFullInput() {
+    public void insertSetShouldWorkWithFullInput() {
         PerformanceSet psAllValues = new PerformanceSet(
                 23,
                 new Date(),
@@ -42,7 +46,7 @@ public class PerformanceSetDAOTest extends DaoTest {
     }
 
     @Test
-    public void constructorShouldNotWorkWithBarePerformanceSet() {
+    public void insertSetShouldNotWorkWithBarePerformanceSet() {
         PerformanceSet psEmpty = new PerformanceSet();
 
         SQLiteConstraintException expectedException = null;
@@ -58,17 +62,23 @@ public class PerformanceSetDAOTest extends DaoTest {
         }
     }
 
-    private void createEmptyExerciseWithId(int exerciseId) {
-        database.exerciseDAO().insertNewExercise(
-                new Exercise(
-                        exerciseId,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null
-                        ));
+    @Test
+    public void nullIdShouldGetAutoFilled() {
+        insertSetWithNullId();
+
+        List<PerformanceSet> performanceSetList = dao.getAllSets();
+
+        assertThat(performanceSetList.get(0).id).isNotNull();
+    }
+
+    @Test
+    public void nullIdShouldGetAutoIncremented() {
+        insertSetWithNullId();
+        insertSetWithNullId();
+
+        List<PerformanceSet> performanceSetList = dao.getAllSets();
+
+        assertThat(performanceSetList.get(1).id).isNotEqualTo(performanceSetList.get(0).id);
     }
 
     @Test
@@ -99,9 +109,7 @@ public class PerformanceSetDAOTest extends DaoTest {
     public void getAllSets() {
         createEmptyExerciseWithId(EMPTY_PS_EXERCISE_ID);
 
-        for (int i = 0; i < TEST_SIZE; i++) {
-            dao.insertSet(new PerformanceSet());
-        }
+        insertNumberOfEmptySets(TEST_SIZE);
 
         assertThat(dao.getAllSets().size()).isEqualTo(TEST_SIZE);
     }
@@ -110,9 +118,7 @@ public class PerformanceSetDAOTest extends DaoTest {
     public void getSetByRowId() {
         createEmptyExerciseWithId(EMPTY_PS_EXERCISE_ID);
 
-        for (int i = 0; i < TEST_SIZE; i++) {
-            dao.insertSet(new PerformanceSet());
-        }
+        insertNumberOfEmptySets(TEST_SIZE);
 
         PerformanceSet testSet = new PerformanceSet();
         testSet.secondsPerformed = 365;
@@ -131,9 +137,7 @@ public class PerformanceSetDAOTest extends DaoTest {
         }
 
         createEmptyExerciseWithId(EMPTY_PS_EXERCISE_ID);
-        for (int i = 0; i < TEST_SIZE + 1; i++) {
-            dao.insertSet(new PerformanceSet());
-        }
+        insertNumberOfEmptySets(TEST_SIZE + 1);
 
         assertThat(dao.getAllByExerciseID(TEST_EXERCISE_ID).size()).isEqualTo(TEST_SIZE);
     }
@@ -144,27 +148,33 @@ public class PerformanceSetDAOTest extends DaoTest {
     }
 
     @Test
-    public void insertSet() {
-    //TODO: implement.
+    public void updateSet() {
+        createEmptyExerciseWithId(EMPTY_PS_EXERCISE_ID);
+
+        insertNumberOfEmptySets(TEST_SIZE);
+        long rowId = dao.insertSet(new PerformanceSet());
+        insertNumberOfEmptySets(TEST_SIZE);
+
+        PerformanceSet testSet = dao.getSetByRowId(rowId);
+
+        testSet.painLevel = 7;
+
+        dao.updateSet(testSet);
+
+        assertThat(dao.getSetByRowId(rowId)).isNotEqualTo(testSet);
     }
 
-    @Test
-    public void nullIdGetsAutoFilled() {
-        insertSetWithNullId();
-
-        List<PerformanceSet> performanceSetList = dao.getAllSets();
-
-        assertThat(performanceSetList.get(0).id).isNotNull();
-    }
-
-    @Test
-    public void nullIdGetsAutoIncremented() {
-        insertSetWithNullId();
-        insertSetWithNullId();
-
-        List<PerformanceSet> performanceSetList = dao.getAllSets();
-
-        assertThat(performanceSetList.get(1).id).isNotEqualTo(performanceSetList.get(0).id);
+    private void createEmptyExerciseWithId(int exerciseId) {
+        database.exerciseDAO().insertNewExercise(
+                new Exercise(
+                        exerciseId,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
+                ));
     }
 
     private void insertSetWithNullId() {
@@ -181,13 +191,9 @@ public class PerformanceSetDAOTest extends DaoTest {
                 null));
     }
 
-    @Test
-    public void updateSet() {
-        //TODO: implement.
-    }
-
-    @Override
-    protected void setDao() {
-        this.dao = database.performanceSetDAO();
+    private void insertNumberOfEmptySets(int n) {
+        for (int i = 0; i < n; i++) {
+            dao.insertSet(new PerformanceSet());
+        }
     }
 }
