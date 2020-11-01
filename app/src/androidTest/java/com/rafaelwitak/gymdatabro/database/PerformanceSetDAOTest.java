@@ -144,7 +144,23 @@ public class PerformanceSetDAOTest extends DaoTest {
 
     @Test
     public void getAllBetweenTimestamps() {
-        //TODO: implement.
+        Date d1 = new Date();
+        d1.setTime(d1.getTime() - 10000);
+
+        createEmptyExerciseWithId(EMPTY_PS_EXERCISE_ID);
+        insertNumberOfEmptySets(TEST_SIZE);
+
+        Date d2 = new Date();
+
+        PerformanceSet beforeD1 = new PerformanceSet();
+        beforeD1.timestamp.setTime(beforeD1.timestamp.getTime() - 50000);
+        dao.insertSet(beforeD1);
+
+        PerformanceSet afterD2 = new PerformanceSet();
+        afterD2.timestamp.setTime(afterD2.timestamp.getTime() + 50000);
+        dao.insertSet(afterD2);
+
+        assertThat(dao.getAllBetweenTimestamps(d1, d2).size()).isEqualTo(TEST_SIZE);
     }
 
     @Test
