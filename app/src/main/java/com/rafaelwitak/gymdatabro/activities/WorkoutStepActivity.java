@@ -79,7 +79,6 @@ public class WorkoutStepActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 savePerformanceSet(getPerformedSet());
-                //FIXME: Should not work when input incomplete
 
                 if (isLastWorkoutStep(currentWorkoutStep)){
                     finish();

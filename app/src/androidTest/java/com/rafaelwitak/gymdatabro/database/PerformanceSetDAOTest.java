@@ -12,12 +12,16 @@ import static com.google.common.truth.Truth.assertThat;
 public class PerformanceSetDAOTest extends DaoTest {
 
     private PerformanceSetDAO dao;
+
+    final int TEST_SIZE = 42;
     private static final int TEST_EXERCISE_ID = 123;
+    private static final int EMPTY_PS_EXERCISE_ID = new PerformanceSet().exerciseID;
+
 
     @Override
     public void setup() {
         super.setup();
-        createEmptyExerciseWithTestExerciseId();
+        createEmptyExerciseWithId(TEST_EXERCISE_ID);
     }
 
     @Test
@@ -54,10 +58,10 @@ public class PerformanceSetDAOTest extends DaoTest {
         }
     }
 
-    private void createEmptyExerciseWithTestExerciseId() {
+    private void createEmptyExerciseWithId(int exerciseId) {
         database.exerciseDAO().insertNewExercise(
                 new Exercise(
-                        TEST_EXERCISE_ID,
+                        exerciseId,
                         null,
                         null,
                         null,
@@ -93,17 +97,45 @@ public class PerformanceSetDAOTest extends DaoTest {
 
     @Test
     public void getAllSets() {
-        //TODO: implement.
+        createEmptyExerciseWithId(EMPTY_PS_EXERCISE_ID);
+
+        for (int i = 0; i < TEST_SIZE; i++) {
+            dao.insertSet(new PerformanceSet());
+        }
+
+        assertThat(dao.getAllSets().size()).isEqualTo(TEST_SIZE);
     }
 
     @Test
     public void getSetByRowId() {
-        //TODO: implement.
+        createEmptyExerciseWithId(EMPTY_PS_EXERCISE_ID);
+
+        for (int i = 0; i < TEST_SIZE; i++) {
+            dao.insertSet(new PerformanceSet());
+        }
+
+        PerformanceSet testSet = new PerformanceSet();
+        testSet.secondsPerformed = 365;
+
+        long rowId = dao.insertSet(testSet);
+
+        assertThat(dao.getSetByRowId(rowId).secondsPerformed).isEqualTo(testSet.secondsPerformed);
     }
 
     @Test
     public void getAllByExerciseID() {
-        //TODO: implement.
+        for (int i = 0; i < TEST_SIZE; i++) {
+            PerformanceSet p = new PerformanceSet();
+            p.exerciseID = TEST_EXERCISE_ID;
+            dao.insertSet(p);
+        }
+
+        createEmptyExerciseWithId(EMPTY_PS_EXERCISE_ID);
+        for (int i = 0; i < TEST_SIZE + 1; i++) {
+            dao.insertSet(new PerformanceSet());
+        }
+
+        assertThat(dao.getAllByExerciseID(TEST_EXERCISE_ID).size()).isEqualTo(TEST_SIZE);
     }
 
     @Test
