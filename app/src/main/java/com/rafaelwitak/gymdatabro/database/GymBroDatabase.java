@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
                 Workout.class,
                 WorkoutStep.class
         },
-        version = 8,
+        version = 9,
         exportSchema = true
 )
 @TypeConverters({Converters.class})

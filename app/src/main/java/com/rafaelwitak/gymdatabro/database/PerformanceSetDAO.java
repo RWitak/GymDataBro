@@ -2,6 +2,7 @@ package com.rafaelwitak.gymdatabro.database;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -22,7 +23,7 @@ public interface PerformanceSetDAO {
     @Query("SELECT * FROM sets WHERE timestamp BETWEEN :from AND :to")
     List<PerformanceSet> getAllBetweenTimestamps(Date from, Date to);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insertSet(PerformanceSet performanceSet);
 
     @Update
