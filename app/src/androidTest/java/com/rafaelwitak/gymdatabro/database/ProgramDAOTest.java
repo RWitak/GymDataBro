@@ -3,6 +3,7 @@ package com.rafaelwitak.gymdatabro.database;
 import android.database.sqlite.SQLiteException;
 
 import org.junit.Test;
+
 import static com.google.common.truth.Truth.assertThat;
 
 public class ProgramDAOTest extends DaoTest {
@@ -31,7 +32,7 @@ public class ProgramDAOTest extends DaoTest {
     }
 
     @Test
-    public void insertProgram() {
+    public void insertEmptyProgramShouldNotThrowException() {
         SQLiteException expectedException = null;
 
         try {
@@ -44,7 +45,31 @@ public class ProgramDAOTest extends DaoTest {
     }
 
     @Test
+    public void insertShouldReplaceOnConflict() {
+        Program p1 = new Program();
+        p1.id = 1;
+        p1.number_workouts = 7;
+
+        Program pAlso1 = new Program();
+        pAlso1.id = 1;
+        pAlso1.number_workouts = p1.number_workouts - 1;
+
+        dao.insertProgram(p1);
+        dao.insertProgram(pAlso1);
+
+        assertThat(dao.getProgramByID(1).number_workouts).isEqualTo(pAlso1.number_workouts);
+    }
+    @Test
     public void updateProgram() {
+        Program p = new Program();
+        p.id = 33;
+        dao.insertProgram(p);
+
+        Program pFromDb = dao.getProgramByID(33);
+        pFromDb.number_workouts = 22;
+        dao.updateProgram(pFromDb);
+
+        assertThat(dao.getProgramByID(33).number_workouts).isNotEqualTo(p.number_workouts);
     }
 
     @Override
