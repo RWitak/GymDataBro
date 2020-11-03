@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.room.Room;
 
 import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
@@ -19,13 +17,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        database = Room
-                .databaseBuilder(getApplicationContext(), GymBroDatabase.class, "gym_data")
-                .createFromAsset("gymdata.db")
-                .allowMainThreadQueries()
-                .build();
+        database = GymBroDatabase.getDatabase(this);
 
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        setSupportActionBar(findViewById(R.id.toolbar));
     }
 
     public void resumeWorkout(View view) {

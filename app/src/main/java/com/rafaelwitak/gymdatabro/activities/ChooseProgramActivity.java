@@ -25,7 +25,7 @@ public class ChooseProgramActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        database = MainActivity.database;
+        database = GymBroDatabase.getDatabase(this);
         setContentView(R.layout.activity_choose_program);
         chooseProgramToolbar = findViewById(R.id.choose_program_toolbar);
         createProgramFAB = findViewById(R.id.choose_program_button_create);

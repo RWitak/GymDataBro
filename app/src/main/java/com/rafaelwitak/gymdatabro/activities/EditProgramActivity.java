@@ -16,6 +16,7 @@ import java.util.List;
 
 public class EditProgramActivity extends AppCompatActivity {
 
+    private GymBroDatabase database;
     private ActivityEditProgramBinding binding;
     private Program program;
     private boolean isNewProgram;
@@ -29,6 +30,7 @@ public class EditProgramActivity extends AppCompatActivity {
         isNewProgram = (programID == -1);
 
         this.program = getProgramByID(programID);
+        this.database = GymBroDatabase.getDatabase(this);
 
         binding = ActivityEditProgramBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -42,11 +44,11 @@ public class EditProgramActivity extends AppCompatActivity {
         if (isNewProgram) {
             return new Program();
         }
-        return MainActivity.database.programDAO().getProgramByID(programID);
+        return database.programDAO().getProgramByID(programID);
     }
 
     private EditProgramRowHolder getEditProgramRowHolder() {
-        return new EditProgramRowHolder(binding, program);
+        return new EditProgramRowHolder(this, binding, program);
     }
 
     private Program getProgramFromRowHolder() {
@@ -96,7 +98,7 @@ public class EditProgramActivity extends AppCompatActivity {
 
     private boolean isUniqueProgramName(Program currentProgram) {
         String name = currentProgram.name;
-        List<Program> programs = MainActivity.database.programDAO().getAllPrograms();
+        List<Program> programs = database.programDAO().getAllPrograms();
 
         for ( Program program : programs) {
             if (name.equalsIgnoreCase(program.name)) {
@@ -118,7 +120,6 @@ public class EditProgramActivity extends AppCompatActivity {
     }
 
     private void saveProgramToDatabase(Program program) {
-        GymBroDatabase database = MainActivity.database;
         database.programDAO().insertProgram(program);
     }
 }

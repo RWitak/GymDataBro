@@ -20,8 +20,7 @@ import java.util.concurrent.Executors;
                 Workout.class,
                 WorkoutStep.class
         },
-        version = 9,
-        exportSchema = true
+        version = 9
 )
 @TypeConverters({Converters.class})
 public abstract class GymBroDatabase extends RoomDatabase {
@@ -39,13 +38,18 @@ public abstract class GymBroDatabase extends RoomDatabase {
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    // nice Singleton getter that's never used and doesn't build from asset (see MainActivity!)
     public static GymBroDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (GymBroDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            GymBroDatabase.class, "gym_bro_database")
+                    INSTANCE = Room
+                            .databaseBuilder(
+                                    context.getApplicationContext(),
+                                    GymBroDatabase.class,
+                                    "gym_data")
+                            .createFromAsset("gymdata.db")
+                            .allowMainThreadQueries()
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

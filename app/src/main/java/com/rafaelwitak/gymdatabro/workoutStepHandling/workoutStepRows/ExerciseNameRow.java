@@ -10,7 +10,7 @@ import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRow;
 
 public class ExerciseNameRow extends WorkoutStepRow {
-    private GymBroDatabase database = MainActivity.database;
+    private GymBroDatabase database = MainActivity.database; //FIXME (and occurrences below)
 
     private TextView nameView;
     private TextView progressView;
