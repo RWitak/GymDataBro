@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -58,6 +59,7 @@ public class PerformanceSet {
     @Nullable
     public String notes;
 
+    @Ignore
     public PerformanceSet(@Nullable Integer id,
                           @Nullable Date timestamp,
                           int exerciseID,

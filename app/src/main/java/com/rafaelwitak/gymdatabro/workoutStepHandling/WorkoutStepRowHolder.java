@@ -18,13 +18,13 @@ import java.util.List;
 
 public class WorkoutStepRowHolder{
 
-    private ExerciseNameRow exerciseNameRow;
-    private RepsRow repsRow;
-    private WeightRow weightRow;
-    private RPERow rpeRow;
-    private DurationRow durationRow;
-    private RestRow restRow;
-    private PainSlider painSlider;
+    private final ExerciseNameRow exerciseNameRow;
+    private final RepsRow repsRow;
+    private final WeightRow weightRow;
+    private final RPERow rpeRow;
+    private final DurationRow durationRow;
+    private final RestRow restRow;
+    private final PainSlider painSlider;
 
     public WorkoutStepRowHolder(ActivityWorkoutStepBinding binding,
                                 WorkoutStep currentWorkoutStep,
