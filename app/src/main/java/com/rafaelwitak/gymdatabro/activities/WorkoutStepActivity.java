@@ -62,7 +62,10 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     // Set visibility and/or data for the WorkoutStep's View's Rows
     private void setUpWorkoutStepViewRows() {
-        WorkoutStepRowHolder rowHolder = new WorkoutStepRowHolder(binding, currentWorkoutStep);
+        WorkoutStepRowHolder rowHolder = new WorkoutStepRowHolder(
+                binding,
+                currentWorkoutStep,
+                this);
         for ( WorkoutStepRow row : rowHolder.getRows() ) {
             row.setup();
         }

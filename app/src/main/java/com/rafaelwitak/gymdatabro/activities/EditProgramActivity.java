@@ -26,11 +26,12 @@ public class EditProgramActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        this.database = GymBroDatabase.getDatabase(this);
+
         int programID = getIntent().getIntExtra("programID", -1);
         isNewProgram = (programID == -1);
 
         this.program = getProgramByID(programID);
-        this.database = GymBroDatabase.getDatabase(this);
 
         binding = ActivityEditProgramBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

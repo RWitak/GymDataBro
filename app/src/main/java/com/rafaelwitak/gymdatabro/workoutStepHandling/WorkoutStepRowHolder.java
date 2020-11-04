@@ -1,5 +1,7 @@
 package com.rafaelwitak.gymdatabro.workoutStepHandling;
 
+import android.content.Context;
+
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.DurationRow;
@@ -25,8 +27,9 @@ public class WorkoutStepRowHolder{
     private PainSlider painSlider;
 
     public WorkoutStepRowHolder(ActivityWorkoutStepBinding binding,
-                                WorkoutStep currentWorkoutStep) {
-        this.exerciseNameRow = new ExerciseNameRow(binding, currentWorkoutStep);
+                                WorkoutStep currentWorkoutStep,
+                                Context context) {
+        this.exerciseNameRow = new ExerciseNameRow(binding, currentWorkoutStep, context);
         this.repsRow = new RepsRow(binding, currentWorkoutStep);
         this.weightRow = new WeightRow(binding, currentWorkoutStep);
         this.rpeRow = new RPERow(binding, currentWorkoutStep);
