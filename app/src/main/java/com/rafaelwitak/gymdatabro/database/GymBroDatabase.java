@@ -34,10 +34,15 @@ public abstract class GymBroDatabase extends RoomDatabase {
     public abstract WorkoutStepDAO workoutStepDAO();
 
     private static volatile GymBroDatabase INSTANCE;
+    /*
+    // Only needed if DB should be created freshly at each start.
+    // Callback must be added,
+    // see https://developer.android.com/codelabs/android-room-with-a-view#12
+
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-
+    */
     public static GymBroDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (GymBroDatabase.class) {
