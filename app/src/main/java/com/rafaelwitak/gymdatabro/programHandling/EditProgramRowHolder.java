@@ -2,7 +2,7 @@ package com.rafaelwitak.gymdatabro.programHandling;
 
 import android.content.Context;
 
-import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
+import com.rafaelwitak.gymdatabro.EditRowHolder;
 import com.rafaelwitak.gymdatabro.database.Program;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditProgramBinding;
 import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.InfoRow;
@@ -14,8 +14,7 @@ import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.SourceRow;
 import java.util.Arrays;
 import java.util.List;
 
-public class EditProgramRowHolder {
-    private final GymBroDatabase database;
+public class EditProgramRowHolder extends EditRowHolder {
     private final Program program;
 
     private final NameRow nameRow;
@@ -28,7 +27,7 @@ public class EditProgramRowHolder {
 //    private final NumberWorkoutsRow numberWorkoutsRow;
 
     public EditProgramRowHolder(Context context, ActivityEditProgramBinding binding, Program program) {
-        this.database = GymBroDatabase.getDatabase(context);
+        super(context);
         this.program = program;
 
         this.nameRow = new NameRow(binding);
