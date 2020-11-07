@@ -2,8 +2,6 @@ package com.rafaelwitak.gymdatabro;
 
 import android.widget.EditText;
 
-import com.rafaelwitak.gymdatabro.database.Program;
-
 public abstract class EditRow {
     protected EditText editText;
 
@@ -29,5 +27,4 @@ public abstract class EditRow {
         this.editText.requestFocus();
     }
 
-    public abstract void setPreFilledText(Program program);
 }
