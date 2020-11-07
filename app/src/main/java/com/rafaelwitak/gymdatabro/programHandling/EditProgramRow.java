@@ -1,6 +1,7 @@
 package com.rafaelwitak.gymdatabro.programHandling;
 
 import com.rafaelwitak.gymdatabro.EditRow;
+import com.rafaelwitak.gymdatabro.EditRow;
 import com.rafaelwitak.gymdatabro.database.Program;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditProgramBinding;
 
