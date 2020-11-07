@@ -1,6 +1,7 @@
 package com.rafaelwitak.gymdatabro.exerciseHandling;
 
 import com.rafaelwitak.gymdatabro.EditRow;
+import com.rafaelwitak.gymdatabro.database.Exercise;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditExerciseBinding;
 
 public abstract class EditExerciseRow extends EditRow {
@@ -11,4 +12,6 @@ public abstract class EditExerciseRow extends EditRow {
         super();
         this.binding = binding;
     }
+
+    public abstract void setPreFilledText(Exercise exercise);
 }
