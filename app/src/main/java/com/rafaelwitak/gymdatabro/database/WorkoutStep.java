@@ -26,6 +26,10 @@ import androidx.room.Index;
                 @Index(value = {"exercise_id", "number"})
         })
 public class WorkoutStep {
+    //TODO: Create new (nullable) column to save exercise name as either:
+    // * name_id (see comment in exercise)
+    // * or String (might get tiresome to enter for each exercise, depending on implementation!)
+
     @ColumnInfo(name = "workout_id")
     public int workoutID;
 
