@@ -7,7 +7,6 @@ import com.rafaelwitak.gymdatabro.database.Exercise;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditExerciseBinding;
 import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.CuesRow;
 import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.EquipmentRow;
-import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.ImageUriRow;
 import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.LinksRow;
 import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.NamesRow;
 
@@ -20,7 +19,6 @@ public class EditExerciseRowHolder extends EditRowHolder {
     private final NamesRow namesRow;
     private final CuesRow cuesRow;
     private final LinksRow linksRow;
-    private final ImageUriRow imageUriRow;
     private final EquipmentRow equipmentRow;
 
     public EditExerciseRowHolder(
@@ -34,7 +32,6 @@ public class EditExerciseRowHolder extends EditRowHolder {
         this.namesRow = new NamesRow(binding);
         this.cuesRow = new CuesRow(binding);
         this.linksRow = new LinksRow(binding);
-        this.imageUriRow = new ImageUriRow(binding);
         this.equipmentRow = new EquipmentRow(binding);
     }
 
@@ -43,7 +40,6 @@ public class EditExerciseRowHolder extends EditRowHolder {
                 this.namesRow,
                 this.cuesRow,
                 this.linksRow,
-                this.imageUriRow,
                 this.equipmentRow
         );
     }
