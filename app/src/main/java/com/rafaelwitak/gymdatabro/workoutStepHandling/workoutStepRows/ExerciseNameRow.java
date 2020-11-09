@@ -1,16 +1,16 @@
 package com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.rafaelwitak.gymdatabro.activities.MainActivity;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRow;
 
 public class ExerciseNameRow extends WorkoutStepRow {
-    private GymBroDatabase database = MainActivity.database; //FIXME (and occurrences below)
+    private final GymBroDatabase database;
 
     private final TextView nameView;
     private final TextView progressView;
@@ -18,9 +18,13 @@ public class ExerciseNameRow extends WorkoutStepRow {
     private final String progress;
 
 
-    public ExerciseNameRow(ActivityWorkoutStepBinding binding, WorkoutStep workoutStep) {
+    public ExerciseNameRow(
+            ActivityWorkoutStepBinding binding,
+            WorkoutStep workoutStep,
+            Context context) {
         super(binding, workoutStep);
 
+        this.database = GymBroDatabase.getDatabase(context);
         this.nameView = getStepExerciseNameTitle();
         this.progressView = getStepExerciseNameProgressRatio();
         this.progress = getProgress();
