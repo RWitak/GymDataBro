@@ -26,7 +26,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 @TypeConverters({Converters.class})
 public abstract class GymBroDatabase extends RoomDatabase {
     public abstract ExerciseDAO exerciseDAO();
-    public abstract ExerciseNameDAO exerciseNameDAO();
     public abstract MuscleGroupDAO muscleGroupDAO();
     public abstract MuscleInvolvementDAO muscleInvolvementDAO();
     public abstract ProgramDAO programDAO();
