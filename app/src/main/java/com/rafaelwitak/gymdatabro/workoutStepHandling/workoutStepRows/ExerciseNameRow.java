@@ -18,9 +18,10 @@ public class ExerciseNameRow extends WorkoutStepRow {
     private final String progress;
 
 
-    public ExerciseNameRow(ActivityWorkoutStepBinding binding,
-                           WorkoutStep workoutStep,
-                           Context context) {
+    public ExerciseNameRow(
+            ActivityWorkoutStepBinding binding,
+            WorkoutStep workoutStep,
+            Context context) {
         super(binding, workoutStep);
 
         this.database = GymBroDatabase.getDatabase(context);
