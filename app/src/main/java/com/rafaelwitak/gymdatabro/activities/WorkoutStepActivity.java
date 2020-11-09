@@ -182,10 +182,4 @@ public class WorkoutStepActivity extends AppCompatActivity {
         }
         return null;
     }
-
-    public String getCurrentExerciseName() {
-        Integer exerciseId = currentWorkoutStep.exerciseID;
-        //TODO get name by exercise name id (yet to be implemented) or main name if not exists
-        return null;
-    }
 }

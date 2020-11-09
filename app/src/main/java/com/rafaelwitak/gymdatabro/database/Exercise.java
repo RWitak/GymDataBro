@@ -44,7 +44,7 @@ public class Exercise {
 
     @ColumnInfo
     @Nullable
-    public String name; // TODO: Access this field instead of querying obsolete ExerciseNameDao!
+    public String name;
 
     @ColumnInfo
     @Nullable

@@ -36,7 +36,7 @@ public class WorkoutStep {
 
     @ColumnInfo
     @Nullable
-    public String name; // TODO: Use this field where possible, else fall back to exercise name.
+    public String name;
 
     @ColumnInfo(name = "exercise_id")
     @NonNull
