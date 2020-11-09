@@ -45,13 +45,21 @@ public class EditExerciseRowHolder extends EditRowHolder {
         );
     }
 
-    public Exercise getExercise() {
-        return setupExerciseFromRowsInputs();
+    public Exercise getUpdatedExercise() {
+        updateExerciseNames(); //TODO: Call externally (would introduce side effects here!)
+        return setupExerciseFromRowsInputs(this.exercise);
     }
 
-    private Exercise setupExerciseFromRowsInputs() {
-        //TODO: Set up methods to correctly process inputs
-        return null;
+    private Exercise setupExerciseFromRowsInputs(Exercise exercise) {
+        exercise.cues = cuesRow.getEditTextValueAsString();
+        exercise.links = linksRow.getEditTextValueAsString();
+        exercise.equipment = equipmentRow.getEditTextValueAsString();
+
+        return exercise;
+    }
+
+    private void updateExerciseNames() {
+        //TODO: Update exercise_names table in DB with edited names for exercise
     }
 
     private String getExerciseNamesAsString(List<ExerciseName> namesList) {
