@@ -5,13 +5,13 @@ import android.widget.EditText;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditExerciseBinding;
 import com.rafaelwitak.gymdatabro.exerciseHandling.EditExerciseRow;
 
-public class NamesRow extends EditExerciseRow {
-    public NamesRow(ActivityEditExerciseBinding binding) {
+public class NameRow extends EditExerciseRow {
+    public NameRow(ActivityEditExerciseBinding binding) {
         super(binding);
     }
 
     @Override
     protected EditText getEditText() {
-        return this.binding.editExerciseNamesEdit;
+        return this.binding.editExerciseNameEdit;
     }
 }

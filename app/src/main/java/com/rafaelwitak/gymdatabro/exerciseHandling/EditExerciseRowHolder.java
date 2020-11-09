@@ -8,7 +8,7 @@ import com.rafaelwitak.gymdatabro.databinding.ActivityEditExerciseBinding;
 import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.CuesRow;
 import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.EquipmentRow;
 import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.LinksRow;
-import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.NamesRow;
+import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.NameRow;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 public class EditExerciseRowHolder extends EditRowHolder {
     private final Exercise exercise;
 
-    private final NamesRow namesRow;
+    private final NameRow nameRow;
     private final CuesRow cuesRow;
     private final LinksRow linksRow;
     private final EquipmentRow equipmentRow;
@@ -29,7 +29,7 @@ public class EditExerciseRowHolder extends EditRowHolder {
         super(context);
         this.exercise = exercise;
 
-        this.namesRow = new NamesRow(binding);
+        this.nameRow = new NameRow(binding);
         this.cuesRow = new CuesRow(binding);
         this.linksRow = new LinksRow(binding);
         this.equipmentRow = new EquipmentRow(binding);
@@ -37,7 +37,7 @@ public class EditExerciseRowHolder extends EditRowHolder {
 
     public List<EditExerciseRow> getRows() {
         return Arrays.asList(
-                this.namesRow,
+                this.nameRow,
                 this.cuesRow,
                 this.linksRow,
                 this.equipmentRow
@@ -49,7 +49,7 @@ public class EditExerciseRowHolder extends EditRowHolder {
     }
 
     private Exercise setupExerciseFromRowsInputs(Exercise exercise) {
-        exercise.name = namesRow.getEditTextValueAsString();
+        exercise.name = nameRow.getEditTextValueAsString();
         exercise.cues = cuesRow.getEditTextValueAsString();
         exercise.links = linksRow.getEditTextValueAsString();
         exercise.equipment = equipmentRow.getEditTextValueAsString();
@@ -58,7 +58,7 @@ public class EditExerciseRowHolder extends EditRowHolder {
     }
 
     public void setupRowTexts(Exercise exercise) {
-        namesRow.setPreFilledText(exercise.name);
+        nameRow.setPreFilledText(exercise.name);
         cuesRow.setPreFilledText(exercise.cues);
         linksRow.setPreFilledText(exercise.links);
         equipmentRow.setPreFilledText(exercise.equipment);
