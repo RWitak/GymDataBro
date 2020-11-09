@@ -19,7 +19,6 @@ import androidx.room.PrimaryKey;
         }
         )
 public class ExerciseName {
-    //TODO: Create new (primary!) column for name_id?
 
     @PrimaryKey
     @NonNull
