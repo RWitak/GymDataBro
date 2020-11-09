@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.rafaelwitak.gymdatabro.EditRowHolder;
 import com.rafaelwitak.gymdatabro.database.Exercise;
+import com.rafaelwitak.gymdatabro.database.ExerciseName;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditExerciseBinding;
 import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.CuesRow;
 import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.EquipmentRow;
@@ -53,9 +54,31 @@ public class EditExerciseRowHolder extends EditRowHolder {
         return null;
     }
 
-    public void setupRowTexts(Exercise exercise) {
-        for ( EditExerciseRow row : getRows() ) {
-            row.setPreFilledText(exercise);
+    private String getExerciseNamesAsString(List<ExerciseName> namesList) {
+        StringBuilder concatenatedExerciseNames = new StringBuilder();
+
+        for (int i = 0; i < namesList.size(); i++) {
+            concatenatedExerciseNames.append(namesList.get(i).name);
+            if (i < namesList.size() - 1) {
+                concatenatedExerciseNames.append("; ");
+            }
         }
+
+        return concatenatedExerciseNames.toString();
+    }
+
+    private List<ExerciseName> getExerciseNamesList() {
+        return database.exerciseNameDAO().getAllNamesByID(this.exercise.id);
+    }
+
+    public void setupRowTexts(Exercise exercise) {
+        cuesRow.setPreFilledText(exercise.cues);
+        linksRow.setPreFilledText(exercise.links);
+        equipmentRow.setPreFilledText(exercise.equipment);
+        namesRow.setPreFilledText(getTextForExerciseNamePreFill());
+    }
+
+    private String getTextForExerciseNamePreFill() {
+        return getExerciseNamesAsString(getExerciseNamesList());
     }
 }
