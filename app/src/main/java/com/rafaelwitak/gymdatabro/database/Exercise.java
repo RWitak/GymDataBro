@@ -3,10 +3,13 @@ package com.rafaelwitak.gymdatabro.database;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "exercises")
+@Entity(
+        tableName = "exercises",
+        indices = {@Index(value = "name", unique = true)})
 public class Exercise {
 
     public Exercise() {}
@@ -14,6 +17,7 @@ public class Exercise {
     @Ignore
     public Exercise(
             int id,
+            @Nullable String name,
             @Nullable Float pr,
             @Nullable String cues,
             @Nullable String links,
@@ -27,6 +31,7 @@ public class Exercise {
 
     @Ignore
     public Exercise(
+            @Nullable String name,
             @Nullable Float pr,
             @Nullable String cues,
             @Nullable String links,
@@ -39,6 +44,10 @@ public class Exercise {
 
     @PrimaryKey(autoGenerate = true)
     public int id;
+
+    @ColumnInfo
+    @Nullable
+    public String name; // TODO: Access this field instead of querying obsolete ExerciseNameDao!
 
     @ColumnInfo
     @Nullable
