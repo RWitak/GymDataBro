@@ -13,7 +13,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 @androidx.room.Database(
         entities={
                 Exercise.class,
-                ExerciseName.class,
                 MuscleGroup.class,
                 MuscleInvolvement.class,
                 Program.class,
@@ -21,7 +20,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
                 Workout.class,
                 WorkoutStep.class
         },
-        version = 11
+        version = 12
 )
 @TypeConverters({Converters.class})
 public abstract class GymBroDatabase extends RoomDatabase {
@@ -54,7 +53,7 @@ public abstract class GymBroDatabase extends RoomDatabase {
                                     "gym_data")
                             .createFromAsset("gymdata.db")
                             .allowMainThreadQueries()
-                            .addMigrations(MIGRATION_9_10, MIGRATION_10_11)
+                            .addMigrations(MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12)
                             .fallbackToDestructiveMigration()
                             .build();
                 }
@@ -64,41 +63,11 @@ public abstract class GymBroDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-
-    static final Migration MIGRATION_9_10 = new Migration(9, 10) {
-        // Deleting columns img_a & img_b from exercises directly is not possible in SQLite
-        // Therefore, we back the table up, drop and recreate it.
+    static final Migration MIGRATION_11_12 = new Migration(11, 12) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             database.execSQL(
-                    "CREATE TEMPORARY TABLE exercises_backup(" +
-                            " id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-                            " pr    REAL, " +
-                            " cues  TEXT, " +
-                            " links TEXT, " +
-                            " equipment     TEXT)"
-            );
-            database.execSQL(
-                    "INSERT INTO exercises_backup " +
-                    "SELECT id, pr, cues, links, equipment FROM exercises"
-            );
-            database.execSQL(
-                    "DROP TABLE exercises"
-            );
-            database.execSQL(
-                    "CREATE TABLE exercises (" +
-                    " id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-                    " pr    REAL, " +
-                    " cues  TEXT, " +
-                    " links TEXT, " +
-                    " equipment     TEXT)"
-            );
-            database.execSQL(
-                    "INSERT INTO exercises " +
-                    "SELECT id, pr, cues, links, equipment FROM exercises_backup"
-            );
-            database.execSQL(
-                    "DROP TABLE exercises_backup"
+                    "DROP TABLE exercise_names"
             );
         }
     };
@@ -111,12 +80,12 @@ public abstract class GymBroDatabase extends RoomDatabase {
             // Recreate 'exercises' table with added 'name' column
             database.execSQL(
                     "CREATE TEMPORARY TABLE exercises_backup(" +
-                    " id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-                    " name  TEXT UNIQUE, " +
-                    " pr    REAL, " +
-                    " cues  TEXT, " +
-                    " links TEXT, " +
-                    " equipment     TEXT) ;"
+                            " id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                            " name  TEXT UNIQUE, " +
+                            " pr    REAL, " +
+                            " cues  TEXT, " +
+                            " links TEXT, " +
+                            " equipment     TEXT) ;"
             );
             database.execSQL(
                     "INSERT INTO exercises_backup SELECT * FROM exercises"
@@ -126,16 +95,16 @@ public abstract class GymBroDatabase extends RoomDatabase {
             );
             database.execSQL(
                     "CREATE TABLE exercises (" +
-                    " id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-                    " name  TEXT UNIQUE, " +
-                    " pr    REAL, " +
-                    " cues  TEXT, " +
-                    " links TEXT, " +
-                    " equipment     TEXT)"
+                            " id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                            " name  TEXT UNIQUE, " +
+                            " pr    REAL, " +
+                            " cues  TEXT, " +
+                            " links TEXT, " +
+                            " equipment     TEXT)"
             );
             database.execSQL(
                     "INSERT INTO exercises(id, pr, cues, links, equipment) " +
-                    "SELECT id, pr, cues, links, equipment FROM exercises_backup"
+                            "SELECT id, pr, cues, links, equipment FROM exercises_backup"
             );
             database.execSQL(
                     "DROP TABLE exercises_backup"
@@ -159,7 +128,7 @@ public abstract class GymBroDatabase extends RoomDatabase {
                             "FOREIGN KEY(workout_id) REFERENCES workouts(id) " +
                             "ON UPDATE NO ACTION ON DELETE NO ACTION, " +
                             "PRIMARY KEY(workout_id,number) " +
-                    ");"
+                            ");"
             );
             database.execSQL(
                     "INSERT INTO workout_steps_backup SELECT * FROM workout_steps"
@@ -185,7 +154,7 @@ public abstract class GymBroDatabase extends RoomDatabase {
                             "FOREIGN KEY(workout_id) REFERENCES workouts(id) " +
                             "ON UPDATE NO ACTION ON DELETE NO ACTION, " +
                             "PRIMARY KEY(workout_id,number) " +
-                    ");"
+                            ");"
             );
             database.execSQL(
                     "INSERT INTO workout_steps(" +
@@ -199,10 +168,48 @@ public abstract class GymBroDatabase extends RoomDatabase {
                             "rest_seconds, " +
                             "details, " +
                             "notes" +
-                    ") SELECT * FROM workout_steps_backup"
+                            ") SELECT * FROM workout_steps_backup"
             );
             database.execSQL(
                     "DROP TABLE workout_steps_backup"
+            );
+        }
+    };
+
+    static final Migration MIGRATION_9_10 = new Migration(9, 10) {
+        // Deleting columns img_a & img_b from exercises directly is not possible in SQLite
+        // Therefore, we back the table up, drop and recreate it.
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL(
+                    "CREATE TEMPORARY TABLE exercises_backup(" +
+                            " id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                            " pr    REAL, " +
+                            " cues  TEXT, " +
+                            " links TEXT, " +
+                            " equipment     TEXT)"
+            );
+            database.execSQL(
+                    "INSERT INTO exercises_backup " +
+                            "SELECT id, pr, cues, links, equipment FROM exercises"
+            );
+            database.execSQL(
+                    "DROP TABLE exercises"
+            );
+            database.execSQL(
+                    "CREATE TABLE exercises (" +
+                            " id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                            " pr    REAL, " +
+                            " cues  TEXT, " +
+                            " links TEXT, " +
+                            " equipment     TEXT)"
+            );
+            database.execSQL(
+                    "INSERT INTO exercises " +
+                            "SELECT id, pr, cues, links, equipment FROM exercises_backup"
+            );
+            database.execSQL(
+                    "DROP TABLE exercises_backup"
             );
         }
     };
