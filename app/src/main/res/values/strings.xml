@@ -33,7 +33,7 @@
     <string name="edit_program_label_number_of_workouts">Number of Workouts</string>
     <string name="edit_program_button_save_text">Save Program</string>
     <string name="edit_exercise_button_save_text">Save Exercise</string>
-    <string name="edit_exercise_label_names">Names</string>
+    <string name="edit_exercise_label_name">Name</string>
     <string name="edit_exercise_label_cues">Cues</string>
     <string name="edit_exercise_label_links">Links</string>
     <string name="edit_exercise_label_equipment">Equipment</string>
