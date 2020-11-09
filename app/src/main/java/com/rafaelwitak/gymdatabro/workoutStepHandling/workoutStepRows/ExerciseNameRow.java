@@ -58,17 +58,16 @@ public class ExerciseNameRow extends WorkoutStepRow {
 
 
     private void setupNameView() {
-        this.nameView.setText(getCurrentExerciseName());
+        this.nameView.setText(getCurrentWorkoutStepName());
     }
 
-    private String getCurrentExerciseName() {
-        String name = database.exerciseNameDAO().getMainNameByID(currentWorkoutStep.exerciseID);
+    private String getCurrentWorkoutStepName() {
+        String name = currentWorkoutStep.name;
 
-        if (name != null) {
-            return name;
+        if (name == null && name.isEmpty()) {
+            return database.exerciseDAO().getExerciseByID(currentWorkoutStep.exerciseID).name;
         }
-
-        return "Unnamed Exercise";
+        return name;
     }
 
 
