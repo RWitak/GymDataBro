@@ -4,11 +4,12 @@ import android.content.Context;
 
 import com.rafaelwitak.gymdatabro.EditRowHolder;
 import com.rafaelwitak.gymdatabro.database.Exercise;
+import com.rafaelwitak.gymdatabro.database.ExerciseName;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditExerciseBinding;
 import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.CuesRow;
 import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.EquipmentRow;
 import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.LinksRow;
-import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.NameRow;
+import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.NamesRow;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 public class EditExerciseRowHolder extends EditRowHolder {
     private final Exercise exercise;
 
-    private final NameRow nameRow;
+    private final NamesRow namesRow;
     private final CuesRow cuesRow;
     private final LinksRow linksRow;
     private final EquipmentRow equipmentRow;
@@ -29,7 +30,7 @@ public class EditExerciseRowHolder extends EditRowHolder {
         super(context);
         this.exercise = exercise;
 
-        this.nameRow = new NameRow(binding);
+        this.namesRow = new NamesRow(binding);
         this.cuesRow = new CuesRow(binding);
         this.linksRow = new LinksRow(binding);
         this.equipmentRow = new EquipmentRow(binding);
@@ -37,30 +38,47 @@ public class EditExerciseRowHolder extends EditRowHolder {
 
     public List<EditExerciseRow> getRows() {
         return Arrays.asList(
-                this.nameRow,
+                this.namesRow,
                 this.cuesRow,
                 this.linksRow,
                 this.equipmentRow
         );
     }
 
-    public Exercise getUpdatedExercise() {
-        return setupExerciseFromRowsInputs(this.exercise);
+    public Exercise getExercise() {
+        return setupExerciseFromRowsInputs();
     }
 
-    private Exercise setupExerciseFromRowsInputs(Exercise exercise) {
-        exercise.name = nameRow.getEditTextValueAsString();
-        exercise.cues = cuesRow.getEditTextValueAsString();
-        exercise.links = linksRow.getEditTextValueAsString();
-        exercise.equipment = equipmentRow.getEditTextValueAsString();
+    private Exercise setupExerciseFromRowsInputs() {
+        //TODO: Set up methods to correctly process inputs
+        return null;
+    }
 
-        return exercise;
+    private String getExerciseNamesAsString(List<ExerciseName> namesList) {
+        StringBuilder concatenatedExerciseNames = new StringBuilder();
+
+        for (int i = 0; i < namesList.size(); i++) {
+            concatenatedExerciseNames.append(namesList.get(i).name);
+            if (i < namesList.size() - 1) {
+                concatenatedExerciseNames.append("; ");
+            }
+        }
+
+        return concatenatedExerciseNames.toString();
+    }
+
+    private List<ExerciseName> getExerciseNamesList() {
+        return database.exerciseNameDAO().getAllNamesByID(this.exercise.id);
     }
 
     public void setupRowTexts(Exercise exercise) {
-        nameRow.setPreFilledText(exercise.name);
         cuesRow.setPreFilledText(exercise.cues);
         linksRow.setPreFilledText(exercise.links);
         equipmentRow.setPreFilledText(exercise.equipment);
+        namesRow.setPreFilledText(getTextForExerciseNamePreFill());
+    }
+
+    private String getTextForExerciseNamePreFill() {
+        return getExerciseNamesAsString(getExerciseNamesList());
     }
 }
