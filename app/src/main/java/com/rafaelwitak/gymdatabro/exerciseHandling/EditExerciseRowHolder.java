@@ -12,6 +12,7 @@ import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.LinksRow;
 import com.rafaelwitak.gymdatabro.exerciseHandling.editExerciseRows.NamesRow;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class EditExerciseRowHolder extends EditRowHolder {
@@ -76,7 +77,10 @@ public class EditExerciseRowHolder extends EditRowHolder {
     }
 
     private List<ExerciseName> getExerciseNamesList() {
-        return database.exerciseNameDAO().getAllNamesByID(this.exercise.id);
+        // FIXME: Use single name from Exercise's name field
+        List<ExerciseName> exerciseNameList = Collections.singletonList(new ExerciseName());
+        exerciseNameList.get(0).name = "I AM NOT A REAL NAME";
+        return exerciseNameList;
     }
 
     public void setupRowTexts(Exercise exercise) {
