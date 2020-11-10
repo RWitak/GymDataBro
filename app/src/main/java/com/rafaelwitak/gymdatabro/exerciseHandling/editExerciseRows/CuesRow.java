@@ -11,7 +11,7 @@ public class CuesRow extends EditExerciseRow {
     }
 
     @Override
-    protected EditText getEditText() {
+    public EditText getEditText(ActivityEditExerciseBinding binding) {
         return this.binding.editExerciseCuesEdit;
     }
 }

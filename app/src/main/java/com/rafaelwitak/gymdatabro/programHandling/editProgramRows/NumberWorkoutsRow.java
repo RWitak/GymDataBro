@@ -12,8 +12,8 @@ public class NumberWorkoutsRow extends EditProgramRow {
     }
 
     @Override
-    protected EditText getEditText() {
-        return binding.editProgramNumberWorkoutsEdit;
+    public EditText getEditText(ActivityEditProgramBinding binding) {
+        return this.binding.editProgramNumberWorkoutsEdit;
     }
 
     @Override

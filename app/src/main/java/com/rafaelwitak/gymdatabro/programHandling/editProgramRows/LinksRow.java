@@ -12,8 +12,8 @@ public class LinksRow extends EditProgramRow {
     }
 
     @Override
-    protected EditText getEditText() {
-        return binding.editProgramLinksEdit;
+    public EditText getEditText(ActivityEditProgramBinding binding) {
+        return this.binding.editProgramLinksEdit;
     }
 
     @Override
