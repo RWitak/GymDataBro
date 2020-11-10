@@ -49,4 +49,10 @@ public class WorkoutStepRowHolder{
             this.painSlider
         );
     }
+
+    public void setupAllRows() {
+        for ( WorkoutStepRow row : getRows() ) {
+            row.setup();
+        }
+    }
 }

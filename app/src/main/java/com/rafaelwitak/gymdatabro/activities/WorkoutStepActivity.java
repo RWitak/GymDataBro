@@ -15,7 +15,6 @@ import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetDataProviderHolder;
 import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetMaker;
-import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRow;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRowHolder;
 
 import java.util.List;
@@ -66,9 +65,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
                 binding,
                 currentWorkoutStep,
                 this);
-        for ( WorkoutStepRow row : rowHolder.getRows() ) {
-            row.setup();
-        }
+        rowHolder.setupAllRows();
     }
 
     private void setUpButton() {
