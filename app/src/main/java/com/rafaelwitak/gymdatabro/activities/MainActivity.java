@@ -31,4 +31,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ChooseProgramActivity.class);
         startActivity(intent);
     }
+
+    public void addExercise(View view) {
+        Intent intent = new Intent(this, EditExerciseActivity.class);
+        startActivity(intent);
+    }
 }
