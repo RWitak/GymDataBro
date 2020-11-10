@@ -5,10 +5,6 @@ import android.widget.EditText;
 public abstract class EditRow {
     protected EditText editText;
 
-    public EditRow() {
-        this.editText = getEditText();
-    }
-
     public Object getEditTextValue() {
         return editText.getText();
     }
@@ -19,8 +15,6 @@ public abstract class EditRow {
         }
         return getEditTextValue().toString().trim();
     }
-
-    protected abstract EditText getEditText();
 
     public void showErrorText(CharSequence error) {
         this.editText.setError(error);

@@ -12,8 +12,8 @@ public class SourceRow extends EditProgramRow {
     }
 
     @Override
-    protected EditText getEditText() {
-        return binding.editProgramSourceEdit;
+    public EditText getEditText(ActivityEditProgramBinding binding) {
+        return this.binding.editProgramSourceEdit;
     }
 
     @Override

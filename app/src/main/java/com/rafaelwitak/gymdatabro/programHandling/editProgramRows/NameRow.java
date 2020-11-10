@@ -12,12 +12,12 @@ public class NameRow extends EditProgramRow {
     }
 
     @Override
-    protected EditText getEditText() {
+    public EditText getEditText(ActivityEditProgramBinding binding) {
         return this.binding.editProgramNameEdit;
     }
 
     @Override
     public void setPreFilledText(Program program) {
-        this.editText.setText(program.name);
+        getEditText(binding).setText(program.name);
     }
 }

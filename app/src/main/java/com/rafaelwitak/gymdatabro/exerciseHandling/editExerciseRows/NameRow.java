@@ -11,7 +11,7 @@ public class NameRow extends EditExerciseRow {
     }
 
     @Override
-    protected EditText getEditText() {
+    public EditText getEditText(ActivityEditExerciseBinding binding) {
         return this.binding.editExerciseNameEdit;
     }
 }

@@ -12,8 +12,8 @@ public class NotesRow extends EditProgramRow {
     }
 
     @Override
-    protected EditText getEditText() {
-        return binding.editProgramNotesEdit;
+    public EditText getEditText(ActivityEditProgramBinding binding) {
+        return this.binding.editProgramNotesEdit;
     }
 
     @Override

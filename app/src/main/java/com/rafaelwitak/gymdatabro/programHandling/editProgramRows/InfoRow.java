@@ -12,8 +12,8 @@ public class InfoRow extends EditProgramRow {
     }
 
     @Override
-    protected EditText getEditText() {
-        return binding.editProgramInfoEdit;
+    public EditText getEditText(ActivityEditProgramBinding binding) {
+        return this.binding.editProgramInfoEdit;
     }
 
     @Override
