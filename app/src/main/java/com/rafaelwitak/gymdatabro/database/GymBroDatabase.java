@@ -9,7 +9,7 @@ import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-
+// FIXME: Many instances without error handling!
 @androidx.room.Database(
         entities={
                 Exercise.class,

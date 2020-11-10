@@ -44,7 +44,7 @@ public class EditExerciseRowHolder extends EditRowHolder {
         );
     }
 
-    public Exercise getUpdatedExercise() {
+    public Exercise getEditedExercise() {
         return setupExerciseFromRowsInputs(this.exercise);
     }
 

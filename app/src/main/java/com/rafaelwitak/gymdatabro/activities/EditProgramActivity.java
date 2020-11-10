@@ -37,7 +37,6 @@ public class EditProgramActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         this.holder = getEditProgramRowHolder();
         setupViews();
-
     }
 
 
