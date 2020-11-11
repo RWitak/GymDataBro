@@ -14,11 +14,10 @@ public class ExerciseDAOTest extends DaoTest {
     public void populateDb() {
         Exercise regularCase = new Exercise(
                 2,
+                "Name",
                 7.125f,
                 "Cues",
                 "Links",
-                "imgA",
-                "imgB",
                 "Equipment"
         );
         exercises.add(regularCase);
