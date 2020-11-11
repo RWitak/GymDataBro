@@ -20,7 +20,7 @@ public class EditExerciseActivity extends AppCompatActivity {
     private ActivityEditExerciseBinding binding;
     private EditExerciseRowHolder rowHolder;
     private Exercise exercise;
-    private boolean isExistingExercise = true;
+    private boolean isExistingExercise;
     private Intent intent;
 
     @Override

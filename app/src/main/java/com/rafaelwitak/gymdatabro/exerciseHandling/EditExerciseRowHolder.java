@@ -58,10 +58,9 @@ public class EditExerciseRowHolder extends EditRowHolder {
     }
 
     public void setupRowTexts(Exercise exercise) {
-        // FIXME: exercise is null
-//        nameRow.setPreFilledText(exercise.name);
-//        cuesRow.setPreFilledText(exercise.cues);
-//        linksRow.setPreFilledText(exercise.links);
-//        equipmentRow.setPreFilledText(exercise.equipment);
+        nameRow.setPreFilledText(exercise.name);
+        cuesRow.setPreFilledText(exercise.cues);
+        linksRow.setPreFilledText(exercise.links);
+        equipmentRow.setPreFilledText(exercise.equipment);
     }
 }
