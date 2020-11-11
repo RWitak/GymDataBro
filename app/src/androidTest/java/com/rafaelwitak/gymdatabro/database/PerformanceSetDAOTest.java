@@ -188,7 +188,6 @@ public class PerformanceSetDAOTest extends DaoTest {
                         null,
                         null,
                         null,
-                        null,
                         null
                 ));
     }
