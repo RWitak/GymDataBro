@@ -37,4 +37,5 @@
     <string name="edit_exercise_label_cues">Cues</string>
     <string name="edit_exercise_label_links">Links</string>
     <string name="edit_exercise_label_equipment">Equipment</string>
+    <string name="edit_exercise_label_pr">OneRepMax</string>
 </resources>

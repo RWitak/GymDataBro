@@ -64,6 +64,29 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
         </TableRow>
 
+        <TableRow android:layout_margin="10dp"
+            android:visibility="gone"> <!-- TODO: Use it or remove it -->
+
+            <TextView
+                android:id="@+id/edit_exercise_pr_label"
+                android:layout_width="0dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:labelFor="@+id/edit_exercise_pr_edit"
+                android:text="@string/edit_exercise_label_pr"
+                android:textAlignment="textEnd"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+            <EditText
+                android:id="@+id/edit_exercise_pr_edit"
+                android:layout_width="0dp"
+                android:layout_weight="1.618"
+                android:autofillHints="@null"
+                android:gravity="start"
+                android:inputType="text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        </TableRow>
+
         <TableRow android:layout_margin="10dp">
 
             <TextView
