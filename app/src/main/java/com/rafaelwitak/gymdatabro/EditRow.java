@@ -5,13 +5,13 @@ import android.widget.EditText;
 public abstract class EditRow {
     protected EditText editText;
 
-    public Object getEditTextValue() {
+    public Object getEditTextValue() { // TODO: Change signature to EditText
         return editText.getText();
     }
 
     public String getEditTextValueAsString() {
         if (getEditTextValue().toString().isEmpty()) {
-            return "";
+            return ""; // FIXME
         }
         return getEditTextValue().toString().trim();
     }

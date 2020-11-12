@@ -29,8 +29,8 @@ public class EditExerciseActivity extends AppCompatActivity {
 
         this.intent = getIntent();
         this.database = GymBroDatabase.getDatabase(this);
-        this.exercise = getExercise();
         this.isExistingExercise = getIsExistingExercise();
+        this.exercise = getExercise();
 
         this.binding = ActivityEditExerciseBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
