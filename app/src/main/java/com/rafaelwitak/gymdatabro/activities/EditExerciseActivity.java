@@ -2,10 +2,8 @@ package com.rafaelwitak.gymdatabro.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,8 +12,14 @@ import com.rafaelwitak.gymdatabro.database.Exercise;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditExerciseBinding;
 import com.rafaelwitak.gymdatabro.exerciseHandling.ExerciseSanityChecker;
+import com.rafaelwitak.gymdatabro.exerciseHandling.ExerciseSaveHandler;
 
 import java.util.HashMap;
+
+import static com.rafaelwitak.gymdatabro.EditTextHelper.getTextAsNullableFloat;
+import static com.rafaelwitak.gymdatabro.EditTextHelper.getTextAsTrimmedStringOrNull;
+import static com.rafaelwitak.gymdatabro.StringHelper.getNonNullStringFromNumber;
+import static com.rafaelwitak.gymdatabro.StringHelper.getNonNullStringFromString;
 
 public class EditExerciseActivity extends AppCompatActivity {
 
@@ -23,23 +27,46 @@ public class EditExerciseActivity extends AppCompatActivity {
     private ActivityEditExerciseBinding binding;
     private Exercise exercise;
     private boolean isExistingExercise;
-    private Intent intent;
     private HashMap<String, EditText> editTexts;
+    private ExerciseSaveHandler saveHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.intent = getIntent();
         this.database = GymBroDatabase.getDatabase(this);
-        this.isExistingExercise = getIsExistingExercise();
-        this.exercise = getExercise();
+
+        Intent intent = getIntent();
+        this.isExistingExercise = getIsExistingExercise(intent);
+        this.exercise = getExercise(this.isExistingExercise);
 
         this.binding = ActivityEditExerciseBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         this.editTexts = getEditTexts(this.binding);
         setViews();
+
+        this.saveHandler =
+                new ExerciseSaveHandler(this,
+                        this.database.exerciseDAO(),
+                        this.exercise,
+                        this.isExistingExercise);
+    }
+
+    private boolean getIsExistingExercise(Intent intent) {
+        return intent.hasExtra("exerciseId");
+    }
+
+    private Exercise getExercise(boolean isExistingExercise) {
+        if (isExistingExercise) {
+            return getExerciseFromIntent(getIntent());
+        }
+        return new Exercise();
+    }
+
+    private Exercise getExerciseFromIntent(Intent intent) {
+        int exerciseId = intent.getIntExtra("ExerciseId", -1);
+        return database.exerciseDAO().getExerciseByID(exerciseId);
     }
 
     private HashMap<String, EditText> getEditTexts(
@@ -55,17 +82,6 @@ public class EditExerciseActivity extends AppCompatActivity {
         return map;
     }
 
-    private Exercise getExercise() {
-        if (isExistingExercise) {
-            return getExerciseFromIntent(getIntent());
-        }
-        return new Exercise();
-    }
-
-    private boolean getIsExistingExercise() {
-        return intent.hasExtra("exerciseId");
-    }
-
 
     private void setViews() {
         setupToolbar(binding.editExerciseToolbar.getRoot());
@@ -73,30 +89,19 @@ public class EditExerciseActivity extends AppCompatActivity {
         setupEditButton();
     }
 
+    private void setupToolbar(Toolbar toolbar) {
+        toolbar.setTitle(isExistingExercise ? "Edit Exercise" : "Create Exercise");
+    }
+
     private void setupEditTexts(
             HashMap<String, EditText> editTexts,
             Exercise exercise) {
 
-        editTexts.get("Name").setText(getSanitizedStringFromString(exercise.name));
-        editTexts.get("PR").setText(getSanitizedStringFromNumber(exercise.pr));
-        editTexts.get("Cues").setText(getSanitizedStringFromString(exercise.cues));
-        editTexts.get("Links").setText(getSanitizedStringFromString(exercise.links));
-        editTexts.get("Equipment").setText(getSanitizedStringFromString(exercise.equipment));
-    }
-
-    private String getSanitizedStringFromString(String string) {
-        return (string == null) ? "" : string;
-    }
-
-    public String getSanitizedStringFromNumber(Number number) {
-        if (number == null) {
-            return "";
-        }
-        return String.valueOf(number);
-    }
-
-    private void setupToolbar(Toolbar toolbar) {
-        toolbar.setTitle(isExistingExercise ? "Edit Exercise" : "Create Exercise");
+        editTexts.get("Name").setText(getNonNullStringFromString(exercise.name));
+        editTexts.get("PR").setText(getNonNullStringFromNumber(exercise.pr));
+        editTexts.get("Cues").setText(getNonNullStringFromString(exercise.cues));
+        editTexts.get("Links").setText(getNonNullStringFromString(exercise.links));
+        editTexts.get("Equipment").setText(getNonNullStringFromString(exercise.equipment));
     }
 
     private void setupEditButton() {
@@ -104,83 +109,31 @@ public class EditExerciseActivity extends AppCompatActivity {
         button.setOnClickListener(v -> tryToSaveAndExit());
     }
 
+
     private void tryToSaveAndExit() {
         Exercise updatedExercise = updateExerciseFromEditTexts(this.exercise, this.editTexts);
 
         int sanityStatus = ExerciseSanityChecker.getStatus(updatedExercise, this.database.exerciseDAO());
 
         if (sanityStatus == ExerciseSanityChecker.Status.SAVABLE) {
-            saveAndFinish(updatedExercise);
+            this.saveHandler.saveAndFinish();
         }
 
         if (ExerciseSanityChecker.Status.isBadName(sanityStatus)) {
-            this.editTexts.get("Name").setError("Please choose a unique and meaningful name");
+            this.editTexts.get("Name").setError("Please choose a unique and meaningful name.");
         }
-    }
-
-    private void saveAndFinish(Exercise updatedExercise) {
-        saveChanges(updatedExercise);
-        this.finish();
-    }
-
-
-    private void saveChanges(Exercise updatedExercise) {
-        trySavingExerciseToDb(updatedExercise);
     }
 
     private Exercise updateExerciseFromEditTexts(
             Exercise exercise,
             HashMap<String, EditText> editTexts) {
 
-        exercise.name = getTextAsTrimmedString(editTexts.get("Name"));
-        exercise.pr = getTextAsFloat(editTexts.get("PR"));
-        exercise.cues = getTextAsTrimmedString(editTexts.get("Cues"));
-        exercise.links = getTextAsTrimmedString(editTexts.get("Links"));
-        exercise.equipment = getTextAsTrimmedString(editTexts.get("Equipment"));
+        exercise.name = getTextAsTrimmedStringOrNull(editTexts.get("Name"));
+        exercise.pr = getTextAsNullableFloat(editTexts.get("PR"));
+        exercise.cues = getTextAsTrimmedStringOrNull(editTexts.get("Cues"));
+        exercise.links = getTextAsTrimmedStringOrNull(editTexts.get("Links"));
+        exercise.equipment = getTextAsTrimmedStringOrNull(editTexts.get("Equipment"));
 
         return exercise;
-    }
-
-    public String getTextAsTrimmedString(EditText editText) {
-        return editText.getText().toString().trim();
-    }
-
-    public Integer getTextAsInteger(EditText editText) {
-        return Integer.getInteger(getTextAsTrimmedString(editText), null);
-    }
-
-    public Float getTextAsFloat(EditText editText) {
-        try {
-            return Float.parseFloat(getTextAsTrimmedString(editText));
-        } catch (NumberFormatException e) {
-            return null;
-        }
-    }
-
-
-    private void trySavingExerciseToDb(Exercise editedExercise) {
-        try {
-            saveExerciseToDatabase(editedExercise);
-        } catch (Exception e) {
-            Toast.makeText(
-                    this,
-                    "Can't write to database",
-                    Toast.LENGTH_LONG)
-                    .show();
-            Log.e("GDB", "Can't write to database!\n" + e.toString());
-        }
-    }
-
-    private void saveExerciseToDatabase(Exercise editedExercise) {
-        if (isExistingExercise) {
-            database.exerciseDAO().updateExercise(editedExercise);
-        } else {
-            database.exerciseDAO().insertNewExercise(editedExercise);
-        }
-    }
-
-    private Exercise getExerciseFromIntent(Intent intent) {
-        int exerciseId = intent.getIntExtra("ExerciseId", -1);
-        return database.exerciseDAO().getExerciseByID(exerciseId);
     }
 }
