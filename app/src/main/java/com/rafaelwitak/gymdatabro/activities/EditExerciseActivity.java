@@ -100,7 +100,12 @@ public class EditExerciseActivity extends AppCompatActivity {
 
     private void setupEditButton() {
         Button button = binding.editExerciseButtonEdit;
-        button.setOnClickListener(v -> saveChanges());
+        button.setOnClickListener(v -> saveAndExit());
+    }
+
+    private void saveAndExit() {
+        saveChanges();
+        this.finish();
     }
 
 
