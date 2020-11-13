@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.rafaelwitak.gymdatabro.database.Exercise;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditExerciseBinding;
+import com.rafaelwitak.gymdatabro.exerciseHandling.ExerciseSanityChecker;
 
 import java.util.HashMap;
 
@@ -100,43 +101,57 @@ public class EditExerciseActivity extends AppCompatActivity {
 
     private void setupEditButton() {
         Button button = binding.editExerciseButtonEdit;
-        button.setOnClickListener(v -> saveAndExit());
+        button.setOnClickListener(v -> tryToSaveAndExit());
     }
 
-    private void saveAndExit() {
-        saveChanges();
+    private void tryToSaveAndExit() {
+        Exercise updatedExercise = updateExerciseFromEditTexts(this.exercise, this.editTexts);
+
+        int sanityStatus = ExerciseSanityChecker.getStatus(updatedExercise, this.database.exerciseDAO());
+
+        if (sanityStatus == ExerciseSanityChecker.Status.SAVABLE) {
+            saveAndFinish(updatedExercise);
+        }
+
+        if (ExerciseSanityChecker.Status.isBadName(sanityStatus)) {
+            this.editTexts.get("Name").setError("Please choose a unique and meaningful name");
+        }
+    }
+
+    private void saveAndFinish(Exercise updatedExercise) {
+        saveChanges(updatedExercise);
         this.finish();
     }
 
 
-    private void saveChanges() {
-        Exercise editedExercise = updateExerciseFromEditTexts(this.exercise, this.editTexts);
-        trySavingExerciseToDb(editedExercise);
+    private void saveChanges(Exercise updatedExercise) {
+        trySavingExerciseToDb(updatedExercise);
     }
 
     private Exercise updateExerciseFromEditTexts(
             Exercise exercise,
             HashMap<String, EditText> editTexts) {
 
-        exercise.name = getTextAsString(editTexts.get("Name"));
+        exercise.name = getTextAsTrimmedString(editTexts.get("Name"));
         exercise.pr = getTextAsFloat(editTexts.get("PR"));
-        exercise.cues = getTextAsString(editTexts.get("Cues"));        exercise.links = getTextAsString(editTexts.get("Links"));
-        exercise.equipment = getTextAsString(editTexts.get("Equipment"));
+        exercise.cues = getTextAsTrimmedString(editTexts.get("Cues"));
+        exercise.links = getTextAsTrimmedString(editTexts.get("Links"));
+        exercise.equipment = getTextAsTrimmedString(editTexts.get("Equipment"));
 
         return exercise;
     }
 
-    public String getTextAsString(EditText editText) {
-        return editText.getText().toString();
+    public String getTextAsTrimmedString(EditText editText) {
+        return editText.getText().toString().trim();
     }
 
     public Integer getTextAsInteger(EditText editText) {
-        return Integer.getInteger(getTextAsString(editText), null);
+        return Integer.getInteger(getTextAsTrimmedString(editText), null);
     }
 
     public Float getTextAsFloat(EditText editText) {
         try {
-            return Float.parseFloat(getTextAsString(editText));
+            return Float.parseFloat(getTextAsTrimmedString(editText));
         } catch (NumberFormatException e) {
             return null;
         }
