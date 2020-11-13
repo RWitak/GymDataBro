@@ -21,4 +21,7 @@ public interface ExerciseDAO {
 
     @Update
     void updateExercise(Exercise exercise);
+
+    @Query("SELECT * FROM exercises WHERE name LIKE :wildcardableName")
+    List<Exercise> getExercisesByName(String wildcardableName);
 }
