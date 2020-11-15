@@ -12,25 +12,25 @@ import java.util.List;
 @Dao
 public interface WorkoutStepDAO {
     @Query("SELECT * FROM workout_steps")
-    public LiveData<List<WorkoutStep>> getAllWorkoutSteps();
+    LiveData<List<WorkoutStep>> getAllWorkoutSteps();
 
     @Query("SELECT * FROM workout_steps WHERE workout_id=:workoutID")
-    public LiveData<List<WorkoutStep>> getAllStepsForWorkoutAsLiveData(int workoutID);
+    LiveData<List<WorkoutStep>> getAllStepsForWorkoutAsLiveData(int workoutID);
 
     @Query("SELECT * FROM workout_steps WHERE workout_id=:workoutID "
             + "AND number=:stepNumber")
-    public LiveData<WorkoutStep> getWorkoutStepAsLiveData(int workoutID, int stepNumber);
+    LiveData<WorkoutStep> getWorkoutStepAsLiveData(int workoutID, int stepNumber);
 
     @Query("SELECT * FROM workout_steps WHERE workout_id=:workoutID")
-    public List<WorkoutStep> getAllStepsForWorkoutSynchronously(int workoutID);
+    List<WorkoutStep> getAllStepsForWorkoutSynchronously(int workoutID);
 
     @Query("SELECT * FROM workout_steps WHERE workout_id=:workoutID "
             + "AND number=:stepNumber")
-    public WorkoutStep getWorkoutStepSynchronously(int workoutID, int stepNumber);
+    WorkoutStep getWorkoutStepSynchronously(int workoutID, int stepNumber);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertWorkoutStep(WorkoutStep workoutStep);
+    void insertNewWorkoutStep(WorkoutStep workoutStep);
 
     @Update
-    public void updateWorkoutStep(WorkoutStep workoutStep);
+    void updateWorkoutStep(WorkoutStep workoutStep);
 }
