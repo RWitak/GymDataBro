@@ -38,4 +38,16 @@
     <string name="edit_exercise_label_links">Links</string>
     <string name="edit_exercise_label_equipment">Equipment</string>
     <string name="edit_exercise_label_pr">OneRepMax</string>
+    <string name="edit_workout_step_label_name">Name</string>
+    <string name="edit_workout_step_label_number">Number</string>
+    <string name="edit_workout_step_label_workout_id">WorkoutID</string>
+    <string name="edit_workout_step_label_exercise_id">ExerciseID</string>
+    <string name="edit_workout_step_label_reps">Reps</string>
+    <string name="edit_workout_step_label_duration">Duration (s)</string>
+    <string name="edit_workout_step_label_rest">Rest (s)</string>
+    <string name="edit_workout_step_label_weight">Weight</string>
+    <string name="edit_workout_step_label_rpe">RPE</string>
+    <string name="edit_workout_step_label_details">Details</string>
+    <string name="edit_workout_step_label_notes">Notes</string>
+    <string name="edit_workout_step_button_save_text">Save WorkoutStep</string>
 </resources>

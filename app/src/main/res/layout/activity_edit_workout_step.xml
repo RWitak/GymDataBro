@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.EditWorkoutStepActivity">
+
+    <include
+        android:id="@+id/edit_workout_step_toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        app:layout_constraintBottom_toTopOf="@+id/edit_workout_step_table_scrollview"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/edit_workout_step_table_scrollview"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="top"
+        app:layout_constraintBottom_toTopOf="@+id/edit_workout_step_button_edit"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_workout_step_toolbar">
+
+        <TableLayout
+            android:id="@+id/edit_workout_step_table"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:isScrollContainer="true"
+            android:orientation="vertical"
+            android:stretchColumns="*"
+            app:layout_constraintBottom_toTopOf="@+id/edit_workout_step_button_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_workout_step_toolbar">
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/edit_workout_step_name_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_workout_step_name_edit"
+                    android:text="@string/edit_workout_step_label_name"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                <EditText
+                    android:id="@+id/edit_workout_step_name_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="textCapWords"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/edit_workout_step_number_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_workout_step_number_edit"
+                    android:text="@string/edit_workout_step_label_number"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                <EditText
+                    android:id="@+id/edit_workout_step_number_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="number"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/edit_workout_step_workout_id_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_workout_step_workout_id_edit"
+                    android:text="@string/edit_workout_step_label_workout_id"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                <EditText
+                    android:id="@+id/edit_workout_step_workout_id_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="number"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/edit_workout_step_exercise_id_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_workout_step_exercise_id_edit"
+                    android:text="@string/edit_workout_step_label_exercise_id"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                <EditText
+                    android:id="@+id/edit_workout_step_exercise_id_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="number"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/edit_workout_step_reps_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_workout_step_reps_edit"
+                    android:text="@string/edit_workout_step_label_reps"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                <EditText
+                    android:id="@+id/edit_workout_step_reps_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="number"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/edit_workout_step_duration_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_workout_step_duration_edit"
+                    android:text="@string/edit_workout_step_label_duration"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                <EditText
+                    android:id="@+id/edit_workout_step_duration_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="number"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/edit_workout_step_rest_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_workout_step_rest_edit"
+                    android:text="@string/edit_workout_step_label_rest"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                <EditText
+                    android:id="@+id/edit_workout_step_rest_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="number"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/edit_workout_step_weight_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_workout_step_weight_edit"
+                    android:text="@string/edit_workout_step_label_weight"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                <EditText
+                    android:id="@+id/edit_workout_step_weight_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="numberDecimal"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/edit_workout_step_rpe_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_workout_step_rpe_edit"
+                    android:text="@string/edit_workout_step_label_rpe"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                <EditText
+                    android:id="@+id/edit_workout_step_rpe_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="numberDecimal"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/edit_workout_step_details_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_workout_step_details_edit"
+                    android:text="@string/edit_workout_step_label_details"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                <EditText
+                    android:id="@+id/edit_workout_step_details_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/edit_workout_step_notes_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_workout_step_notes_edit"
+                    android:text="@string/edit_workout_step_label_notes"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                <EditText
+                    android:id="@+id/edit_workout_step_notes_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.618"
+                    android:autofillHints="@null"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </TableRow>
+
+        </TableLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/edit_workout_step_button_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginVertical="20dp"
+        android:text="@string/edit_workout_step_button_save_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_workout_step_table_scrollview"
+        tools:layout_editor_absoluteX="40dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
