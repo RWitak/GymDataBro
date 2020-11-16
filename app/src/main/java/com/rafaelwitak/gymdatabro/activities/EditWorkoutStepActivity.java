@@ -3,18 +3,25 @@ package com.rafaelwitak.gymdatabro.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.rafaelwitak.gymdatabro.database.Exercise;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
+import com.rafaelwitak.gymdatabro.database.Workout;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepHandling.WorkoutStepSanityChecker;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepHandling.WorkoutStepSaveHandler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.rafaelwitak.gymdatabro.EditTextHelper.getTextAsNullableFloat;
@@ -96,6 +103,8 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         setupToolbar(binding.editWorkoutStepToolbar.getRoot());
         setupEditTexts(this.editTexts, this.workoutStep);
         setupEditButton();
+
+        new SpinnerManager().setup(); // FIXME: I'm ugly.
     }
 
     private void setupToolbar(Toolbar toolbar) {
@@ -125,7 +134,8 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
 
 
     private void tryToSaveAndExit() {
-        WorkoutStep updatedWorkoutStep = updateWorkoutStepFromEditTexts(this.workoutStep, this.editTexts);
+        WorkoutStep updatedWorkoutStep =
+                updateWorkoutStepFromEditTexts(this.workoutStep, this.editTexts);
 
         int sanityStatus = WorkoutStepSanityChecker.getStatus(
                 updatedWorkoutStep,
@@ -173,5 +183,119 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         workoutStep.notes = getTextAsTrimmedStringOrNull(editTexts.get("Equipment"));
 
         return workoutStep;
+    }
+
+
+    private class SpinnerManager {
+
+        public void setup() {
+            setupAllSpinners(getSpinners(), database);
+        }
+
+        private void setupAllSpinners(HashMap<String, Spinner> spinners, GymBroDatabase database) {
+
+            Spinner exerciseIdSpinner = spinners.get("ExerciseIdSpinner");
+            Spinner workoutIdSpinner = spinners.get("WorkoutIdSpinner");
+
+            setupExerciseSpinner(database, exerciseIdSpinner, getExerciseNamesArray(database));
+            setupWorkoutIdSpinner(database, workoutIdSpinner, getWorkoutNamesArray(database));
+        }
+
+        private void setupWorkoutIdSpinner(GymBroDatabase database,
+                                           Spinner spinner,
+                                           ArrayList<String> workoutNames) {
+
+            ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
+                    getBaseContext(),
+                    android.R.layout.simple_spinner_item,
+                    new ArrayList<>());
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            spinner.setAdapter(spinnerAdapter);
+            spinner.setOnItemSelectedListener(getWorkoutListener(database));
+
+            // As suggested by https://stackoverflow.com/a/61875814/12121416
+            spinnerAdapter.addAll(workoutNames);
+            spinnerAdapter.notifyDataSetChanged();
+        }
+
+        private AdapterView.OnItemSelectedListener getWorkoutListener(GymBroDatabase database) {
+            return new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    Workout workout = database.workoutDAO().getWorkoutByName(
+                            (String) adapterView.getItemAtPosition(i));
+                    binding.editWorkoutStepWorkoutIdEdit.setText(workout.name);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                    adapterView.setSelection(0);
+                }
+            };
+        }
+
+        private ArrayList<String> getWorkoutNamesArray(GymBroDatabase database) {
+            ArrayList<String> workoutNames = new ArrayList<>();
+
+            for (Workout workout : database.workoutDAO().getAllWorkouts()) {
+                workoutNames.add(workout.name);
+            }
+            return workoutNames;
+        }
+
+
+        private void setupExerciseSpinner(GymBroDatabase database,
+                                          Spinner exerciseIdSpinner,
+                                          ArrayList<CharSequence> exerciseNames) {
+
+            ArrayAdapter<CharSequence> adapter =
+                    new ArrayAdapter<>(getBaseContext(),
+                            android.R.layout.simple_spinner_item,
+                            exerciseNames);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            // TODO: Not the way suggested by https://stackoverflow.com/a/61875814/12121416, still correct?
+
+            exerciseIdSpinner.setAdapter(adapter);
+            exerciseIdSpinner.setOnItemSelectedListener(getExerciseListener(database));
+        }
+
+        private AdapterView.OnItemSelectedListener getExerciseListener(GymBroDatabase database) {
+            return new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    Exercise exercise = database.exerciseDAO().getExercisesByName(
+                            adapterView.getItemAtPosition(i).toString()).get(0);
+                    binding.editWorkoutStepExerciseIdEdit.setText(exercise.id);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                    adapterView.setSelection(0);
+                }
+            };
+        }
+
+        private ArrayList<CharSequence> getExerciseNamesArray(GymBroDatabase database) {
+            ArrayList<CharSequence> names = new ArrayList<>();
+            for (Exercise exercise : database.exerciseDAO().getAllExercises()) {
+                names.add(exercise.name);
+            }
+            return names;
+        }
+
+        private HashMap<String, Spinner> getSpinners() {
+            HashMap<String, Spinner> spinnerHashMap = new HashMap<>();
+
+            spinnerHashMap.put(
+                    "WorkoutIdSpinner",
+                    (Spinner) binding.editWorkoutStepWorkoutIdSpinner);
+            spinnerHashMap.put(
+                    "ExerciseIdSpinner",
+                    (Spinner) binding.editWorkoutStepExerciseIdSpinner);
+
+            return spinnerHashMap;
+        }
     }
 }

@@ -84,6 +84,7 @@
                     android:gravity="start"
                     android:inputType="number"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
             </TableRow>
 
             <TableRow android:layout_margin="10dp">
@@ -98,6 +99,11 @@
                     android:textAlignment="textEnd"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
+                <Spinner
+                    android:id="@+id/edit_workout_step_workout_id_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
                 <EditText
                     android:id="@+id/edit_workout_step_workout_id_edit"
                     android:layout_width="0dp"
@@ -106,6 +112,7 @@
                     android:gravity="start"
                     android:inputType="number"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
             </TableRow>
 
             <TableRow android:layout_margin="10dp">
@@ -120,6 +127,11 @@
                     android:textAlignment="textEnd"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
+                <Spinner
+                    android:id="@+id/edit_workout_step_exercise_id_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
                 <EditText
                     android:id="@+id/edit_workout_step_exercise_id_edit"
                     android:layout_width="0dp"
@@ -128,6 +140,7 @@
                     android:gravity="start"
                     android:inputType="number"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
             </TableRow>
 
             <TableRow android:layout_margin="10dp">
