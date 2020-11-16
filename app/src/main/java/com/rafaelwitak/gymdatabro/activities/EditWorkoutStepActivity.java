@@ -2,6 +2,7 @@ package com.rafaelwitak.gymdatabro.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -11,7 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditWorkoutStepBinding;
-import com.rafaelwitak.gymdatabro.exerciseHandling.WorkoutStepSanityChecker;
+import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepHandling.WorkoutStepSanityChecker;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepHandling.WorkoutStepSaveHandler;
 
 import java.util.HashMap;
@@ -126,15 +127,33 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
     private void tryToSaveAndExit() {
         WorkoutStep updatedWorkoutStep = updateWorkoutStepFromEditTexts(this.workoutStep, this.editTexts);
 
-        int sanityStatus = WorkoutStepSanityChecker.getStatus(updatedWorkoutStep, this.database.workoutStepDAO());
+        int sanityStatus = WorkoutStepSanityChecker.getStatus(
+                updatedWorkoutStep,
+                this.database.workoutStepDAO(),
+                this.database.exerciseDAO(),
+                this.isExistingWorkoutStep);
 
         if (sanityStatus == WorkoutStepSanityChecker.Status.SAVABLE) {
             this.saveHandler.saveAndFinish();
         }
 
-        if (WorkoutStepSanityChecker.Status.isBadName(sanityStatus)) {
-            this.editTexts.get("Name").setError("Please choose a unique and meaningful name.");
+        else if (WorkoutStepSanityChecker.Status.isBadName(sanityStatus)) {
+            this.editTexts.get("Name").setError("Please choose a meaningful name or leave empty.");
         }
+        else if (WorkoutStepSanityChecker.Status.isBadExerciseId(sanityStatus)) {
+            this.editTexts.get("ExerciseID").setError("Please choose an existing ExerciseID.");
+        }
+        else if (WorkoutStepSanityChecker.Status.isBadNumber(sanityStatus)) {
+            this.editTexts.get("Number").setError("Please enter valid number.");
+        }
+        else if (WorkoutStepSanityChecker.Status.isBadRpe(sanityStatus)) {
+            this.editTexts.get("RPE").setError("RPE must be a positive number up to 10.");
+        }
+
+        Log.e("GDB",
+                "SanityCheck Error (WorkoutStep): Status code '"
+                + sanityStatus
+                + "' could not be handled.");
     }
 
     private WorkoutStep updateWorkoutStepFromEditTexts(
