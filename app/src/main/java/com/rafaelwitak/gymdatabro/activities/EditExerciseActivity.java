@@ -2,6 +2,7 @@ package com.rafaelwitak.gymdatabro.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -118,9 +119,14 @@ public class EditExerciseActivity extends AppCompatActivity {
         if (sanityStatus == ExerciseSanityChecker.Status.SAVABLE) {
             this.saveHandler.saveAndFinish();
         }
-
-        if (ExerciseSanityChecker.Status.isBadName(sanityStatus)) {
+        else if (ExerciseSanityChecker.Status.isBadName(sanityStatus)) {
             this.editTexts.get("Name").setError("Please choose a unique and meaningful name.");
+        }
+        else {
+            Log.e("GDB",
+                    "SanityCheck Error (Exercise): Status code '"
+                            + sanityStatus
+                            + "' could not be handled.");
         }
     }
 
