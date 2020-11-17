@@ -116,7 +116,10 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
             WorkoutStep workoutStep) {
 
         editTexts.get("Name").setText(getNonNullStringFromString(workoutStep.name));
+
+        // FIXME: NullPointerException: Attempt to invoke virtual method 'int java.lang.Integer.intValue()' on a null object reference at com.rafaelwitak.gymdatabro.activities.EditWorkoutStepActivity.updateWorkoutStepFromEditTexts(EditWorkoutStepActivity.java:174)
         editTexts.get("WorkoutID").setText(getNonNullStringFromNumber(workoutStep.workoutID));
+
         editTexts.get("Number").setText(getNonNullStringFromNumber(workoutStep.number));
         editTexts.get("ExerciseID").setText(getNonNullStringFromNumber(workoutStep.exerciseID));
         editTexts.get("Reps").setText(getNonNullStringFromNumber(workoutStep.reps));
@@ -171,16 +174,16 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
             HashMap<String, EditText> editTexts) {
 
         workoutStep.name = getTextAsTrimmedStringOrNull(editTexts.get("Name"));
-        workoutStep.workoutID = getTextAsNullableInteger(editTexts.get("PR"));
-        workoutStep.number = getTextAsNullableInteger(editTexts.get("Cues"));
-        workoutStep.exerciseID = getTextAsNullableInteger(editTexts.get("Links"));
-        workoutStep.reps = getTextAsNullableInteger(editTexts.get("Equipment"));
-        workoutStep.weight = getTextAsNullableFloat(editTexts.get("Equipment"));
-        workoutStep.rpe = getTextAsNullableFloat(editTexts.get("Equipment"));
-        workoutStep.durationSeconds = getTextAsNullableInteger(editTexts.get("Equipment"));
-        workoutStep.restSeconds = getTextAsNullableInteger(editTexts.get("Equipment"));
-        workoutStep.details = getTextAsTrimmedStringOrNull(editTexts.get("Equipment"));
-        workoutStep.notes = getTextAsTrimmedStringOrNull(editTexts.get("Equipment"));
+        workoutStep.workoutID = getTextAsNullableInteger(editTexts.get("WorkoutID"));
+        workoutStep.number = getTextAsNullableInteger(editTexts.get("Number"));
+        workoutStep.exerciseID = getTextAsNullableInteger(editTexts.get("ExerciseID"));
+        workoutStep.reps = getTextAsNullableInteger(editTexts.get("Reps"));
+        workoutStep.weight = getTextAsNullableFloat(editTexts.get("Weight"));
+        workoutStep.rpe = getTextAsNullableFloat(editTexts.get("RPE"));
+        workoutStep.durationSeconds = getTextAsNullableInteger(editTexts.get("Duration"));
+        workoutStep.restSeconds = getTextAsNullableInteger(editTexts.get("Rest"));
+        workoutStep.details = getTextAsTrimmedStringOrNull(editTexts.get("Details"));
+        workoutStep.notes = getTextAsTrimmedStringOrNull(editTexts.get("Notes"));
 
         return workoutStep;
     }
@@ -288,10 +291,10 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
 
             spinnerHashMap.put(
                     "WorkoutIdSpinner",
-                    (Spinner) binding.editWorkoutStepWorkoutIdSpinner);
+                    binding.editWorkoutStepWorkoutIdSpinner);
             spinnerHashMap.put(
                     "ExerciseIdSpinner",
-                    (Spinner) binding.editWorkoutStepExerciseIdSpinner);
+                    binding.editWorkoutStepExerciseIdSpinner);
 
             return spinnerHashMap;
         }
