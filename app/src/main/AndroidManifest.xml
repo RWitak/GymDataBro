@@ -19,6 +19,10 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".activities.EditWorkoutStepActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".activities.ChooseProgramActivity"
             android:theme="@style/AppTheme" />
         <activity
