@@ -225,7 +225,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     Workout workout = database.workoutDAO().getWorkoutByName(
                             (String) adapterView.getItemAtPosition(i));
-                    binding.editWorkoutStepWorkoutIdEdit.setText(workout.name);
+                    binding.editWorkoutStepWorkoutIdEdit.setText(String.valueOf(workout.id));
                 }
 
                 @Override
@@ -255,8 +255,6 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
                             exerciseNames);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-            // TODO: Not the way suggested by https://stackoverflow.com/a/61875814/12121416, still correct?
-
             exerciseIdSpinner.setAdapter(adapter);
             exerciseIdSpinner.setOnItemSelectedListener(getExerciseListener(database));
         }
@@ -267,7 +265,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     Exercise exercise = database.exerciseDAO().getExercisesByName(
                             adapterView.getItemAtPosition(i).toString()).get(0);
-                    binding.editWorkoutStepExerciseIdEdit.setText(exercise.id);
+                    binding.editWorkoutStepExerciseIdEdit.setText(String.valueOf(exercise.id));
                 }
 
                 @Override
