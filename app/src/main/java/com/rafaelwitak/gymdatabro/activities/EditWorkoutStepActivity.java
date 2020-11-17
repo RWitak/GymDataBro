@@ -104,7 +104,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         setupEditTexts(this.editTexts, this.workoutStep);
         setupEditButton();
 
-        new SpinnerManager().setup(); // FIXME: I'm ugly.
+        new SpinnerManager().setup();
     }
 
     private void setupToolbar(Toolbar toolbar) {
