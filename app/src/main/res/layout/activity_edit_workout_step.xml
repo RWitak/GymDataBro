@@ -64,7 +64,8 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
             </TableRow>
 
-            <TableRow android:layout_margin="10dp">
+            <!-- Currently obsolete
+            TableRow android:layout_margin="10dp">
 
                 <TextView
                     android:id="@+id/edit_workout_step_number_label"
@@ -85,7 +86,7 @@
                     android:inputType="number"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-            </TableRow>
+            </TableRow -->
 
             <TableRow android:layout_margin="10dp">
 

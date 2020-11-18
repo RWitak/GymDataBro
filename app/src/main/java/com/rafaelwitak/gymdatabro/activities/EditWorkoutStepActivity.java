@@ -85,7 +85,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
 
         map.put("Name", binding.editWorkoutStepNameEdit);
         map.put("WorkoutID", binding.editWorkoutStepWorkoutIdEdit);
-        map.put("Number", binding.editWorkoutStepNumberEdit);
+//        map.put("Number", binding.editWorkoutStepNumberEdit);
         map.put("ExerciseID", binding.editWorkoutStepExerciseIdEdit);
         map.put("Reps", binding.editWorkoutStepRepsEdit);
         map.put("Weight", binding.editWorkoutStepWeightEdit);
@@ -117,7 +117,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
 
         editTexts.get("Name").setText(getNonNullStringFromString(workoutStep.name));
         editTexts.get("WorkoutID").setText(getNonNullStringFromNumber(workoutStep.workoutID));
-        editTexts.get("Number").setText(getNonNullStringFromNumber(workoutStep.number));
+//        editTexts.get("Number").setText(getNonNullStringFromNumber(workoutStep.number));
         editTexts.get("ExerciseID").setText(getNonNullStringFromNumber(workoutStep.exerciseID));
         editTexts.get("Reps").setText(getNonNullStringFromNumber(workoutStep.reps));
         editTexts.get("Weight").setText(getNonNullStringFromNumber(workoutStep.weight));
@@ -127,6 +127,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         editTexts.get("Details").setText(getNonNullStringFromString(workoutStep.details));
         editTexts.get("Notes").setText(getNonNullStringFromString(workoutStep.notes));
     }
+
     private void setupEditButton() {
         Button button = binding.editWorkoutStepButtonEdit;
         button.setOnClickListener(v -> tryToSaveAndExit());
@@ -153,9 +154,12 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         else if (WorkoutStepSanityChecker.Status.isBadExerciseId(sanityStatus)) {
             this.editTexts.get("ExerciseID").setError("Please choose an existing ExerciseID.");
         }
+/*
+        // currently obsolete
         else if (WorkoutStepSanityChecker.Status.isBadNumber(sanityStatus)) {
             this.editTexts.get("Number").setError("Please enter valid number.");
         }
+*/
         else if (WorkoutStepSanityChecker.Status.isBadRpe(sanityStatus)) {
             this.editTexts.get("RPE").setError("RPE must be a positive number up to 10.");
         }
@@ -173,7 +177,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
 
         workoutStep.name = getTextAsTrimmedStringOrNull(editTexts.get("Name"));
         workoutStep.workoutID = getTextAsNullableInteger(editTexts.get("WorkoutID"));
-        workoutStep.number = getTextAsNullableInteger(editTexts.get("Number"));
+//        workoutStep.number = getTextAsNullableInteger(editTexts.get("Number")); // obsolete atm
         workoutStep.exerciseID = getTextAsNullableInteger(editTexts.get("ExerciseID"));
         workoutStep.reps = getTextAsNullableInteger(editTexts.get("Reps"));
         workoutStep.weight = getTextAsNullableFloat(editTexts.get("Weight"));
@@ -183,7 +187,14 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         workoutStep.details = getTextAsTrimmedStringOrNull(editTexts.get("Details"));
         workoutStep.notes = getTextAsTrimmedStringOrNull(editTexts.get("Notes"));
 
+        if (workoutStep.number == null) {
+            workoutStep.number = getNextWorkoutStepNumber(workoutStep);
+        }
         return workoutStep;
+    }
+
+    private int getNextWorkoutStepNumber(WorkoutStep workoutStep) {
+        return database.workoutStepDAO().getAllStepsForWorkoutSynchronously(workoutStep.workoutID).size();
     }
 
 
