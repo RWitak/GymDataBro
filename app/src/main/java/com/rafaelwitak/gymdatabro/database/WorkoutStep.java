@@ -31,7 +31,7 @@ public class WorkoutStep {
     public int workoutID;
 
     @ColumnInfo
-    @NonNull
+    @NonNull // TODO: Replace annotation with DAOs non-null property, remove default, check other columns for similar issues
     public Integer number = 0;
 
     @ColumnInfo

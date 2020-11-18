@@ -54,7 +54,6 @@ public abstract class GymBroDatabase extends RoomDatabase {
                             .createFromAsset("gymdata.db")
                             .allowMainThreadQueries()
                             .addMigrations(MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12)
-                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
