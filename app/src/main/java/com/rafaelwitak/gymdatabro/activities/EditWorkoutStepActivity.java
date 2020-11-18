@@ -159,11 +159,12 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         else if (WorkoutStepSanityChecker.Status.isBadRpe(sanityStatus)) {
             this.editTexts.get("RPE").setError("RPE must be a positive number up to 10.");
         }
-
-        Log.e("GDB",
-                "SanityCheck Error (WorkoutStep): Status code '"
-                + sanityStatus
-                + "' could not be handled.");
+        else {
+            Log.e("GDB",
+                    "SanityCheck Error (WorkoutStep): Status code '"
+                            + sanityStatus
+                            + "' could not be handled.");
+        }
     }
 
     private WorkoutStep updateWorkoutStepFromEditTexts(

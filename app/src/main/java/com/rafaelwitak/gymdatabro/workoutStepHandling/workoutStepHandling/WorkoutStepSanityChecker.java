@@ -26,8 +26,10 @@ public class WorkoutStepSanityChecker {
         if (isNonExistingExerciseId(workoutStep.exerciseID, exerciseDAO)) {
             return Status.EXERCISE_NON_EXISTENT;
         }
-        if (10 < workoutStep.rpe || workoutStep.rpe <= 0) {
-            return Status.RPE_OUT_OF_RANGE;
+        if (workoutStep.rpe != null) {
+            if (10 < workoutStep.rpe || workoutStep.rpe <= 0) {
+                return Status.RPE_OUT_OF_RANGE;
+            }
         }
 
         return Status.SAVABLE;
