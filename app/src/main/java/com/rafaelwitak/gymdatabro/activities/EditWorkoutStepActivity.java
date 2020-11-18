@@ -116,10 +116,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
             WorkoutStep workoutStep) {
 
         editTexts.get("Name").setText(getNonNullStringFromString(workoutStep.name));
-
-        // FIXME: NullPointerException: Attempt to invoke virtual method 'int java.lang.Integer.intValue()' on a null object reference at com.rafaelwitak.gymdatabro.activities.EditWorkoutStepActivity.updateWorkoutStepFromEditTexts(EditWorkoutStepActivity.java:174)
         editTexts.get("WorkoutID").setText(getNonNullStringFromNumber(workoutStep.workoutID));
-
         editTexts.get("Number").setText(getNonNullStringFromNumber(workoutStep.number));
         editTexts.get("ExerciseID").setText(getNonNullStringFromNumber(workoutStep.exerciseID));
         editTexts.get("Reps").setText(getNonNullStringFromNumber(workoutStep.reps));

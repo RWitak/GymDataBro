@@ -16,7 +16,12 @@ public class EditTextHelper {
     }
 
     public static Integer getTextAsNullableInteger(@NonNull EditText editText) {
-        return Integer.getInteger(getTrimmedStringFromEditText(editText), null);
+        try {
+            return Integer.valueOf(getTrimmedStringFromEditText(editText));
+        }
+        catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     public static Float getTextAsNullableFloat(@NonNull EditText editText) {
