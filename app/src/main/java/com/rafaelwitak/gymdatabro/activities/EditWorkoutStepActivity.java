@@ -2,7 +2,6 @@ package com.rafaelwitak.gymdatabro.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -154,20 +153,17 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         else if (WorkoutStepSanityChecker.Status.isBadExerciseId(sanityStatus)) {
             this.editTexts.get("ExerciseID").setError("Please choose an existing ExerciseID.");
         }
-/*
-        // currently obsolete
-        else if (WorkoutStepSanityChecker.Status.isBadNumber(sanityStatus)) {
-            this.editTexts.get("Number").setError("Please enter valid number.");
-        }
-*/
         else if (WorkoutStepSanityChecker.Status.isBadRpe(sanityStatus)) {
             this.editTexts.get("RPE").setError("RPE must be a positive number up to 10.");
         }
+        else if (WorkoutStepSanityChecker.Status.isBadNumber(sanityStatus)) {
+            throw new RuntimeException("SanityCheck Error (WorkoutStep): " +
+                    "WorkoutStep number " + workoutStep.number + " is illegal.");
+        }
         else {
-            Log.e("GDB",
-                    "SanityCheck Error (WorkoutStep): Status code '"
-                            + sanityStatus
-                            + "' could not be handled.");
+            throw new RuntimeException("SanityCheck Error (WorkoutStep): Status code '"
+                    + sanityStatus
+                    + "' could not be handled.");
         }
     }
 
@@ -187,7 +183,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         workoutStep.details = getTextAsTrimmedStringOrNull(editTexts.get("Details"));
         workoutStep.notes = getTextAsTrimmedStringOrNull(editTexts.get("Notes"));
 
-        if (workoutStep.number == null) {
+        if (!isExistingWorkoutStep) {
             workoutStep.number = getNextWorkoutStepNumber(workoutStep);
         }
         return workoutStep;

@@ -9,18 +9,21 @@ public class WorkoutStepSanityChecker {
                                 WorkoutStepDAO workoutStepDAO,
                                 ExerciseDAO exerciseDAO,
                                 boolean isExistingWorkoutStep) {
-        if (workoutStep.number == null || workoutStep.number < 0) {
+        if (workoutStep.number < 0) {
             return Status.NUMBER_MISSING;
         }
         if (!isExistingWorkoutStep && isAlreadyInDatabase(workoutStep, workoutStepDAO)) {
             return Status.NUMBER_DUPLICATE;
+        }
+        if (workoutStep.number < 0) {
+            return Status.NUMBER_OUT_OF_RANGE;
         }
         if (workoutStep.name != null) {
             if (workoutStep.name.length() <= 2) {
                 return Status.NAME_TOO_SHORT;
             }
         }
-        if (workoutStep.exerciseID == null || workoutStep.exerciseID < 0) {
+        if (workoutStep.exerciseID < 0) {
             return Status.EXERCISE_ID_MISSING;
         }
         if (isNonExistingExerciseId(workoutStep.exerciseID, exerciseDAO)) {
@@ -53,6 +56,7 @@ public class WorkoutStepSanityChecker {
         public static final int SAVABLE = 0;
         public static final int NUMBER_MISSING = 10;
         public static final int NUMBER_DUPLICATE = 11;
+        public static final int NUMBER_OUT_OF_RANGE = 12;
         public static final int NAME_TOO_SHORT = 20;
         public static final int EXERCISE_ID_MISSING = 30;
         public static final int EXERCISE_NON_EXISTENT = 31;
