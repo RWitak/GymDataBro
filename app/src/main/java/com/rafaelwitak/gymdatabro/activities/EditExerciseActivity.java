@@ -9,6 +9,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.rafaelwitak.gymdatabro.StringHelper;
 import com.rafaelwitak.gymdatabro.database.Exercise;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditExerciseBinding;
@@ -19,8 +20,7 @@ import java.util.HashMap;
 
 import static com.rafaelwitak.gymdatabro.EditTextHelper.getTextAsNullableFloat;
 import static com.rafaelwitak.gymdatabro.EditTextHelper.getTextAsTrimmedStringOrNull;
-import static com.rafaelwitak.gymdatabro.StringHelper.getNonNullStringFromNumber;
-import static com.rafaelwitak.gymdatabro.StringHelper.getNonNullStringFromString;
+import static com.rafaelwitak.gymdatabro.StringHelper.getNonNullString;
 
 public class EditExerciseActivity extends AppCompatActivity {
 
@@ -98,11 +98,11 @@ public class EditExerciseActivity extends AppCompatActivity {
             HashMap<String, EditText> editTexts,
             Exercise exercise) {
 
-        editTexts.get("Name").setText(getNonNullStringFromString(exercise.name));
-        editTexts.get("PR").setText(getNonNullStringFromNumber(exercise.pr));
-        editTexts.get("Cues").setText(getNonNullStringFromString(exercise.cues));
-        editTexts.get("Links").setText(getNonNullStringFromString(exercise.links));
-        editTexts.get("Equipment").setText(getNonNullStringFromString(exercise.equipment));
+        editTexts.get("Name").setText(getNonNullString(exercise.name));
+        editTexts.get("PR").setText(StringHelper.getNonNullString(exercise.pr));
+        editTexts.get("Cues").setText(getNonNullString(exercise.cues));
+        editTexts.get("Links").setText(getNonNullString(exercise.links));
+        editTexts.get("Equipment").setText(getNonNullString(exercise.equipment));
     }
 
     private void setupEditButton() {

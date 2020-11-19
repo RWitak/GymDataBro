@@ -22,12 +22,12 @@ import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepHandling.Workou
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import static com.rafaelwitak.gymdatabro.EditTextHelper.getTextAsNullableFloat;
 import static com.rafaelwitak.gymdatabro.EditTextHelper.getTextAsNullableInteger;
 import static com.rafaelwitak.gymdatabro.EditTextHelper.getTextAsTrimmedStringOrNull;
-import static com.rafaelwitak.gymdatabro.StringHelper.getNonNullStringFromNumber;
-import static com.rafaelwitak.gymdatabro.StringHelper.getNonNullStringFromString;
+import static com.rafaelwitak.gymdatabro.StringHelper.getNonNullString;
 
 public class EditWorkoutStepActivity extends AppCompatActivity {
 
@@ -100,7 +100,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
 
     private void setViews() {
         setupToolbar(binding.editWorkoutStepToolbar.getRoot());
-        setupEditTexts(this.editTexts, this.workoutStep);
+        setupEditTexts();
         setupEditButton();
 
         new SpinnerManager().setup();
@@ -110,21 +110,32 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         toolbar.setTitle(isExistingWorkoutStep ? "Edit WorkoutStep" : "Create WorkoutStep");
     }
 
-    private void setupEditTexts(
-            HashMap<String, EditText> editTexts,
-            WorkoutStep workoutStep) {
+    private void setupEditTexts() {
+        setTextsSafely("Name", workoutStep.name);
+        setTextsSafely("WorkoutID", workoutStep.workoutID);
+//        setTextsSafely("Number", workoutStep.number);
+        setTextsSafely("ExerciseID", workoutStep.exerciseID);
+        setTextsSafely("Reps", workoutStep.reps);
+        setTextsSafely("Weight", workoutStep.weight);
+        setTextsSafely("RPE", workoutStep.rpe);
+        setTextsSafely("Duration", workoutStep.durationSeconds);
+        setTextsSafely("Rest", workoutStep.restSeconds);
+        setTextsSafely("Details", workoutStep.details);
+        setTextsSafely("Notes", workoutStep.notes);
+    }
 
-        editTexts.get("Name").setText(getNonNullStringFromString(workoutStep.name));
-        editTexts.get("WorkoutID").setText(getNonNullStringFromNumber(workoutStep.workoutID));
-//        editTexts.get("Number").setText(getNonNullStringFromNumber(workoutStep.number));
-        editTexts.get("ExerciseID").setText(getNonNullStringFromNumber(workoutStep.exerciseID));
-        editTexts.get("Reps").setText(getNonNullStringFromNumber(workoutStep.reps));
-        editTexts.get("Weight").setText(getNonNullStringFromNumber(workoutStep.weight));
-        editTexts.get("RPE").setText(getNonNullStringFromNumber(workoutStep.rpe));
-        editTexts.get("Duration").setText(getNonNullStringFromNumber(workoutStep.durationSeconds));
-        editTexts.get("Rest").setText(getNonNullStringFromNumber(workoutStep.restSeconds));
-        editTexts.get("Details").setText(getNonNullStringFromString(workoutStep.details));
-        editTexts.get("Notes").setText(getNonNullStringFromString(workoutStep.notes));
+    public void setTextsSafely(String key, String text) {
+        String sanitizedText = getNonNullString(text);
+        Objects.requireNonNull(
+                this.editTexts.get(key))
+                .setText(sanitizedText);
+    }
+
+    public void setTextsSafely(String key, Number value) {
+        String sanitizedText = getNonNullString(value);
+        Objects.requireNonNull(
+                this.editTexts.get(key))
+                .setText(sanitizedText);
     }
 
     private void setupEditButton() {
