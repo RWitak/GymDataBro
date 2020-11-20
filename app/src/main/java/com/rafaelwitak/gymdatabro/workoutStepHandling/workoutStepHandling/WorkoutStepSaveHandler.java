@@ -1,6 +1,7 @@
 package com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepHandling;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class WorkoutStepSaveHandler {
     }
 
     public void saveMultipleAndFinish(int numberSets) {
+        // FIXME one too many??
         for (int i = 0; i < numberSets; i++, workoutStep.number++) {
             saveChanges(workoutStep);
         }
@@ -63,5 +65,25 @@ public class WorkoutStepSaveHandler {
         } else {
             workoutStepDAO.insertNewWorkoutStep(workoutStep);
         }
+    }
+
+    public void saveAndAddMore() {
+        saveChanges(workoutStep);
+
+        Intent intent = new Intent();
+        intent.putExtra("WorkoutID", workoutStep.workoutID);
+        activity.startActivity(intent);
+        activity.finish();
+    }
+
+    public void saveMultipleAndAddMore(int numberSets) {
+        for (int i = 0; i < numberSets; i++, workoutStep.number++) {
+            saveChanges(workoutStep);
+        }
+        Intent intent = new Intent();
+        intent.putExtra("WorkoutID", workoutStep.workoutID);
+        intent.putExtra("NumberSets", numberSets);
+        activity.startActivity(intent);
+        activity.finish();
     }
 }

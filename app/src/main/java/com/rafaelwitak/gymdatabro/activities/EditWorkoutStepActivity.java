@@ -92,7 +92,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         setupToolbar(binding.editWorkoutStepToolbar.getRoot());
         setupNumberSetsPicker(binding.editWorkoutStepNumberSetsPicker);
         setupEditTexts();
-        setupSaveButton();
+        setupButtons();
 
         new SpinnerManager().setup();
     }
@@ -137,9 +137,31 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
     }
 
 
-    private void setupSaveButton() {
-        Button button = binding.editWorkoutStepButtonSave;
+    private void setupButtons() {
+        setupSaveExitButton();
+        setupSaveAddMoreButton();
+    }
+
+    private void setupSaveExitButton() {
+        Button button = binding.editWorkoutStepButtonSaveExit;
         button.setOnClickListener(v -> tryToSaveAndFinish());
+    }
+
+    private void setupSaveAddMoreButton() {
+        Button button = binding.editWorkoutStepButtonSaveAddMore;
+        button.setOnClickListener(v -> tryToSaveAndAddMore());
+    }
+
+    private void tryToSaveAndAddMore() {
+        updateWorkoutStepFromEditTexts();
+
+        int sanityStatus = getSanityStatus();
+
+        if (sanityStatus == WorkoutStepSanityChecker.Status.SAVABLE) {
+            saveAndAddMore();
+        } else {
+            handleSanityStatusErrors(sanityStatus);
+        }
     }
 
     private void tryToSaveAndFinish() {
@@ -182,6 +204,16 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
             saveHandler.saveMultipleAndFinish(numberSets);
         }
         getSaveHandler().saveAndFinish();
+    }
+
+    private void saveAndAddMore() {
+        WorkoutStepSaveHandler saveHandler = getSaveHandler();
+        int numberSets = getNumberSets();
+
+        if (numberSets > 1) {
+            saveHandler.saveMultipleAndAddMore(numberSets);
+        }
+        getSaveHandler().saveAndAddMore();
     }
 
     private int getNumberSets() {

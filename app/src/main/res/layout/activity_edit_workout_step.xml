@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="top"
-        app:layout_constraintBottom_toTopOf="@+id/edit_workout_step_button_save"
+        app:layout_constraintBottom_toTopOf="@+id/edit_workout_step_button_save_exit"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -36,7 +36,7 @@
             android:isScrollContainer="true"
             android:orientation="vertical"
             android:stretchColumns="*"
-            app:layout_constraintBottom_toTopOf="@+id/edit_workout_step_button_save"
+            app:layout_constraintBottom_toTopOf="@+id/edit_workout_step_button_save_exit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -324,15 +324,27 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/edit_workout_step_button_save"
+        android:id="@+id/edit_workout_step_button_save_exit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginVertical="20dp"
-        android:text="@string/edit_workout_step_button_save_text"
+        android:layout_marginTop="20dp"
+        android:text="@string/edit_workout_step_button_save_exit_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toTopOf="@id/edit_workout_step_button_save_add_more"
+        app:layout_constraintTop_toBottomOf="@+id/edit_workout_step_table_scrollview"
+        tools:layout_editor_absoluteX="40dp" />
+
+    <Button
+        android:id="@+id/edit_workout_step_button_save_add_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginVertical="10dp"
+        android:text="@string/edit_workout_step_button_save_add_more_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_workout_step_table_scrollview"
+        app:layout_constraintTop_toBottomOf="@+id/edit_workout_step_button_save_exit"
         tools:layout_editor_absoluteX="40dp" />
 
 

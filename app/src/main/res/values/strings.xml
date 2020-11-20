@@ -49,6 +49,7 @@
     <string name="edit_workout_step_label_rpe">RPE</string>
     <string name="edit_workout_step_label_details">Details</string>
     <string name="edit_workout_step_label_notes">Notes</string>
-    <string name="edit_workout_step_button_save_text">Save WorkoutStep</string>
+    <string name="edit_workout_step_button_save_exit_text">Save WorkoutStep &amp; Exit</string>
     <string name="edit_workout_step_label_number_sets">Number of Sets</string>
+    <string name="edit_workout_step_button_save_add_more_text">Save &amp; Add More</string>
 </resources>
