@@ -29,8 +29,15 @@ public class WorkoutStepSaveHandler {
 
 
     public void saveAndFinish() {
-        saveChanges(this.workoutStep);
-        this.activity.finish();
+        saveChanges(workoutStep);
+        activity.finish();
+    }
+
+    public void saveMultipleAndFinish(int numberSets) {
+        for (int i = 0; i < numberSets; i++, workoutStep.number++) {
+            saveChanges(workoutStep);
+        }
+        activity.finish();
     }
 
     public void saveChanges(WorkoutStep workoutStep) {
@@ -42,7 +49,7 @@ public class WorkoutStepSaveHandler {
             saveWorkoutStepToDatabase(workoutStep);
         } catch (Exception e) {
             Toast.makeText(
-                    this.activity,
+                    activity,
                     "Can't write to database",
                     Toast.LENGTH_LONG)
                     .show();

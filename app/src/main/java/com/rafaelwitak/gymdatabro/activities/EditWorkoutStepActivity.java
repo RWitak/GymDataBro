@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -89,6 +90,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
 
     private void setViews() {
         setupToolbar(binding.editWorkoutStepToolbar.getRoot());
+        setupNumberSetsPicker(binding.editWorkoutStepNumberSetsPicker);
         setupEditTexts();
         setupSaveButton();
 
@@ -97,6 +99,16 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
 
     private void setupToolbar(@NonNull Toolbar toolbar) {
         toolbar.setTitle(isExistingWorkoutStep ? "Edit WorkoutStep" : "Create WorkoutStep");
+    }
+
+    private void setupNumberSetsPicker(@NonNull NumberPicker numberPicker) {
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(100);
+        numberPicker.setValue(getNumberPickerValueFromIntent());
+    }
+
+    private int getNumberPickerValueFromIntent() {
+        return getIntent().getIntExtra("NumberSets", 1);
     }
 
 
@@ -163,7 +175,17 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
     }
 
     private void saveAndFinish() {
+        WorkoutStepSaveHandler saveHandler = getSaveHandler();
+        int numberSets = getNumberSets();
+
+        if (numberSets > 1) {
+            saveHandler.saveMultipleAndFinish(numberSets);
+        }
         getSaveHandler().saveAndFinish();
+    }
+
+    private int getNumberSets() {
+        return binding.editWorkoutStepNumberSetsPicker.getValue();
     }
 
     private int getSanityStatus() {

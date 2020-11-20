@@ -50,4 +50,5 @@
     <string name="edit_workout_step_label_details">Details</string>
     <string name="edit_workout_step_label_notes">Notes</string>
     <string name="edit_workout_step_button_save_text">Save WorkoutStep</string>
+    <string name="edit_workout_step_label_number_sets">Number of Sets</string>
 </resources>

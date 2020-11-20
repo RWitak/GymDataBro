@@ -91,6 +91,25 @@
             <TableRow android:layout_margin="10dp">
 
                 <TextView
+                    android:id="@+id/edit_workout_step_number_sets_label"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/edit_workout_step_number_sets_picker"
+                    android:text="@string/edit_workout_step_label_number_sets"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                <NumberPicker
+                    android:id="@+id/edit_workout_step_number_sets_picker"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
                     android:id="@+id/edit_workout_step_workout_id_label"
                     android:layout_width="0dp"
                     android:layout_marginEnd="20dp"
