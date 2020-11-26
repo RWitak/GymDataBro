@@ -65,7 +65,7 @@ public class WorkoutStepSaveHandler {
         for (int i = 0; i < numberSets; i++, workoutStep.number++) {
             saveChanges(workoutStep);
         }
-        Intent intent = new Intent();
+        Intent intent = new Intent(activity, EditWorkoutStepActivity.class);
         intent.putExtra("WorkoutID", workoutStep.workoutID);
         intent.putExtra("NumberSets", numberSets);
         activity.startActivity(intent);
