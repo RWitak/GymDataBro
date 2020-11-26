@@ -35,7 +35,6 @@ public class WorkoutStepSaveHandler {
     }
 
     public void saveMultipleAndFinish(int numberSets) {
-        // FIXME one too many??
         for (int i = 0; i < numberSets; i++, workoutStep.number++) {
             saveChanges(workoutStep);
         }

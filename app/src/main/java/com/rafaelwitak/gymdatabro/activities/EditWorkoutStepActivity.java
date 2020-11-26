@@ -203,7 +203,9 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         if (numberSets > 1) {
             saveHandler.saveMultipleAndFinish(numberSets);
         }
-        getSaveHandler().saveAndFinish();
+        else {
+            getSaveHandler().saveAndFinish();
+        }
     }
 
     private void saveAndAddMore() {
@@ -213,7 +215,9 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         if (numberSets > 1) {
             saveHandler.saveMultipleAndAddMore(numberSets);
         }
-        getSaveHandler().saveAndAddMore();
+        else {
+            getSaveHandler().saveAndAddMore();
+        }
     }
 
     private int getNumberSets() {
