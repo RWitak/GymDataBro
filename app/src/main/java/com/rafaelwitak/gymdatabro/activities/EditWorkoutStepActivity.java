@@ -197,27 +197,11 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
     }
 
     private void saveAndFinish() {
-        WorkoutStepSaveHandler saveHandler = getSaveHandler();
-        int numberSets = getNumberSets();
-
-        if (numberSets > 1) {
-            saveHandler.saveMultipleAndFinish(numberSets);
-        }
-        else {
-            getSaveHandler().saveAndFinish();
-        }
+        getSaveHandler().saveAndFinish(getNumberSets());
     }
 
     private void saveAndAddMore() {
-        WorkoutStepSaveHandler saveHandler = getSaveHandler();
-        int numberSets = getNumberSets();
-
-        if (numberSets > 1) {
-            saveHandler.saveMultipleAndAddMore(numberSets);
-        }
-        else {
-            getSaveHandler().saveAndAddMore();
-        }
+        getSaveHandler().saveAndAddMore(getNumberSets());
     }
 
     private int getNumberSets() {
