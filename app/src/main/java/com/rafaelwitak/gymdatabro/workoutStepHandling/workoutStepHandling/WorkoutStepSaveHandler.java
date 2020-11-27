@@ -29,17 +29,17 @@ public class WorkoutStepSaveHandler {
 
     public void save(int numberSets) {
         for (int i = 0; i < numberSets; i++, workoutStep.number++) {
-            saveChangesToDb(workoutStep);
+            saveChangesToDb();
         }
     }
 
-    public void saveChangesToDb(WorkoutStep workoutStep) {
-        trySavingWorkoutStepToDb(workoutStep);
+    private void saveChangesToDb() {
+        trySavingWorkoutStepToDb();
     }
 
-    public void trySavingWorkoutStepToDb(WorkoutStep workoutStep) {
+    public void trySavingWorkoutStepToDb() {
         try {
-            saveWorkoutStepToDatabase(workoutStep);
+            saveWorkoutStepToDatabase();
         } catch (Exception e) {
             Toast.makeText(
                     activity,
@@ -50,7 +50,7 @@ public class WorkoutStepSaveHandler {
         }
     }
 
-    public void saveWorkoutStepToDatabase(WorkoutStep workoutStep) {
+    public void saveWorkoutStepToDatabase() {
         if (isExistingWorkoutStep) {
             workoutStepDAO.updateWorkoutStep(workoutStep);
         } else {
