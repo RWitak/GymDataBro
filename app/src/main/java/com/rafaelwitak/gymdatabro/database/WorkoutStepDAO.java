@@ -28,6 +28,9 @@ public interface WorkoutStepDAO {
             + "AND number=:stepNumber")
     WorkoutStep getWorkoutStepSynchronously(int workoutID, int stepNumber);
 
+    @Query("SELECT COUNT(*) FROM workout_steps WHERE workout_id=:workoutID")
+    int getNumberOfStepsInWorkout(int workoutID);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNewWorkoutStep(WorkoutStep workoutStep);
 

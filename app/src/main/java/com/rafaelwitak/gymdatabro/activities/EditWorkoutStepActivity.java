@@ -192,7 +192,8 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         workoutStep.notes = getTextAsTrimmedStringOrNull(getEditTextSafely("Notes"));
 
         if (!isExistingWorkoutStep) {
-            workoutStep.number = getNextWorkoutStepNumber();
+            workoutStep.number =
+                    database.workoutStepDAO().getNumberOfStepsInWorkout(workoutStep.workoutID);
         }
     }
 
@@ -241,12 +242,6 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
     @NonNull
     private EditText getEditTextSafely(String key) {
         return Objects.requireNonNull(editTextMap.get(key));
-    }
-
-    private int getNextWorkoutStepNumber() {
-        return database.workoutStepDAO()
-                .getAllStepsForWorkoutSynchronously(workoutStep.workoutID)
-                .size();
     }
 
     private void handleSanityStatusErrors(int sanityStatus) {
