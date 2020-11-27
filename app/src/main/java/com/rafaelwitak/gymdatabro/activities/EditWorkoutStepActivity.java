@@ -197,11 +197,18 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
     }
 
     private void saveAndFinish() {
-        getSaveHandler().saveAndFinish(getNumberSets());
+        getSaveHandler().save(getNumberSets());
+        finish();
     }
 
     private void saveAndAddMore() {
-        getSaveHandler().saveAndAddMore(getNumberSets());
+        getSaveHandler().save(getNumberSets());
+
+        Intent intent = new Intent(this, EditWorkoutStepActivity.class);
+        intent.putExtra("WorkoutID", workoutStep.workoutID);
+        intent.putExtra("NumberSets", getNumberSets());
+        startActivity(intent);
+        finish();
     }
 
     private int getNumberSets() {

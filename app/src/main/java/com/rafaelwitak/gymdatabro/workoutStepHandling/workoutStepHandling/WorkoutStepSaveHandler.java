@@ -1,13 +1,11 @@
 package com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepHandling;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.rafaelwitak.gymdatabro.activities.EditWorkoutStepActivity;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.database.WorkoutStepDAO;
 
@@ -29,14 +27,13 @@ public class WorkoutStepSaveHandler {
         this.isExistingWorkoutStep = isExistingWorkoutStep;
     }
 
-    public void saveAndFinish(int numberSets) {
+    public void save(int numberSets) {
         for (int i = 0; i < numberSets; i++, workoutStep.number++) {
-            saveChanges(workoutStep);
+            saveChangesToDb(workoutStep);
         }
-        activity.finish();
     }
 
-    public void saveChanges(WorkoutStep workoutStep) {
+    public void saveChangesToDb(WorkoutStep workoutStep) {
         trySavingWorkoutStepToDb(workoutStep);
     }
 
@@ -59,16 +56,5 @@ public class WorkoutStepSaveHandler {
         } else {
             workoutStepDAO.insertNewWorkoutStep(workoutStep);
         }
-    }
-
-    public void saveAndAddMore(int numberSets) {
-        for (int i = 0; i < numberSets; i++, workoutStep.number++) {
-            saveChanges(workoutStep);
-        }
-        Intent intent = new Intent(activity, EditWorkoutStepActivity.class);
-        intent.putExtra("WorkoutID", workoutStep.workoutID);
-        intent.putExtra("NumberSets", numberSets);
-        activity.startActivity(intent);
-        activity.finish();
     }
 }
