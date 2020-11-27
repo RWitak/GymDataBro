@@ -46,7 +46,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         this.database = GymBroDatabase.getDatabase(this);
 
         this.isExistingWorkoutStep = getIsExistingWorkoutStep(getIntent());
-        this.workoutStep = getWorkoutStep(this.isExistingWorkoutStep);
+        this.workoutStep = getWorkoutStep();
 
         this.binding = ActivityEditWorkoutStepBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -59,7 +59,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         return intent.hasExtra("workoutId") && intent.hasExtra("stepNumber");
     }
 
-    private WorkoutStep getWorkoutStep(boolean isExistingWorkoutStep) {
+    private WorkoutStep getWorkoutStep() {
         if (isExistingWorkoutStep) {
             return getWorkoutStepFromIntent(getIntent());
         }
