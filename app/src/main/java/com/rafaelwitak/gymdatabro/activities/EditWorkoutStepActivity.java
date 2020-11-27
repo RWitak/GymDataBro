@@ -207,6 +207,8 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         Intent intent = new Intent(this, EditWorkoutStepActivity.class);
         intent.putExtra("WorkoutID", workoutStep.workoutID);
         intent.putExtra("NumberSets", getNumberSets());
+        intent.putExtra("WorkoutSpinnerPosition",
+                binding.editWorkoutStepWorkoutIdSpinner.getSelectedItemPosition());
         startActivity(intent);
         finish();
     }
@@ -279,8 +281,17 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
             Spinner workoutIdSpinner = binding.editWorkoutStepWorkoutIdSpinner;
             Spinner exerciseIdSpinner = binding.editWorkoutStepExerciseIdSpinner;
 
-            setupSpinner(workoutIdSpinner, getWorkoutNamesArray(), getWorkoutListener());
-            setupSpinner(exerciseIdSpinner, getExerciseNamesArray(), getExerciseListener());
+            setupSpinner(
+                    workoutIdSpinner,
+                    getWorkoutNamesArray(),
+                    getWorkoutListener());
+            workoutIdSpinner.setSelection(
+                    getIntent().getIntExtra("WorkoutSpinnerPosition", 0));
+
+            setupSpinner(
+                    exerciseIdSpinner,
+                    getExerciseNamesArray(),
+                    getExerciseListener());
         }
 
         private void setupSpinner(@NonNull Spinner spinner,
