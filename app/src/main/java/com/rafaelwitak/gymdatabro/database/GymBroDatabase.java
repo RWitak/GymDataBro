@@ -20,7 +20,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
                 Workout.class,
                 WorkoutStep.class
         },
-        version = 13
+        version = 14
 )
 @TypeConverters({Converters.class})
 public abstract class GymBroDatabase extends RoomDatabase {
@@ -57,7 +57,8 @@ public abstract class GymBroDatabase extends RoomDatabase {
                                     MIGRATION_9_10,
                                     MIGRATION_10_11,
                                     MIGRATION_11_12,
-                                    MIGRATION_12_13)
+                                    MIGRATION_12_13,
+                                    MIGRATION_13_14)
                             .build();
                 }
             }
@@ -65,6 +66,57 @@ public abstract class GymBroDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
+
+    static final Migration MIGRATION_13_14 = new Migration(13, 14) {
+        // PerformanceSets can now reference their WorkoutStep's ID (if any).
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL(
+                    "CREATE TABLE sets_backup ( " +
+                            "id INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT, " +
+                            "timestamp INTEGER, " +
+                            "exercise_id INTEGER NOT NULL, " +
+                            "reps INTEGER, " +
+                            "weight REAL, " +
+                            "seconds_performed INTEGER, " +
+                            "seconds_rested INTEGER, " +
+                            "rpe REAL, " +
+                            "pain_level INTEGER NOT NULL, " +
+                            "notes TEXT, " +
+                            "FOREIGN KEY(exercise_id) REFERENCES exercises(id) " +
+                            "ON UPDATE NO ACTION ON DELETE NO ACTION " +
+                            ");"
+            );
+            database.execSQL(
+                    "INSERT INTO sets_backup SELECT * FROM sets;"
+            );
+            database.execSQL(
+                    "DROP TABLE sets;"
+            );
+            database.execSQL(
+                    "CREATE TABLE sets ( " +
+                            "id INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT, " +
+                            "workout_step_id INTEGER, " +
+                            "timestamp INTEGER, " +
+                            "exercise_id INTEGER NOT NULL, " +
+                            "reps INTEGER, " +
+                            "weight REAL, " +
+                            "seconds_performed INTEGER, " +
+                            "seconds_rested INTEGER, " +
+                            "rpe REAL, " +
+                            "pain_level INTEGER NOT NULL, " +
+                            "notes TEXT, " +
+                            "FOREIGN KEY(exercise_id) REFERENCES exercises(id) " +
+                            "ON UPDATE NO ACTION ON DELETE NO ACTION, " +
+                            "FOREIGN KEY(workout_step_id) REFERENCES workout_steps(id) " +
+                            "ON UPDATE NO ACTION ON DELETE NO ACTION " +
+                            ");"
+            );
+            database.execSQL(
+                    "DROP TABLE sets_backup;"
+            );
+        }
+    };
 
     static final Migration MIGRATION_12_13 = new Migration(12, 13) {
         // 'workout_steps' get an auto-incrementing int 'id' as primary key,

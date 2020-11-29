@@ -6,24 +6,29 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
 @Entity(
         tableName = "sets",
-        foreignKeys = @ForeignKey(
-                entity = Exercise.class,
-                parentColumns = "id",
-                childColumns = "exercise_id"),
-        indices = {
-                @Index(value = "exercise_id")
+        foreignKeys = {
+                @ForeignKey(
+                        entity = Exercise.class,
+                        parentColumns = "id",
+                        childColumns = "exercise_id"),
+                @ForeignKey(
+                        entity = WorkoutStep.class,
+                        parentColumns = "id",
+                        childColumns = "workout_step_id")
         }
 )
 public class PerformanceSet {
     @PrimaryKey(autoGenerate = true)
     public Integer id;
+
+    @ColumnInfo(name = "workout_step_id")
+    public Integer workoutStepId;
 
     @ColumnInfo
     public Date timestamp;
@@ -61,6 +66,7 @@ public class PerformanceSet {
 
     @Ignore
     public PerformanceSet(@Nullable Integer id,
+                          @Nullable Integer workoutStepId,
                           @Nullable Date timestamp,
                           int exerciseID,
                           @Nullable Integer reps,
@@ -71,6 +77,7 @@ public class PerformanceSet {
                           @NonNull Integer painLevel,
                           @Nullable String notes) {
         this.id = id;
+        this.workoutStepId = workoutStepId;
         this.timestamp = timestamp == null ? getTimestamp() : timestamp;
         this.exerciseID = exerciseID;
         this.reps = reps;
@@ -84,6 +91,7 @@ public class PerformanceSet {
 
     public PerformanceSet() {
         this(
+                null,
                 null,
                 null,
                 -1,
@@ -101,6 +109,10 @@ public class PerformanceSet {
         return new Date();
     }
 
+    public void setWorkoutStepId(Integer workoutStepId) {
+        this.workoutStepId = workoutStepId;
+        // TODO: use in WorkoutStepActivity
+    }
 
     public void setExerciseID(int exerciseID) {
         this.exerciseID = exerciseID;
@@ -141,6 +153,8 @@ public class PerformanceSet {
                 + " (ID)\n"
                 + this.timestamp
                 + " (timestamp)\n"
+                + this.workoutStepId
+                + " (workoutStepId)\n"
                 + this.exerciseID
                 + " (exerciseID)\n"
                 + this.reps
