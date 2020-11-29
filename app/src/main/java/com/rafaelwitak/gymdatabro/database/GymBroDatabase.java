@@ -74,7 +74,7 @@ public abstract class GymBroDatabase extends RoomDatabase {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             database.execSQL(
-                    "CREATE TEMPORARY TABLE workout_steps_backup(" +
+                    "CREATE TABLE workout_steps_backup(" +
                             "workout_id INTEGER NOT NULL, " +
                             "number INTEGER NOT NULL, " +
                             "name TEXT, " +
@@ -172,7 +172,7 @@ public abstract class GymBroDatabase extends RoomDatabase {
 
             // Recreate 'exercises' table with added 'name' column
             database.execSQL(
-                    "CREATE TEMPORARY TABLE exercises_backup(" +
+                    "CREATE TABLE exercises_backup(" +
                             " id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
                             " name  TEXT UNIQUE, " +
                             " pr    REAL, " +
@@ -205,7 +205,7 @@ public abstract class GymBroDatabase extends RoomDatabase {
 
             // Recreate 'workout_steps' table with added 'name' column
             database.execSQL(
-                    "CREATE TEMPORARY TABLE workout_steps_backup(" +
+                    "CREATE TABLE workout_steps_backup(" +
                             "workout_id INTEGER NOT NULL, " +
                             "number INTEGER NOT NULL, " +
                             "exercise_id INTEGER NOT NULL, " +
@@ -275,7 +275,7 @@ public abstract class GymBroDatabase extends RoomDatabase {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             database.execSQL(
-                    "CREATE TEMPORARY TABLE exercises_backup(" +
+                    "CREATE TABLE exercises_backup(" +
                             " id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
                             " pr    REAL, " +
                             " cues  TEXT, " +
