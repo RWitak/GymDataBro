@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -30,12 +31,19 @@ public class WorkoutStepActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        database = GymBroDatabase.getDatabase(this);
-        currentWorkoutStep = getCurrentWorkoutStep();
-        currentWorkout = getCurrentWorkout();
+        this.database = GymBroDatabase.getDatabase(this);
+        this.currentWorkoutStep = getCurrentWorkoutStep();
+        if (currentWorkoutStep == null) {
+            Toast.makeText(this,
+                    "Please create a WorkoutStep first!",
+                    Toast.LENGTH_SHORT).show();
+            finish();
+            return; // DO NOT DELETE: Method will try to continue without a proper WorkoutStep!
+        }
+        this.currentWorkout = getCurrentWorkout();
 
         // automatically bind all Views with IDs
-        binding = ActivityWorkoutStepBinding.inflate(getLayoutInflater());
+        this.binding = ActivityWorkoutStepBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setUpViews();
@@ -144,19 +152,9 @@ public class WorkoutStepActivity extends AppCompatActivity {
                     + ", Step "
                     + stepNumber);
 
-        WorkoutStep step = database
+        return database
                 .workoutStepDAO()
                 .getWorkoutStepSynchronously(workoutID, stepNumber);
-
-        if (step == null) {
-            Log.w("GymDataBro",
-                    "getCurrentWorkoutStep returned null, empty WorkoutStep created.");
-            return new WorkoutStep();
-        }
-
-        Log.i("GymDataBro", "WorkoutStep fetched successfully.");
-
-        return step;
     }
 
     private Workout getCurrentWorkout() {
