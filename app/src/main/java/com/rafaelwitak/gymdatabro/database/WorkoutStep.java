@@ -6,10 +6,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
+import androidx.room.PrimaryKey;
 
 @Entity(
         tableName = "workout_steps",
-        primaryKeys = {"workout_id", "number"},
         foreignKeys = {
                 @ForeignKey(
                         entity = Workout.class,
@@ -23,9 +23,12 @@ import androidx.room.Index;
                 )
         },
         indices = {
-                @Index(value = {"exercise_id", "number"})
+                @Index(value = {"workout_id", "number"}, unique = true)
         })
 public class WorkoutStep {
+
+    @PrimaryKey(autoGenerate = true)
+    public int id;
 
     @ColumnInfo(name = "workout_id")
     public int workoutID;

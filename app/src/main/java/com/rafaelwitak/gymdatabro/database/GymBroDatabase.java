@@ -20,7 +20,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
                 Workout.class,
                 WorkoutStep.class
         },
-        version = 12
+        version = 13
 )
 @TypeConverters({Converters.class})
 public abstract class GymBroDatabase extends RoomDatabase {
@@ -53,14 +53,108 @@ public abstract class GymBroDatabase extends RoomDatabase {
                                     "gym_data")
                             .createFromAsset("gymdata.db")
                             .allowMainThreadQueries()
-                            .addMigrations(MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12)
+                            .addMigrations(
+                                    MIGRATION_9_10,
+                                    MIGRATION_10_11,
+                                    MIGRATION_11_12,
+                                    MIGRATION_12_13)
                             .build();
                 }
             }
         }
-
         return INSTANCE;
     }
+
+
+    static final Migration MIGRATION_12_13 = new Migration(12, 13) {
+        // 'workout_steps' get an auto-incrementing int 'id' as primary key,
+        // preventing persistence conflicts (no reassignment can overwrite uniqueness).
+        // 'workout_id' and 'number' still function as unique identifiers,
+        // but aren't persistent; they get uniquely indexed together.
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL(
+                    "CREATE TEMPORARY TABLE workout_steps_backup(" +
+                            "workout_id INTEGER NOT NULL, " +
+                            "number INTEGER NOT NULL, " +
+                            "name TEXT, " +
+                            "exercise_id INTEGER NOT NULL, " +
+                            "reps INTEGER, " +
+                            "weight REAL, " +
+                            "rpe REAL, " +
+                            "duration_seconds INTEGER, " +
+                            "rest_seconds INTEGER, " +
+                            "details TEXT, " +
+                            "notes TEXT, " +
+                            "FOREIGN KEY(exercise_id) REFERENCES exercises(id) " +
+                            "ON UPDATE NO ACTION ON DELETE NO ACTION, " +
+                            "FOREIGN KEY(workout_id) REFERENCES workouts(id) " +
+                            "ON UPDATE NO ACTION ON DELETE NO ACTION, " +
+                            "PRIMARY KEY(workout_id,number) " +
+                            ");"
+            );
+            database.execSQL(
+                    "INSERT INTO workout_steps_backup SELECT * FROM workout_steps;"
+            );
+            database.execSQL(
+                    "DROP TABLE workout_steps;"
+            );
+            database.execSQL(
+                    "CREATE TABLE workout_steps(" +
+                            "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+                            "workout_id INTEGER NOT NULL, " +
+                            "number INTEGER NOT NULL, " +
+                            "name TEXT, " +
+                            "exercise_id INTEGER NOT NULL, " +
+                            "reps INTEGER, " +
+                            "weight REAL, " +
+                            "rpe REAL, " +
+                            "duration_seconds INTEGER, " +
+                            "rest_seconds INTEGER, " +
+                            "details TEXT, " +
+                            "notes TEXT, " +
+                            "FOREIGN KEY(exercise_id) REFERENCES exercises(id) " +
+                            "ON UPDATE NO ACTION ON DELETE NO ACTION, " +
+                            "FOREIGN KEY(workout_id) REFERENCES workouts(id) " +
+                            "ON UPDATE NO ACTION ON DELETE NO ACTION" +
+                            ");"
+            );
+            database.execSQL(
+                    "INSERT INTO workout_steps (" +
+                            "workout_id," +
+                            "number," +
+                            "name," +
+                            "exercise_id," +
+                            "reps," +
+                            "weight," +
+                            "rpe," +
+                            "duration_seconds," +
+                            "rest_seconds," +
+                            "details," +
+                            "notes) " +
+                    "SELECT " +
+                            "workout_id," +
+                            "number," +
+                            "name," +
+                            "exercise_id," +
+                            "reps," +
+                            "weight," +
+                            "rpe," +
+                            "duration_seconds," +
+                            "rest_seconds," +
+                            "details," +
+                            "notes " +
+                    "FROM workout_steps_backup;"
+            );
+            database.execSQL(
+                    "CREATE UNIQUE INDEX index_workout_steps_workout_id_number" +
+                            " ON workout_steps (workout_id, number);"
+            );
+            database.execSQL(
+                    "DROP TABLE workout_steps_backup;"
+            );
+        }
+    };
 
     static final Migration MIGRATION_11_12 = new Migration(11, 12) {
         @Override
