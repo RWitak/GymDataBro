@@ -10,12 +10,14 @@ import com.rafaelwitak.gymdatabro.performanceSetHandling.performanceSetDataProvi
 import com.rafaelwitak.gymdatabro.performanceSetHandling.performanceSetDataProviders.PerformanceSetSecondsPerformedProvider;
 import com.rafaelwitak.gymdatabro.performanceSetHandling.performanceSetDataProviders.PerformanceSetSecondsRestedProvider;
 import com.rafaelwitak.gymdatabro.performanceSetHandling.performanceSetDataProviders.PerformanceSetWeightProvider;
+import com.rafaelwitak.gymdatabro.performanceSetHandling.performanceSetDataProviders.PerformanceSetWorkoutStepIdProvider;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class PerformanceSetDataProviderHolder {
 
+    private PerformanceSetWorkoutStepIdProvider workoutStepIdProvider;
     private PerformanceSetExerciseIdProvider exerciseIdProvider;
     private PerformanceSetRepsProvider repsProvider;
     private PerformanceSetWeightProvider weightProvider;
@@ -29,6 +31,7 @@ public class PerformanceSetDataProviderHolder {
     public PerformanceSetDataProviderHolder(ActivityWorkoutStepBinding binding,
                                             WorkoutStep currentWorkoutStep) {
 
+        this.workoutStepIdProvider = new PerformanceSetWorkoutStepIdProvider(currentWorkoutStep);
         this.exerciseIdProvider = new PerformanceSetExerciseIdProvider(currentWorkoutStep);
         this.repsProvider = new PerformanceSetRepsProvider(binding);
         this.weightProvider = new PerformanceSetWeightProvider(binding);
@@ -41,14 +44,15 @@ public class PerformanceSetDataProviderHolder {
 
     public List<PerformanceSetDataProvider> getDataProviders() {
         return Arrays.asList(
-                this.exerciseIdProvider,
-                this.repsProvider,
-                this.weightProvider,
-                this.secondsPerformedProvider,
-                this.secondsRestedProvider,
-                this.rpeProvider,
-                this.painLevelProvider,
-                this.notesProvider
+                workoutStepIdProvider,
+                exerciseIdProvider,
+                repsProvider,
+                weightProvider,
+                secondsPerformedProvider,
+                secondsRestedProvider,
+                rpeProvider,
+                painLevelProvider,
+                notesProvider
         );
     }
 }

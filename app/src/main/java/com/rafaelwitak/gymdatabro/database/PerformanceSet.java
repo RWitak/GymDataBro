@@ -111,7 +111,6 @@ public class PerformanceSet {
 
     public void setWorkoutStepId(Integer workoutStepId) {
         this.workoutStepId = workoutStepId;
-        // TODO: use in WorkoutStepActivity
     }
 
     public void setExerciseID(int exerciseID) {
