@@ -110,8 +110,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
         final List<WorkoutStep> workoutSteps =
                 database
                         .workoutStepDAO()
-                        .getAllStepsForWorkoutAsLiveData(currentWorkout.id)
-                        .getValue();
+                        .getAllStepsForWorkoutSynchronously(currentWorkout.id);
 
         final int numberOfStepsInWorkout = workoutSteps != null ? workoutSteps.size() : 0;
 
@@ -129,13 +128,14 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private void startNextWorkoutStep() {
-        Intent intent = getIntentWithExtras();
+        Intent intent = getNewIntentWithExtras();
 
         startActivity(intent);
+        finish();
     }
 
-    private Intent getIntentWithExtras() {
-        Intent intent = new Intent(this, MainActivity.class);
+    private Intent getNewIntentWithExtras() {
+        Intent intent = new Intent(this, WorkoutStepActivity.class);
         intent.putExtra("workoutID", currentWorkoutStep.workoutID);
         intent.putExtra("nextStepNumber", currentWorkoutStep.number + 1);
 
