@@ -31,6 +31,30 @@ public interface WorkoutStepDAO {
     @Query("SELECT COUNT(*) FROM workout_steps WHERE workout_id=:workoutID")
     int getNumberOfStepsInWorkout(int workoutID);
 
+    // TODO: Include possibilities of finished Workout or even Program.
+    /*
+    @Query("SELECT * FROM workout_steps WHERE number = 1 + " +
+            "IFNULL(" +
+                "(SELECT MAX(number) FROM " +
+                    "sets " +
+                    "JOIN workout_steps ON sets.workout_step_id=workout_steps.id " +
+                "WHERE timestamp = " +
+                "(SELECT MAX(timestamp) FROM sets) " +
+                "LIMIT 1), " +
+            "-1);")
+    WorkoutStep getNextGlobalWorkoutStep();
+
+    @Query("SELECT * FROM workout_steps WHERE number = 1 + " +
+            "(SELECT MAX(number) FROM sets WHERE timestamp = " +
+                "(SELECT MAX(timestamp) FROM " +
+                    "sets " +
+                    "JOIN workout_steps ON sets.workout_step_id=workout_steps.id " +
+                    "JOIN workouts ON workout_steps.workout_id=workouts.id " +
+                "WHERE program_id=:programId) " +
+            "LIMIT 1);")
+    WorkoutStep getNextWorkoutStepForProgram(int programId);
+    */
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNewWorkoutStep(WorkoutStep workoutStep);
 
