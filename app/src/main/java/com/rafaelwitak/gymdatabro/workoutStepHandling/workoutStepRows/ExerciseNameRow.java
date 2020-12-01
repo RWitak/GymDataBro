@@ -9,6 +9,8 @@ import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRow;
 
+import java.util.List;
+
 public class ExerciseNameRow extends WorkoutStepRow {
     private final GymBroDatabase database;
 
@@ -86,14 +88,28 @@ public class ExerciseNameRow extends WorkoutStepRow {
     }
 
     private String getProgress() {
-        int currentNumber = this.currentWorkoutStep.number;
-        int totalNumber = database.workoutDAO().getOccurrencesOfExerciseInWorkout(
-                currentWorkoutStep.exerciseID, currentWorkoutStep.workoutID);
+        int currentNumber = getCurrentProgressNumber();
+        int totalNumber = getTotalProgressNumber();
 
         if (totalNumber <= 1) {
             return null;
         }
 
         return currentNumber + "/" + totalNumber;
+    }
+
+    private int getCurrentProgressNumber() {
+        List<Integer> numbers =
+                database.workoutDAO()
+                        .getNumbersOfExerciseInWorkout(
+                                currentWorkoutStep.exerciseID,
+                                currentWorkoutStep.workoutID);
+
+        return numbers.indexOf(currentWorkoutStep.number) + 1;
+    }
+
+    private Integer getTotalProgressNumber() {
+        return database.workoutDAO().getOccurrencesOfExerciseInWorkout(
+                currentWorkoutStep.exerciseID, currentWorkoutStep.workoutID);
     }
 }

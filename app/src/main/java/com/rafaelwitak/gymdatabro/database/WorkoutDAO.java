@@ -29,6 +29,11 @@ public interface WorkoutDAO {
             "WHERE exercise_id=:exerciseID AND workout_id=:workoutID")
     Integer getOccurrencesOfExerciseInWorkout(int exerciseID, int workoutID);
 
+    @Query("SELECT number FROM workout_steps " +
+            "WHERE exercise_id=:exerciseID AND workout_id=:workoutID " +
+            "ORDER BY number ASC")
+    List<Integer> getNumbersOfExerciseInWorkout(int exerciseID, int workoutID);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertWorkout(Workout workout);
 
