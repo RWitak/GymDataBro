@@ -132,6 +132,33 @@ public abstract class GymBroDatabase extends RoomDatabase {
                             ");"
             );
             database.execSQL(
+                    "INSERT INTO sets(" +
+                            "id, " +
+                            "workout_step_id, " +
+                            "timestamp, " +
+                            "exercise_id, " +
+                            "reps, " +
+                            "weight, " +
+                            "seconds_performed, " +
+                            "seconds_rested, " +
+                            "rpe, " +
+                            "pain_level, " +
+                            "notes)" +
+                        "SELECT " +
+                            "id, " +
+                            "workout_step_id, " +
+                            "timestamp, " +
+                            "exercise_id, " +
+                            "reps, " +
+                            "weight, " +
+                            "seconds_performed, " +
+                            "seconds_rested, " +
+                            "rpe, " +
+                            "pain_level, " +
+                            "notes" +
+                            "FROM sets_backup;"
+            );
+            database.execSQL(
                     "DROP TABLE sets_backup;"
             );
         }
