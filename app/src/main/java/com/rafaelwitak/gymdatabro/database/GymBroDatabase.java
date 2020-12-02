@@ -18,9 +18,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
                 Program.class,
                 PerformanceSet.class,
                 Workout.class,
+                WorkoutInProgram.class,
                 WorkoutStep.class
         },
-        version = 14
+        version = 15
 )
 @TypeConverters({Converters.class})
 public abstract class GymBroDatabase extends RoomDatabase {
@@ -58,7 +59,8 @@ public abstract class GymBroDatabase extends RoomDatabase {
                                     MIGRATION_10_11,
                                     MIGRATION_11_12,
                                     MIGRATION_12_13,
-                                    MIGRATION_13_14)
+                                    MIGRATION_13_14,
+                                    MIGRATION_14_15)
                             .build();
                 }
             }
@@ -66,6 +68,23 @@ public abstract class GymBroDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
+    static final Migration MIGRATION_14_15 = new Migration(14, 15) {
+        // Create a table that numerically lists Workouts in each Program.
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL(
+                    "CREATE TABLE workouts_in_programs (" +
+                            "program_id INTEGER NOT NULL, " +
+                            "workout_id INTEGER NOT NULL, " +
+                            "workout_number INTEGER NOT NULL, " +
+                            "FOREIGN KEY(program_id) REFERENCES programs(id) " +
+                               "ON UPDATE NO ACTION ON DELETE NO ACTION, " +
+                            "FOREIGN KEY(workout_id) REFERENCES workouts(id) " +
+                               "ON UPDATE NO ACTION ON DELETE NO ACTION, " +
+                            "PRIMARY KEY(program_id, workout_number));"
+            );
+        }
+    };
 
     static final Migration MIGRATION_13_14 = new Migration(13, 14) {
         // PerformanceSets can now reference their WorkoutStep's ID (if any).
