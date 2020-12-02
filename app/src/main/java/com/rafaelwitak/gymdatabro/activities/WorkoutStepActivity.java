@@ -89,13 +89,19 @@ public class WorkoutStepActivity extends AppCompatActivity {
                 savePerformanceSet(getPerformedSet());
 
                 if (isLastWorkoutStep(currentWorkoutStep)){
-                    finish();
+                    congratulateAndFinish();
                 }
                 else {
                     startNextWorkoutStep();
                 }
             }
         };
+    }
+
+    public void congratulateAndFinish() {
+        Toast.makeText(this, "Congrats, you are done for today! \n" +
+                "Have a good rest!", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     private PerformanceSet getPerformedSet() {
