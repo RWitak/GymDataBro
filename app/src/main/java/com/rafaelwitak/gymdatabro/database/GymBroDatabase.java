@@ -69,6 +69,86 @@ public abstract class GymBroDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
+    // TODO: Double check Migration.
+    static final Migration MIGRATION_16_17 = new Migration(16, 17) {
+        // Rename table "sets" to "performance_sets",
+        // remove "exercise_id" column (can be queried via workout_step_id),
+        // add "workout_number" in its place.
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL(
+                    "CREATE TABLE sets_backup (" +
+                            "id INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT, " +
+                            "workout_step_id INTEGER, " +
+                            "timestamp INTEGER, " +
+                            "exercise_id INTEGER NOT NULL, " +
+                            "reps INTEGER, " +
+                            "weight REAL, " +
+                            "seconds_performed INTEGER, " +
+                            "seconds_rested INTEGER, " +
+                            "rpe REAL, " +
+                            "pain_level INTEGER NOT NULL, " +
+                            "notes TEXT, " +
+                            "FOREIGN KEY(exercise_id) REFERENCES exercises(id) " +
+                                "ON UPDATE NO ACTION ON DELETE NO ACTION, " +
+                            "FOREIGN KEY(workout_step_id) REFERENCES workout_steps(id) " +
+                                "ON UPDATE NO ACTION ON DELETE NO ACTION);"
+            );
+            database.execSQL(
+                    "INSERT INTO sets_backup SELECT * FROM sets;"
+            );
+            database.execSQL(
+                    "DROP TABLE sets;"
+            );
+            database.execSQL(
+                    "CREATE TABLE performance_sets (" +
+                            "id INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT, " +
+                            "workout_step_id INTEGER, " +
+                            "workout_number INTEGER, " +
+                            "timestamp INTEGER, " +
+                            "reps INTEGER, " +
+                            "weight REAL, " +
+                            "seconds_performed INTEGER, " +
+                            "seconds_rested INTEGER, " +
+                            "rpe REAL, " +
+                            "pain_level INTEGER NOT NULL, " +
+                            "notes TEXT, " +
+                            "FOREIGN KEY(workout_number) " +
+                                "REFERENCES workouts_in_programs(workout_number) " +
+                                "ON UPDATE NO ACTION ON DELETE NO ACTION, " +
+                            "FOREIGN KEY(workout_step_id) REFERENCES workout_steps(id) " +
+                                "ON UPDATE NO ACTION ON DELETE NO ACTION);"
+            );
+            database.execSQL(
+                    "INSERT INTO performance_sets(" +
+                            "id, " +
+                            "workout_step_id, " +
+                            "timestamp, " +
+                            "reps, " +
+                            "weight, " +
+                            "seconds_performed, " +
+                            "seconds_rested, " +
+                            "rpe, " +
+                            "pain_level, " +
+                            "notes) " +
+                    "SELECT id, " +
+                            "workout_step_id, " +
+                            "timestamp, " +
+                            "reps, " +
+                            "weight, " +
+                            "seconds_performed, " +
+                            "seconds_rested, " +
+                            "rpe, " +
+                            "pain_level, " +
+                            "notes " +
+                    "FROM sets_backup;"
+            );
+            database.execSQL(
+                    "DROP TABLE sets_backup;"
+            );
+        }
+    };
+
     static final Migration MIGRATION_15_16 = new Migration(15, 16) {
         // Delete obsolete "number_workouts" column from programs
         @Override

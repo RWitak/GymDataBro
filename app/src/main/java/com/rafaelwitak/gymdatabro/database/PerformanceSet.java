@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity(
-        tableName = "sets",
+        tableName = "sets", // TODO: change me to "performance_sets" EVERYWHERE!
         foreignKeys = {
                 @ForeignKey(
                         entity = Exercise.class,
@@ -33,6 +33,7 @@ public class PerformanceSet {
     @ColumnInfo
     public Date timestamp;
 
+    //TODO: Get rid of me EVERYWHERE!
     @ColumnInfo(name = "exercise_id")
     public int exerciseID;
 
