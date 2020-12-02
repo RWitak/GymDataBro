@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "programs")
@@ -31,7 +32,7 @@ public class Program {
     @Nullable
     public String notes;
 
-    @ColumnInfo(defaultValue = "1")
-    @NonNull
-    public Integer number_workouts = 1;
+
+    @Ignore
+    public Integer number_workouts;
 }

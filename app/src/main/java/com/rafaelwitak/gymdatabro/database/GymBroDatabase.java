@@ -21,7 +21,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
                 WorkoutInProgram.class,
                 WorkoutStep.class
         },
-        version = 15
+        version = 16
 )
 @TypeConverters({Converters.class})
 public abstract class GymBroDatabase extends RoomDatabase {
@@ -60,13 +60,53 @@ public abstract class GymBroDatabase extends RoomDatabase {
                                     MIGRATION_11_12,
                                     MIGRATION_12_13,
                                     MIGRATION_13_14,
-                                    MIGRATION_14_15)
+                                    MIGRATION_14_15,
+                                    MIGRATION_15_16)
                             .build();
                 }
             }
         }
         return INSTANCE;
     }
+
+    static final Migration MIGRATION_15_16 = new Migration(15, 16) {
+        // Delete obsolete "number_workouts" column from programs
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL(
+                    "CREATE TABLE programs_backup (" +
+                            "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                            "name TEXT NOT NULL DEFAULT 'Freestyle Program', " +
+                            "source TEXT, " +
+                            "links TEXT, " +
+                            "info TEXT, " +
+                            "notes TEXT, " +
+                            "number_workouts INTEGER NOT NULL DEFAULT 1)"
+            );
+            database.execSQL(
+                    "INSERT INTO programs_backup SELECT * FROM programs;"
+            );
+            database.execSQL(
+                    "DROP TABLE programs;"
+            );
+            database.execSQL(
+                    "CREATE TABLE programs (" +
+                            "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                            "name TEXT NOT NULL DEFAULT 'Freestyle Program', " +
+                            "source TEXT, " +
+                            "links TEXT, " +
+                            "info TEXT, " +
+                            "notes TEXT)"
+            );
+            database.execSQL(
+                    "INSERT INTO programs(id, name, source, links, info, notes) " +
+                            "SELECT id, name, source, links, info, notes FROM programs_backup;"
+            );
+            database.execSQL(
+                    "DROP TABLE programs_backup;"
+            );
+        }
+    };
 
     static final Migration MIGRATION_14_15 = new Migration(14, 15) {
         // Create a table that numerically lists Workouts in each Program.
