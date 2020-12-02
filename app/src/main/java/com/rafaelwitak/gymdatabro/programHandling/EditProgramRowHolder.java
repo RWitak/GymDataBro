@@ -23,10 +23,10 @@ public class EditProgramRowHolder extends EditRowHolder {
     private final InfoRow infoRow;
     private final NotesRow notesRow;
 
-//    out of use:
-//    private final NumberWorkoutsRow numberWorkoutsRow;
-
-    public EditProgramRowHolder(Context context, ActivityEditProgramBinding binding, Program program) {
+    public EditProgramRowHolder(
+            Context context,
+            ActivityEditProgramBinding binding,
+            Program program) {
         super(context);
         this.program = program;
 
@@ -35,9 +35,6 @@ public class EditProgramRowHolder extends EditRowHolder {
         this.linksRow = new LinksRow(binding);
         this.infoRow = new InfoRow(binding);
         this.notesRow = new NotesRow(binding);
-
-//        out of use:
-//        numberWorkoutsRow = new NumberWorkoutsRow(binding);
     }
 
     public List<EditProgramRow> getRows() {
@@ -51,22 +48,22 @@ public class EditProgramRowHolder extends EditRowHolder {
     }
 
     public Program getProgram() {
-        return setupProgramFromRowsInputs();
+        setupProgramFromRowsInputs();
+        setNumberOfWorkouts();
+        return program;
     }
 
-    private Program setupProgramFromRowsInputs() {
+    private void setupProgramFromRowsInputs() {
         program.name = this.nameRow.getEditTextValueAsString();
         program.source = this.sourceRow.getEditTextValueAsString();
         program.links = this.linksRow.getEditTextValueAsString();
         program.info = this.infoRow.getEditTextValueAsString();
         program.notes = this.notesRow.getEditTextValueAsString();
+    }
+
+    private void setNumberOfWorkouts() {
         program.number_workouts = database.workoutDAO()
                 .getNumberOfWorkoutsByProgram(program.id);
-
-//        out of use:
-//        program.number_workouts = (Integer) this.numberWorkoutsRow.getEditTextValue();
-
-        return program;
     }
 
     public void setupRowTexts(Program program) {
