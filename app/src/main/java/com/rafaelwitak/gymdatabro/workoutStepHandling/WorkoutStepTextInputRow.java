@@ -33,7 +33,23 @@ public abstract class WorkoutStepTextInputRow extends WorkoutStepRow {
     }
 
     protected void setAllViewTexts() {
-        expectedValueTextView.setText(this.getExpectedValue().toString());
+        setExpectedValueTextView();
+        setActualValueEditText();
+    }
+
+    private void setExpectedValueTextView() {
+        Number expectedValue = this.getExpectedValue();
+        String text;
+        if (expectedValue.intValue() < -1000) {
+            text = "";
+        }
+        else {
+            text = expectedValue.toString();
+        }
+        expectedValueTextView.setText(text);
+    }
+
+    private void setActualValueEditText() {
         actualValueEditText.setText(this.getActualValueHint().toString());
     }
 
@@ -41,6 +57,5 @@ public abstract class WorkoutStepTextInputRow extends WorkoutStepRow {
         return this.expectedValueTextView.getText();
     }
 
-    protected abstract Object getExpectedValue();
-
+    protected abstract Number getExpectedValue();
 }

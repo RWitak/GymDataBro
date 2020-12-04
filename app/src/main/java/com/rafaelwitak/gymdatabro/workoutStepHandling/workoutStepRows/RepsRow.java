@@ -19,7 +19,7 @@ public class RepsRow extends WorkoutStepTextInputRow {
     }
 
     @Override
-    protected Object getExpectedValue() {
+    protected Number getExpectedValue() {
         return currentWorkoutStep.reps;
     }
 

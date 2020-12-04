@@ -19,7 +19,7 @@ public class DurationRow extends WorkoutStepTextInputRow {
     }
 
     @Override
-    protected Object getExpectedValue() {
+    protected Number getExpectedValue() {
         return currentWorkoutStep.durationSeconds;
     }
 
