@@ -80,8 +80,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private String getWorkoutInstanceName(Integer workoutInstanceId) {
-        // TODO: Implement
-        return null;
+        return database.workoutInstanceDAO().getNameByInstanceId(workoutInstanceId);
     }
 
     // Set visibility and/or data for the WorkoutStep's View's Rows
