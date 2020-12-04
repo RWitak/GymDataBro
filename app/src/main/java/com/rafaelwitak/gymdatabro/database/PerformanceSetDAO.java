@@ -11,16 +11,18 @@ import java.util.List;
 
 @Dao
 public interface PerformanceSetDAO {
-    @Query("SELECT * FROM sets")
+    @Query("SELECT * FROM performance_sets")
     List<PerformanceSet> getAllSets();
 
-    @Query("SELECT * FROM sets WHERE rowid = :rowId")
+    @Query("SELECT * FROM performance_sets WHERE rowid = :rowId")
     PerformanceSet getSetByRowId(long rowId);
 
-    @Query("SELECT * FROM sets WHERE exercise_id=:exerciseID")
+    @Query("SELECT * FROM performance_sets " +
+            "JOIN workout_steps ON performance_sets.workout_step_id=workout_steps.id " +
+            "WHERE exercise_id=:exerciseID")
     List<PerformanceSet> getAllByExerciseID(int exerciseID);
 
-    @Query("SELECT * FROM sets WHERE timestamp BETWEEN :from AND :to")
+    @Query("SELECT * FROM performance_sets WHERE timestamp BETWEEN :from AND :to")
     List<PerformanceSet> getAllBetweenTimestamps(Date from, Date to);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

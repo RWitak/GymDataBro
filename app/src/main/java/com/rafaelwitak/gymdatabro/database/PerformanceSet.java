@@ -11,16 +11,16 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity(
-        tableName = "sets", // TODO: change me to "performance_sets" EVERYWHERE!
+        tableName = "performance_sets",
         foreignKeys = {
-                @ForeignKey(
-                        entity = Exercise.class,
-                        parentColumns = "id",
-                        childColumns = "exercise_id"),
                 @ForeignKey(
                         entity = WorkoutStep.class,
                         parentColumns = "id",
-                        childColumns = "workout_step_id")
+                        childColumns = "workout_step_id"),
+                @ForeignKey(
+                        entity = WorkoutInstance.class,
+                        parentColumns = "id",
+                        childColumns = "workout_instance_id")
         }
 )
 public class PerformanceSet {
@@ -30,12 +30,11 @@ public class PerformanceSet {
     @ColumnInfo(name = "workout_step_id")
     public Integer workoutStepId;
 
+    @ColumnInfo(name = "workout_instance_id")
+    public Integer workoutInstanceId;
+
     @ColumnInfo
     public Date timestamp;
-
-    //TODO: Get rid of me EVERYWHERE!
-    @ColumnInfo(name = "exercise_id")
-    public int exerciseID;
 
     @ColumnInfo
     @Nullable
@@ -68,8 +67,8 @@ public class PerformanceSet {
     @Ignore
     public PerformanceSet(@Nullable Integer id,
                           @Nullable Integer workoutStepId,
+                          @Nullable Integer workoutInstanceId,
                           @Nullable Date timestamp,
-                          int exerciseID,
                           @Nullable Integer reps,
                           @Nullable Float weight,
                           @Nullable Integer secondsPerformed,
@@ -79,8 +78,8 @@ public class PerformanceSet {
                           @Nullable String notes) {
         this.id = id;
         this.workoutStepId = workoutStepId;
+        this.workoutInstanceId = workoutInstanceId;
         this.timestamp = timestamp == null ? getTimestamp() : timestamp;
-        this.exerciseID = exerciseID;
         this.reps = reps;
         this.weight = weight;
         this.secondsPerformed = secondsPerformed;
@@ -95,7 +94,7 @@ public class PerformanceSet {
                 null,
                 null,
                 null,
-                -1,
+                null,
                 null,
                 null,
                 null,
@@ -114,8 +113,8 @@ public class PerformanceSet {
         this.workoutStepId = workoutStepId;
     }
 
-    public void setExerciseID(int exerciseID) {
-        this.exerciseID = exerciseID;
+    public void setWorkoutInstanceId(Integer workoutInstanceId) {
+        this.workoutInstanceId = workoutInstanceId;
     }
 
     public void setReps(@Nullable Integer reps) {
@@ -155,8 +154,8 @@ public class PerformanceSet {
                 + " (timestamp)\n"
                 + this.workoutStepId
                 + " (workoutStepId)\n"
-                + this.exerciseID
-                + " (exerciseID)\n"
+                + this.workoutInstanceId
+                + " (workoutInstanceId)\n"
                 + this.reps
                 + " (reps)\n"
                 + this.weight

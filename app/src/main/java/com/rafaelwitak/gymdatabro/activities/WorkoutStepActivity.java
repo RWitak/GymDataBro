@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -59,12 +60,28 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private void setUpToolbar() {
         Toolbar toolbar = binding.toolbar.getRoot();
         setSupportActionBar(toolbar);
-        this.setTitle(getCurrentWorkoutName()); // otherwise toolbar always just displays app name
+        this.setTitle(getToolbarTitle()); // otherwise toolbar always just displays app name
 
         String programName = getCurrentProgramName();
         if (programName != null) {
             toolbar.setSubtitle(programName);
         }
+    }
+
+    private String getToolbarTitle() {
+        String workoutInstanceName = getWorkoutInstanceName(getWorkoutInstanceId());
+        if (workoutInstanceName == null || workoutInstanceName.isEmpty()) {
+            if (currentWorkout.name == null || currentWorkout.name.isEmpty()) {
+                return "Unnamed Workout";
+            }
+            return currentWorkout.name;
+        }
+        return workoutInstanceName;
+    }
+
+    private String getWorkoutInstanceName(Integer workoutInstanceId) {
+        // TODO: Implement
+        return null;
     }
 
     // Set visibility and/or data for the WorkoutStep's View's Rows
@@ -109,7 +126,10 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private PerformanceSetDataProviderHolder getPerformanceSetDataProviderHolder() {
-        return new PerformanceSetDataProviderHolder(this.binding, this.currentWorkoutStep);
+        return new PerformanceSetDataProviderHolder(
+                binding,
+                currentWorkoutStep,
+                getWorkoutInstanceId());
     }
 
     private boolean isLastWorkoutStep(WorkoutStep currentWorkoutStep) {
@@ -144,6 +164,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
         Intent intent = new Intent(this, WorkoutStepActivity.class);
         intent.putExtra("workoutID", currentWorkoutStep.workoutID);
         intent.putExtra("nextStepNumber", currentWorkoutStep.number + 1);
+        intent.putExtra("workoutInstanceId", getWorkoutInstanceId());
 
         return intent;
     }
@@ -173,13 +194,15 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return currentWorkout;
     }
 
-
-    private String getCurrentWorkoutName() {
-        if (currentWorkout.name.isEmpty()) {
-            return "Unnamed Workout";
-        }
-        return currentWorkout.name;
+    @Nullable
+    private Integer getWorkoutInstanceId() {
+        int currentWorkoutNumber =
+                getIntent().getIntExtra("workoutInstanceId", -1);
+        return currentWorkoutNumber == -1
+                ? null
+                : currentWorkoutNumber;
     }
+
 
     private String getCurrentProgramName() {
         Integer id = currentWorkout.programID;

@@ -37,7 +37,7 @@ public interface WorkoutStepDAO {
             "IFNULL(" +
                 "(SELECT MAX(number) FROM " +
                     "sets " +
-                    "JOIN workout_steps ON sets.workout_step_id=workout_steps.id " +
+                    "JOIN workout_steps ON sets.workout_step_id=workout_steps.id " + // update to workout_instance_id logic
                 "WHERE timestamp = " +
                 "(SELECT MAX(timestamp) FROM sets) " +
                 "LIMIT 1), " +
@@ -48,7 +48,7 @@ public interface WorkoutStepDAO {
             "(SELECT MAX(number) FROM sets WHERE timestamp = " +
                 "(SELECT MAX(timestamp) FROM " +
                     "sets " +
-                    "JOIN workout_steps ON sets.workout_step_id=workout_steps.id " +
+                    "JOIN workout_steps ON sets.workout_step_id=workout_steps.id " + // update to workout_instance_id logic
                     "JOIN workouts ON workout_steps.workout_id=workouts.id " +
                 "WHERE program_id=:programId) " +
             "LIMIT 1);")

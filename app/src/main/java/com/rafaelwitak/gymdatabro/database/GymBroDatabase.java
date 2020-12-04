@@ -18,10 +18,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
                 Program.class,
                 PerformanceSet.class,
                 Workout.class,
-                WorkoutInProgram.class,
+                WorkoutInstance.class,
                 WorkoutStep.class
         },
-        version = 16
+        version = 17
 )
 @TypeConverters({Converters.class})
 public abstract class GymBroDatabase extends RoomDatabase {
@@ -61,7 +61,8 @@ public abstract class GymBroDatabase extends RoomDatabase {
                                     MIGRATION_12_13,
                                     MIGRATION_13_14,
                                     MIGRATION_14_15,
-                                    MIGRATION_15_16)
+                                    MIGRATION_15_16,
+                                    MIGRATION_16_17)
                             .build();
                 }
             }
@@ -69,82 +70,56 @@ public abstract class GymBroDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    // TODO: Double check Migration.
     static final Migration MIGRATION_16_17 = new Migration(16, 17) {
-        // Rename table "sets" to "performance_sets",
-        // remove "exercise_id" column (can be queried via workout_step_id),
-        // add "workout_number" in its place.
+        /*
+        1. drop workouts_in_programs
+        2. create new workout_instances with auto-increment PK 'workout_instance_id'
+           and a nullable 'workout_instance_name'
+        3. make workout_id~workout_number a unique index
+        4. drop existing sets table
+        5. recreate sets as performance_sets with reference to workout_instances(id) FK
+        */
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             database.execSQL(
-                    "CREATE TABLE sets_backup (" +
-                            "id INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT, " +
-                            "workout_step_id INTEGER, " +
-                            "timestamp INTEGER, " +
-                            "exercise_id INTEGER NOT NULL, " +
-                            "reps INTEGER, " +
-                            "weight REAL, " +
-                            "seconds_performed INTEGER, " +
-                            "seconds_rested INTEGER, " +
-                            "rpe REAL, " +
-                            "pain_level INTEGER NOT NULL, " +
-                            "notes TEXT, " +
-                            "FOREIGN KEY(exercise_id) REFERENCES exercises(id) " +
-                                "ON UPDATE NO ACTION ON DELETE NO ACTION, " +
-                            "FOREIGN KEY(workout_step_id) REFERENCES workout_steps(id) " +
-                                "ON UPDATE NO ACTION ON DELETE NO ACTION);"
+                    "DROP TABLE IF EXISTS workouts_in_programs;"
             );
             database.execSQL(
-                    "INSERT INTO sets_backup SELECT * FROM sets;"
+                    "CREATE TABLE workout_instances( " +
+                            "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                            "name TEXT, " +
+                            "program_id INTEGER NOT NULL, " +
+                            "workout_id INTEGER NOT NULL, " +
+                            "workout_number INTEGER NOT NULL,  " +
+                                "FOREIGN KEY(program_id) REFERENCES programs(id) " +
+                                    "ON UPDATE NO ACTION ON DELETE NO ACTION, " +
+                                "FOREIGN KEY(workout_id) REFERENCES workouts(id) " +
+                                    "ON UPDATE NO ACTION ON DELETE NO ACTION);"
+            );
+            database.execSQL(
+                    "CREATE UNIQUE INDEX index_workout_instances_workout_id_workout_number " +
+                        "ON workout_instances(workout_id, workout_number);"
             );
             database.execSQL(
                     "DROP TABLE sets;"
             );
             database.execSQL(
-                    "CREATE TABLE performance_sets (" +
-                            "id INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT, " +
-                            "workout_step_id INTEGER, " +
-                            "workout_number INTEGER, " +
-                            "timestamp INTEGER, " +
-                            "reps INTEGER, " +
-                            "weight REAL, " +
-                            "seconds_performed INTEGER, " +
-                            "seconds_rested INTEGER, " +
-                            "rpe REAL, " +
-                            "pain_level INTEGER NOT NULL, " +
-                            "notes TEXT, " +
-                            "FOREIGN KEY(workout_number) " +
-                                "REFERENCES workouts_in_programs(workout_number) " +
-                                "ON UPDATE NO ACTION ON DELETE NO ACTION, " +
+                    "CREATE TABLE performance_sets(" +
+                        "id INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT, "  +
+                        "workout_step_id INTEGER, "  +
+                        "workout_instance_id INTEGER, "  +
+                        "timestamp INTEGER, "  +
+                        "reps INTEGER, "  +
+                        "weight REAL, "  +
+                        "seconds_performed INTEGER, "  +
+                        "seconds_rested INTEGER, "  +
+                        "rpe REAL, "  +
+                        "pain_level INTEGER NOT NULL, "  +
+                        "notes TEXT, "  +
                             "FOREIGN KEY(workout_step_id) REFERENCES workout_steps(id) " +
+                                "ON UPDATE NO ACTION ON DELETE NO ACTION, "  +
+                            "FOREIGN KEY(workout_instance_id) REFERENCES workout_instances(id) " +
                                 "ON UPDATE NO ACTION ON DELETE NO ACTION);"
-            );
-            database.execSQL(
-                    "INSERT INTO performance_sets(" +
-                            "id, " +
-                            "workout_step_id, " +
-                            "timestamp, " +
-                            "reps, " +
-                            "weight, " +
-                            "seconds_performed, " +
-                            "seconds_rested, " +
-                            "rpe, " +
-                            "pain_level, " +
-                            "notes) " +
-                    "SELECT id, " +
-                            "workout_step_id, " +
-                            "timestamp, " +
-                            "reps, " +
-                            "weight, " +
-                            "seconds_performed, " +
-                            "seconds_rested, " +
-                            "rpe, " +
-                            "pain_level, " +
-                            "notes " +
-                    "FROM sets_backup;"
-            );
-            database.execSQL(
-                    "DROP TABLE sets_backup;"
             );
         }
     };
@@ -189,7 +164,7 @@ public abstract class GymBroDatabase extends RoomDatabase {
     };
 
     static final Migration MIGRATION_14_15 = new Migration(14, 15) {
-        // Create a table that numerically lists Workouts in each Program.
+        // Create a table 'workouts_in_programs' that numerically lists Workouts in each Program.
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             database.execSQL(
