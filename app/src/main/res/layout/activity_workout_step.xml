@@ -134,7 +134,6 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintBottom_toTopOf="@id/step_reps_barrier"
                 app:layout_constraintEnd_toStartOf="@id/step_right_guideline"
-                app:layout_constraintStart_toEndOf="@+id/step_right_guideline"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="1234" />
 
@@ -223,8 +222,8 @@
                 android:id="@+id/step_weight_barrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:barrierDirection="top"
-                app:constraint_referenced_ids="step_rpe_prescribed, step_rpe_title, step_rpe_performed"/>
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="step_weight_prescribed, step_weight_kg1, step_weight_title, step_weight_performed, step_weight_kg2"/>
 
 
             <androidx.constraintlayout.widget.Group
@@ -280,8 +279,8 @@
                 android:id="@+id/step_rpe_barrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:barrierDirection="top"
-                app:constraint_referenced_ids="step_duration_prescribed, step_duration_s1, step_duration_title, step_duration_performed, step_duration_s2"/>
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="step_rpe_prescribed, step_rpe_title, step_rpe_performed"/>
 
 
             <androidx.constraintlayout.widget.Group
@@ -290,7 +289,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:constraint_referenced_ids="step_duration_prescribed, step_duration_s1, step_duration_title, step_duration_performed, step_duration_s2"
-                app:layout_constraintBottom_toTopOf="@id/step_duration_barrier"
                 app:layout_constraintTop_toBottomOf="@id/step_rpe_barrier" />
 
             <TextView
@@ -362,8 +360,8 @@
                 android:id="@+id/step_duration_barrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:barrierDirection="top"
-                app:constraint_referenced_ids="step_rest_prescribed, step_rest_seconds1, step_rest_title, step_rest_performed, step_rest_seconds2"/>
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="step_duration_prescribed, step_duration_s1, step_duration_title, step_duration_performed, step_duration_s2"/>
 
 
             <androidx.constraintlayout.widget.Group
@@ -371,7 +369,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="visible"
                 app:constraint_referenced_ids="step_rest_prescribed, step_rest_seconds1, step_rest_title, step_rest_performed,step_rest_seconds2"
                 app:layout_constraintTop_toBottomOf="@id/step_duration_barrier" />
 
@@ -445,8 +442,8 @@
                 android:id="@+id/step_rest_barrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:barrierDirection="top"
-                app:constraint_referenced_ids="step_pain_row"/>
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="step_rest_prescribed, step_rest_seconds1, step_rest_title, step_rest_performed, step_rest_seconds2"/>
 
             <LinearLayout
                 android:id="@+id/step_pain_row"
@@ -512,7 +509,7 @@
                     android:hint="@string/notes"
                     android:imeOptions="actionDone"
                     android:inputType="textMultiLine"
-                    tools:text="Here is some text to fit in the Notes /n might be too long!" />
+                    tools:text="Here is some text to fit in the Notes might be too long!" />
 
             </LinearLayout>
 
