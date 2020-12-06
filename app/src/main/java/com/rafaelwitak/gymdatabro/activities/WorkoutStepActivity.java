@@ -71,7 +71,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private String getToolbarTitle() {
         String workoutInstanceName = getWorkoutInstanceName(getWorkoutInstanceId());
         if (workoutInstanceName == null || workoutInstanceName.isEmpty()) {
-            if (currentWorkout.name == null || currentWorkout.name.isEmpty()) {
+            if (currentWorkout.name.isEmpty()) {
                 return "Unnamed Workout";
             }
             return currentWorkout.name;
@@ -137,7 +137,10 @@ public class WorkoutStepActivity extends AppCompatActivity {
                         .workoutStepDAO()
                         .getAllStepsForWorkoutSynchronously(currentWorkout.id);
 
-        final int numberOfStepsInWorkout = workoutSteps != null ? workoutSteps.size() : 0;
+        final int numberOfStepsInWorkout =
+                workoutSteps != null
+                        ? workoutSteps.size()
+                        : 0;
 
         return (currentWorkoutStep.number + 1 == numberOfStepsInWorkout);
     }
@@ -170,8 +173,8 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
 
     private WorkoutStep getCurrentWorkoutStep() {
-        int workoutID = getIntent().getIntExtra("workoutID", 1);
-        int stepNumber = getIntent().getIntExtra("nextStepNumber", 0);
+        int workoutID = getWorkoutIdFromIntent();
+        int stepNumber = getStepNumberFromIntent();
 
         Log.d("GymDataBro", "Fetching Workout " +
                     + workoutID
@@ -181,6 +184,14 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return database
                 .workoutStepDAO()
                 .getWorkoutStepSynchronously(workoutID, stepNumber);
+    }
+
+    private int getWorkoutIdFromIntent() {
+        return getIntent().getIntExtra("workoutID", 1);
+    }
+
+    private int getStepNumberFromIntent() {
+        return getIntent().getIntExtra("nextStepNumber", 0);
     }
 
     private Workout getCurrentWorkout() {
@@ -195,11 +206,14 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     @Nullable
     private Integer getWorkoutInstanceId() {
-        int currentWorkoutNumber =
-                getIntent().getIntExtra("workoutInstanceId", -1);
+        int currentWorkoutNumber = getWorkoutInstanceIdFromIntent();
         return currentWorkoutNumber == -1
                 ? null
                 : currentWorkoutNumber;
+    }
+
+    private int getWorkoutInstanceIdFromIntent() {
+        return getIntent().getIntExtra("workoutInstanceId", -1);
     }
 
 

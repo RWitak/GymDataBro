@@ -55,6 +55,23 @@ public interface WorkoutStepDAO {
     WorkoutStep getNextWorkoutStepForProgram(int programId);
     */
 
+    @Query(
+            "SELECT :workoutStepId = (" +
+                    "SELECT MAX(number) FROM workout_steps WHERE workout_id = (" +
+                        "SELECT workout_id FROM workout_steps WHERE id=:workoutStepId));"
+    )
+    boolean isLastStepOfWorkout(Integer workoutStepId);
+
+    @Query(
+            "SELECT * FROM workout_steps WHERE id=:workoutStepId;"
+    )
+    WorkoutStep getWorkoutStepById(Integer workoutStepId);
+
+    @Query(
+            "SELECT MIN(number) FROM workout_steps WHERE number > :latestNumber;"
+    )
+    Integer getNextNumberUp(Integer latestNumber);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNewWorkoutStep(WorkoutStep workoutStep);
 

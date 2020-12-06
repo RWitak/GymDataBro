@@ -25,6 +25,11 @@ public interface PerformanceSetDAO {
     @Query("SELECT * FROM performance_sets WHERE timestamp BETWEEN :from AND :to")
     List<PerformanceSet> getAllBetweenTimestamps(Date from, Date to);
 
+    @Query("SELECT * FROM performance_sets WHERE timestamp = (" +
+                "SELECT MAX(timestamp) FROM performance_sets) " +
+            "LIMIT 1;")
+    PerformanceSet getLatestPerformanceSet();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insertSet(PerformanceSet performanceSet);
 

@@ -65,6 +65,7 @@ public class ChooseProgramActivity extends AppCompatActivity {
         return view -> {
             Intent intent = new Intent(getApplicationContext(), WorkoutStepActivity.class);
             intent.putExtra("programID", program.id);
+
             startActivity(intent);
         };
     }
