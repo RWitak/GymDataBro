@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -13,6 +14,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.Program;
+import com.rafaelwitak.gymdatabro.database.WorkoutInstance;
+import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.programHandling.ChooseProgramRow;
 
 public class ChooseProgramActivity extends AppCompatActivity {
@@ -64,10 +67,39 @@ public class ChooseProgramActivity extends AppCompatActivity {
     private View.OnClickListener getRowOnClickListener(Program program) {
         return view -> {
             Intent intent = new Intent(getApplicationContext(), WorkoutStepActivity.class);
-            intent.putExtra("programID", program.id);
+            WorkoutInstance instance = getWorkoutInstanceForProgram(program);
+
+            intent.putExtra("workoutID", instance.workoutId);
+            intent.putExtra("nextStepNumber", getNextWorkoutStepNumber(program));
+            intent.putExtra("workoutInstanceId", instance.id);
 
             startActivity(intent);
         };
+    }
+
+    @NonNull
+    private Integer getNextWorkoutStepNumber(Program program) {
+        WorkoutStep nextStep = database.masterDao().getNextWorkoutStepForProgramId(program.id);
+        if (nextStep != null) {
+        return nextStep.number;
+        }
+        return database.masterDao().getFirstWorkoutStepOfProgram(program.id).number;
+    }
+
+    private WorkoutInstance getWorkoutInstanceForProgram(Program program) {
+        WorkoutInstance latestWorkoutInstance =
+                database.masterDao().getLatestWorkoutInstanceForProgram(program.id);
+        if (latestWorkoutInstance != null) {
+            WorkoutInstance nextAfterLatest =
+                    database.masterDao()
+                            .getNextWorkoutInstanceForProgram(
+                                    program.id, latestWorkoutInstance.workoutNumber);
+            if (nextAfterLatest != null) {
+                return nextAfterLatest;
+            }
+        }
+
+        return database.masterDao().getFirstWorkoutInstanceForProgram(program.id);
     }
 
     private View.OnLongClickListener getRowOnLongClickListener(Program program) {

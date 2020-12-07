@@ -33,6 +33,7 @@ public abstract class GymBroDatabase extends RoomDatabase {
     public abstract WorkoutDAO workoutDAO();
     public abstract WorkoutInstanceDAO workoutInstanceDAO();
     public abstract WorkoutStepDAO workoutStepDAO();
+    public abstract MasterDao masterDao();
 
     private static volatile GymBroDatabase INSTANCE;
     /*
