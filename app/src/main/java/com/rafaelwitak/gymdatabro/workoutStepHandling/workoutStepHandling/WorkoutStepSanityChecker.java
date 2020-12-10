@@ -46,7 +46,7 @@ public class WorkoutStepSanityChecker {
             WorkoutStep workoutStep,
             WorkoutStepDAO workoutStepDAO) {
         return workoutStepDAO.
-                getWorkoutStepSynchronously(
+                getWorkoutStep(
                         workoutStep.workoutID,
                         workoutStep.number)
                 != null;

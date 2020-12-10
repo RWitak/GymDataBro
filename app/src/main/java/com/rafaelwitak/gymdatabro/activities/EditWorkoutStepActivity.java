@@ -69,7 +69,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
     private WorkoutStep getWorkoutStepFromIntent(@NonNull Intent intent) {
         int workoutId = intent.getIntExtra("workoutId", -1);
         int stepNumber = intent.getIntExtra("stepNumber", -1);
-        return database.workoutStepDAO().getWorkoutStepSynchronously(workoutId, stepNumber);
+        return database.workoutStepDAO().getWorkoutStep(workoutId, stepNumber);
     }
 
 

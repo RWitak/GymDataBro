@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,8 +19,6 @@ import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetDataProviderHolder;
 import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetMaker;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRowHolder;
-
-import java.util.List;
 
 public class WorkoutStepActivity extends AppCompatActivity {
 
@@ -97,19 +96,16 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
 
+    @NonNull
     private View.OnClickListener getViewOnClickListener() {
-        //noinspection Convert2Lambda
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                savePerformanceSet(getPerformedSet());
+        return v -> {
+            savePerformanceSet(getPerformedSet());
 
-                if (isLastWorkoutStep(currentWorkoutStep)){
-                    congratulateAndFinish();
-                }
-                else {
-                    startNextWorkoutStep();
-                }
+            if (isLastWorkoutStep(currentWorkoutStep)){
+                congratulateAndFinish();
+            }
+            else {
+                startNextWorkoutStep();
             }
         };
     }
@@ -120,10 +116,12 @@ public class WorkoutStepActivity extends AppCompatActivity {
         finish();
     }
 
+    @NonNull
     private PerformanceSet getPerformedSet() {
         return PerformanceSetMaker.getPerformanceSet(getPerformanceSetDataProviderHolder());
     }
 
+    @NonNull
     private PerformanceSetDataProviderHolder getPerformanceSetDataProviderHolder() {
         return new PerformanceSetDataProviderHolder(
                 binding,
@@ -131,18 +129,11 @@ public class WorkoutStepActivity extends AppCompatActivity {
                 getWorkoutInstanceId());
     }
 
-    private boolean isLastWorkoutStep(WorkoutStep currentWorkoutStep) {
-        final List<WorkoutStep> workoutSteps =
-                database
-                        .workoutStepDAO()
-                        .getAllStepsForWorkoutSynchronously(currentWorkout.id);
-
-        final int numberOfStepsInWorkout =
-                workoutSteps != null
-                        ? workoutSteps.size()
-                        : 0;
-
-        return (currentWorkoutStep.number + 1 == numberOfStepsInWorkout);
+    private boolean isLastWorkoutStep(@NonNull WorkoutStep currentWorkoutStep) {
+        return database.masterDao()
+                .isLastStepOfWorkout(
+                        currentWorkoutStep.workoutID,
+                        currentWorkoutStep.number);
     }
 
 
@@ -162,13 +153,25 @@ public class WorkoutStepActivity extends AppCompatActivity {
         finish();
     }
 
+    @NonNull
     private Intent getNewIntentWithExtras() {
         Intent intent = new Intent(this, WorkoutStepActivity.class);
+        Integer nextWorkoutStepNumber = getNextWorkoutStepNumber();
         intent.putExtra("workoutID", currentWorkoutStep.workoutID);
-        intent.putExtra("nextStepNumber", currentWorkoutStep.number + 1);
+        intent.putExtra("nextStepNumber", nextWorkoutStepNumber);
         intent.putExtra("workoutInstanceId", getWorkoutInstanceId());
 
         return intent;
+    }
+
+    @Nullable
+    private Integer getNextWorkoutStepNumber() {
+        WorkoutStep nextStep = database.masterDao()
+                    .getNextStepInWorkout(currentWorkoutStep.id, currentWorkout.id);
+        if (nextStep == null) {
+            return null;
+        }
+        return nextStep.number;
     }
 
 
@@ -183,7 +186,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
         return database
                 .workoutStepDAO()
-                .getWorkoutStepSynchronously(workoutID, stepNumber);
+                .getWorkoutStep(workoutID, stepNumber);
     }
 
     private int getWorkoutIdFromIntent() {
@@ -194,6 +197,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return getIntent().getIntExtra("nextStepNumber", 0);
     }
 
+    @NonNull
     private Workout getCurrentWorkout() {
         Workout currentWorkout = database.workoutDAO().getWorkoutByID(currentWorkoutStep.workoutID);
 
@@ -217,6 +221,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
 
+    @Nullable
     private String getCurrentProgramName() {
         Integer id = currentWorkout.programID;
         if (id != null) {

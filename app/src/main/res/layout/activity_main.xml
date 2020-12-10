@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
         android:layout_margin="16dp"
-        android:onClick="resumeWorkout"
+        android:onClick="resumeWorkoutOrRedirect"
         android:src="@android:drawable/ic_media_play" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

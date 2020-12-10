@@ -3,10 +3,11 @@ package com.rafaelwitak.gymdatabro.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -70,20 +71,32 @@ public class ChooseProgramActivity extends AppCompatActivity {
             WorkoutInstance instance = getWorkoutInstanceForProgram(program);
 
             intent.putExtra("workoutID", instance.workoutId);
-            intent.putExtra("nextStepNumber", getNextWorkoutStepNumber(program));
+            intent.putExtra("nextStepNumber", getNextWorkoutStepNumber(program, instance));
             intent.putExtra("workoutInstanceId", instance.id);
 
+            Log.d("GDB",
+                    "workoutID = " + instance.workoutId + "\n"
+                            + "nextStepNumber = "
+                            + getNextWorkoutStepNumber(program, instance) + "\n"
+                            + "workoutInstanceId = " + instance.id);
+
             startActivity(intent);
+            finishAndRemoveTask();
         };
     }
 
-    @NonNull
-    private Integer getNextWorkoutStepNumber(Program program) {
-        WorkoutStep nextStep = database.masterDao().getNextWorkoutStepForProgramId(program.id);
-        if (nextStep != null) {
-        return nextStep.number;
+    @Nullable
+    private Integer getNextWorkoutStepNumber(Program program, WorkoutInstance instance) {
+        WorkoutStep nextStep = database.masterDao()
+                .getNextWorkoutStepForProgramId(program.id, instance);
+
+        if (nextStep == null) {
+            nextStep = database.masterDao().getFirstWorkoutStepOfProgram(program.id);
         }
-        return database.masterDao().getFirstWorkoutStepOfProgram(program.id).number;
+        if (nextStep == null) {
+            return null;
+        }
+        return nextStep.number;
     }
 
     private WorkoutInstance getWorkoutInstanceForProgram(Program program) {
