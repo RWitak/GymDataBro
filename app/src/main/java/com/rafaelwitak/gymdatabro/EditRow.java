@@ -1,11 +1,12 @@
 package com.rafaelwitak.gymdatabro;
 
+import android.text.Editable;
 import android.widget.EditText;
 
 public abstract class EditRow {
     protected EditText editText;
 
-    public Object getEditTextValue() { // TODO: Change signature to EditText
+    public Editable getEditTextValue() {
         return editText.getText();
     }
 
