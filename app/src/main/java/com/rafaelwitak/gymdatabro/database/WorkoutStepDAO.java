@@ -1,6 +1,6 @@
 package com.rafaelwitak.gymdatabro.database;
 
-import androidx.lifecycle.LiveData;
+import androidx.annotation.Nullable;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -11,66 +11,60 @@ import java.util.List;
 
 @Dao
 public interface WorkoutStepDAO {
-    @Query("SELECT * FROM workout_steps")
-    LiveData<List<WorkoutStep>> getAllWorkoutSteps();
-
+    @Nullable
     @Query("SELECT * FROM workout_steps WHERE workout_id=:workoutID")
-    LiveData<List<WorkoutStep>> getAllStepsForWorkoutAsLiveData(int workoutID);
+    List<WorkoutStep> getAllStepsForWorkout(int workoutID);
 
+    @Nullable
     @Query("SELECT * FROM workout_steps WHERE workout_id=:workoutID "
             + "AND number=:stepNumber")
-    LiveData<WorkoutStep> getWorkoutStepAsLiveData(int workoutID, int stepNumber);
-
-    @Query("SELECT * FROM workout_steps WHERE workout_id=:workoutID")
-    List<WorkoutStep> getAllStepsForWorkoutSynchronously(int workoutID);
-
-    @Query("SELECT * FROM workout_steps WHERE workout_id=:workoutID "
-            + "AND number=:stepNumber")
-    WorkoutStep getWorkoutStepSynchronously(int workoutID, int stepNumber);
+    WorkoutStep getWorkoutStep(int workoutID, int stepNumber);
 
     @Query("SELECT COUNT(*) FROM workout_steps WHERE workout_id=:workoutID")
     int getNumberOfStepsInWorkout(int workoutID);
 
-    // TODO: Include possibilities of finished Workout or even Program.
-    /*
-    @Query("SELECT * FROM workout_steps WHERE number = 1 + " +
-            "IFNULL(" +
-                "(SELECT MAX(number) FROM " +
-                    "sets " +
-                    "JOIN workout_steps ON sets.workout_step_id=workout_steps.id " + // update to workout_instance_id logic
-                "WHERE timestamp = " +
-                "(SELECT MAX(timestamp) FROM sets) " +
-                "LIMIT 1), " +
-            "-1);")
-    WorkoutStep getNextGlobalWorkoutStep();
-
-    @Query("SELECT * FROM workout_steps WHERE number = 1 + " +
-            "(SELECT MAX(number) FROM sets WHERE timestamp = " +
-                "(SELECT MAX(timestamp) FROM " +
-                    "sets " +
-                    "JOIN workout_steps ON sets.workout_step_id=workout_steps.id " + // update to workout_instance_id logic
-                    "JOIN workouts ON workout_steps.workout_id=workouts.id " +
-                "WHERE program_id=:programId) " +
-            "LIMIT 1);")
-    WorkoutStep getNextWorkoutStepForProgram(int programId);
-    */
-
     @Query(
-            "SELECT :workoutStepId = (" +
-                    "SELECT MAX(number) FROM workout_steps WHERE workout_id = (" +
-                        "SELECT workout_id FROM workout_steps WHERE id=:workoutStepId));"
+            "SELECT :workoutStepNumber = (" +
+                    "SELECT MAX(number) FROM workout_steps WHERE workout_id = :workoutId);"
     )
-    boolean isLastStepOfWorkout(Integer workoutStepId);
+    boolean isLastStepOfWorkout(Integer workoutId, Integer workoutStepNumber);
 
     @Query(
             "SELECT * FROM workout_steps WHERE id=:workoutStepId;"
     )
     WorkoutStep getWorkoutStepById(Integer workoutStepId);
 
+    @Nullable
     @Query(
-            "SELECT MIN(number) FROM workout_steps WHERE number > :latestNumber;"
+            "SELECT * FROM workout_steps WHERE workout_id = :workoutId " +
+                    "AND number = (" +
+                    "SELECT MIN(number) FROM workout_steps WHERE workout_id = :workoutId " +
+                    "AND number > (" +
+                    "SELECT number FROM workout_steps WHERE id = :latestWorkoutStepId));"
     )
-    Integer getNextNumberUp(Integer latestNumber);
+    WorkoutStep getNextStepInWorkout(
+            Integer latestWorkoutStepId, Integer workoutId);
+
+    @Nullable
+    @Query(
+            "SELECT * FROM workout_steps " +
+                    "WHERE workout_id = :workoutId " +
+                    "AND number = (" +
+                        "SELECT MIN(number) FROM workout_steps " +
+                        "WHERE workout_id = :workoutId);"
+    )
+    WorkoutStep getFirstStepOfWorkout(Integer workoutId);
+
+    @Nullable
+    @Query(
+            "SELECT * FROM workout_instances WHERE workout_instances.id = (" +
+                    "SELECT workout_instances.id FROM workout_instances WHERE workout_number = (" +
+                        "SELECT MIN(workout_number) FROM workout_instances " +
+                            "WHERE program_id = :programId " +
+                            "AND workout_number > :workoutNumber))"
+    )
+    WorkoutInstance getNextWorkoutInstanceForProgram(
+            Integer programId, Integer workoutNumber);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNewWorkoutStep(WorkoutStep workoutStep);
