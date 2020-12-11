@@ -6,6 +6,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -20,7 +21,16 @@ import java.util.Date;
                 @ForeignKey(
                         entity = WorkoutInstance.class,
                         parentColumns = "id",
-                        childColumns = "workout_instance_id")
+                        childColumns = "workout_instance_id"),
+        },
+        indices = {
+                @Index(
+                        value = "workout_step_id",
+                        name = "index_performance_sets_workout_step_id"),
+                @Index(
+                        value = "workout_instance_id",
+                        name = "index_performance_sets_workout_instance_id"
+                )
         }
 )
 public class PerformanceSet {

@@ -21,7 +21,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
                 WorkoutInstance.class,
                 WorkoutStep.class
         },
-        version = 17
+        version = 18
 )
 @TypeConverters({Converters.class})
 public abstract class GymBroDatabase extends RoomDatabase {
@@ -64,13 +64,38 @@ public abstract class GymBroDatabase extends RoomDatabase {
                                     MIGRATION_13_14,
                                     MIGRATION_14_15,
                                     MIGRATION_15_16,
-                                    MIGRATION_16_17)
+                                    MIGRATION_16_17,
+                                    MIGRATION_17_18
+                                    )
                             .build();
                 }
             }
         }
         return INSTANCE;
     }
+
+    static final Migration MIGRATION_17_18 = new Migration(17, 18) {
+        // Add indices for foreign keys.
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS index_performance_sets_workout_step_id " +
+                            "ON performance_sets(workout_step_id);"
+            );
+            database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS index_performance_sets_workout_instance_id " +
+                            "ON performance_sets(workout_instance_id);"
+            );
+            database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS index_workout_instances_program_id " +
+                            "ON workout_instances(program_id);"
+            );
+            database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS index_workout_steps_exercise_id " +
+                            "ON workout_steps(exercise_id);"
+            );
+        }
+    };
 
     static final Migration MIGRATION_16_17 = new Migration(16, 17) {
         /*

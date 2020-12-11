@@ -19,7 +19,12 @@ import androidx.room.PrimaryKey;
                         childColumns = "workout_id")
         },
         indices = {
-                @Index(value = {"workout_id", "workout_number"}, unique = true)
+                @Index(
+                        value = "program_id",
+                        name = "index_workout_instances_program_id"),
+                @Index(
+                        value = {"workout_id", "workout_number"},
+                        unique = true)
         }
 )
 public class WorkoutInstance {

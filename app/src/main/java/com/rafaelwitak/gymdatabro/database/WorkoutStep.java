@@ -23,7 +23,12 @@ import androidx.room.PrimaryKey;
                 )
         },
         indices = {
-                @Index(value = {"workout_id", "number"}, unique = true)
+                @Index(
+                        value = "exercise_id",
+                        name = "index_workout_steps_exercise_id"),
+                @Index(
+                        value = {"workout_id", "number"},
+                        unique = true)
         })
 public class WorkoutStep {
 

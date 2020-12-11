@@ -17,9 +17,9 @@ public interface PerformanceSetDAO {
     @Query("SELECT * FROM performance_sets WHERE rowid = :rowId")
     PerformanceSet getSetByRowId(long rowId);
 
-    @Query("SELECT * FROM performance_sets " +
-            "JOIN workout_steps ON performance_sets.workout_step_id=workout_steps.id " +
-            "WHERE exercise_id=:exerciseID")
+    @Query("SELECT * FROM performance_sets WHERE id = (" +
+            "SELECT id FROM workout_steps " +
+            "WHERE exercise_id=:exerciseID);")
     List<PerformanceSet> getAllByExerciseID(int exerciseID);
 
     @Query("SELECT * FROM performance_sets WHERE timestamp BETWEEN :from AND :to")
