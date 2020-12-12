@@ -46,7 +46,7 @@ public abstract class OneRepMax {
             if (orm == 0) {
                 return 0;
             }
-            return (float) (Math.pow(reps, 0.1) / orm);
+            return (float) (orm / Math.pow(reps, 0.1));
         }
 
         @Override
@@ -69,7 +69,7 @@ public abstract class OneRepMax {
             if (orm == 0) {
                 return 0;
             }
-            return (1 + (reps / 40)) / orm;
+            return orm / (1 + (reps / 40));
         }
 
         @Override
