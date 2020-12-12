@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.rafaelwitak.gymdatabro.OneRepMax;
+import com.rafaelwitak.gymdatabro.database.Exercise;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.PerformanceSet;
 import com.rafaelwitak.gymdatabro.database.Workout;
@@ -40,6 +42,11 @@ public class WorkoutStepActivity extends AppCompatActivity {
             finish();
             return; // DO NOT DELETE: Method will try to continue without a proper WorkoutStep!
         }
+        this.currentWorkoutStep.weight =
+                getWeightFromOrm(
+                        this.currentWorkoutStep.weight,
+                        getCurrentExercise(),
+                        OneRepMax.getFormula());
         this.currentWorkout = getCurrentWorkout();
 
         // automatically bind all Views with IDs
@@ -47,6 +54,23 @@ public class WorkoutStepActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setUpViews();
+    }
+
+    @Nullable
+    private Float getWeightFromOrm(Float weight,
+                                   @NonNull Exercise exercise,
+                                   @NonNull OneRepMax.OrmFormula formula) {
+        if (weight != null && currentWorkoutStep.reps != null) {
+            float orm = (exercise.pr != null)
+                    ? exercise.pr
+                    : 0;
+            weight = formula.getWeight(currentWorkoutStep.reps, orm);
+        }
+        return weight;
+    }
+
+    private Exercise getCurrentExercise() {
+        return database.exerciseDAO().getExerciseByID(currentWorkoutStep.exerciseID);
     }
 
 
