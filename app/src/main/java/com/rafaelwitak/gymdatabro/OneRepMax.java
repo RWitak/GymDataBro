@@ -1,17 +1,17 @@
 package com.rafaelwitak.gymdatabro;
 
 public abstract class OneRepMax {
-    private final OrmFormula STANDARD_FORMULA = new Lombardi();
+    private static final OrmFormula STANDARD_FORMULA = new OConner();
     public enum FORMULA {
         LOMBARDI,
         O_CONNER
     }
 
-    public OrmFormula getFormula() {
+    public static OrmFormula getFormula() {
         return STANDARD_FORMULA;
     }
 
-    public OrmFormula getFormula(FORMULA formula) {
+    public static OrmFormula getFormula(FORMULA formula) {
         switch (formula) {
             case LOMBARDI:
                 return new Lombardi();
@@ -33,7 +33,7 @@ public abstract class OneRepMax {
         float getOrm(float weight, float reps);
     }
 
-    protected abstract static class OrmFormula implements
+    public abstract static class OrmFormula implements
             WeightCalculator,
             RepsCalculator,
             OrmCalculator
@@ -43,11 +43,17 @@ public abstract class OneRepMax {
     private static class Lombardi extends OrmFormula {
         @Override
         public float getWeight(float reps, float orm) {
+            if (orm == 0) {
+                return 0;
+            }
             return (float) (Math.pow(reps, 0.1) / orm);
         }
 
         @Override
         public int getReps(float weight, float orm) {
+            if (weight == 0) {
+                return 0;
+            }
             return (int) Math.round(Math.pow(orm / weight, 10));
         }
 
@@ -60,17 +66,23 @@ public abstract class OneRepMax {
     private static class OConner extends OrmFormula {
         @Override
         public float getWeight(float reps, float orm) {
-            return (float) ((1 + (reps / 40)) / orm);
+            if (orm == 0) {
+                return 0;
+            }
+            return (1 + (reps / 40)) / orm;
         }
 
         @Override
         public int getReps(float weight, float orm) {
-            return (int) Math.round(40 * ((orm / weight) - 1));
+            if (weight == 0) {
+                return 0;
+            }
+            return Math.round(40 * ((orm / weight) - 1));
         }
 
         @Override
         public float getOrm(float weight, float reps) {
-            return (float) (weight * (1 + (reps / 40)));
+            return weight * (1 + (reps / 40));
         }
     }
 }
