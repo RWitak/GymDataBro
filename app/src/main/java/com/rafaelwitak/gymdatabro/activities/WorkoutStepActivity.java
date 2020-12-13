@@ -64,9 +64,17 @@ public class WorkoutStepActivity extends AppCompatActivity {
             float orm = (exercise.pr != null)
                     ? exercise.pr
                     : 0;
-            weight = formula.getWeight(currentWorkoutStep.reps, orm);
+            weight = formula.getWeight(getMaxNumberOfReps(), orm);
         }
         return weight;
+    }
+
+    private Integer getMaxNumberOfReps() {
+        // The maximum number of possible reps, found using RPE (10 RPE is failure).
+        if (currentWorkoutStep.rpe == null) {
+            return currentWorkoutStep.reps;
+        }
+        return (currentWorkoutStep.reps + Math.round(10 - currentWorkoutStep.rpe));
     }
 
     private Exercise getCurrentExercise() {
