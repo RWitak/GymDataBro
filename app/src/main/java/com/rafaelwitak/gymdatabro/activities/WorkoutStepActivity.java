@@ -22,6 +22,8 @@ import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetDataProvi
 import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetMaker;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRowHolder;
 
+import java.util.Locale;
+
 public class WorkoutStepActivity extends AppCompatActivity {
     private GymBroDatabase database;
 
@@ -90,19 +92,22 @@ public class WorkoutStepActivity extends AppCompatActivity {
             float orm = (exercise.pr != null)
                     ? exercise.pr
                     : 0;
-            weight = formula.getWeight(getMaxNumberOfReps(), orm);
+            weight = formula.getWeight(getMaxNumberOfReps(currentWorkoutStep.reps, currentWorkoutStep.rpe), orm);
         }
         return weight;
     }
 
-    /** The maximum number of possible reps, found using RPE (10 RPE is failure).*/
-    private Integer getMaxNumberOfReps() {
-        if (currentWorkoutStep.rpe == null) {
-            return currentWorkoutStep.reps;
+    /** The maximum number of possible reps, found using RPE (10 RPE is failure).
+     * @param reps Repetitions
+     * @param rpe Rate of Perceived Exertion */
+    private Integer getMaxNumberOfReps(Integer reps, Float rpe) {
+        if (rpe == null || reps == null) {
+            return reps;
         }
-        return (currentWorkoutStep.reps + Math.round(10 - currentWorkoutStep.rpe));
+        return (reps + Math.round(10 - rpe));
     }
 
+    @NonNull
     private Exercise getCurrentExercise() {
         return database.exerciseDAO().getExerciseByID(currentWorkoutStep.exerciseID);
     }
@@ -166,7 +171,9 @@ public class WorkoutStepActivity extends AppCompatActivity {
     @NonNull
     private View.OnClickListener getViewOnClickListener() {
         return v -> {
-            savePerformanceSet(getPerformedSet());
+            PerformanceSet performedSet = getPerformedSet();
+            savePerformanceSet(performedSet);
+            handleNewRecords(performedSet);
 
             if (isLastWorkoutStep(currentWorkoutStep)){
                 congratulateAndFinish();
@@ -175,6 +182,11 @@ public class WorkoutStepActivity extends AppCompatActivity {
                 startNextWorkoutStep();
             }
         };
+    }
+
+    @NonNull
+    private PerformanceSet getPerformedSet() {
+        return PerformanceSetMaker.getPerformanceSet(getPerformanceSetDataProviderHolder());
     }
 
     private void savePerformanceSet(PerformanceSet performanceSet) {
@@ -186,9 +198,54 @@ public class WorkoutStepActivity extends AppCompatActivity {
                 + database.performanceSetDAO().getSetByRowId(savedSetRowId).toString());
     }
 
-    @NonNull
-    private PerformanceSet getPerformedSet() {
-        return PerformanceSetMaker.getPerformanceSet(getPerformanceSetDataProviderHolder());
+    private void handleNewRecords(@NonNull PerformanceSet performedSet) {
+        Exercise currentExercise = getCurrentExercise();
+        @Nullable Float previousOrm = currentExercise.pr;
+        @Nullable Float currentOrm = getOneRepMaxValue(
+                performedSet.reps,
+                performedSet.weight,
+                performedSet.rpe);
+
+        if (isNewPr(previousOrm, currentOrm)) {
+            currentExercise.pr = currentOrm;
+            database.exerciseDAO().updateExercise(currentExercise);
+
+            showNewOrmMessage(performedSet, currentOrm);
+        }
+    }
+
+    private Float getOneRepMaxValue(Integer reps, Float weight, Float rpe) {
+        if (reps == null || weight == null) {
+            return null;
+        }
+        if (rpe == null) {
+            rpe = 10f; // If no RPE is given, maximum exertion is assumed.
+        }
+        return OneRepMax.getFormula().getOrm(weight, getMaxNumberOfReps(reps, rpe));
+    }
+
+    private void showNewOrmMessage(@NonNull PerformanceSet performedSet, Float currentOrm) {
+        Toast.makeText(
+                this,
+                String.format(
+                        Locale.ENGLISH,
+                        "Congrats! That was a new personal best: \n" +
+                                "%dx%.2fkg " +
+                                "(ORM %.2fkg)",
+                        performedSet.reps,
+                        performedSet.weight,
+                        currentOrm),
+                Toast.LENGTH_LONG).show();
+    }
+
+    private boolean isNewPr(Float previousOrm, Float currentOrm) {
+        if (previousOrm == null && currentOrm != null) {
+            return true;
+        }
+        if (currentOrm == null) {
+            return false;
+        }
+        return previousOrm < currentOrm;
     }
 
     private boolean isLastWorkoutStep(@NonNull WorkoutStep currentWorkoutStep) {
