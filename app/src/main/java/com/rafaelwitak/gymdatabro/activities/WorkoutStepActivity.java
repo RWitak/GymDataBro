@@ -23,8 +23,8 @@ import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetMaker;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRowHolder;
 
 public class WorkoutStepActivity extends AppCompatActivity {
-
     private GymBroDatabase database;
+
     private Workout currentWorkout;
     private WorkoutStep currentWorkoutStep;
     private ActivityWorkoutStepBinding binding;
@@ -42,11 +42,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
             finish();
             return; // DO NOT DELETE: Method will try to continue without a proper WorkoutStep!
         }
-        this.currentWorkoutStep.weight =
-                getWeightFromOrm(
-                        this.currentWorkoutStep.weight,
-                        getCurrentExercise(),
-                        OneRepMax.getFormula());
+        updateCurrentWorkoutStepWeight();
         this.currentWorkout = getCurrentWorkout();
 
         // automatically bind all Views with IDs
@@ -54,6 +50,36 @@ public class WorkoutStepActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setUpViews();
+    }
+
+    private WorkoutStep getCurrentWorkoutStep() {
+        int workoutID = getWorkoutIdFromIntent();
+        int stepNumber = getStepNumberFromIntent();
+
+        Log.d("GymDataBro", "Fetching Workout " +
+                + workoutID
+                + ", Step "
+                + stepNumber);
+
+        return database
+                .workoutStepDAO()
+                .getWorkoutStep(workoutID, stepNumber);
+    }
+
+    private int getWorkoutIdFromIntent() {
+        return getIntent().getIntExtra("workoutID", 1);
+    }
+
+    private int getStepNumberFromIntent() {
+        return getIntent().getIntExtra("nextStepNumber", 0);
+    }
+
+    private void updateCurrentWorkoutStepWeight() {
+        currentWorkoutStep.weight =
+                getWeightFromOrm(
+                        currentWorkoutStep.weight,
+                        getCurrentExercise(),
+                        OneRepMax.getFormula());
     }
 
     @Nullable
@@ -69,8 +95,8 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return weight;
     }
 
+    /** The maximum number of possible reps, found using RPE (10 RPE is failure).*/
     private Integer getMaxNumberOfReps() {
-        // The maximum number of possible reps, found using RPE (10 RPE is failure).
         if (currentWorkoutStep.rpe == null) {
             return currentWorkoutStep.reps;
         }
@@ -81,13 +107,23 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return database.exerciseDAO().getExerciseByID(currentWorkoutStep.exerciseID);
     }
 
+    @NonNull
+    private Workout getCurrentWorkout() {
+        Workout currentWorkout = database.workoutDAO().getWorkoutByID(currentWorkoutStep.workoutID);
+
+        if (currentWorkout == null) {
+            return new Workout();
+        }
+
+        return currentWorkout;
+    }
+
 
     private void setUpViews() {
         setUpToolbar();
         setUpWorkoutStepViewRows();
         setUpButton();
     }
-
     private void setUpToolbar() {
         Toolbar toolbar = binding.toolbar.getRoot();
         setSupportActionBar(toolbar);
@@ -114,19 +150,18 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return database.workoutInstanceDAO().getNameByInstanceId(workoutInstanceId);
     }
 
-    // Set visibility and/or data for the WorkoutStep's View's Rows
-    private void setUpWorkoutStepViewRows() {
-        WorkoutStepRowHolder rowHolder = new WorkoutStepRowHolder(
-                binding,
-                currentWorkoutStep,
-                this);
-        rowHolder.setupAllRows();
+    @Nullable
+    private String getCurrentProgramName() {
+        Integer id = currentWorkout.programID;
+        if (id != null) {
+            return database.programDAO().getProgramByID(id).name;
+        }
+        return null;
     }
 
     private void setUpButton() {
         binding.stepBtnNext.setOnClickListener(getViewOnClickListener());
     }
-
 
     @NonNull
     private View.OnClickListener getViewOnClickListener() {
@@ -142,15 +177,25 @@ public class WorkoutStepActivity extends AppCompatActivity {
         };
     }
 
-    public void congratulateAndFinish() {
-        Toast.makeText(this, "Congrats, you are done for today! \n" +
-                "Have a good rest!", Toast.LENGTH_LONG).show();
-        finish();
+    private void savePerformanceSet(PerformanceSet performanceSet) {
+        long savedSetRowId = database.performanceSetDAO().insertSet(performanceSet);
+
+        Log.d("GymDataBro", "PerformanceSet successfully saved to database by "
+                + "WorkoutStepActivity.savePerformanceSet():"
+                + "\n"
+                + database.performanceSetDAO().getSetByRowId(savedSetRowId).toString());
     }
 
     @NonNull
     private PerformanceSet getPerformedSet() {
         return PerformanceSetMaker.getPerformanceSet(getPerformanceSetDataProviderHolder());
+    }
+
+    private boolean isLastWorkoutStep(@NonNull WorkoutStep currentWorkoutStep) {
+        return database.masterDao()
+                .isLastStepOfWorkout(
+                        currentWorkoutStep.workoutID,
+                        currentWorkoutStep.number);
     }
 
     @NonNull
@@ -161,21 +206,10 @@ public class WorkoutStepActivity extends AppCompatActivity {
                 getWorkoutInstanceId());
     }
 
-    private boolean isLastWorkoutStep(@NonNull WorkoutStep currentWorkoutStep) {
-        return database.masterDao()
-                .isLastStepOfWorkout(
-                        currentWorkoutStep.workoutID,
-                        currentWorkoutStep.number);
-    }
-
-
-    private void savePerformanceSet(PerformanceSet performanceSet) {
-        long savedSetRowId = database.performanceSetDAO().insertSet(performanceSet);
-
-        Log.d("GymDataBro", "PerformanceSet successfully saved to database by "
-                + "WorkoutStepActivity.savePerformanceSet():"
-                + "\n"
-                + database.performanceSetDAO().getSetByRowId(savedSetRowId).toString());
+    public void congratulateAndFinish() {
+        Toast.makeText(this, "Congrats, you are done for today! \n" +
+                "Have a good rest!", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     private void startNextWorkoutStep() {
@@ -199,45 +233,11 @@ public class WorkoutStepActivity extends AppCompatActivity {
     @Nullable
     private Integer getNextWorkoutStepNumber() {
         WorkoutStep nextStep = database.masterDao()
-                    .getNextStepInWorkout(currentWorkoutStep.id, currentWorkout.id);
+                .getNextStepInWorkout(currentWorkoutStep.id, currentWorkout.id);
         if (nextStep == null) {
             return null;
         }
         return nextStep.number;
-    }
-
-
-    private WorkoutStep getCurrentWorkoutStep() {
-        int workoutID = getWorkoutIdFromIntent();
-        int stepNumber = getStepNumberFromIntent();
-
-        Log.d("GymDataBro", "Fetching Workout " +
-                    + workoutID
-                    + ", Step "
-                    + stepNumber);
-
-        return database
-                .workoutStepDAO()
-                .getWorkoutStep(workoutID, stepNumber);
-    }
-
-    private int getWorkoutIdFromIntent() {
-        return getIntent().getIntExtra("workoutID", 1);
-    }
-
-    private int getStepNumberFromIntent() {
-        return getIntent().getIntExtra("nextStepNumber", 0);
-    }
-
-    @NonNull
-    private Workout getCurrentWorkout() {
-        Workout currentWorkout = database.workoutDAO().getWorkoutByID(currentWorkoutStep.workoutID);
-
-        if (currentWorkout == null) {
-            return new Workout();
-        }
-
-        return currentWorkout;
     }
 
     @Nullable
@@ -253,12 +253,12 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
 
-    @Nullable
-    private String getCurrentProgramName() {
-        Integer id = currentWorkout.programID;
-        if (id != null) {
-            return database.programDAO().getProgramByID(id).name;
-        }
-        return null;
+    /** Set visibility and/or data for the WorkoutStep's View's Rows */
+    private void setUpWorkoutStepViewRows() {
+        WorkoutStepRowHolder rowHolder = new WorkoutStepRowHolder(
+                binding,
+                currentWorkoutStep,
+                this);
+        rowHolder.setupAllRows();
     }
 }
