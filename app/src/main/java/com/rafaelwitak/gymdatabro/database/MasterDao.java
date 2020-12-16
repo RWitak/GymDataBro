@@ -83,4 +83,26 @@ public abstract class MasterDao extends WorkoutInstanceDAO
             "LIMIT 1;"
     )
     public abstract PerformanceSet getLatestPerformanceSetForProgramId(Integer programId);
+
+    @Nullable
+    @Query(
+            "SELECT weight, reps, rpe FROM performance_sets " +
+                    "WHERE timestamp = (" +
+                    "SELECT MAX(timestamp) from performance_sets " +
+                    "JOIN workout_steps ON performance_sets.workout_step_id = workout_steps.id " +
+                    "WHERE exercise_id = :exerciseId)"
+    )
+    public abstract WeightRepsRpe getLatestWeightRepsRpeForExercise(int exerciseId);
+
+    public static class WeightRepsRpe {
+        public Float weight;
+        public Integer reps;
+        public Float rpe;
+
+        public WeightRepsRpe(Float weight, Integer reps, Float rpe) {
+            this.weight = weight;
+            this.reps = reps;
+            this.rpe = rpe;
+        }
+    }
 }

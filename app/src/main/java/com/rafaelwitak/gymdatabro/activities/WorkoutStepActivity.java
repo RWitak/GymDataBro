@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.rafaelwitak.gymdatabro.OneRepMax;
 import com.rafaelwitak.gymdatabro.database.Exercise;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
+import com.rafaelwitak.gymdatabro.database.MasterDao;
 import com.rafaelwitak.gymdatabro.database.PerformanceSet;
 import com.rafaelwitak.gymdatabro.database.Workout;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
@@ -24,12 +25,16 @@ import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRowHolder;
 
 import java.util.Locale;
 
+import static com.rafaelwitak.gymdatabro.OneRepMax.getMaxNumberOfReps;
+import static com.rafaelwitak.gymdatabro.OneRepMax.getWeightFromOrm;
+
 public class WorkoutStepActivity extends AppCompatActivity {
     private GymBroDatabase database;
 
     private Workout currentWorkout;
     private WorkoutStep currentWorkoutStep;
     private ActivityWorkoutStepBinding binding;
+    private Exercise currentExercise;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
             finish();
             return; // DO NOT DELETE: Method will try to continue without a proper WorkoutStep!
         }
+        this.currentExercise = getCurrentExercise();
         updateCurrentWorkoutStepWeight();
         this.currentWorkout = getCurrentWorkout();
 
@@ -77,40 +83,65 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private void updateCurrentWorkoutStepWeight() {
-        currentWorkoutStep.weight =
+        if (currentWorkoutStep.weight == null) {
+            return;
+        }
+
+        Float recentWeight = getRecentStrengthBasedWeight();
+        if (recentWeight != null) {
+            currentWorkoutStep.weight = recentWeight;
+            return;
+        }
+
+        Float ormBasedWeight =
                 getWeightFromOrm(
                         currentWorkoutStep.weight,
-                        getCurrentExercise(),
+                        getMaxNumberOfReps(currentWorkoutStep.reps, currentWorkoutStep.rpe),
+                        currentExercise.pr,
                         OneRepMax.getFormula());
+        if (ormBasedWeight != null) {
+            currentWorkoutStep.weight = ormBasedWeight;
+        }
     }
 
     @Nullable
-    private Float getWeightFromOrm(Float weight,
-                                   @NonNull Exercise exercise,
-                                   @NonNull OneRepMax.OrmFormula formula) {
-        if (weight != null && currentWorkoutStep.reps != null) {
-            float orm = (exercise.pr != null)
-                    ? exercise.pr
-                    : 0;
-            weight = formula.getWeight(getMaxNumberOfReps(currentWorkoutStep.reps, currentWorkoutStep.rpe), orm);
+    private Float getRecentStrengthBasedWeight() {
+        MasterDao.WeightRepsRpe recent =
+                database.masterDao()
+                        .getLatestWeightRepsRpeForExercise(currentExercise.id);
+        if (recent == null || recent.weight == null) {
+            return null;
         }
-        return weight;
+        if (recent.reps == null) {
+            if (currentWorkoutStep.reps == null) {
+                // for exercises not based on reps, the previous weight may be used...
+                // TODO: ...for now! But that's not representative,
+                //  eg. a duration based exercise requires different weight
+                //  for different durations to be considered equally fatiguing.
+                return recent.weight;
+            } else {
+                return null;
+            }
+        }
+
+        // Casting added for indicating nullity is impossible.
+        Integer maxReps = getMaxNumberOfReps((int) recent.reps, recent.rpe);
+
+        // Previous set failed? Try again with less weight.
+        if (recent.reps == 0) {
+            return recent.weight * .75f;
+        }
+
+        float recentOrm = OneRepMax.getFormula().getOrm((float) recent.weight, (int) maxReps);
+
+        return getWeightFromOrm(
+                currentWorkoutStep.weight,
+                getMaxNumberOfReps(currentWorkoutStep.reps, currentWorkoutStep.rpe),
+                recentOrm,
+                OneRepMax.getFormula()
+        );
     }
 
-    /** The maximum number of possible reps, found using RPE (10 RPE is failure).
-     * @param reps Repetitions
-     * @param rpe Rate of Perceived Exertion */
-    private Integer getMaxNumberOfReps(Integer reps, Float rpe) {
-        if (rpe == null || reps == null) {
-            return reps;
-        }
-        return (reps + Math.round(10 - rpe));
-    }
-
-    @NonNull
-    private Exercise getCurrentExercise() {
-        return database.exerciseDAO().getExerciseByID(currentWorkoutStep.exerciseID);
-    }
 
     @NonNull
     private Workout getCurrentWorkout() {
@@ -123,12 +154,18 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return currentWorkout;
     }
 
+    @NonNull
+    private Exercise getCurrentExercise() {
+        return database.exerciseDAO().getExerciseByID(currentWorkoutStep.exerciseID);
+    }
+
 
     private void setUpViews() {
         setUpToolbar();
         setUpWorkoutStepViewRows();
         setUpButton();
     }
+
     private void setUpToolbar() {
         Toolbar toolbar = binding.toolbar.getRoot();
         setSupportActionBar(toolbar);
@@ -166,6 +203,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     private void setUpButton() {
         binding.stepBtnNext.setOnClickListener(getViewOnClickListener());
+        // TODO: create and pass method 'v -> wrapUpCurrentPerformanceSet()' instead.
     }
 
     @NonNull
@@ -175,10 +213,9 @@ public class WorkoutStepActivity extends AppCompatActivity {
             savePerformanceSet(performedSet);
             handleNewRecords(performedSet);
 
-            if (isLastWorkoutStep(currentWorkoutStep)){
+            if (isLastWorkoutStep(currentWorkoutStep)) {
                 congratulateAndFinish();
-            }
-            else {
+            } else {
                 startNextWorkoutStep();
             }
         };
@@ -199,7 +236,6 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private void handleNewRecords(@NonNull PerformanceSet performedSet) {
-        Exercise currentExercise = getCurrentExercise();
         @Nullable Float previousOrm = currentExercise.pr;
         @Nullable Float currentOrm = getOneRepMaxValue(
                 performedSet.reps,
@@ -310,7 +346,9 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
 
-    /** Set visibility and/or data for the WorkoutStep's View's Rows */
+    /**
+     * Set visibility and/or data for the WorkoutStep's View's Rows
+     */
     private void setUpWorkoutStepViewRows() {
         WorkoutStepRowHolder rowHolder = new WorkoutStepRowHolder(
                 binding,

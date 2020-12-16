@@ -1,5 +1,12 @@
 package com.rafaelwitak.gymdatabro;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+/**
+ * Use this class to instantiate a formula (specific or default),
+ * whose methods can then be used for OneRepMax calculations.
+ */
 public abstract class OneRepMax {
     private static final OrmFormula STANDARD_FORMULA = new OConner();
     public enum FORMULA {
@@ -22,15 +29,48 @@ public abstract class OneRepMax {
         }
     }
 
+    /**
+     * The maximum number of possible reps,
+     * found using inverted RPE, a kind of "Reps in Reverse" system
+     * (10 RPE is failure, every step below is one more repetition "in the tank").
+     * @param reps Repetitions
+     * @param rpe Rate of Perceived Exertion
+     */
+    @NonNull
+    public static Integer getMaxNumberOfReps(int reps, Float rpe) {
+        if (rpe == null) {
+            return reps;
+        }
+        return (reps + Math.round(10 - rpe));
+    }
+
+    /**
+     * Calculate the expected maximum weight
+     * for the expected maximum reps.
+     */
+    @Nullable
+    public static Float getWeightFromOrm(Float weight,
+                                   Integer maxReps,
+                                   Float orm,
+                                   @NonNull OrmFormula formula) {
+        if (orm == null || weight == null) {
+            return null;
+        }
+        if (maxReps == null) {
+            return weight;
+        }
+        return formula.getWeight(maxReps, orm);
+    }
+
 
     protected interface WeightCalculator {
-        float getWeight(float reps, float orm);
+        float getWeight(int reps, float orm);
     }
     protected interface RepsCalculator {
         int getReps(float weight, float orm);
     }
     protected interface OrmCalculator {
-        float getOrm(float weight, float reps);
+        float getOrm(float weight, int reps);
     }
 
     public abstract static class OrmFormula implements
@@ -42,7 +82,7 @@ public abstract class OneRepMax {
 
     private static class Lombardi extends OrmFormula {
         @Override
-        public float getWeight(float reps, float orm) {
+        public float getWeight(int reps, float orm) {
             if (orm == 0) {
                 return 0;
             }
@@ -58,18 +98,18 @@ public abstract class OneRepMax {
         }
 
         @Override
-        public float getOrm(float weight, float reps) {
+        public float getOrm(float weight, int reps) {
             return (float) (weight * Math.pow(reps, 0.1));
         }
     }
 
     private static class OConner extends OrmFormula {
         @Override
-        public float getWeight(float reps, float orm) {
+        public float getWeight(int reps, float orm) {
             if (orm == 0) {
                 return 0;
             }
-            return orm / (1 + (reps / 40));
+            return orm / (1 + ((float) reps / 40));
         }
 
         @Override
@@ -81,8 +121,8 @@ public abstract class OneRepMax {
         }
 
         @Override
-        public float getOrm(float weight, float reps) {
-            return weight * (1 + (reps / 40));
+        public float getOrm(float weight, int reps) {
+            return weight * (1 + ((float) reps / 40));
         }
     }
 }
