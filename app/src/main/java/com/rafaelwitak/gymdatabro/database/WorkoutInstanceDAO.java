@@ -42,7 +42,7 @@ public abstract class WorkoutInstanceDAO {
                         "WHERE program_id = :programId " +
                         "AND workout_number > :previousWorkoutNumber);"
     )
-    public abstract WorkoutInstance getNextWorkoutInstance(
+    public abstract WorkoutInstance getNextWorkoutInstanceForProgram(
             Integer programId, Integer previousWorkoutNumber);
 
     @Nullable

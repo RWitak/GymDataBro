@@ -55,17 +55,6 @@ public interface WorkoutStepDAO {
     )
     WorkoutStep getFirstStepOfWorkout(Integer workoutId);
 
-    @Nullable
-    @Query(
-            "SELECT * FROM workout_instances WHERE workout_instances.id = (" +
-                    "SELECT workout_instances.id FROM workout_instances WHERE workout_number = (" +
-                        "SELECT MIN(workout_number) FROM workout_instances " +
-                            "WHERE program_id = :programId " +
-                            "AND workout_number > :workoutNumber))"
-    )
-    WorkoutInstance getNextWorkoutInstanceForProgram(
-            Integer programId, Integer workoutNumber);
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNewWorkoutStep(WorkoutStep workoutStep);
 

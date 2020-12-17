@@ -3,11 +3,9 @@ package com.rafaelwitak.gymdatabro.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -15,8 +13,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.Program;
-import com.rafaelwitak.gymdatabro.database.WorkoutInstance;
-import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.programHandling.ChooseProgramRow;
 
 public class ChooseProgramActivity extends AppCompatActivity {
@@ -67,52 +63,9 @@ public class ChooseProgramActivity extends AppCompatActivity {
 
     private View.OnClickListener getRowOnClickListener(Program program) {
         return view -> {
-            Intent intent = new Intent(getApplicationContext(), WorkoutStepActivity.class);
-            WorkoutInstance instance = getWorkoutInstanceForProgram(program);
-
-            intent.putExtra("workoutID", instance.workoutId);
-            intent.putExtra("nextStepNumber", getNextWorkoutStepNumber(program, instance));
-            intent.putExtra("workoutInstanceId", instance.id);
-
-            Log.d("GDB",
-                    "workoutID = " + instance.workoutId + "\n"
-                            + "nextStepNumber = "
-                            + getNextWorkoutStepNumber(program, instance) + "\n"
-                            + "workoutInstanceId = " + instance.id);
-
-            startActivity(intent);
+            startActivity(new IntentMaker(this).getIntentToResumeProgram(program.id));
             finishAndRemoveTask();
         };
-    }
-
-    @Nullable
-    private Integer getNextWorkoutStepNumber(Program program, WorkoutInstance instance) {
-        WorkoutStep nextStep = database.masterDao()
-                .getNextWorkoutStepForProgramId(program.id, instance);
-
-        if (nextStep == null) {
-            nextStep = database.masterDao().getFirstWorkoutStepOfProgram(program.id);
-        }
-        if (nextStep == null) {
-            return null;
-        }
-        return nextStep.number;
-    }
-
-    private WorkoutInstance getWorkoutInstanceForProgram(Program program) {
-        WorkoutInstance latestWorkoutInstance =
-                database.masterDao().getLatestWorkoutInstanceForProgram(program.id);
-        if (latestWorkoutInstance != null) {
-            WorkoutInstance nextAfterLatest =
-                    database.masterDao()
-                            .getNextWorkoutInstanceForProgram(
-                                    program.id, latestWorkoutInstance.workoutNumber);
-            if (nextAfterLatest != null) {
-                return nextAfterLatest;
-            }
-        }
-
-        return database.masterDao().getFirstWorkoutInstanceForProgram(program.id);
     }
 
     private View.OnLongClickListener getRowOnLongClickListener(Program program) {
