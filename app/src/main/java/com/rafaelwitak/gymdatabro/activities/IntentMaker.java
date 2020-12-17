@@ -17,14 +17,10 @@ public class IntentMaker {
 
     private final Context context;
     private final MasterDao dao;
+
     IntentMaker(Context context) {
         this.context = context;
         this.dao = GymBroDatabase.getDatabase(context).masterDao();
-    }
-
-    @NonNull
-    public Intent getChooseProgramIntent() {
-        return new Intent(context, ChooseProgramActivity.class);
     }
 
     @NonNull
@@ -39,7 +35,7 @@ public class IntentMaker {
 
     @NonNull
     public Intent getIntentToResumeWorkoutOrChooseProgram() {
-        WorkoutInstance workoutInstance = getWorkoutInstance();
+        WorkoutInstance workoutInstance = getInstanceToResumeFromLastTime();
         if (workoutInstance == null) {
             Log.d("GDB", "workoutInstance == null");
             return getChooseProgramIntent();
@@ -51,10 +47,8 @@ public class IntentMaker {
     }
 
     @NonNull
-    public Intent getIntentToResumeProgram(int programId) {
-        PerformanceSet latestPerformanceSet = dao.getLatestPerformanceSetForProgramId(programId);
-        WorkoutInstance instance = getWorkoutInstanceToResumeProgram(programId, latestPerformanceSet);
-        return createWorkoutStepIntentWithExtras(instance, getNextWorkoutStepNumber(programId, instance));
+    public Intent getChooseProgramIntent() {
+        return new Intent(context, ChooseProgramActivity.class);
     }
 
     @NonNull
@@ -73,13 +67,23 @@ public class IntentMaker {
     }
 
     @Nullable
-    private Integer getNextWorkoutStepNumber(Integer programId, WorkoutInstance instance) {
-        WorkoutStep nextStep = dao.getNextWorkoutStepForProgramId(programId, instance);
-        if (nextStep == null) {
-            Log.d("GDB", "nextStep == null");
+    public WorkoutInstance getInstanceToResumeFromLastTime() {
+        WorkoutInstance latestInstance = dao.getLatestWorkoutInstance();
+        if (latestInstance == null) {
             return null;
         }
-        return nextStep.number;
+
+        if (dao.isLastStepOfWorkout(
+                latestInstance.workoutId,
+                getLatestWorkoutStepNumber())) {
+            if (dao.isLastInstanceOfProgram(latestInstance.id, latestInstance.programId)) {
+                return null;
+            }
+            return dao.getNextWorkoutInstanceForProgram(
+                    latestInstance.programId,
+                    latestInstance.workoutNumber);
+        }
+        return latestInstance;
     }
 
     @NonNull
@@ -90,30 +94,39 @@ public class IntentMaker {
     }
 
     @Nullable
-    public WorkoutInstance getWorkoutInstance() {
-        WorkoutInstance latestInstance = dao.getLatestWorkoutInstance();
-        if (latestInstance != null && dao.isLastStepOfWorkout(
-                latestInstance.workoutId,
-                getLatestWorkoutStepNumber())) {
-            if (dao.isLastInstanceOfProgram(latestInstance.id, latestInstance.programId)) {
-                return null;
-            }
-            return dao.getNextWorkoutInstanceForProgram(
-                            latestInstance.programId,
-                            latestInstance.workoutNumber);
+    private Integer getNextWorkoutStepNumber(Integer programId, WorkoutInstance instance) {
+        WorkoutStep nextStep = dao.getNextWorkoutStepForProgramId(programId, instance);
+        if (nextStep == null) {
+            Log.d("GDB", "nextStep == null");
+            return null;
         }
-        return null;
+        return nextStep.number;
+    }
+
+    @NonNull
+    public Intent getIntentToResumeProgram(int programId) {
+        PerformanceSet latestPerformanceSet =
+                dao.getLatestPerformanceSetForProgramId(programId);
+        WorkoutInstance instance =
+                getWorkoutInstanceToResumeProgram(programId, latestPerformanceSet);
+
+        return createWorkoutStepIntentWithExtras(
+                instance,
+                getNextWorkoutStepNumber(programId, instance));
     }
 
     @Nullable
-    public WorkoutInstance getWorkoutInstanceToResumeProgram(int programId, PerformanceSet latestSetOfProgram) {
+    public WorkoutInstance getWorkoutInstanceToResumeProgram(
+            int programId,
+            PerformanceSet latestSetOfProgram) {
         if (latestSetOfProgram == null) {
             return dao.getFirstWorkoutInstanceForProgram(programId);
         }
 
         WorkoutInstance latestInstance =
                 dao.getLatestWorkoutInstanceForProgram(programId);
-        if (latestInstance == null) {
+        if (latestInstance == null
+                || dao.isLastInstanceOfProgram(latestInstance.id, programId)) {
             return dao.getFirstWorkoutInstanceForProgram(programId);
         }
 
@@ -123,13 +136,11 @@ public class IntentMaker {
         if (dao.isLastStepOfWorkout(
                 latestWorkoutStep.workoutID,
                 latestWorkoutStep.number)) {
-            if (dao.isLastInstanceOfProgram(latestInstance.id, programId)) {
-                return dao.getFirstWorkoutInstanceForProgram(programId);
-            }
+
             return dao.getNextWorkoutInstanceForProgram(
                     programId,
                     latestInstance.workoutNumber);
         }
-        return dao.getWorkoutInstance(programId, latestInstance.workoutNumber);
+        return latestInstance;
     }
 }
