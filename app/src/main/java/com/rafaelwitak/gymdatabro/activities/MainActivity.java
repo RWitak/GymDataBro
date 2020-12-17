@@ -43,6 +43,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = intentMaker.getEditWorkoutStepIntent();
         startActivity(intent);
     }
-
-
 }

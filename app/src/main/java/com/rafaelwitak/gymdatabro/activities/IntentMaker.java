@@ -117,11 +117,15 @@ public class IntentMaker {
             return dao.getFirstWorkoutInstanceForProgram(programId);
         }
 
+
         WorkoutStep latestWorkoutStep =
                 dao.getWorkoutStepById(latestSetOfProgram.workoutStepId);
         if (dao.isLastStepOfWorkout(
                 latestWorkoutStep.workoutID,
                 latestWorkoutStep.number)) {
+            if (dao.isLastInstanceOfProgram(latestInstance.id, programId)) {
+                return dao.getFirstWorkoutInstanceForProgram(programId);
+            }
             return dao.getNextWorkoutInstanceForProgram(
                     programId,
                     latestInstance.workoutNumber);
