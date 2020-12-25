@@ -1,3 +1,7 @@
+<!--
+  ~ Copyright (c) 2020, Rafael Witak.
+  -->
+
 <resources>
     <string name="app_name">GymDataBro</string>
     <string name="tab1">Tab1</string>
@@ -52,4 +56,6 @@
     <string name="edit_workout_step_button_save_exit_text">Save WorkoutStep &amp; Exit</string>
     <string name="edit_workout_step_label_number_sets">Number of Sets</string>
     <string name="edit_workout_step_button_save_add_more_text">Save &amp; Add More</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
