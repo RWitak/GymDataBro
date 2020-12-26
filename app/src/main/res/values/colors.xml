@@ -5,8 +5,9 @@
 
 <resources>
     <color name="colorPrimary">#403D3E</color>
-    <color name="colorPrimaryDark">#0E0C20</color>
+    <color name="colorPrimaryDark">#0D081F</color>
     <color name="colorAccent">#4EBFFB</color>
     <color name="colorBad">#CC0000</color>
     <color name="colorGood">#00CC00</color>
+    <color name="colorLightBackground">#B0AEA6</color>
 </resources>
