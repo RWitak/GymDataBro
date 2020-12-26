@@ -4,7 +4,8 @@
   -->
 
 <resources>#
-    <string name="info_copyright">
+    <string name="info_copyright"><![CDATA[
+
     <h1>GymDataBro</h1>
     <h2>How to use</h2>
     <p>
@@ -14,7 +15,7 @@
         It offers <em>RPE</em> ("Rate of Perceived Exertion") as a guideline:
         A 1-10 scale of how challenging a given set is.
         For ease of calculation, think of it as reverse count of repetitions "in the tank",
-        where you could do 3 more at RPE-7, 1 more at RPE-9...
+        where you could do 3 more at RPE-7, 1 more at RPE-9…
         And not a single rep more at RPE-10, aka "to failure".
     </p>
     <p>
@@ -35,7 +36,8 @@
         or even create own workouts!
     </p>
     <h2>About GymDataBro</h2>
-        <p>This app was designed as final project for HarvardX's online course CS50.</p>
-        <p>It was created by Rafael Witak, BA </p>
-    </string>
+        <p>This app was designed as a final project for HarvardX\'s online course CS50.</p>
+        <p>© 2020, Rafael Witak.</p>
+
+    ]]></string>
 </resources>
