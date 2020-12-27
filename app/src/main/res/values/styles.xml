@@ -13,6 +13,7 @@
         <item name="chooseProgramRowStyle">@style/ChooseProgramRow</item>
         <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="NoActionBar">
