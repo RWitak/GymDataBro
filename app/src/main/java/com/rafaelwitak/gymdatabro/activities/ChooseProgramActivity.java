@@ -4,7 +4,6 @@
 
 package com.rafaelwitak.gymdatabro.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +31,7 @@ public class ChooseProgramActivity extends AppCompatActivity {
         database = GymBroDatabase.getDatabase(this);
         setContentView(R.layout.activity_choose_program);
         chooseProgramToolbar = findViewById(R.id.choose_program_toolbar);
-        createProgramFAB = findViewById(R.id.choose_program_button_create);
+        // createProgramFAB = findViewById(R.id.choose_program_button_create);
         programList = findViewById(R.id.program_list);
 
         setupViews();
@@ -41,15 +40,17 @@ public class ChooseProgramActivity extends AppCompatActivity {
     private void setupViews() {
         setupToolbar();
         setupRows();
-        setupFAB(this);
+//        setupFAB(this);
     }
 
+/*
     private void setupFAB(Context context) {
         createProgramFAB.setOnClickListener(view -> {
             Intent intent = new Intent(context, EditProgramActivity.class);
             startActivity(intent);
         });
     }
+*/
 
     private void setupToolbar() {
         chooseProgramToolbar.setTitle(R.string.choose_program_toolbar_title);
