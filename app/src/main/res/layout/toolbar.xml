@@ -7,9 +7,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorPrimaryDark"
     app:titleTextColor="@color/colorLightBackground"
     android:elevation="8dp"
+    tools:showIn="@layout/activity_choose_program"
+    tools:text="ToolbarTitle"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
 </androidx.appcompat.widget.Toolbar>

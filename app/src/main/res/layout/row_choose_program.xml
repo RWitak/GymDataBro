@@ -7,4 +7,5 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/row_choose_program_text"
     tools:text="Program Row PLACEHOLDER"
+    tools:showIn="@layout/activity_choose_program"
     style="@style/ChooseProgramRow" />

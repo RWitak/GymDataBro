@@ -129,6 +129,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_gym_bro"
+        app:layout_constraintVertical_bias="0.36"
         app:layout_constraintVertical_chainStyle="packed"
         app:strokeColor="@color/colorAccent"
         app:strokeWidth="4dp" />
