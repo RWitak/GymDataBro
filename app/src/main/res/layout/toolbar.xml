@@ -11,7 +11,7 @@
     android:background="@color/colorPrimaryDark"
     app:titleTextColor="@color/colorLightBackground"
     android:elevation="8dp"
-    tools:showIn="@layout/activity_choose_program"
+    tools:showIn="@layout/activity_workout_step"
     tools:text="ToolbarTitle"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
