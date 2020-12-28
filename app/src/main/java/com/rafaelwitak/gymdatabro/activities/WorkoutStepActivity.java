@@ -69,9 +69,14 @@ public class WorkoutStepActivity extends AppCompatActivity {
                 + ", Step "
                 + stepNumber);
 
-        return database
-                .workoutStepDAO()
-                .getWorkoutStep(workoutID, stepNumber);
+        WorkoutStep step =
+                database.workoutStepDAO()
+                        .getWorkoutStep(workoutID, stepNumber);
+
+        if (step == null) {
+            Log.d("GymDataBro", "This WorkoutStep doesn't exist.");
+        }
+        return step;
     }
 
     private int getWorkoutIdFromIntent() {
