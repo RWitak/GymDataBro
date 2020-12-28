@@ -54,7 +54,7 @@ public abstract class GymBroDatabase extends RoomDatabase {
                                     context.getApplicationContext(),
                                     GymBroDatabase.class,
                                     "gym_data")
-                            .createFromAsset("gymdata.db")
+                            .createFromAsset("gym_data.db")
                             .allowMainThreadQueries()
                             .addMigrations(
                                     MIGRATION_9_10,
