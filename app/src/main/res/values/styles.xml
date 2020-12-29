@@ -13,7 +13,9 @@
         <item name="chooseProgramRowStyle">@style/ChooseProgramRow</item>
         <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
+        <item name="android:windowTranslucentStatus">false</item>
     </style>
 
     <style name="NoActionBar">
@@ -22,6 +24,11 @@
     </style>
 
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="titleTextAppearance">@style/ToolbarTitleTextAppearance</item>
+        <item name="subtitleTextAppearance">@style/ToolbarSubtitleTextAppearance</item>
+    </style>
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
@@ -34,6 +41,14 @@
         <item name="android:textStyle">bold</item>
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <style name="ToolbarTitleTextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="ToolbarSubtitleTextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
 </resources>
