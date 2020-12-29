@@ -12,17 +12,18 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.Program;
 import com.rafaelwitak.gymdatabro.programHandling.ChooseProgramRow;
 
+//import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class ChooseProgramActivity extends AppCompatActivity {
     GymBroDatabase database;
     LinearLayout programList;
     Toolbar chooseProgramToolbar;
-    FloatingActionButton createProgramFAB;
+//    FloatingActionButton createProgramFAB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

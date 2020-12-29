@@ -106,8 +106,7 @@
         app:layout_constraintBottom_toBottomOf="@id/logo_gym_bro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/logo_gym_bro"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toTopOf="@id/logo_gym_bro" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/main_resume_button"
