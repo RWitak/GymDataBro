@@ -9,14 +9,15 @@
     <h1>GymDataBro</h1>
     <h2>How to use</h2>
     <p>
-        <strong>GymDataBro</strong> is your companion in the gym and helps you with various kinds of strength workouts.
+        <strong>GymDataBro</strong> is your companion in the gym
+        and helps you track various kinds of strength training programs.
     </p>
     <p>
         It offers <em>RPE</em> ("Rate of Perceived Exertion") as a guideline:
-        A 1-10 scale of how challenging a given set is.
+        A 0-10 scale of how challenging a given set is.
         For ease of calculation, think of it as reverse count of repetitions "in the tank",
         where you could do 3 more at RPE-7, 1 more at RPE-9…
-        And not a single rep more at RPE-10, aka "to failure".
+        and not a single rep more at RPE-10, aka "to failure".
     </p>
     <p>
         Based on your personal maximum weight for a given exercise (your "One Rep Max"),
@@ -36,7 +37,8 @@
         or even create own workouts!
     </p>
     <h2>About GymDataBro</h2>
-        <p>This app was designed as a final project for HarvardX\'s online course CS50.</p>
+        <p>This app was designed as a final project for Harvard\'s online course CS50.</p>
+        <p>Photo by Charles Gaudreault, unsplash.com.</p>
         <p>© 2020, Rafael Witak.</p>
 
     ]]></string>

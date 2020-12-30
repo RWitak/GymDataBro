@@ -56,7 +56,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo_gym_bro">
+        app:layout_constraintTop_toBottomOf="@id/logo_gym_bro"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/main_info_box_text"
@@ -75,7 +76,7 @@
         android:alpha=".8"
         android:fontFamily="@font/bungee_inline_regular"
         android:includeFontPadding="true"
-        android:lineSpacingMultiplier=".9"
+        android:lineSpacingMultiplier="1.1"
         android:lines="2"
         android:singleLine="false"
         android:text="@string/logo_text_gym_bro"
@@ -95,13 +96,14 @@
         android:id="@+id/logo_data"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:alpha=".7"
+        android:alpha="1.7"
         android:fontFamily="@font/audiowide_regular"
         android:text="@string/logo_text_data"
+        tools:text="data"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorAccent"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@id/logo_gym_bro"
         app:layout_constraintEnd_toEndOf="parent"
