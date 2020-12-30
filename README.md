@@ -16,4 +16,6 @@ In this current version, you can only choose between predefined programs. With f
 
 This app was designed as a final project for Harvard\'s online course CS50.
 
+Photo by [charles gaudreault](https://unsplash.com/@dcdg?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText).
+
 © 2020, Rafael Witak.
