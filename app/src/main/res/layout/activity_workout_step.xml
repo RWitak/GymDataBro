@@ -90,14 +90,49 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="16dp">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/step_left_guideline"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.27088606" />
+                app:layout_constraintGuide_percent="0.2" />
+
+            <TextView
+                android:id="@+id/step_explanation_expected"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/step_explanation_goal"
+                android:textStyle="italic"
+                android:textAlignment="textEnd"
+                app:layout_constraintBottom_toTopOf="@id/step_explanation_barrier"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/step_left_guideline"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/step_explanation_reality"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/workout_step_reality"
+                android:textStyle="italic"
+                android:textAlignment="textEnd"
+                app:layout_constraintBottom_toTopOf="@id/step_explanation_barrier"
+                app:layout_constraintLeft_toRightOf="@+id/step_explanation_expected"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/step_explanation_barrier"
+                app:layout_constraintBottom_toTopOf="@+id/step_reps_row"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="step_explanation_expected, step_explanation_reality"/>
 
 
 
@@ -108,7 +143,7 @@
                 android:orientation="horizontal"
                 app:constraint_referenced_ids="step_reps_prescribed, step_reps_performed, step_reps_title"
                 app:layout_constraintBottom_toTopOf="@+id/step_reps_prescribed"
-                app:layout_constraintTop_toTopOf="@+id/workout_step_rows" />
+                app:layout_constraintTop_toBottomOf="@+id/step_explanation_barrier" />
 
             <TextView
                 android:id="@+id/step_reps_prescribed"
@@ -119,7 +154,7 @@
                 app:layout_constraintEnd_toStartOf="@id/step_left_guideline"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/step_reps_row"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/step_explanation_barrier"
                 tools:text="12" />
 
             <!-- hackish -->
@@ -135,7 +170,7 @@
                 app:layout_constraintLeft_toRightOf="@id/step_left_guideline"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/step_explanation_barrier" />
 
             <EditText
                 android:id="@+id/step_reps_performed"
@@ -148,7 +183,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintBottom_toTopOf="@id/step_reps_barrier"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/step_explanation_barrier"
                 tools:text="1234" />
 
             <androidx.constraintlayout.widget.Barrier
@@ -174,9 +209,9 @@
                 android:layout_toStartOf="@+id/step_duration_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintBottom_toTopOf="@id/step_duration_barrier"
-                app:layout_constraintStart_toStartOf="@id/step_duration_row"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintEnd_toStartOf="@id/step_left_guideline"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@id/step_duration_row"
                 app:layout_constraintTop_toBottomOf="@id/step_reps_barrier"
                 tools:text="30" />
 
@@ -293,9 +328,9 @@
                 android:layout_toStartOf="@+id/step_rpe_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintBottom_toTopOf="@id/step_rpe_barrier"
-                app:layout_constraintStart_toStartOf="@id/step_rpe_row"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintEnd_toStartOf="@id/step_left_guideline"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@id/step_rpe_row"
                 app:layout_constraintTop_toBottomOf="@id/step_weight_barrier"
                 tools:text="8" />
 
@@ -352,10 +387,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                app:layout_constraintStart_toStartOf="@id/step_rest_row"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintBottom_toTopOf="@id/step_rest_barrier"
                 app:layout_constraintEnd_toStartOf="@id/step_left_guideline"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@id/step_rest_row"
                 app:layout_constraintTop_toBottomOf="@id/step_rpe_barrier"
                 tools:text="30" />
 
@@ -405,6 +440,7 @@
                 android:padding="8dp"
                 app:layout_constraintTop_toBottomOf="@id/step_rest_barrier"
                 tools:layout_editor_absoluteX="16dp"
+                android:visibility="gone"
                 tools:visibility="gone">
 
                 <TextView
@@ -455,7 +491,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/step_pain_row"
                 tools:layout_editor_absoluteX="16dp"
-                tools:visibility="gone">
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/step_notes_input"

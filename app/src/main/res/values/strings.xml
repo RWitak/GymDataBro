@@ -65,4 +65,7 @@
     <string name="cont_desc_main_info_button">Info</string>
     <string name="logo_text_gym_bro">GYM\nBRO</string>
     <string name="logo_text_data">Data</string>
+    <string name="workout_step_expectation"><![CDATA[Expectation ]]></string>
+    <string name="workout_step_reality"><![CDATA[Reality ]]></string>
+    <string name="step_explanation_goal"><![CDATA[Goal ]]></string>
 </resources>
