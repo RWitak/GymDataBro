@@ -114,7 +114,8 @@
         android:layout_height="wrap_content"
         android:elevation="16dp"
         android:ellipsize="none"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="@font/montserrat"
+        android:textStyle="bold"
         android:hapticFeedbackEnabled="true"
         android:onClick="resumeWorkoutOrRedirect"
         android:text="@string/main_resume_button_text"
@@ -135,12 +136,11 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/main_choose_program_button"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="#00FFFFFF"
-        android:fontFamily="sans-serif-condensed"
+        android:fontFamily="@font/montserrat"
         android:onClick="chooseProgram"
         android:text="@string/main_choose_program_button_text"
         android:textColor="@color/colorAccent"
