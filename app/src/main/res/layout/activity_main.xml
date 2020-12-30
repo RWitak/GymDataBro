@@ -19,7 +19,7 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/hd_vignette"
+        android:src="@drawable/hd_vignette2"
         android:contentDescription="@string/cont_descr_main_bg" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
