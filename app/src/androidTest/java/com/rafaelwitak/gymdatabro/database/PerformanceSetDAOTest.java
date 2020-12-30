@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Rafael Witak.
+ */
+
 package com.rafaelwitak.gymdatabro.database;
 
 import android.database.sqlite.SQLiteConstraintException;
@@ -12,7 +16,7 @@ import static com.google.common.truth.Truth.assertThat;
 public class PerformanceSetDAOTest extends DaoTest {
     private static final int TEST_EXERCISE_ID = 123;
 
-    private static final int EMPTY_PS_EXERCISE_ID = new PerformanceSet().exerciseID;
+    private static final int EMPTY_PS_EXERCISE_ID = 56789;
     final int TEST_SIZE = 42;
     private PerformanceSetDAO dao;
 
@@ -31,9 +35,10 @@ public class PerformanceSetDAOTest extends DaoTest {
     @Test
     public void insertSetShouldWorkWithFullInput() {
         PerformanceSet psAllValues = new PerformanceSet(
-                23,
+                666,
+                2,
+                3,
                 new Date(),
-                TEST_EXERCISE_ID,
                 10,
                 22.5f,
                 12,
@@ -88,7 +93,8 @@ public class PerformanceSetDAOTest extends DaoTest {
         long rowId = dao.insertSet(new PerformanceSet(
                 15,
                 null,
-                TEST_EXERCISE_ID,
+                null,
+                null,
                 null,
                 null,
                 null,
@@ -126,20 +132,6 @@ public class PerformanceSetDAOTest extends DaoTest {
         long rowId = dao.insertSet(testSet);
 
         assertThat(dao.getSetByRowId(rowId).secondsPerformed).isEqualTo(testSet.secondsPerformed);
-    }
-
-    @Test
-    public void getAllByExerciseID() {
-        for (int i = 0; i < TEST_SIZE; i++) {
-            PerformanceSet p = new PerformanceSet();
-            p.exerciseID = TEST_EXERCISE_ID;
-            dao.insertSet(p);
-        }
-
-        createEmptyExerciseWithId(EMPTY_PS_EXERCISE_ID);
-        insertNumberOfEmptySets(TEST_SIZE + 1);
-
-        assertThat(dao.getAllByExerciseID(TEST_EXERCISE_ID).size()).isEqualTo(TEST_SIZE);
     }
 
     @Test
@@ -196,7 +188,8 @@ public class PerformanceSetDAOTest extends DaoTest {
         dao.insertSet(new PerformanceSet(
                 null,
                 null,
-                123,
+                null,
+                null,
                 12,
                 30f,
                 60,

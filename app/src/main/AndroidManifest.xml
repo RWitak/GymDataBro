@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020, Rafael Witak.
+  -->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rafaelwitak.gymdatabro">
 
 <!-- TODO:   Allow Backups in Production! -->
     <application
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/gdb_launcher1"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/gdb_launcher1_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <activity

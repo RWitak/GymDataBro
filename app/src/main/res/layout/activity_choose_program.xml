@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020, Rafael Witak.
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:layout_behavior=""
+    android:background="@color/colorPrimary"
     tools:context=".activities.ChooseProgramActivity">
 
     <include
@@ -19,23 +23,29 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp">
+            android:layout_margin="16dp">
 
             <LinearLayout
                 android:id="@+id/program_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:elevation="8dp"
+                android:padding="8dp"
+                android:orientation="vertical"
+                android:background="@color/colorLightBackground"/>
 
         </ScrollView>
 
+<!-- Not used in current version.
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/choose_program_button_create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="20dp"
+
             android:src="@android:drawable/ic_input_add" />
+-->
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

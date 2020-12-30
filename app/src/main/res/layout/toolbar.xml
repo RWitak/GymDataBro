@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020, Rafael Witak.
+  -->
+
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimaryDark"
-    android:elevation="4dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    android:elevation="8dp"
+    android:theme="@style/Toolbar"
+    app:subtitleTextAppearance="@style/ToolbarSubtitleTextAppearance"
+    app:titleTextAppearance="@style/ToolbarTitleTextAppearance"
+    app:titleTextColor="@color/colorLightBackground"
+    tools:showIn="@layout/activity_workout_step"
+    tools:subtitle="Program Name"
+    tools:title="Workout Name">
 
 </androidx.appcompat.widget.Toolbar>

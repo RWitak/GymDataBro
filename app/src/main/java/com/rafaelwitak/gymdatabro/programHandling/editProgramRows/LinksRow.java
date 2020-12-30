@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Rafael Witak.
+ */
+
 package com.rafaelwitak.gymdatabro.programHandling.editProgramRows;
 
 import android.widget.EditText;

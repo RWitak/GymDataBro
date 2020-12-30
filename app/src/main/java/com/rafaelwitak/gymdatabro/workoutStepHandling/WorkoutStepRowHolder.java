@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Rafael Witak.
+ */
+
 package com.rafaelwitak.gymdatabro.workoutStepHandling;
 
 import android.content.Context;
@@ -6,7 +10,6 @@ import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.DurationRow;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.ExerciseNameRow;
-import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.PainSlider;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.RPERow;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.RepsRow;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.RestRow;
@@ -14,6 +17,8 @@ import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.WeightRow;
 
 import java.util.Arrays;
 import java.util.List;
+
+//import com.rafaelwitak.gymdatabro.workoutStepHandling.workoutStepRows.PainSlider;
 
 
 public class WorkoutStepRowHolder{
@@ -24,7 +29,7 @@ public class WorkoutStepRowHolder{
     private final RPERow rpeRow;
     private final DurationRow durationRow;
     private final RestRow restRow;
-    private final PainSlider painSlider;
+//    private final PainSlider painSlider;
 
     public WorkoutStepRowHolder(ActivityWorkoutStepBinding binding,
                                 WorkoutStep currentWorkoutStep,
@@ -35,7 +40,7 @@ public class WorkoutStepRowHolder{
         this.rpeRow = new RPERow(binding, currentWorkoutStep);
         this.durationRow = new DurationRow(binding, currentWorkoutStep);
         this.restRow = new RestRow(binding, currentWorkoutStep);
-        this.painSlider = new PainSlider(binding, currentWorkoutStep);
+//        this.painSlider = new PainSlider(binding, currentWorkoutStep);
     }
 
     public List<WorkoutStepRow> getRows() {
@@ -45,8 +50,8 @@ public class WorkoutStepRowHolder{
             this.weightRow,
             this.rpeRow,
             this.durationRow,
-            this.restRow,
-            this.painSlider
+            this.restRow
+//            this.painSlider
         );
     }
 

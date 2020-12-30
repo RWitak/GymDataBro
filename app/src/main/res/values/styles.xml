@@ -1,3 +1,7 @@
+<!--
+  ~ Copyright (c) 2020, Rafael Witak.
+  -->
+
 <resources>
 
     <!-- Base application theme. -->
@@ -7,6 +11,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="chooseProgramRowStyle">@style/ChooseProgramRow</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
+        <item name="android:windowTranslucentStatus">false</item>
     </style>
 
     <style name="NoActionBar">
@@ -16,6 +25,11 @@
 
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="titleTextAppearance">@style/ToolbarTitleTextAppearance</item>
+        <item name="subtitleTextAppearance">@style/ToolbarSubtitleTextAppearance</item>
+    </style>
+
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="ChooseProgramRow" parent="Widget.AppCompat.TextView">
@@ -23,7 +37,18 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Large</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <style name="ToolbarTitleTextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="ToolbarSubtitleTextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
 </resources>

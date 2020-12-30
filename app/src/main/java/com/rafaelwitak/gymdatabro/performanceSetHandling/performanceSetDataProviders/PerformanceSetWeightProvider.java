@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020, Rafael Witak.
+ */
+
 package com.rafaelwitak.gymdatabro.performanceSetHandling.performanceSetDataProviders;
 
 import android.widget.EditText;

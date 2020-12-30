@@ -1,6 +1,11 @@
+/*
+ * Copyright (c) 2020, Rafael Witak.
+ */
+
 package com.rafaelwitak.gymdatabro.workoutStepHandling;
 
 import android.view.View;
+
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 
