@@ -43,11 +43,14 @@ public abstract class MasterDao extends WorkoutInstanceDAO
                         "SELECT workout_id FROM workout_instances " +
                         "WHERE workout_number = (" +
                             "SELECT MIN(workout_number) FROM workout_instances " +
-                            "WHERE program_id = :programId))" +
-            "AND workout_id = (SELECT workout_id FROM workout_instances " +
-                    "WHERE workout_number = (" +
-                        "SELECT MIN(workout_number) FROM workout_instances " +
-                        "WHERE program_id = :programId)));"
+                            "WHERE program_id = :programId) " +
+                            "AND program_id = :programId))" +
+                    "AND workout_id = (" +
+                        "SELECT workout_id FROM workout_instances " +
+                        "WHERE workout_number = (" +
+                            "SELECT MIN(workout_number) FROM workout_instances " +
+                            "WHERE program_id = :programId) " +
+                            "AND program_id = :programId);"
     )
     public abstract WorkoutStep getFirstWorkoutStepOfProgram(int programId);
 
