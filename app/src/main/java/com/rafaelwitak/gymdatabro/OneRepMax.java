@@ -41,9 +41,12 @@ public abstract class OneRepMax {
      * @param rpe Rate of Perceived Exertion
      */
     @NonNull
-    public static Integer getMaxNumberOfReps(int reps, Float rpe) {
+    public static Integer getMaxNumberOfReps(Integer reps, Float rpe) { // FIXME: Hotfix!
         if (rpe == null) {
             return reps;
+        }
+        if (reps == null) { // FIXME: This is a hotfix for having this called without reps
+            return 0;
         }
         return (reps + Math.round(10 - rpe));
     }
@@ -62,6 +65,9 @@ public abstract class OneRepMax {
         }
         if (maxReps == null) {
             return weight;
+        }
+        if (maxReps == 0) { // FIXME: maxReps == 0 is hotfix!
+            return null;
         }
         return formula.getWeight(maxReps, orm);
     }

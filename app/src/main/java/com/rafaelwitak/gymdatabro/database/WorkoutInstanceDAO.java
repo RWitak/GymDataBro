@@ -60,9 +60,11 @@ public abstract class WorkoutInstanceDAO {
 
     @Query(
             "SELECT :instanceId = (" +
-                    "SELECT id FROM workout_instances WHERE workout_number = (" +
+                    "SELECT id FROM workout_instances " +
+                    "WHERE workout_number = (" +
                         "SELECT MAX(workout_number) FROM workout_instances " +
-                        "WHERE program_id = :programId))"
+                        "WHERE program_id = :programId)" +
+                    "AND program_id = :programId)"
     )
     public abstract boolean isLastInstanceOfProgram(int instanceId, Integer programId);
 

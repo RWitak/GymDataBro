@@ -69,7 +69,7 @@ public class ChooseProgramActivity extends AppCompatActivity {
 
     private View.OnClickListener getRowOnClickListener(Program program) {
         return view -> {
-            startActivity(new IntentMaker(this).getIntentToResumeProgram(program.id));
+                startActivity(new IntentMaker(this).getIntentToResumeProgram(program.id));
             finishAndRemoveTask();
         };
     }
