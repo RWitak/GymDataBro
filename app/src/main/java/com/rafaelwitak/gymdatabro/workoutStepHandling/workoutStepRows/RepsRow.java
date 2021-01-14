@@ -19,12 +19,12 @@ public class RepsRow extends WorkoutStepTextInputRow {
 
     @Override
     protected boolean shouldBeVisible() {
-        return currentWorkoutStep.reps != null;
+        return currentWorkoutStep.getReps() != null;
     }
 
     @Override
     protected Number getExpectedValue() {
-        return currentWorkoutStep.reps;
+        return currentWorkoutStep.getReps();
     }
 
     @Override

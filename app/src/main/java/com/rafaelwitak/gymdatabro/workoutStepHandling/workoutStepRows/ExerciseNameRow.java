@@ -69,10 +69,10 @@ public class ExerciseNameRow extends WorkoutStepRow {
     }
 
     private String getCurrentWorkoutStepName() {
-        String name = currentWorkoutStep.name;
+        String name = currentWorkoutStep.getName();
 
         if (name == null || name.isEmpty()) {
-            return database.exerciseDAO().getExerciseByID(currentWorkoutStep.exerciseID).name;
+            return database.exerciseDAO().getExerciseByID(currentWorkoutStep.getExerciseID()).name;
         }
         return name;
     }
@@ -106,14 +106,14 @@ public class ExerciseNameRow extends WorkoutStepRow {
         List<Integer> numbers =
                 database.workoutDAO()
                         .getNumbersOfExerciseInWorkout(
-                                currentWorkoutStep.exerciseID,
-                                currentWorkoutStep.workoutID);
+                                currentWorkoutStep.getExerciseID(),
+                                currentWorkoutStep.getWorkoutID());
 
-        return numbers.indexOf(currentWorkoutStep.number) + 1;
+        return numbers.indexOf(currentWorkoutStep.getNumber()) + 1;
     }
 
     private Integer getTotalProgressNumber() {
         return database.workoutDAO().getOccurrencesOfExerciseInWorkout(
-                currentWorkoutStep.exerciseID, currentWorkoutStep.workoutID);
+                currentWorkoutStep.getExerciseID(), currentWorkoutStep.getWorkoutID());
     }
 }

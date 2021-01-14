@@ -94,7 +94,7 @@ public class IntentMaker {
     private Integer getLatestWorkoutStepNumber() {
         return dao.getWorkoutStepById(
                 dao.getLatestPerformanceSet().workoutStepId)
-                .number;
+                .getNumber();
     }
 
     @Nullable
@@ -104,7 +104,7 @@ public class IntentMaker {
             Log.d("GDB", "nextStep == null");
             return null;
         }
-        return nextStep.number;
+        return nextStep.getNumber();
     }
 
     @NonNull
@@ -138,8 +138,8 @@ public class IntentMaker {
         WorkoutStep latestWorkoutStep =
                 dao.getWorkoutStepById(latestSetOfProgram.workoutStepId);
         if (dao.isLastStepOfWorkout(
-                latestWorkoutStep.workoutID,
-                latestWorkoutStep.number)) {
+                latestWorkoutStep.getWorkoutID(),
+                latestWorkoutStep.getNumber())) {
 
             return dao.getNextWorkoutInstanceForProgram(
                     programId,

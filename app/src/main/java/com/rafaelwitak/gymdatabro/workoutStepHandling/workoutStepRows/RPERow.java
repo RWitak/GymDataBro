@@ -19,12 +19,12 @@ public class RPERow extends WorkoutStepTextInputRow {
 
     @Override
     protected boolean shouldBeVisible() {
-        return (currentWorkoutStep.rpe != null);
+        return (currentWorkoutStep.getRpe() != null);
     }
 
     @Override
     protected Number getExpectedValue() {
-        return currentWorkoutStep.rpe;
+        return currentWorkoutStep.getRpe();
     }
 
     @Override

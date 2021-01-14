@@ -92,24 +92,27 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private void updateCurrentWorkoutStepWeight() {
-        if (currentWorkoutStep.weight == null) {
+        if (currentWorkoutStep.getWeight() == null) {
             return;
         }
 
         Float recentWeight = getRecentStrengthBasedWeight();
         if (recentWeight != null) {
-            currentWorkoutStep.weight = recentWeight;
+            currentWorkoutStep.setWeight(recentWeight);
             return;
         }
 
         Float ormBasedWeight =
                 getWeightFromOrm(
-                        currentWorkoutStep.weight,
-                        getMaxNumberOfReps(currentWorkoutStep.reps, currentWorkoutStep.rpe),
+                        currentWorkoutStep.getWeight(),
+                        getMaxNumberOfReps(
+                                currentWorkoutStep.getReps(),
+                                currentWorkoutStep.getRpe()
+                        ),
                         currentExercise.pr,
                         OneRepMax.getFormula());
         if (ormBasedWeight != null) {
-            currentWorkoutStep.weight = ormBasedWeight;
+            currentWorkoutStep.setWeight(ormBasedWeight);
         }
     }
 
@@ -122,7 +125,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
             return null;
         }
         if (recent.reps == null) {
-            if (currentWorkoutStep.reps == null) {
+            if (currentWorkoutStep.getReps() == null) {
                 // for exercises not based on reps, the previous weight may be used...
                 // TODO: ...for now! But that's not representative,
                 //  eg. a duration based exercise requires different weight
@@ -144,8 +147,8 @@ public class WorkoutStepActivity extends AppCompatActivity {
         float recentOrm = OneRepMax.getFormula().getOrm((float) recent.weight, (int) maxReps);
 
         return getWeightFromOrm(
-                currentWorkoutStep.weight,
-                getMaxNumberOfReps(currentWorkoutStep.reps, currentWorkoutStep.rpe),
+                currentWorkoutStep.getWeight(),
+                getMaxNumberOfReps(currentWorkoutStep.getReps(), currentWorkoutStep.getRpe()),
                 recentOrm,
                 OneRepMax.getFormula()
         );
@@ -154,7 +157,8 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     @NonNull
     private Workout getCurrentWorkout() {
-        Workout currentWorkout = database.workoutDAO().getWorkoutByID(currentWorkoutStep.workoutID);
+        Workout currentWorkout =
+                database.workoutDAO().getWorkoutByID(currentWorkoutStep.getWorkoutID());
 
         if (currentWorkout == null) {
             return new Workout();
@@ -165,7 +169,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     @NonNull
     private Exercise getCurrentExercise() {
-        return database.exerciseDAO().getExerciseByID(currentWorkoutStep.exerciseID);
+        return database.exerciseDAO().getExerciseByID(currentWorkoutStep.getExerciseID());
     }
 
 
@@ -296,8 +300,8 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private boolean isLastWorkoutStep(@NonNull WorkoutStep currentWorkoutStep) {
         return database.masterDao()
                 .isLastStepOfWorkout(
-                        currentWorkoutStep.workoutID,
-                        currentWorkoutStep.number);
+                        currentWorkoutStep.getWorkoutID(),
+                        currentWorkoutStep.getNumber());
     }
 
     @NonNull
@@ -325,7 +329,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private Intent getNewIntentWithExtras() {
         Intent intent = new Intent(this, WorkoutStepActivity.class);
         Integer nextWorkoutStepNumber = getNextWorkoutStepNumber();
-        intent.putExtra("workoutID", currentWorkoutStep.workoutID);
+        intent.putExtra("workoutID", currentWorkoutStep.getWorkoutID());
         intent.putExtra("nextStepNumber", nextWorkoutStepNumber);
         intent.putExtra("workoutInstanceId", getWorkoutInstanceId());
 
@@ -335,11 +339,11 @@ public class WorkoutStepActivity extends AppCompatActivity {
     @Nullable
     private Integer getNextWorkoutStepNumber() {
         WorkoutStep nextStep = database.masterDao()
-                .getNextStepInWorkout(currentWorkoutStep.id, currentWorkout.id);
+                .getNextStepInWorkout(currentWorkoutStep.getId(), currentWorkout.id);
         if (nextStep == null) {
             return null;
         }
-        return nextStep.number;
+        return nextStep.getNumber();
     }
 
     @Nullable

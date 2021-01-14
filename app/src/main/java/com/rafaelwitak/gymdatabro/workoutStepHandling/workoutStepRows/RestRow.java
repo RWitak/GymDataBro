@@ -19,12 +19,12 @@ public class RestRow extends WorkoutStepTextInputRow {
 
     @Override
     protected boolean shouldBeVisible() {
-        return (currentWorkoutStep.restSeconds != null);
+        return (currentWorkoutStep.getRestSeconds() != null);
     }
 
     @Override
     protected Number getExpectedValue() {
-        return currentWorkoutStep.restSeconds;
+        return currentWorkoutStep.getRestSeconds();
     }
 
     @Override

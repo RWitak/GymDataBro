@@ -20,12 +20,12 @@ public class WeightRow extends WorkoutStepTextInputRow {
 
     @Override
     protected boolean shouldBeVisible() {
-        return currentWorkoutStep.weight != null;
+        return currentWorkoutStep.getWeight() != null;
     }
 
     @Override
     protected Number getExpectedValue() {
-        return ConvertToFourths.convertToFourthsPrecision(currentWorkoutStep.weight);
+        return ConvertToFourths.convertToFourthsPrecision(currentWorkoutStep.getWeight());
     }
 
     @Override

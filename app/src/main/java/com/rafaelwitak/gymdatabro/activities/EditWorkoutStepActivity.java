@@ -117,17 +117,17 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
 
 
     private void setupEditTexts() {
-        setTextsSafely("Name", workoutStep.name);
-        setTextsSafely("WorkoutID", workoutStep.workoutID);
+        setTextsSafely("Name", workoutStep.getName());
+        setTextsSafely("WorkoutID", workoutStep.getWorkoutID());
 //        setTextsSafely("Number", workoutStep.number);  // obsolete atm
-        setTextsSafely("ExerciseID", workoutStep.exerciseID);
-        setTextsSafely("Reps", workoutStep.reps);
-        setTextsSafely("Weight", workoutStep.weight);
-        setTextsSafely("RPE", workoutStep.rpe);
-        setTextsSafely("Duration", workoutStep.durationSeconds);
-        setTextsSafely("Rest", workoutStep.restSeconds);
-        setTextsSafely("Details", workoutStep.details);
-        setTextsSafely("Notes", workoutStep.notes);
+        setTextsSafely("ExerciseID", workoutStep.getExerciseID());
+        setTextsSafely("Reps", workoutStep.getReps());
+        setTextsSafely("Weight", workoutStep.getWeight());
+        setTextsSafely("RPE", workoutStep.getRpe());
+        setTextsSafely("Duration", workoutStep.getDurationSeconds());
+        setTextsSafely("Rest", workoutStep.getRestSeconds());
+        setTextsSafely("Details", workoutStep.getDetails());
+        setTextsSafely("Notes", workoutStep.getNotes());
     }
 
     public void setTextsSafely(String key, String text) {
@@ -182,22 +182,23 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
 
     private void updateWorkoutStepFromEditTexts() {
 
-        workoutStep.workoutID = getNonNullIntFromEditText("WorkoutID");
-        workoutStep.exerciseID = getNonNullIntFromEditText("ExerciseID");
+        workoutStep.setWorkoutID(getNonNullIntFromEditText("WorkoutID"));
+        workoutStep.setExerciseID(getNonNullIntFromEditText("ExerciseID"));
 
-        workoutStep.name = getTextAsTrimmedStringOrNull(getEditTextSafely("Name"));
+        workoutStep.setName(getTextAsTrimmedStringOrNull(getEditTextSafely("Name")));
 // workoutStep.number = getTextAsNullableInteger(getEditTextSafely("Number")); // obsolete atm
-        workoutStep.reps = getTextAsNullableInteger(getEditTextSafely("Reps"));
-        workoutStep.weight = getTextAsNullableFloat(getEditTextSafely("Weight"));
-        workoutStep.rpe = getTextAsNullableFloat(getEditTextSafely("RPE"));
-        workoutStep.durationSeconds = getTextAsNullableInteger(getEditTextSafely("Duration"));
-        workoutStep.restSeconds = getTextAsNullableInteger(getEditTextSafely("Rest"));
-        workoutStep.details = getTextAsTrimmedStringOrNull(getEditTextSafely("Details"));
-        workoutStep.notes = getTextAsTrimmedStringOrNull(getEditTextSafely("Notes"));
+        workoutStep.setReps(getTextAsNullableInteger(getEditTextSafely("Reps")));
+        workoutStep.setWeight(getTextAsNullableFloat(getEditTextSafely("Weight")));
+        workoutStep.setRpe(getTextAsNullableFloat(getEditTextSafely("RPE")));
+        workoutStep.setDurationSeconds(getTextAsNullableInteger(getEditTextSafely("Duration")));
+        workoutStep.setRestSeconds(getTextAsNullableInteger(getEditTextSafely("Rest")));
+        workoutStep.setDetails(getTextAsTrimmedStringOrNull(getEditTextSafely("Details")));
+        workoutStep.setNotes(getTextAsTrimmedStringOrNull(getEditTextSafely("Notes")));
 
         if (!isExistingWorkoutStep) {
-            workoutStep.number =
-                    database.workoutStepDAO().getNumberOfStepsInWorkout(workoutStep.workoutID);
+            workoutStep.setNumber(
+                    database.workoutStepDAO()
+                            .getNumberOfStepsInWorkout(workoutStep.getWorkoutID()));
         }
     }
 
@@ -210,7 +211,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         getSaveHandler().save(getNumberSets());
 
         Intent intent = new Intent(this, EditWorkoutStepActivity.class);
-        intent.putExtra("WorkoutID", workoutStep.workoutID);
+        intent.putExtra("WorkoutID", workoutStep.getWorkoutID());
         intent.putExtra("NumberSets", getNumberSets());
         intent.putExtra("WorkoutSpinnerPosition",
                 binding.editWorkoutStepWorkoutIdSpinner.getSelectedItemPosition());
@@ -263,7 +264,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         }
         else if (WorkoutStepSanityChecker.Status.isBadNumber(sanityStatus)) {
             throw new RuntimeException("SanityCheck Error (WorkoutStep): " +
-                    "WorkoutStep number " + workoutStep.number + " is illegal.");
+                    "WorkoutStep number " + workoutStep.getNumber() + " is illegal.");
         }
         else {
             throw new RuntimeException("SanityCheck Error (WorkoutStep): Status code '"
@@ -311,7 +312,11 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         private AdapterView.OnItemSelectedListener getWorkoutListener() {
             return new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemSelected(@NonNull AdapterView<?> adapterView, View view, int i, long l) {
+                public void onItemSelected(
+                        @NonNull AdapterView<?> adapterView,
+                        View view,
+                        int i,
+                        long l) {
                     Workout workout = database.workoutDAO().getWorkoutByName(
                             (String) adapterView.getItemAtPosition(i));
                     binding.editWorkoutStepWorkoutIdEdit.setText(String.valueOf(workout.id));
@@ -339,7 +344,8 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         private AdapterView.OnItemSelectedListener getExerciseListener() {
             return new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemSelected(@NonNull AdapterView<?> adapterView, View view, int i, long l) {
+                public void onItemSelected(
+                        @NonNull AdapterView<?> adapterView, View view, int i, long l) {
                     Exercise exercise = database.exerciseDAO().getExercisesByName(
                             adapterView.getItemAtPosition(i).toString()).get(0);
                     binding.editWorkoutStepExerciseIdEdit.setText(String.valueOf(exercise.id));

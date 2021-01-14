@@ -12,7 +12,7 @@ public class PerformanceSetWorkoutStepIdProvider implements PerformanceSetDataPr
     private final Integer workoutStepId;
 
     public PerformanceSetWorkoutStepIdProvider(WorkoutStep currentWorkoutStep) {
-        this.workoutStepId = currentWorkoutStep.id;
+        this.workoutStepId = currentWorkoutStep.getId();
     }
 
     @Override

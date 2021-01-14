@@ -13,28 +13,28 @@ public class WorkoutStepSanityChecker {
                                 WorkoutStepDAO workoutStepDAO,
                                 ExerciseDAO exerciseDAO,
                                 boolean isExistingWorkoutStep) {
-        if (workoutStep.number < 0) {
+        if (workoutStep.getNumber() < 0) {
             return Status.NUMBER_MISSING;
         }
         if (!isExistingWorkoutStep && isAlreadyInDatabase(workoutStep, workoutStepDAO)) {
             return Status.NUMBER_DUPLICATE;
         }
-        if (workoutStep.number < 0) {
+        if (workoutStep.getNumber() < 0) {
             return Status.NUMBER_OUT_OF_RANGE;
         }
-        if (workoutStep.name != null) {
-            if (workoutStep.name.length() <= 2) {
+        if (workoutStep.getName() != null) {
+            if (workoutStep.getName().length() <= 2) {
                 return Status.NAME_TOO_SHORT;
             }
         }
-        if (workoutStep.exerciseID < 0) {
+        if (workoutStep.getExerciseID() < 0) {
             return Status.EXERCISE_ID_MISSING;
         }
-        if (isNonExistingExerciseId(workoutStep.exerciseID, exerciseDAO)) {
+        if (isNonExistingExerciseId(workoutStep.getExerciseID(), exerciseDAO)) {
             return Status.EXERCISE_NON_EXISTENT;
         }
-        if (workoutStep.rpe != null) {
-            if (10 < workoutStep.rpe || workoutStep.rpe <= 0) {
+        if (workoutStep.getRpe() != null) {
+            if (10 < workoutStep.getRpe() || workoutStep.getRpe() <= 0) {
                 return Status.RPE_OUT_OF_RANGE;
             }
         }
@@ -51,8 +51,8 @@ public class WorkoutStepSanityChecker {
             WorkoutStepDAO workoutStepDAO) {
         return workoutStepDAO.
                 getWorkoutStep(
-                        workoutStep.workoutID,
-                        workoutStep.number)
+                        workoutStep.getWorkoutID(),
+                        workoutStep.getNumber())
                 != null;
     }
 

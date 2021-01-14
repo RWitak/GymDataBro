@@ -73,11 +73,11 @@ public abstract class MasterDao extends WorkoutInstanceDAO
             Log.d("GDB", "latestWorkoutStep == null");
             return getFirstWorkoutStepOfProgram(programId);
         }
-        if (isLastStepOfWorkout(latestWorkoutStep.workoutID, latestWorkoutStep.number)) {
+        if (isLastStepOfWorkout(latestWorkoutStep.getWorkoutID(), latestWorkoutStep.getNumber())) {
             Log.d("GDB", "latestWorkoutStep is last step of Workout");
             return getFirstStepOfWorkout(nextInstance.workoutId);
         }
-        return getNextStepInWorkout(latestWorkoutStep.id, latestWorkoutStep.workoutID);
+        return getNextStepInWorkout(latestWorkoutStep.getId(), latestWorkoutStep.getWorkoutID());
     }
 
     @Nullable

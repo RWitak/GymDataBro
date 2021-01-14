@@ -37,46 +37,150 @@ import androidx.room.PrimaryKey;
 public class WorkoutStep {
 
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
 
     @ColumnInfo(name = "workout_id")
-    public int workoutID;
+    private int workoutID;
 
     @ColumnInfo
     @NonNull
-    public Integer number = -1;
+    private Integer number = -1;
 
     @ColumnInfo
     @Nullable
-    public String name;
+    private String name;
 
     @ColumnInfo(name = "exercise_id")
     @NonNull
-    public Integer exerciseID = -1;
+    private Integer exerciseID = -1;
 
     @ColumnInfo
     @Nullable
-    public Integer reps;
+    private Integer reps;
 
     @ColumnInfo
     @Nullable
-    public Float weight;
+    private Float weight;
 
     @ColumnInfo
     @Nullable
-    public Float rpe;
+    private Float rpe;
 
     @ColumnInfo(name = "duration_seconds")
     @Nullable
-    public Integer durationSeconds;
+    private Integer durationSeconds;
 
     @ColumnInfo(name = "rest_seconds")
     @Nullable
-    public Integer restSeconds;
+    private Integer restSeconds;
 
     @ColumnInfo
-    public String details;
+    private String details;
 
     @ColumnInfo
-    public String notes;
+    private String notes;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getWorkoutID() {
+        return workoutID;
+    }
+
+    public void setWorkoutID(int workoutID) {
+        this.workoutID = workoutID;
+    }
+
+    @NonNull
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(@NonNull Integer number) {
+        this.number = number;
+    }
+
+    @Nullable
+    public String getName() {
+        return name;
+    }
+
+    public void setName(@Nullable String name) {
+        this.name = name;
+    }
+
+    @NonNull
+    public Integer getExerciseID() {
+        return exerciseID;
+    }
+
+    public void setExerciseID(@NonNull Integer exerciseID) {
+        this.exerciseID = exerciseID;
+    }
+
+    @Nullable
+    public Integer getReps() {
+        return reps;
+    }
+
+    public void setReps(@Nullable Integer reps) {
+        this.reps = reps;
+    }
+
+    @Nullable
+    public Float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(@Nullable Float weight) {
+        this.weight = weight;
+    }
+
+    @Nullable
+    public Float getRpe() {
+        return rpe;
+    }
+
+    public void setRpe(@Nullable Float rpe) {
+        this.rpe = rpe;
+    }
+
+    @Nullable
+    public Integer getDurationSeconds() {
+        return durationSeconds;
+    }
+
+    public void setDurationSeconds(@Nullable Integer durationSeconds) {
+        this.durationSeconds = durationSeconds;
+    }
+
+    @Nullable
+    public Integer getRestSeconds() {
+        return restSeconds;
+    }
+
+    public void setRestSeconds(@Nullable Integer restSeconds) {
+        this.restSeconds = restSeconds;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 }

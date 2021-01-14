@@ -19,12 +19,12 @@ public class DurationRow extends WorkoutStepTextInputRow {
 
     @Override
     protected boolean shouldBeVisible() {
-        return (currentWorkoutStep.durationSeconds != null);
+        return (currentWorkoutStep.getDurationSeconds() != null);
     }
 
     @Override
     protected Number getExpectedValue() {
-        return currentWorkoutStep.durationSeconds;
+        return currentWorkoutStep.getDurationSeconds();
     }
 
     @Override
