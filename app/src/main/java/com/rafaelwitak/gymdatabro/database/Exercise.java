@@ -26,11 +26,11 @@ public class Exercise {
             @Nullable String cues,
             @Nullable String links,
             @Nullable String equipment) {
-        this.id = id;
-        this.pr = pr;
-        this.cues = cues;
-        this.links = links;
-        this.equipment = equipment;
+        this.setId(id);
+        this.setPr(pr);
+        this.setCues(cues);
+        this.setLinks(links);
+        this.setEquipment(equipment);
     }
 
     @Ignore
@@ -40,32 +40,85 @@ public class Exercise {
             @Nullable String cues,
             @Nullable String links,
             @Nullable String equipment) {
-        this.pr = pr;
-        this.cues = cues;
-        this.links = links;
-        this.equipment = equipment;
+        this.setPr(pr);
+        this.setCues(cues);
+        this.setLinks(links);
+        this.setEquipment(equipment);
     }
 
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
 
     @ColumnInfo
     @Nullable
-    public String name;
+    private String name;
 
     @ColumnInfo
     @Nullable
-    public Float pr;
+    private Float pr;
 
     @ColumnInfo
     @Nullable
-    public String cues;
+    private String cues;
 
     @ColumnInfo
     @Nullable
-    public String links;
+    private String links;
 
     @ColumnInfo
     @Nullable
-    public String equipment;
+    private String equipment;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Nullable
+    public String getName() {
+        return name;
+    }
+
+    public void setName(@Nullable String name) {
+        this.name = name;
+    }
+
+    @Nullable
+    public Float getPr() {
+        return pr;
+    }
+
+    public void setPr(@Nullable Float pr) {
+        this.pr = pr;
+    }
+
+    @Nullable
+    public String getCues() {
+        return cues;
+    }
+
+    public void setCues(@Nullable String cues) {
+        this.cues = cues;
+    }
+
+    @Nullable
+    public String getLinks() {
+        return links;
+    }
+
+    public void setLinks(@Nullable String links) {
+        this.links = links;
+    }
+
+    @Nullable
+    public String getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(@Nullable String equipment) {
+        this.equipment = equipment;
+    }
 }

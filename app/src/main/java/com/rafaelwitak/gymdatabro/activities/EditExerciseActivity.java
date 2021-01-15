@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -21,6 +22,7 @@ import com.rafaelwitak.gymdatabro.exerciseHandling.ExerciseSanityChecker;
 import com.rafaelwitak.gymdatabro.exerciseHandling.ExerciseSaveHandler;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import static com.rafaelwitak.gymdatabro.EditTextHelper.getTextAsNullableFloat;
 import static com.rafaelwitak.gymdatabro.EditTextHelper.getTextAsTrimmedStringOrNull;
@@ -58,7 +60,7 @@ public class EditExerciseActivity extends AppCompatActivity {
                         this.isExistingExercise);
     }
 
-    private boolean getIsExistingExercise(Intent intent) {
+    private boolean getIsExistingExercise(@NonNull Intent intent) {
         return intent.hasExtra("exerciseId");
     }
 
@@ -69,13 +71,14 @@ public class EditExerciseActivity extends AppCompatActivity {
         return new Exercise();
     }
 
-    private Exercise getExerciseFromIntent(Intent intent) {
+    private Exercise getExerciseFromIntent(@NonNull Intent intent) {
         int exerciseId = intent.getIntExtra("ExerciseId", -1);
         return database.exerciseDAO().getExerciseByID(exerciseId);
     }
 
+    @NonNull
     private HashMap<String, EditText> getEditTexts(
-            ActivityEditExerciseBinding binding) {
+            @NonNull ActivityEditExerciseBinding binding) {
         HashMap<String, EditText> map = new HashMap<>();
 
         map.put("Name", binding.editExerciseNameEdit);
@@ -94,19 +97,24 @@ public class EditExerciseActivity extends AppCompatActivity {
         setupEditButton();
     }
 
-    private void setupToolbar(Toolbar toolbar) {
+    private void setupToolbar(@NonNull Toolbar toolbar) {
         toolbar.setTitle(isExistingExercise ? "Edit Exercise" : "Create Exercise");
     }
 
     private void setupEditTexts(
-            HashMap<String, EditText> editTexts,
-            Exercise exercise) {
+            @NonNull HashMap<String, EditText> editTexts,
+            @NonNull Exercise exercise) {
 
-        editTexts.get("Name").setText(getNonNullString(exercise.name));
-        editTexts.get("PR").setText(StringHelper.getNonNullString(exercise.pr));
-        editTexts.get("Cues").setText(getNonNullString(exercise.cues));
-        editTexts.get("Links").setText(getNonNullString(exercise.links));
-        editTexts.get("Equipment").setText(getNonNullString(exercise.equipment));
+        Objects.requireNonNull(editTexts.get("Name"))
+                .setText(getNonNullString(exercise.getName()));
+        Objects.requireNonNull(editTexts.get("PR"))
+                .setText(StringHelper.getNonNullString(exercise.getPr()));
+        Objects.requireNonNull(editTexts.get("Cues"))
+                .setText(getNonNullString(exercise.getCues()));
+        Objects.requireNonNull(editTexts.get("Links"))
+                .setText(getNonNullString(exercise.getLinks()));
+        Objects.requireNonNull(editTexts.get("Equipment"))
+                .setText(getNonNullString(exercise.getEquipment()));
     }
 
     private void setupEditButton() {
@@ -116,15 +124,21 @@ public class EditExerciseActivity extends AppCompatActivity {
 
 
     private void tryToSaveAndExit() {
-        Exercise updatedExercise = updateExerciseFromEditTexts(this.exercise, this.editTexts);
+        Exercise updatedExercise =
+                updateExerciseFromEditTexts(this.exercise, this.editTexts);
 
-        int sanityStatus = ExerciseSanityChecker.getStatus(updatedExercise, this.database.exerciseDAO());
+        int sanityStatus =
+                ExerciseSanityChecker
+                        .getStatus(
+                                updatedExercise,
+                                this.database.exerciseDAO());
 
         if (sanityStatus == ExerciseSanityChecker.Status.SAVABLE) {
             this.saveHandler.saveAndFinish();
         }
         else if (ExerciseSanityChecker.Status.isBadName(sanityStatus)) {
-            this.editTexts.get("Name").setError("Please choose a unique and meaningful name.");
+            Objects.requireNonNull(this.editTexts.get("Name"))
+                    .setError("Please choose a unique and meaningful name.");
         }
         else {
             Log.e("GDB",
@@ -134,15 +148,21 @@ public class EditExerciseActivity extends AppCompatActivity {
         }
     }
 
+    @NonNull
     private Exercise updateExerciseFromEditTexts(
-            Exercise exercise,
-            HashMap<String, EditText> editTexts) {
+            @NonNull Exercise exercise,
+            @NonNull HashMap<String, EditText> editTexts) {
 
-        exercise.name = getTextAsTrimmedStringOrNull(editTexts.get("Name"));
-        exercise.pr = getTextAsNullableFloat(editTexts.get("PR"));
-        exercise.cues = getTextAsTrimmedStringOrNull(editTexts.get("Cues"));
-        exercise.links = getTextAsTrimmedStringOrNull(editTexts.get("Links"));
-        exercise.equipment = getTextAsTrimmedStringOrNull(editTexts.get("Equipment"));
+        exercise.setName(getTextAsTrimmedStringOrNull(
+                Objects.requireNonNull(editTexts.get("Name"))));
+        exercise.setPr(getTextAsNullableFloat(
+                Objects.requireNonNull(editTexts.get("PR"))));
+        exercise.setCues(getTextAsTrimmedStringOrNull(
+                Objects.requireNonNull(editTexts.get("Cues"))));
+        exercise.setLinks(getTextAsTrimmedStringOrNull(
+                Objects.requireNonNull(editTexts.get("Links"))));
+        exercise.setEquipment(getTextAsTrimmedStringOrNull(
+                Objects.requireNonNull(editTexts.get("Equipment"))));
 
         return exercise;
     }

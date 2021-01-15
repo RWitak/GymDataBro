@@ -72,7 +72,10 @@ public class ExerciseNameRow extends WorkoutStepRow {
         String name = currentWorkoutStep.getName();
 
         if (name == null || name.isEmpty()) {
-            return database.exerciseDAO().getExerciseByID(currentWorkoutStep.getExerciseID()).name;
+            return database.exerciseDAO()
+                    .getExerciseByID(
+                            currentWorkoutStep.getExerciseID())
+                    .getName();
         }
         return name;
     }

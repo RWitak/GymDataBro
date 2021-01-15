@@ -12,9 +12,9 @@ import java.util.List;
 public class ExerciseSanityChecker {
 
 public static int getStatus(Exercise exercise, ExerciseDAO exerciseDAO) {
-    if (exercise.name == null)
+    if (exercise.getName() == null)
         return Status.NAME_MISSING;
-    if (exercise.name.length() <= 2)
+    if (exercise.getName().length() <= 2)
         return Status.NAME_TOO_SHORT;
     if (isExistingExerciseName(exercise, exerciseDAO))
         return Status.NAME_ALREADY_EXISTS;
@@ -23,13 +23,17 @@ public static int getStatus(Exercise exercise, ExerciseDAO exerciseDAO) {
 }
 
     @SuppressWarnings("RedundantIfStatement")
-    private static boolean isExistingExerciseName(Exercise exercise, ExerciseDAO exerciseDAO) {
-        List<Exercise> savedExercisesWithName = exerciseDAO.getExercisesByName(exercise.name);
+    private static boolean isExistingExerciseName(
+            Exercise exercise,
+            ExerciseDAO exerciseDAO) {
+
+    List<Exercise> savedExercisesWithName =
+            exerciseDAO.getExercisesByName(exercise.getName());
 
         if (savedExercisesWithName.isEmpty()) {
             return false;
         } else if (savedExercisesWithName.size() == 1
-                && savedExercisesWithName.get(0).id == exercise.id)
+                && savedExercisesWithName.get(0).getId() == exercise.getId())
             return false;
 
         return true;

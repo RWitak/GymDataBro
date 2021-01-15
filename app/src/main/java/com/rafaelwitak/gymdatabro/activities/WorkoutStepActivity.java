@@ -109,7 +109,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
                                 currentWorkoutStep.getReps(),
                                 currentWorkoutStep.getRpe()
                         ),
-                        currentExercise.pr,
+                        currentExercise.getPr(),
                         OneRepMax.getFormula());
         if (ormBasedWeight != null) {
             currentWorkoutStep.setWeight(ormBasedWeight);
@@ -120,7 +120,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private Float getRecentStrengthBasedWeight() {
         MasterDao.WeightRepsRpe recent =
                 database.masterDao()
-                        .getLatestWeightRepsRpeForExercise(currentExercise.id);
+                        .getLatestWeightRepsRpeForExercise(currentExercise.getId());
         if (recent == null || recent.weight == null) {
             return null;
         }
@@ -136,15 +136,14 @@ public class WorkoutStepActivity extends AppCompatActivity {
             }
         }
 
-        // Casting added for indicating nullity is impossible.
-        Integer maxReps = getMaxNumberOfReps((int) recent.reps, recent.rpe);
+        Integer maxReps = getMaxNumberOfReps( recent.reps, recent.rpe);
 
         // Previous set failed? Try again with less weight.
         if (recent.reps == 0) {
             return recent.weight * .75f;
         }
 
-        float recentOrm = OneRepMax.getFormula().getOrm((float) recent.weight, (int) maxReps);
+        float recentOrm = OneRepMax.getFormula().getOrm(recent.weight, maxReps);
 
         return getWeightFromOrm(
                 currentWorkoutStep.getWeight(),
@@ -249,14 +248,14 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private void handleNewRecords(@NonNull PerformanceSet performedSet) {
-        @Nullable Float previousOrm = currentExercise.pr;
+        @Nullable Float previousOrm = currentExercise.getPr();
         @Nullable Float currentOrm = getOneRepMaxValue(
                 performedSet.reps,
                 performedSet.weight,
                 performedSet.rpe);
 
         if (isNewPr(previousOrm, currentOrm)) {
-            currentExercise.pr = currentOrm;
+            currentExercise.setPr(currentOrm);
             database.exerciseDAO().updateExercise(currentExercise);
 
             showNewOrmMessage(performedSet, currentOrm);

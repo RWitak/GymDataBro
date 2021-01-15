@@ -27,24 +27,24 @@ public class ExerciseDAOTest extends DaoTest {
         exercises.add(regularCase);
 
         Exercise idIsZero = new Exercise();
-        idIsZero.id = 0;
-        idIsZero.pr = 3f;
+        idIsZero.setId(0);
+        idIsZero.setPr(3f);
         exercises.add(idIsZero);
 
         Exercise idRepeats = new Exercise();
-        idRepeats.id = 0; // already in database!
+        idRepeats.setId(0); // already in database!
         exercises.add(idRepeats);
 
         Exercise idIsHigh = new Exercise();
-        idIsHigh.id = 1000000000;
+        idIsHigh.setId(1000000000);
         exercises.add(idIsHigh);
 
         Exercise idIsNotIncremental = new Exercise();
-        idIsNotIncremental.id = 69;
+        idIsNotIncremental.setId(69);
         exercises.add(idIsNotIncremental);
 
         Exercise idIsOneWhichShouldBeReservedByIdRepeatsByNow = new Exercise();
-        idIsOneWhichShouldBeReservedByIdRepeatsByNow.id = 1;
+        idIsOneWhichShouldBeReservedByIdRepeatsByNow.setId(1);
         exercises.add(idIsOneWhichShouldBeReservedByIdRepeatsByNow);
 
         for (Exercise exercise : exercises) {
@@ -55,14 +55,14 @@ public class ExerciseDAOTest extends DaoTest {
     @Test
     public void insertNewExercise() {
         Exercise newestExercise = new Exercise();
-        newestExercise.cues = "Test for insertNewExercise";
+        newestExercise.setCues("Test for insertNewExercise");
 
         dao.insertNewExercise(newestExercise);
 
         List<Exercise> daoEntries = dao.getAllExercises();
 
         Exercise createdExercise = daoEntries.get(0);
-        assertThat(createdExercise.cues).isEqualTo(newestExercise.cues);
+        assertThat(createdExercise.getCues()).isEqualTo(newestExercise.getCues());
     }
 
     @Test
@@ -74,14 +74,14 @@ public class ExerciseDAOTest extends DaoTest {
     @Test
     public void getExerciseByID() {
         Exercise newestExercise = new Exercise();
-        newestExercise.id = 247365;
-        newestExercise.cues = "Test for getExerciseById";
+        newestExercise.setId(247365);
+        newestExercise.setCues("Test for getExerciseById");
         dao.insertNewExercise(newestExercise);
 
-        Exercise insertedExercise = dao.getExerciseByID(newestExercise.id);
+        Exercise insertedExercise = dao.getExerciseByID(newestExercise.getId());
 
         assertThat(insertedExercise).isNotNull();
-        assertThat(insertedExercise.cues).isEqualTo(newestExercise.cues);
+        assertThat(insertedExercise.getCues()).isEqualTo(newestExercise.getCues());
     }
 
     @Test
@@ -90,13 +90,13 @@ public class ExerciseDAOTest extends DaoTest {
         Exercise testExercise = dao.getExerciseByID(2);
 
         String testString = "Exercise update successful";
-        testExercise.cues = testString;
+        testExercise.setCues(testString);
 
         dao.updateExercise(testExercise);
 
         Exercise updatedTestExercise = dao.getExerciseByID(2);
 
-        assertThat(updatedTestExercise.cues).isEqualTo(testString);
+        assertThat(updatedTestExercise.getCues()).isEqualTo(testString);
     }
 
     @Override
