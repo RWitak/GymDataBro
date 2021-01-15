@@ -34,8 +34,10 @@ public abstract class MasterDao extends WorkoutInstanceDAO
                 "WHERE timestamp = (" +
                     "SELECT MAX(timestamp) FROM (" +
                     "SELECT timestamp FROM performance_sets " +
-                    "JOIN workout_steps ON performance_sets.workout_step_id = workout_steps.id " +
-                    "JOIN workouts ON workout_steps.workout_id = workouts.id " +
+                    "JOIN workout_steps " +
+                        "ON performance_sets.workout_step_id = workout_steps.id " +
+                    "JOIN workouts " +
+                        "ON workout_steps.workout_id = workouts.id " +
                     "WHERE program_id = :programId)))"
     )
     public abstract WorkoutStep getLatestWorkoutStepForProgramId(Integer programId);
@@ -73,11 +75,15 @@ public abstract class MasterDao extends WorkoutInstanceDAO
             Log.d("GDB", "latestWorkoutStep == null");
             return getFirstWorkoutStepOfProgram(programId);
         }
-        if (isLastStepOfWorkout(latestWorkoutStep.getWorkoutID(), latestWorkoutStep.getNumber())) {
+        if (isLastStepOfWorkout(
+                latestWorkoutStep.getWorkoutID(),
+                latestWorkoutStep.getNumber())) {
             Log.d("GDB", "latestWorkoutStep is last step of Workout");
-            return getFirstStepOfWorkout(nextInstance.workoutId);
+            return getFirstStepOfWorkout(nextInstance.getWorkoutId());
         }
-        return getNextStepInWorkout(latestWorkoutStep.getId(), latestWorkoutStep.getWorkoutID());
+        return getNextStepInWorkout(
+                latestWorkoutStep.getId(),
+                latestWorkoutStep.getWorkoutID());
     }
 
     @Nullable
@@ -96,7 +102,8 @@ public abstract class MasterDao extends WorkoutInstanceDAO
             "SELECT weight, reps, rpe FROM performance_sets " +
                     "WHERE timestamp = (" +
                     "SELECT MAX(timestamp) from performance_sets " +
-                    "JOIN workout_steps ON performance_sets.workout_step_id = workout_steps.id " +
+                    "JOIN workout_steps " +
+                        "ON performance_sets.workout_step_id = workout_steps.id " +
                     "WHERE exercise_id = :exerciseId)"
     )
     public abstract WeightRepsRpe getLatestWeightRepsRpeForExercise(int exerciseId);

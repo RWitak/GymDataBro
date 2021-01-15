@@ -33,17 +33,57 @@ import androidx.room.PrimaryKey;
 )
 public class WorkoutInstance {
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
 
     @ColumnInfo
-    public String name;
+    private String name;
 
     @ColumnInfo(name = "program_id")
-    public int programId;
+    private int programId;
 
     @ColumnInfo(name = "workout_id")
-    public int workoutId;
+    private int workoutId;
 
     @ColumnInfo(name = "workout_number")
-    public int workoutNumber;
+    private int workoutNumber;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getProgramId() {
+        return programId;
+    }
+
+    public void setProgramId(int programId) {
+        this.programId = programId;
+    }
+
+    public int getWorkoutId() {
+        return workoutId;
+    }
+
+    public void setWorkoutId(int workoutId) {
+        this.workoutId = workoutId;
+    }
+
+    public int getWorkoutNumber() {
+        return workoutNumber;
+    }
+
+    public void setWorkoutNumber(int workoutNumber) {
+        this.workoutNumber = workoutNumber;
+    }
 }
