@@ -22,6 +22,6 @@ public class SourceRow extends EditProgramRow {
 
     @Override
     public void setPreFilledText(Program program) {
-        this.editText.setText(program.source);
+        this.editText.setText(program.getSource());
     }
 }

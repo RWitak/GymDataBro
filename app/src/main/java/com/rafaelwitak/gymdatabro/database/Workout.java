@@ -24,21 +24,65 @@ import androidx.room.PrimaryKey;
 )
 public class Workout {
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
 
     @ColumnInfo(name = "program_id")
     @Nullable
-    public Integer programID;
+    private Integer programID;
 
     @ColumnInfo
     @NonNull
-    public String name = "Unnamed Workout";
+    private String name = "Unnamed Workout";
 
     @ColumnInfo
     @Nullable
-    public String details;
+    private String details;
 
     @ColumnInfo
     @Nullable
-    public String notes;
+    private String notes;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Nullable
+    public Integer getProgramID() {
+        return programID;
+    }
+
+    public void setProgramID(@Nullable Integer programID) {
+        this.programID = programID;
+    }
+
+    @NonNull
+    public String getName() {
+        return name;
+    }
+
+    public void setName(@NonNull String name) {
+        this.name = name;
+    }
+
+    @Nullable
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(@Nullable String details) {
+        this.details = details;
+    }
+
+    @Nullable
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(@Nullable String notes) {
+        this.notes = notes;
+    }
 }

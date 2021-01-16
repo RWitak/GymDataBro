@@ -22,6 +22,6 @@ public class NotesRow extends EditProgramRow {
 
     @Override
     public void setPreFilledText(Program program) {
-        this.editText.setText(program.notes);
+        this.editText.setText(program.getNotes());
     }
 }

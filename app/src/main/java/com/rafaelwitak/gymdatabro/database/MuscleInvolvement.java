@@ -36,18 +36,53 @@ import androidx.room.Index;
         )
 public class MuscleInvolvement {
     @ColumnInfo(name = "exercise_id")
-    public int exerciseID;
+    private int exerciseID;
 
     @ColumnInfo(name = "muscle_group_name")
     @NonNull
-    public String muscleGroupName = "";
+    private String muscleGroupName = "";
 
     @ColumnInfo(name = "involvement_level")
     @Nullable
-    public Float involvementLevel;
+    private Float involvementLevel;
 
     @ColumnInfo
     @Nullable
-    public String details;
+    private String details;
+
+    public int getExerciseID() {
+        return exerciseID;
+    }
+
+    public void setExerciseID(int exerciseID) {
+        this.exerciseID = exerciseID;
+    }
+
+    @NonNull
+    public String getMuscleGroupName() {
+        return muscleGroupName;
+    }
+
+    public void setMuscleGroupName(@NonNull String muscleGroupName) {
+        this.muscleGroupName = muscleGroupName;
+    }
+
+    @Nullable
+    public Float getInvolvementLevel() {
+        return involvementLevel;
+    }
+
+    public void setInvolvementLevel(@Nullable Float involvementLevel) {
+        this.involvementLevel = involvementLevel;
+    }
+
+    @Nullable
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(@Nullable String details) {
+        this.details = details;
+    }
 }
 

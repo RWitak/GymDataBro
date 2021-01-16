@@ -28,11 +28,11 @@ public class ProgramDAOTest extends DaoTest {
     public void getProgramByID() {
         for (int i = 0; i < TEST_SIZE; i++) {
             Program p = new Program();
-            p.id = i + 1;
+            p.setId(i + 1);
             dao.insertProgram(p);
         }
 
-        assertThat(dao.getProgramByID(TEST_SIZE).id).isEqualTo(TEST_SIZE);
+        assertThat(dao.getProgramByID(TEST_SIZE).getId()).isEqualTo(TEST_SIZE);
     }
 
     @Test
@@ -51,29 +51,31 @@ public class ProgramDAOTest extends DaoTest {
     @Test
     public void insertShouldReplaceOnConflict() {
         Program p1 = new Program();
-        p1.id = 1;
-        p1.number_workouts = 7;
+        p1.setId(1);
+        p1.setNumber_workouts(7);
 
         Program pAlso1 = new Program();
-        pAlso1.id = 1;
-        pAlso1.number_workouts = p1.number_workouts - 1;
+        pAlso1.setId(1);
+        pAlso1.setNumber_workouts(p1.getNumber_workouts() - 1);
 
         dao.insertProgram(p1);
         dao.insertProgram(pAlso1);
 
-        assertThat(dao.getProgramByID(1).number_workouts).isEqualTo(pAlso1.number_workouts);
+        assertThat(dao.getProgramByID(1).getNumber_workouts())
+                .isEqualTo(pAlso1.getNumber_workouts());
     }
     @Test
     public void updateProgram() {
         Program p = new Program();
-        p.id = 33;
+        p.setId(33);
         dao.insertProgram(p);
 
         Program pFromDb = dao.getProgramByID(33);
-        pFromDb.number_workouts = 22;
+        pFromDb.setNumber_workouts(22);
         dao.updateProgram(pFromDb);
 
-        assertThat(dao.getProgramByID(33).number_workouts).isNotEqualTo(p.number_workouts);
+        assertThat(dao.getProgramByID(33).getNumber_workouts())
+                .isNotEqualTo(p.getNumber_workouts());
     }
 
     @Override

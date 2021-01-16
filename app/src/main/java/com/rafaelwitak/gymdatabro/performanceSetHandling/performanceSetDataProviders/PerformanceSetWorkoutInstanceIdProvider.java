@@ -16,7 +16,7 @@ public class PerformanceSetWorkoutInstanceIdProvider implements PerformanceSetDa
 
     @Override
     public PerformanceSet getUpdatedPerformanceSet(PerformanceSet performanceSet) {
-        performanceSet.workoutInstanceId = workoutInstanceId;
+        performanceSet.setWorkoutInstanceId(workoutInstanceId);
         return performanceSet;
     }
 }

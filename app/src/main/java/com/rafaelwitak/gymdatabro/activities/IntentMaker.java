@@ -95,7 +95,7 @@ public class IntentMaker {
     @NonNull
     private Integer getLatestWorkoutStepNumber() {
         return dao.getWorkoutStepById(
-                dao.getLatestPerformanceSet().workoutStepId)
+                dao.getLatestPerformanceSet().getWorkoutStepId())
                 .getNumber();
     }
 
@@ -140,7 +140,7 @@ public class IntentMaker {
 
 
         WorkoutStep latestWorkoutStep =
-                dao.getWorkoutStepById(latestSetOfProgram.workoutStepId);
+                dao.getWorkoutStepById(latestSetOfProgram.getWorkoutStepId());
         if (dao.isLastStepOfWorkout(
                 latestWorkoutStep.getWorkoutID(),
                 latestWorkoutStep.getNumber())) {

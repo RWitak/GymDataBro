@@ -192,10 +192,10 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private String getToolbarTitle() {
         String workoutInstanceName = getWorkoutInstanceName(getWorkoutInstanceId());
         if (workoutInstanceName == null || workoutInstanceName.isEmpty()) {
-            if (currentWorkout.name.isEmpty()) {
+            if (currentWorkout.getName().isEmpty()) {
                 return "Unnamed Workout";
             }
-            return currentWorkout.name;
+            return currentWorkout.getName();
         }
         return workoutInstanceName;
     }
@@ -206,9 +206,9 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     @Nullable
     private String getCurrentProgramName() {
-        Integer id = currentWorkout.programID;
+        Integer id = currentWorkout.getProgramID();
         if (id != null) {
-            return database.programDAO().getProgramByID(id).name;
+            return database.programDAO().getProgramByID(id).getName();
         }
         return null;
     }
@@ -250,9 +250,9 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private void handleNewRecords(@NonNull PerformanceSet performedSet) {
         @Nullable Float previousOrm = currentExercise.getPr();
         @Nullable Float currentOrm = getOneRepMaxValue(
-                performedSet.reps,
-                performedSet.weight,
-                performedSet.rpe);
+                performedSet.getReps(),
+                performedSet.getWeight(),
+                performedSet.getRpe());
 
         if (isNewPr(previousOrm, currentOrm)) {
             currentExercise.setPr(currentOrm);
@@ -280,8 +280,8 @@ public class WorkoutStepActivity extends AppCompatActivity {
                         "Congrats! That was a new personal best: \n" +
                                 "%dx%.2fkg " +
                                 "(ORM %.2fkg)",
-                        performedSet.reps,
-                        performedSet.weight,
+                        performedSet.getReps(),
+                        performedSet.getWeight(),
                         currentOrm),
                 Toast.LENGTH_LONG).show();
     }
@@ -338,7 +338,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     @Nullable
     private Integer getNextWorkoutStepNumber() {
         WorkoutStep nextStep = database.masterDao()
-                .getNextStepInWorkout(currentWorkoutStep.getId(), currentWorkout.id);
+                .getNextStepInWorkout(currentWorkoutStep.getId(), currentWorkout.getId());
         if (nextStep == null) {
             return null;
         }

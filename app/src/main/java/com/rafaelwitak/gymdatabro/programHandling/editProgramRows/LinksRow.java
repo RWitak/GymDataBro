@@ -22,6 +22,6 @@ public class LinksRow extends EditProgramRow {
 
     @Override
     public void setPreFilledText(Program program) {
-        this.editText.setText(program.links);
+        this.editText.setText(program.getLinks());
     }
 }

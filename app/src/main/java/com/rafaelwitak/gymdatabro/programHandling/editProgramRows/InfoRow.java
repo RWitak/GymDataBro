@@ -22,6 +22,6 @@ public class InfoRow extends EditProgramRow {
 
     @Override
     public void setPreFilledText(Program program) {
-        this.editText.setText(program.info);
+        this.editText.setText(program.getInfo());
     }
 }

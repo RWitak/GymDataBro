@@ -12,5 +12,14 @@ import androidx.room.PrimaryKey;
 public class MuscleGroup {
     @PrimaryKey
     @NonNull
-    public String name = "";
+    private String name = "";
+
+    @NonNull
+    public String getName() {
+        return name;
+    }
+
+    public void setName(@NonNull String name) {
+        this.name = name;
+    }
 }

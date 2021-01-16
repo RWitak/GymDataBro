@@ -39,44 +39,44 @@ import java.util.Date;
 )
 public class PerformanceSet {
     @PrimaryKey(autoGenerate = true)
-    public Integer id;
+    private Integer id;
 
     @ColumnInfo(name = "workout_step_id")
-    public Integer workoutStepId;
+    private Integer workoutStepId;
 
     @ColumnInfo(name = "workout_instance_id")
-    public Integer workoutInstanceId;
+    private Integer workoutInstanceId;
 
     @ColumnInfo
-    public Date timestamp;
-
-    @ColumnInfo
-    @Nullable
-    public Integer reps;
+    private Date timestamp;
 
     @ColumnInfo
     @Nullable
-    public Float weight;
+    private Integer reps;
+
+    @ColumnInfo
+    @Nullable
+    private Float weight;
 
     @ColumnInfo(name = "seconds_performed")
     @Nullable
-    public Integer secondsPerformed;
+    private Integer secondsPerformed;
 
     @ColumnInfo(name = "seconds_rested")
     @Nullable
-    public Integer secondsRested;
+    private Integer secondsRested;
 
     @ColumnInfo
     @Nullable
-    public Float rpe;
+    private Float rpe;
 
     @ColumnInfo(name = "pain_level")
     @NonNull
-    public Integer painLevel;
+    private Integer painLevel = 0;
 
     @ColumnInfo
     @Nullable
-    public String notes;
+    private String notes;
 
     @Ignore
     public PerformanceSet(@Nullable Integer id,
@@ -90,17 +90,17 @@ public class PerformanceSet {
                           @Nullable Float rpe,
                           @NonNull Integer painLevel,
                           @Nullable String notes) {
-        this.id = id;
-        this.workoutStepId = workoutStepId;
-        this.workoutInstanceId = workoutInstanceId;
-        this.timestamp = timestamp == null ? getTimestamp() : timestamp;
-        this.reps = reps;
-        this.weight = weight;
-        this.secondsPerformed = secondsPerformed;
-        this.secondsRested = secondsRested;
-        this.rpe = rpe;
-        this.painLevel = painLevel;
-        this.notes = notes;
+        this.setId(id);
+        this.setWorkoutStepId(workoutStepId);
+        this.setWorkoutInstanceId(workoutInstanceId);
+        this.setTimestamp(timestamp == null ? getTimestamp() : timestamp);
+        this.setReps(reps);
+        this.setWeight(weight);
+        this.setSecondsPerformed(secondsPerformed);
+        this.setSecondsRested(secondsRested);
+        this.setRpe(rpe);
+        this.setPainLevel(painLevel);
+        this.setNotes(notes);
     }
 
     public PerformanceSet() {
@@ -119,7 +119,7 @@ public class PerformanceSet {
         );
     }
 
-    private Date getTimestamp() {
+    public Date getTimestamp() {
         return new Date();
     }
 
@@ -162,27 +162,82 @@ public class PerformanceSet {
     @Override
     @NonNull
     public String toString() {
-        return this.id
+        return this.getId()
                 + " (ID)\n"
-                + this.timestamp
+                + this.getTimestamp()
                 + " (timestamp)\n"
-                + this.workoutStepId
+                + this.getWorkoutStepId()
                 + " (workoutStepId)\n"
-                + this.workoutInstanceId
+                + this.getWorkoutInstanceId()
                 + " (workoutInstanceId)\n"
-                + this.reps
+                + this.getReps()
                 + " (reps)\n"
-                + this.weight
+                + this.getWeight()
                 + " (weight)\n"
-                + this.secondsPerformed
+                + this.getSecondsPerformed()
                 + " (secondsPerformed)\n"
-                + this.secondsRested
+                + this.getSecondsRested()
                 + " (secondsRested)\n"
-                + this.rpe
+                + this.getRpe()
                 + " (rpe)\n"
-                + this.painLevel
+                + this.getPainLevel()
                 + " (painLevel)\n"
-                + this.notes
+                + this.getNotes()
                 + " (notes)\n";
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getWorkoutStepId() {
+        return workoutStepId;
+    }
+
+    public Integer getWorkoutInstanceId() {
+        return workoutInstanceId;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    @Nullable
+    public Integer getReps() {
+        return reps;
+    }
+
+    @Nullable
+    public Float getWeight() {
+        return weight;
+    }
+
+    @Nullable
+    public Integer getSecondsPerformed() {
+        return secondsPerformed;
+    }
+
+    @Nullable
+    public Integer getSecondsRested() {
+        return secondsRested;
+    }
+
+    @Nullable
+    public Float getRpe() {
+        return rpe;
+    }
+
+    @NonNull
+    public Integer getPainLevel() {
+        return painLevel;
+    }
+
+    @Nullable
+    public String getNotes() {
+        return notes;
     }
 }

@@ -97,16 +97,16 @@ public class EditProgramActivity extends AppCompatActivity {
     }
 
     private boolean isValidProgramName(Program currentProgram) {
-        return currentProgram.name.length() > 2;
+        return currentProgram.getName().length() > 2;
     }
 
     private boolean isUniqueProgramName(Program currentProgram) {
-        String name = currentProgram.name;
+        String name = currentProgram.getName();
         List<Program> programs = database.programDAO().getAllPrograms();
 
         for ( Program program : programs) {
-            if (name.equalsIgnoreCase(program.name)) {
-                if (currentProgram.id != program.id) {
+            if (name.equalsIgnoreCase(program.getName())) {
+                if (currentProgram.getId() != program.getId()) {
                     return false;
                 }
             }

@@ -73,7 +73,7 @@ public class PerformanceSetDAOTest extends DaoTest {
 
         List<PerformanceSet> performanceSetList = dao.getAllSets();
 
-        assertThat(performanceSetList.get(0).id).isNotNull();
+        assertThat(performanceSetList.get(0).getId()).isNotNull();
     }
 
     @Test
@@ -83,7 +83,8 @@ public class PerformanceSetDAOTest extends DaoTest {
 
         List<PerformanceSet> performanceSetList = dao.getAllSets();
 
-        assertThat(performanceSetList.get(1).id).isNotEqualTo(performanceSetList.get(0).id);
+        assertThat(performanceSetList.get(1).getId())
+                .isNotEqualTo(performanceSetList.get(0).getId());
     }
 
     @Test
@@ -107,8 +108,8 @@ public class PerformanceSetDAOTest extends DaoTest {
 
         PerformanceSet savedSet = dao.getSetByRowId(rowId);
 
-        assertThat(savedSet.timestamp).isAtLeast(timestampBefore);
-        assertThat(savedSet.timestamp).isAtMost(new Date());
+        assertThat(savedSet.getTimestamp()).isAtLeast(timestampBefore);
+        assertThat(savedSet.getTimestamp()).isAtMost(new Date());
     }
 
     @Test
@@ -127,11 +128,12 @@ public class PerformanceSetDAOTest extends DaoTest {
         insertNumberOfEmptySets(TEST_SIZE);
 
         PerformanceSet testSet = new PerformanceSet();
-        testSet.secondsPerformed = 365;
+        testSet.setSecondsPerformed(365);
 
         long rowId = dao.insertSet(testSet);
 
-        assertThat(dao.getSetByRowId(rowId).secondsPerformed).isEqualTo(testSet.secondsPerformed);
+        assertThat(dao.getSetByRowId(rowId).getSecondsPerformed())
+                .isEqualTo(testSet.getSecondsPerformed());
     }
 
     @Test
@@ -145,11 +147,11 @@ public class PerformanceSetDAOTest extends DaoTest {
         Date d2 = new Date();
 
         PerformanceSet beforeD1 = new PerformanceSet();
-        beforeD1.timestamp.setTime(beforeD1.timestamp.getTime() - 50000);
+        beforeD1.getTimestamp().setTime(beforeD1.getTimestamp().getTime() - 50000);
         dao.insertSet(beforeD1);
 
         PerformanceSet afterD2 = new PerformanceSet();
-        afterD2.timestamp.setTime(afterD2.timestamp.getTime() + 50000);
+        afterD2.getTimestamp().setTime(afterD2.getTimestamp().getTime() + 50000);
         dao.insertSet(afterD2);
 
         assertThat(dao.getAllBetweenTimestamps(d1, d2).size()).isEqualTo(TEST_SIZE);
@@ -165,7 +167,7 @@ public class PerformanceSetDAOTest extends DaoTest {
 
         PerformanceSet testSet = dao.getSetByRowId(rowId);
 
-        testSet.painLevel = 7;
+        testSet.setPainLevel(7);
 
         dao.updateSet(testSet);
 

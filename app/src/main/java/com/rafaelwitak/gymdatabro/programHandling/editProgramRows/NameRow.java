@@ -22,6 +22,6 @@ public class NameRow extends EditProgramRow {
 
     @Override
     public void setPreFilledText(Program program) {
-        getEditText(binding).setText(program.name);
+        getEditText(binding).setText(program.getName());
     }
 }

@@ -69,7 +69,7 @@ public class ChooseProgramActivity extends AppCompatActivity {
 
     private View.OnClickListener getRowOnClickListener(Program program) {
         return view -> {
-                startActivity(new IntentMaker(this).getIntentToResumeProgram(program.id));
+                startActivity(new IntentMaker(this).getIntentToResumeProgram(program.getId()));
             finishAndRemoveTask();
         };
     }
@@ -77,13 +77,13 @@ public class ChooseProgramActivity extends AppCompatActivity {
     private View.OnLongClickListener getRowOnLongClickListener(Program program) {
         return view -> {
             Intent intent = new Intent(getApplicationContext(), EditProgramActivity.class);
-            intent.putExtra("programID", program.id);
+            intent.putExtra("programID", program.getId());
             startActivity(intent);
             return true;
         };
     }
 
     private String getProgramName(Program program) {
-        return program.name;
+        return program.getName();
     }
 }

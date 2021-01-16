@@ -319,7 +319,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
                         long l) {
                     Workout workout = database.workoutDAO().getWorkoutByName(
                             (String) adapterView.getItemAtPosition(i));
-                    binding.editWorkoutStepWorkoutIdEdit.setText(String.valueOf(workout.id));
+                    binding.editWorkoutStepWorkoutIdEdit.setText(String.valueOf(workout.getId()));
                 }
 
                 @Override
@@ -334,7 +334,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
             ArrayList<CharSequence> workoutNames = new ArrayList<>();
 
             for (Workout workout : database.workoutDAO().getAllWorkouts()) {
-                workoutNames.add(workout.name);
+                workoutNames.add(workout.getName());
             }
             return workoutNames;
         }

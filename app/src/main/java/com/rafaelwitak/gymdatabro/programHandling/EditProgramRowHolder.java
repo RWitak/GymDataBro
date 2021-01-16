@@ -58,16 +58,16 @@ public class EditProgramRowHolder extends EditRowHolder {
     }
 
     private void setupProgramFromRowsInputs() {
-        program.name = this.nameRow.getEditTextValueAsString();
-        program.source = this.sourceRow.getEditTextValueAsString();
-        program.links = this.linksRow.getEditTextValueAsString();
-        program.info = this.infoRow.getEditTextValueAsString();
-        program.notes = this.notesRow.getEditTextValueAsString();
+        program.setName(this.nameRow.getEditTextValueAsString());
+        program.setSource(this.sourceRow.getEditTextValueAsString());
+        program.setLinks(this.linksRow.getEditTextValueAsString());
+        program.setInfo(this.infoRow.getEditTextValueAsString());
+        program.setNotes(this.notesRow.getEditTextValueAsString());
     }
 
     private void setNumberOfWorkouts() {
-        program.number_workouts = database.workoutDAO()
-                .getNumberOfWorkoutsByProgram(program.id);
+        program.setNumber_workouts(database.workoutDAO()
+                .getNumberOfWorkoutsByProgram(program.getId()));
     }
 
     public void setupRowTexts(Program program) {
