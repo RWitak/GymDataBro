@@ -17,6 +17,7 @@ public abstract class EditRow {
     public String getEditTextValueAsString() {
         if (getEditTextValue().toString().isEmpty()) {
             return ""; // FIXME
+            // TODO: 16.01.2021 Find out why this needs fixing.
         }
         return getEditTextValue().toString().trim();
     }
@@ -25,5 +26,4 @@ public abstract class EditRow {
         this.editText.setError(error);
         this.editText.requestFocus();
     }
-
 }

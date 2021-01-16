@@ -7,7 +7,6 @@ package com.rafaelwitak.gymdatabro.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -214,23 +213,21 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private void setUpButton() {
-        binding.stepBtnNext.setOnClickListener(getViewOnClickListener());
-        // TODO: create and pass method 'v -> wrapUpCurrentPerformanceSet()' instead.
+        binding.stepBtnNext.setOnClickListener(v ->
+            wrapUpCurrentPerformanceSet()
+        );
     }
 
-    @NonNull
-    private View.OnClickListener getViewOnClickListener() {
-        return v -> {
-            PerformanceSet performedSet = getPerformedSet();
-            savePerformanceSet(performedSet);
-            handleNewRecords(performedSet);
+    private void wrapUpCurrentPerformanceSet() {
+        PerformanceSet performedSet = getPerformedSet();
+        savePerformanceSet(performedSet);
+        handleNewRecords(performedSet);
 
-            if (isLastWorkoutStep(currentWorkoutStep)) {
-                congratulateAndFinish();
-            } else {
-                startNextWorkoutStep();
-            }
-        };
+        if (isLastWorkoutStep(currentWorkoutStep)) {
+            congratulateAndFinish();
+        } else {
+            startNextWorkoutStep();
+        }
     }
 
     @NonNull
