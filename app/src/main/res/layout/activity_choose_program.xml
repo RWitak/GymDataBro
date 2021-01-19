@@ -16,37 +16,7 @@
         android:id="@+id/choose_program_toolbar"
         layout="@layout/toolbar" />
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp">
-
-            <LinearLayout
-                android:id="@+id/program_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:elevation="8dp"
-                android:padding="8dp"
-                android:orientation="vertical"
-                android:background="@color/colorLightBackground"/>
-
-        </ScrollView>
-
-<!-- Not used in current version.
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/choose_program_button_create"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="20dp"
-
-            android:src="@android:drawable/ic_input_add" />
--->
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
+    <include
+        android:id="@+id/choose_program_list"
+        layout="@layout/list_template" />
 </LinearLayout>

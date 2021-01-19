@@ -15,7 +15,7 @@
     app:titleTextAppearance="@style/ToolbarTitleTextAppearance"
     app:titleTextColor="@color/colorLightBackground"
     tools:showIn="@layout/activity_workout_step"
-    tools:subtitle="Program Name"
-    tools:title="Workout Name">
+    tools:subtitle="Subtitle Text"
+    tools:title="Title Text">
 
 </androidx.appcompat.widget.Toolbar>

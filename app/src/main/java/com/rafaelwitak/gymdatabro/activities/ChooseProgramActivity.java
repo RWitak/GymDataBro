@@ -33,7 +33,7 @@ public class ChooseProgramActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_program);
         chooseProgramToolbar = findViewById(R.id.choose_program_toolbar);
         // createProgramFAB = findViewById(R.id.choose_program_button_create);
-        programList = findViewById(R.id.program_list);
+        programList = findViewById(R.id.main_list);
 
         setupViews();
     }
