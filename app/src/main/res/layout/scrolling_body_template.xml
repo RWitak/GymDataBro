@@ -3,14 +3,11 @@
   ~ Copyright (c) 2021, Rafael Witak.
   -->
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_width="match_parent"
+<ScrollView
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="16dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="16dp">
 
         <LinearLayout
             android:id="@+id/main_list"
@@ -21,5 +18,4 @@
             android:orientation="vertical"
             android:background="@color/colorLightBackground"/>
 
-    </ScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</ScrollView>

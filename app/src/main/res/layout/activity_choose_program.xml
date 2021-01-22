@@ -18,5 +18,5 @@
 
     <include
         android:id="@+id/choose_program_list"
-        layout="@layout/list_template" />
+        layout="@layout/scrolling_body_template" />
 </LinearLayout>
