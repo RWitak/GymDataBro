@@ -2,7 +2,7 @@
 <!--
   ~ Copyright (c) 2021, Rafael Witak.
   -->
-
+<!--TODO: This would better be JUST the ScrollView-->
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
