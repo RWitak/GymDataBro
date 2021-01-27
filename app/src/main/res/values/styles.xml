@@ -54,12 +54,27 @@
         <item name="android:paddingBottom">8dp</item>
     </style>
 
+    <style name="EditProgramLabel">
+        <item name="android:layout_marginEnd">20dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Display1</item>
+        <item name="android:layout_width">0dp</item>
+    </style>
+
     <style name="ToolbarTitleTextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
     <style name="ToolbarSubtitleTextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
         <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="EditProgramEditText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1.618</item>
+        <item name="android:gravity">start</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Large</item>
     </style>
 
 </resources>

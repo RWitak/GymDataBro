@@ -19,8 +19,7 @@
         app:layout_constraintBottom_toTopOf="@+id/edit_program_body"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/edit_program_body"
@@ -35,25 +34,22 @@
             android:id="@+id/edit_program_table_scrollview"
             style="@style/BasicForeground"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="110dp"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_max="wrap"
             app:layout_constraintBottom_toTopOf="@+id/edit_program_button_edit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
             app:layout_constraintVertical_chainStyle="spread_inside">
 
             <TableLayout
                 android:id="@+id/edit_program_table"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:isScrollContainer="true"
                 android:orientation="vertical"
                 android:stretchColumns="*">
-<!--
+                <!--
                 TODO: Create unified style for rows, including:
                     * multi-line input
                     * smaller/adaptive label font
@@ -64,110 +60,75 @@
 
                     <TextView
                         android:id="@+id/edit_program_name_label"
-                        android:layout_width="0dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_weight="1"
+                        style="@style/EditProgramLabel"
                         android:labelFor="@+id/edit_program_name_edit"
-                        android:text="@string/edit_program_label_name"
-                        android:textAlignment="textEnd"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                        android:text="@string/edit_program_label_name" />
 
                     <EditText
                         android:id="@+id/edit_program_name_edit"
-                        android:layout_width="0dp"
-                        android:layout_weight="1.618"
+                        style="@style/EditProgramEditText"
                         android:autofillHints="@null"
-                        android:gravity="start"
-                        android:inputType="textCapWords"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                        android:inputType="textCapWords" />
                 </TableRow>
 
                 <TableRow android:layout_margin="10dp">
 
                     <TextView
                         android:id="@+id/edit_program_source_label"
-                        android:layout_width="0dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_weight="1"
+                        style="@style/EditProgramLabel"
                         android:labelFor="@+id/edit_program_source_edit"
-                        android:text="@string/edit_program_label_source"
-                        android:textAlignment="textEnd"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                        android:text="@string/edit_program_label_source" />
 
                     <EditText
                         android:id="@+id/edit_program_source_edit"
-                        android:layout_width="0dp"
-                        android:layout_weight="1.618"
+                        style="@style/EditProgramEditText"
                         android:autofillHints="@null"
-                        android:gravity="start"
-                        android:inputType="text"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                        android:inputType="text" />
                 </TableRow>
 
                 <TableRow android:layout_margin="10dp">
 
                     <TextView
                         android:id="@+id/edit_program_links_label"
-                        android:layout_width="0dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_weight="1"
+                        style="@style/EditProgramLabel"
                         android:labelFor="@+id/edit_program_links_edit"
-                        android:text="@string/edit_program_label_links"
-                        android:textAlignment="textEnd"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                        android:text="@string/edit_program_label_links" />
 
                     <EditText
                         android:id="@+id/edit_program_links_edit"
-                        android:layout_width="0dp"
-                        android:layout_weight="1.618"
+                        style="@style/EditProgramEditText"
                         android:autofillHints="@null"
-                        android:gravity="start"
-                        android:inputType="textMultiLine"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                        android:inputType="textMultiLine" />
                 </TableRow>
 
                 <TableRow android:layout_margin="10dp">
 
                     <TextView
                         android:id="@+id/edit_program_info_label"
-                        android:layout_width="0dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_weight="1"
+                        style="@style/EditProgramLabel"
                         android:labelFor="@+id/edit_program_info_edit"
-                        android:text="@string/edit_program_label_info"
-                        android:textAlignment="textEnd"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                        android:text="@string/edit_program_label_info" />
 
                     <EditText
                         android:id="@+id/edit_program_info_edit"
-                        android:layout_width="0dp"
-                        android:layout_weight="1.618"
+                        style="@style/EditProgramEditText"
                         android:autofillHints="@null"
-                        android:gravity="start"
-                        android:inputType="textMultiLine"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                        android:inputType="textMultiLine" />
                 </TableRow>
 
                 <TableRow android:layout_margin="10dp">
 
                     <TextView
                         android:id="@+id/edit_program_notes_label"
-                        android:layout_width="0dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_weight="1"
+                        style="@style/EditProgramLabel"
                         android:labelFor="@+id/edit_program_notes_edit"
-                        android:text="@string/edit_program_label_notes"
-                        android:textAlignment="textEnd"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                        android:text="@string/edit_program_label_notes" />
 
                     <EditText
                         android:id="@+id/edit_program_notes_edit"
-                        android:layout_width="0dp"
-                        android:layout_weight="1.618"
+                        style="@style/EditProgramEditText"
                         android:autofillHints="@null"
-                        android:gravity="start"
-                        android:inputType="textMultiLine"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                        android:inputType="textMultiLine" />
                 </TableRow>
 
             </TableLayout>
@@ -180,7 +141,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:layout_marginVertical="20dp"
-            android:layout_marginTop="108dp"
             android:text="@string/edit_program_button_save_text"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintBottom_toBottomOf="parent"
