@@ -20,6 +20,7 @@
 
     <style name="BasicBackground">
         <item name="android:background">@color/colorPrimary</item>
+        <item name="android:fitsSystemWindows">true</item>
     </style>
 
     <style name="BasicForeground">
@@ -27,6 +28,26 @@
         <item name="android:background">@color/colorLightBackground</item>
         <item name="android:elevation">8dp</item>
         <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="TableRowEditText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1.618</item>
+        <item name="android:gravity">start</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Large</item>
+        <item name="android:inputType">textMultiLine</item>
+    </style>
+
+    <style name="ResponsiveForeground" parent="BasicForeground">
+        <item name="layout_constrainedWidth">true</item>
+        <item name="layout_constraintWidth_max">800dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="layout_constraintHeight_max">wrap</item>
+    </style>
+
+    <style name="TableRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_margin">10dp</item>
     </style>
 
     <style name="NoActionBar">
@@ -54,7 +75,7 @@
         <item name="android:paddingBottom">8dp</item>
     </style>
 
-    <style name="EditProgramLabel">
+    <style name="TableRowLabel">
         <item name="android:layout_marginEnd">20dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textAlignment">textEnd</item>
@@ -70,24 +91,5 @@
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
-    <style name="EditProgramEditText">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">1.618</item>
-        <item name="android:gravity">start</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Large</item>
-        <item name="android:inputType">textMultiLine</item>
-    </style>
-
-    <style name="ResponsiveForeground" parent="BasicForeground">
-        <item name="layout_constrainedWidth">true</item>
-        <item name="layout_constraintWidth_max">800dp</item>
-        <item name="android:layout_height">0dp</item>
-        <item name="layout_constraintHeight_max">wrap</item>
-    </style>
-
-    <style name="EditProgramRow">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_margin">10dp</item>
-    </style>
 
 </resources>

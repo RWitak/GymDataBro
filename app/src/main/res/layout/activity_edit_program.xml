@@ -9,7 +9,6 @@
     style="@style/BasicBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".activities.EditProgramActivity">
 
@@ -51,78 +50,78 @@
                 TODO: smaller label font
                     -->
                 <TableRow
-                    style="@style/EditProgramRow">
+                    style="@style/TableRow">
 
                     <TextView
                         android:id="@+id/edit_program_name_label"
-                        style="@style/EditProgramLabel"
+                        style="@style/TableRowLabel"
                         android:labelFor="@+id/edit_program_name_edit"
                         android:text="@string/edit_program_label_name" />
 
                     <EditText
                         android:id="@+id/edit_program_name_edit"
-                        style="@style/EditProgramEditText"
+                        style="@style/TableRowEditText"
                         android:autofillHints="@null"
                         android:inputType="textMultiLine|textCapWords" />
                 </TableRow>
 
                 <TableRow
-                    style="@style/EditProgramRow">
+                    style="@style/TableRow">
 
                     <TextView
                         android:id="@+id/edit_program_source_label"
-                        style="@style/EditProgramLabel"
+                        style="@style/TableRowLabel"
                         android:labelFor="@+id/edit_program_source_edit"
                         android:text="@string/edit_program_label_source" />
 
                     <EditText
                         android:id="@+id/edit_program_source_edit"
-                        style="@style/EditProgramEditText"
+                        style="@style/TableRowEditText"
                         android:autofillHints="@null" />
                 </TableRow>
 
                 <TableRow
-                    style="@style/EditProgramRow">
+                    style="@style/TableRow">
 
                     <TextView
                         android:id="@+id/edit_program_links_label"
-                        style="@style/EditProgramLabel"
+                        style="@style/TableRowLabel"
                         android:labelFor="@+id/edit_program_links_edit"
                         android:text="@string/edit_program_label_links" />
 
                     <EditText
                         android:id="@+id/edit_program_links_edit"
-                        style="@style/EditProgramEditText"
+                        style="@style/TableRowEditText"
                         android:autofillHints="@null" />
                 </TableRow>
 
                 <TableRow
-                    style="@style/EditProgramRow">
+                    style="@style/TableRow">
 
                     <TextView
                         android:id="@+id/edit_program_info_label"
-                        style="@style/EditProgramLabel"
+                        style="@style/TableRowLabel"
                         android:labelFor="@+id/edit_program_info_edit"
                         android:text="@string/edit_program_label_info" />
 
                     <EditText
                         android:id="@+id/edit_program_info_edit"
-                        style="@style/EditProgramEditText"
+                        style="@style/TableRowEditText"
                         android:autofillHints="@null" />
                 </TableRow>
 
                 <TableRow
-                style="@style/EditProgramRow">
+                style="@style/TableRow">
 
                     <TextView
                         android:id="@+id/edit_program_notes_label"
-                        style="@style/EditProgramLabel"
+                        style="@style/TableRowLabel"
                         android:labelFor="@+id/edit_program_notes_edit"
                         android:text="@string/edit_program_label_notes" />
 
                     <EditText
                         android:id="@+id/edit_program_notes_edit"
-                        style="@style/EditProgramEditText"
+                        style="@style/TableRowEditText"
                         android:autofillHints="@null" />
                 </TableRow>
 

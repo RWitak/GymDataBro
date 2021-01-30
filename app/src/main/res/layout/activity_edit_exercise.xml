@@ -6,172 +6,123 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BasicBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activities.EditExerciseActivity">
 
-<include
-    android:id="@+id/edit_exercise_toolbar"
-    layout="@layout/toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="top"
-    app:layout_constraintBottom_toTopOf="@+id/edit_exercise_table_scrollview"
-    app:layout_constraintHorizontal_bias="0.5"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    <include
+        android:id="@+id/edit_exercise_toolbar"
+        layout="@layout/toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/edit_exercise_body"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-<ScrollView
-    android:id="@+id/edit_exercise_table_scrollview"
-    android:layout_width="wrap_content"
-    android:layout_height="0dp"
-    android:gravity="top"
-    app:layout_constraintBottom_toTopOf="@+id/edit_exercise_button_edit"
-    app:layout_constraintHorizontal_bias="0.5"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/edit_exercise_toolbar">
-
-    <TableLayout
-        android:id="@+id/edit_exercise_table"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/edit_exercise_body"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:isScrollContainer="true"
-        android:orientation="vertical"
-        android:stretchColumns="*"
-        app:layout_constraintBottom_toTopOf="@+id/edit_exercise_button_edit"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_exercise_toolbar">
 
-        <TableRow android:layout_margin="10dp">
+        <ScrollView
+            android:id="@+id/edit_exercise_table_scrollview"
+            style="@style/ResponsiveForeground"
+            android:layout_width="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/edit_exercise_button_edit"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside">
 
-            <TextView
-                android:id="@+id/edit_exercise_name_label"
-                android:layout_width="0dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:labelFor="@+id/edit_exercise_name_edit"
-                android:text="@string/edit_exercise_label_name"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            <TableLayout
+                android:id="@+id/edit_exercise_table"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:isScrollContainer="true"
+                android:orientation="vertical"
+                android:stretchColumns="*" >
 
-            <EditText
-                android:id="@+id/edit_exercise_name_edit"
-                android:layout_width="0dp"
-                android:layout_weight="1.618"
-                android:autofillHints="@null"
-                android:gravity="start"
-                android:inputType="textCapWords"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-        </TableRow>
+                <TableRow
+                    style="@style/TableRow">
 
-        <TableRow android:layout_margin="10dp"
-            android:visibility="gone"> <!-- TODO: Use it or remove it -->
+                    <TextView
+                        android:id="@+id/edit_exercise_name_label"
+                        style="@style/TableRowLabel"
+                        android:labelFor="@+id/edit_exercise_name_edit"
+                        android:text="@string/edit_exercise_label_name" />
 
-            <TextView
-                android:id="@+id/edit_exercise_pr_label"
-                android:layout_width="0dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:labelFor="@+id/edit_exercise_pr_edit"
-                android:text="@string/edit_exercise_label_pr"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                    <EditText
+                        android:id="@+id/edit_exercise_name_edit"
+                        style="@style/TableRowEditText"
+                        android:autofillHints="@null" />
+                </TableRow>
 
-            <EditText
-                android:id="@+id/edit_exercise_pr_edit"
-                android:layout_width="0dp"
-                android:layout_weight="1.618"
-                android:autofillHints="@null"
-                android:gravity="start"
-                android:inputType="text"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-        </TableRow>
+                <TableRow
+                    style="@style/TableRow">
 
-        <TableRow android:layout_margin="10dp">
+                    <TextView
+                        android:id="@+id/edit_exercise_cues_label"
+                        style="@style/TableRowLabel"
+                        android:labelFor="@+id/edit_exercise_cues_edit"
+                        android:text="@string/edit_exercise_label_cues" />
 
-            <TextView
-                android:id="@+id/edit_exercise_cues_label"
-                android:layout_width="0dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:labelFor="@+id/edit_exercise_cues_edit"
-                android:text="@string/edit_exercise_label_cues"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                    <EditText
+                        android:id="@+id/edit_exercise_cues_edit"
+                        style="@style/TableRowEditText"
+                        android:autofillHints="@null" />
+                </TableRow>
 
-            <EditText
-                android:id="@+id/edit_exercise_cues_edit"
-                android:layout_width="0dp"
-                android:layout_weight="1.618"
-                android:autofillHints="@null"
-                android:gravity="start"
-                android:inputType="text"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-        </TableRow>
+                <TableRow
+                    style="@style/TableRow">
 
-        <TableRow android:layout_margin="10dp">
+                    <TextView
+                        android:id="@+id/edit_exercise_links_label"
+                        style="@style/TableRowLabel"
+                        android:labelFor="@+id/edit_exercise_links_edit"
+                        android:text="@string/edit_exercise_label_links" />
 
-            <TextView
-                android:id="@+id/edit_exercise_links_label"
-                android:layout_width="0dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:labelFor="@+id/edit_exercise_links_edit"
-                android:text="@string/edit_exercise_label_links"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                    <EditText
+                        android:id="@+id/edit_exercise_links_edit"
+                        style="@style/TableRowEditText"
+                        android:autofillHints="@null" />
+                </TableRow>
 
-            <EditText
-                android:id="@+id/edit_exercise_links_edit"
-                android:layout_width="0dp"
-                android:layout_weight="1.618"
-                android:autofillHints="@null"
-                android:gravity="start"
-                android:inputType="textMultiLine"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-        </TableRow>
+                <TableRow
+                    style="@style/TableRow">
 
-        <TableRow android:layout_margin="10dp">
+                    <TextView
+                        android:id="@+id/edit_exercise_equipment_label"
+                        style="@style/TableRowLabel"
+                        android:labelFor="@+id/edit_exercise_equipment_edit"
+                        android:text="@string/edit_exercise_label_equipment" />
 
-            <TextView
-                android:id="@+id/edit_exercise_equipment_label"
-                android:layout_width="0dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:labelFor="@+id/edit_exercise_equipment_edit"
-                android:text="@string/edit_exercise_label_equipment"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                    <EditText
+                        android:id="@+id/edit_exercise_equipment_edit"
+                        style="@style/TableRowEditText"
+                        android:autofillHints="@null" />
+                </TableRow>
 
-            <EditText
-                android:id="@+id/edit_exercise_equipment_edit"
-                android:layout_width="0dp"
-                android:layout_weight="1.618"
-                android:autofillHints="@null"
-                android:gravity="start"
-                android:inputType="textMultiLine"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-        </TableRow>
+            </TableLayout>
 
-    </TableLayout>
+        </ScrollView>
 
-</ScrollView>
+        <Button
+            android:id="@+id/edit_exercise_button_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginVertical="20dp"
+            android:text="@string/edit_exercise_button_save_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_exercise_table_scrollview" />
 
-<Button
-    android:id="@+id/edit_exercise_button_edit"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="40dp"
-    android:layout_marginVertical="20dp"
-    android:text="@string/edit_exercise_button_save_text"
-    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/edit_exercise_table_scrollview"
-    tools:layout_editor_absoluteX="40dp" />
-
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
