@@ -85,4 +85,9 @@
         <item name="layout_constraintHeight_max">wrap</item>
     </style>
 
+    <style name="EditProgramRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
 </resources>

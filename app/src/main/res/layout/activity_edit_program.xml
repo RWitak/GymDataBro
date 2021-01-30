@@ -48,12 +48,10 @@
                 android:orientation="vertical"
                 android:stretchColumns="*">
                 <!--
-                TODO: Create unified style for rows, including:
-                    * smaller label font
+                TODO: smaller label font
                     -->
                 <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_margin="10dp">
+                    style="@style/EditProgramRow">
 
                     <TextView
                         android:id="@+id/edit_program_name_label"
@@ -68,7 +66,8 @@
                         android:inputType="textMultiLine|textCapWords" />
                 </TableRow>
 
-                <TableRow android:layout_margin="10dp">
+                <TableRow
+                    style="@style/EditProgramRow">
 
                     <TextView
                         android:id="@+id/edit_program_source_label"
@@ -82,7 +81,8 @@
                         android:autofillHints="@null" />
                 </TableRow>
 
-                <TableRow android:layout_margin="10dp">
+                <TableRow
+                    style="@style/EditProgramRow">
 
                     <TextView
                         android:id="@+id/edit_program_links_label"
@@ -96,7 +96,8 @@
                         android:autofillHints="@null" />
                 </TableRow>
 
-                <TableRow android:layout_margin="10dp">
+                <TableRow
+                    style="@style/EditProgramRow">
 
                     <TextView
                         android:id="@+id/edit_program_info_label"
@@ -110,7 +111,8 @@
                         android:autofillHints="@null" />
                 </TableRow>
 
-                <TableRow android:layout_margin="10dp">
+                <TableRow
+                style="@style/EditProgramRow">
 
                     <TextView
                         android:id="@+id/edit_program_notes_label"
