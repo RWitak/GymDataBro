@@ -30,16 +30,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_program_toolbar">
 
-<!--    TODO: make a style out of the width part here
-        and set BasicForeground as this styles parent so both can be applied-->
         <ScrollView
             android:id="@+id/edit_program_table_scrollview"
-            style="@style/BasicForeground"
+            style="@style/ResponsiveForeground"
             android:layout_width="wrap_content"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintWidth_max="800dp"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_max="wrap"
             app:layout_constraintBottom_toTopOf="@+id/edit_program_button_edit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
