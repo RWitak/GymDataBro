@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020, Rafael Witak.
+  -->
+<!--TODO: Test with device, replace original.-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/BasicBackground"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    tools:context=".activities.WorkoutStepActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/step_exercise_name_row"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:id="@+id/step_exercise_name_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="8dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@id/step_body"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <TextView
+            android:id="@+id/step_exercise_name_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="10"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            tools:text="Exercise Name Exercise Name Exercise Name" />
+
+        <TextView
+            android:id="@+id/step_exercise_name_progress_ratio"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="start|fill_vertical"
+            android:paddingHorizontal="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorAccent"
+            tools:text="1/3" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/step_body"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/step_exercise_name_row">
+
+        <Button
+            android:id="@+id/step_btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="16dp"
+            android:background="@color/colorAccent"
+            android:elevation="16dp"
+            android:text="@string/next_step"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/workout_step_scrollview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <ScrollView
+            android:id="@+id/workout_step_scrollview"
+            style="@style/ResponsiveForeground"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/step_btn_next"
+            app:layout_constraintVertical_chainStyle="spread_inside">
+
+            <TableLayout
+                android:id="@+id/workout_step_table"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                android:shrinkColumns="1"
+                android:stretchColumns="0, 1, 2">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/step_explanation_expected"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/step_explanation_goal"
+                        android:textAlignment="textEnd"
+                        android:textStyle="italic" />
+
+                    <TextView />
+
+                    <TextView
+                        android:id="@+id/step_explanation_reality"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/workout_step_reality"
+                        android:textAlignment="textStart"
+                        android:textStyle="italic" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/step_reps_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/step_reps_prescribed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="12" />
+
+                    <TextView
+                        android:id="@+id/step_reps_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reps"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                    <EditText
+                        android:id="@+id/step_reps_performed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="@null"
+                        android:hint="@null"
+                        android:inputType="number"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="1234" />
+                </ TableRow>
+
+                <TableRow
+                    android:id="@+id/step_duration_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/step_reps_barrier">
+
+                    <TextView
+                        android:id="@+id/step_duration_prescribed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="30" />
+
+                    <TextView
+                        android:id="@+id/step_duration_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:singleLine="false"
+                        android:text="@string/duration"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                    <EditText
+                        android:id="@+id/step_duration_performed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="@null"
+                        android:hint="@null"
+                        android:inputType="number"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="30" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/step_weight_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/step_weight_prescribed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        app:layout_constraintBottom_toTopOf="@id/step_weight_barrier"
+                        app:layout_constraintEnd_toStartOf="@id/step_left_guideline"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="@id/step_weight_row"
+                        app:layout_constraintTop_toBottomOf="@id/step_duration_barrier"
+                        tools:text="250,75" />
+
+                    <TextView
+                        android:id="@+id/step_weight_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/weight"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        app:layout_constraintBottom_toTopOf="@id/step_weight_barrier"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/step_left_guideline"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/step_duration_barrier" />
+
+                    <EditText
+                        android:id="@+id/step_weight_performed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="@null"
+                        android:hint="@null"
+                        android:inputType="numberDecimal"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="250,75" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/step_rpe_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/step_rpe_prescribed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="8" />
+
+                    <TextView
+                        android:id="@+id/step_rpe_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/rpe"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        app:layout_constraintBottom_toTopOf="@id/step_rpe_barrier"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/step_left_guideline"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/step_weight_barrier" />
+
+                    <EditText
+                        android:id="@+id/step_rpe_performed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="@null"
+                        android:hint="@null"
+                        android:inputType="numberDecimal"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        app:layout_constraintBottom_toTopOf="@id/step_rpe_barrier"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/step_weight_barrier"
+                        tools:text="8" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/step_rest_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/step_rest_prescribed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="30" />
+
+                    <TextView
+                        android:id="@+id/step_rest_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/rest"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                    <EditText
+                        android:id="@+id/step_rest_performed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="@null"
+                        android:hint="@null"
+                        android:inputType="number"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="30" />
+
+                </TableRow>
+
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/step_rest_barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="step_rest_prescribed, step_rest_title, step_rest_performed" />
+
+                <LinearLayout
+                    android:id="@+id/step_pain_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/step_rest_barrier"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/step_pain_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/pain_level"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                    <TextView
+                        android:id="@+id/step_pain_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="fill_vertical|end"
+                        android:text="@string/none"
+                        android:textAlignment="gravity"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/colorGood" />
+
+                    <androidx.appcompat.widget.AppCompatSeekBar
+                        android:id="@+id/step_pain_slider"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="25"
+                        android:max="@integer/pain_max"
+                        android:value="0" />
+
+
+                    <TextView
+                        android:id="@+id/step_pain_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="fill_vertical|start"
+                        android:text="@string/max"
+                        android:textAlignment="gravity"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/colorBad" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/step_notes_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/step_pain_row"
+                    tools:layout_editor_absoluteX="16dp">
+
+                    <EditText
+                        android:id="@+id/step_notes_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="@null"
+                        android:hint="@string/notes"
+                        android:imeOptions="actionDone"
+                        android:inputType="textMultiLine"
+                        tools:text="Here is some text to fit in the Notes might be too long!" />
+
+                </LinearLayout>
+
+            </TableLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
