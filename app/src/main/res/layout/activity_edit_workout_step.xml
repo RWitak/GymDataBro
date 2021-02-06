@@ -240,27 +240,23 @@
 
             <Button
                 android:id="@+id/edit_workout_step_button_save_exit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="40dp"
-                android:layout_marginTop="20dp"
+                style="@style/PrimaryButton"
                 android:text="@string/edit_workout_step_button_save_exit_text"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintWidth_percent="0.75"
                 app:layout_constraintBottom_toTopOf="@id/edit_workout_step_button_save_add_more"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="40dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/edit_workout_step_button_save_add_more"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="40dp"
-                android:layout_marginVertical="10dp"
+                style="@style/PrimaryButton"
                 android:text="@string/edit_workout_step_button_save_add_more_text"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintWidth_percent="0.75"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_workout_step_button_save_exit"
-                tools:layout_editor_absoluteX="40dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_workout_step_button_save_exit" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

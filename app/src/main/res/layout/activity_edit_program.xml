@@ -132,12 +132,9 @@
         <!-- TODO: Extract unified Button style -->
         <Button
             android:id="@+id/edit_program_button_edit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="40dp"
-            android:layout_marginVertical="20dp"
+            style="@style/PrimaryButton"
             android:text="@string/edit_program_button_save_text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintWidth_percent="0.75"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
