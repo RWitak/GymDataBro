@@ -35,7 +35,7 @@ import androidx.room.PrimaryKey;
                         unique = true)
         })
 public class WorkoutStep {
-
+// TODO: Use optionals instead of Nullables in Getters/Setters. Possible?
     @PrimaryKey(autoGenerate = true)
     private int id;
 
