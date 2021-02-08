@@ -2,7 +2,7 @@
 <!--
   ~ Copyright (c) 2020, Rafael Witak.
   -->
-
+<!--TODO: Test with device, replace original.-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -63,369 +63,242 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/step_exercise_name_row">
 
         <Button
             android:id="@+id/step_btn_next"
-            android:layout_gravity="bottom"
             style="@style/PrimaryButton"
             android:text="@string/next_step"
-            app:layout_constraintWidth_percent=".75"
+            app:layout_constraintWidth_percent="0.75"
             app:layout_constraintBottom_toTopOf="@+id/workout_step_scrollview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0"
+            app:layout_constraintVertical_bias="0.0"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <ScrollView
             android:id="@+id/workout_step_scrollview"
-            style="@style/ResponsiveForegroundWide"
+            style="@style/ResponsiveForeground"
             android:layout_width="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/step_btn_next"
             app:layout_constraintVertical_chainStyle="spread_inside">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/workout_step_rows"
+            <TableLayout
+                android:id="@+id/workout_step_table"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="vertical"
-                android:paddingHorizontal="8dp"
-                android:paddingBottom="16dp">
+                android:paddingBottom="16dp"
+                android:shrinkColumns="1"
+                android:stretchColumns="0, 1, 2">
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/step_left_guideline"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.2" />
-
-                <TextView
-                    android:id="@+id/step_explanation_expected"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/step_explanation_goal"
-                    android:textAlignment="textEnd"
-                    android:textStyle="italic"
-                    app:layout_constraintBottom_toTopOf="@id/step_explanation_barrier"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/step_left_guideline"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/step_explanation_reality"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/workout_step_reality"
-                    android:textAlignment="textEnd"
-                    android:textStyle="italic"
-                    app:layout_constraintBottom_toTopOf="@id/step_explanation_barrier"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintLeft_toRightOf="@+id/step_explanation_expected"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/step_explanation_barrier"
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="step_explanation_expected, step_explanation_reality"
-                    app:layout_constraintBottom_toTopOf="@+id/step_reps_row" />
+                    android:layout_height="wrap_content">
 
+                    <TextView
+                        android:id="@+id/step_explanation_expected"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/step_explanation_goal"
+                        android:textAlignment="textEnd"
+                        android:textStyle="italic" />
 
-                <androidx.constraintlayout.widget.Group
+                    <TextView />
+
+                    <TextView
+                        android:id="@+id/step_explanation_reality"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/workout_step_reality"
+                        android:textAlignment="textStart"
+                        android:textStyle="italic" />
+                </TableRow>
+
+                <TableRow
                     android:id="@+id/step_reps_row"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:constraint_referenced_ids="step_reps_prescribed, step_reps_performed, step_reps_title"
-                    app:layout_constraintBottom_toTopOf="@+id/step_reps_prescribed"
-                    app:layout_constraintTop_toBottomOf="@+id/step_explanation_barrier" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/step_reps_prescribed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/step_reps_barrier"
-                    app:layout_constraintEnd_toStartOf="@id/step_left_guideline"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@id/step_reps_row"
-                    app:layout_constraintTop_toBottomOf="@+id/step_explanation_barrier"
-                    tools:text="12" />
+                    <TextView
+                        android:id="@+id/step_reps_prescribed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="12" />
 
-                <!-- hackish -->
-                <TextView
-                    android:id="@+id/step_reps_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="@string/reps"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/step_reps_barrier"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/step_left_guideline"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/step_explanation_barrier" />
+                    <TextView
+                        android:id="@+id/step_reps_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reps"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-                <EditText
-                    android:id="@+id/step_reps_performed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/step_reps_title"
-                    android:autofillHints="@null"
-                    android:hint="@null"
-                    android:inputType="number"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/step_reps_barrier"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/step_explanation_barrier"
-                    tools:text="1234" />
+                    <EditText
+                        android:id="@+id/step_reps_performed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="@null"
+                        android:hint="@null"
+                        android:inputType="number"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="1234" />
+                </TableRow>
 
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/step_reps_barrier"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="step_reps_prescribed, step_reps_title, step_reps_performed" />
-
-                <androidx.constraintlayout.widget.Group
+                <TableRow
                     android:id="@+id/step_duration_row"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:constraint_referenced_ids="step_duration_prescribed, step_duration_title, step_duration_performed"
-                    app:layout_constraintTop_toBottomOf="@id/step_reps_barrier" />
+                    android:orientation="horizontal" >
 
-                <TextView
-                    android:id="@+id/step_duration_prescribed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/step_duration_title"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/step_duration_barrier"
-                    app:layout_constraintEnd_toStartOf="@id/step_left_guideline"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@id/step_duration_row"
-                    app:layout_constraintTop_toBottomOf="@id/step_reps_barrier"
-                    tools:text="30" />
+                    <TextView
+                        android:id="@+id/step_duration_prescribed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="30" />
 
-                <TextView
-                    android:id="@+id/step_duration_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:singleLine="false"
-                    android:text="@string/duration"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/step_duration_barrier"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/step_left_guideline"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/step_reps_barrier" />
+                    <TextView
+                        android:id="@+id/step_duration_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:singleLine="false"
+                        android:text="@string/duration"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-                <EditText
-                    android:id="@+id/step_duration_performed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/step_duration_title"
-                    android:autofillHints="@null"
-                    android:hint="@null"
-                    android:inputType="number"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/step_duration_barrier"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/step_reps_barrier"
-                    tools:text="30" />
+                    <EditText
+                        android:id="@+id/step_duration_performed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="@null"
+                        android:hint="@null"
+                        android:inputType="number"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="30" />
+                </TableRow>
 
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/step_duration_barrier"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="step_duration_prescribed, step_duration_title, step_duration_performed" />
-
-
-                <androidx.constraintlayout.widget.Group
+                <TableRow
                     android:id="@+id/step_weight_row"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:constraint_referenced_ids="step_weight_prescribed, step_weight_title, step_weight_performed"
-                    app:layout_constraintTop_toBottomOf="@id/step_duration_barrier" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/step_weight_prescribed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/step_weight_barrier"
-                    app:layout_constraintEnd_toStartOf="@id/step_left_guideline"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@id/step_weight_row"
-                    app:layout_constraintTop_toBottomOf="@id/step_duration_barrier"
-                    tools:text="250,75" />
+                    <TextView
+                        android:id="@+id/step_weight_prescribed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="@id/step_weight_row"
+                        tools:text="250,75" />
 
-                <TextView
-                    android:id="@+id/step_weight_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="@string/weight"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/step_weight_barrier"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/step_left_guideline"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/step_duration_barrier" />
+                    <TextView
+                        android:id="@+id/step_weight_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/weight"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                <EditText
-                    android:id="@+id/step_weight_performed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/step_weight_title"
-                    android:autofillHints="@null"
-                    android:hint="@null"
-                    android:inputType="numberDecimal"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/step_weight_barrier"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/step_duration_barrier"
-                    tools:text="250,75" />
+                    <EditText
+                        android:id="@+id/step_weight_performed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="@null"
+                        android:hint="@null"
+                        android:inputType="numberDecimal"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="250,75" />
 
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/step_weight_barrier"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="step_weight_prescribed, step_weight_title, step_weight_performed" />
+                </TableRow>
 
-
-                <androidx.constraintlayout.widget.Group
+                <TableRow
                     android:id="@+id/step_rpe_row"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:constraint_referenced_ids="step_rpe_prescribed, step_rpe_title, step_rpe_performed"
-                    app:layout_constraintTop_toBottomOf="@id/step_weight_barrier" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/step_rpe_prescribed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/step_rpe_title"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/step_rpe_barrier"
-                    app:layout_constraintEnd_toStartOf="@id/step_left_guideline"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@id/step_rpe_row"
-                    app:layout_constraintTop_toBottomOf="@id/step_weight_barrier"
-                    tools:text="8" />
+                    <TextView
+                        android:id="@+id/step_rpe_prescribed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="8" />
 
-                <TextView
-                    android:id="@+id/step_rpe_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="@string/rpe"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/step_rpe_barrier"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/step_left_guideline"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/step_weight_barrier" />
+                    <TextView
+                        android:id="@+id/step_rpe_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/rpe"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                <EditText
-                    android:id="@+id/step_rpe_performed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/step_rpe_title"
-                    android:autofillHints="@null"
-                    android:hint="@null"
-                    android:inputType="numberDecimal"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/step_rpe_barrier"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/step_weight_barrier"
-                    tools:text="8" />
+                    <EditText
+                        android:id="@+id/step_rpe_performed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="@null"
+                        android:hint="@null"
+                        android:inputType="numberDecimal"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="8" />
 
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/step_rpe_barrier"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="step_rpe_prescribed, step_rpe_title, step_rpe_performed" />
+                </TableRow>
 
-
-                <androidx.constraintlayout.widget.Group
+                <TableRow
                     android:id="@+id/step_rest_row"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:constraint_referenced_ids="step_rest_prescribed, step_rest_title, step_rest_performed"
-                    app:layout_constraintTop_toBottomOf="@id/step_rpe_barrier" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/step_rest_prescribed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/step_rest_barrier"
-                    app:layout_constraintEnd_toStartOf="@id/step_left_guideline"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@id/step_rest_row"
-                    app:layout_constraintTop_toBottomOf="@id/step_rpe_barrier"
-                    tools:text="30" />
+                    <TextView
+                        android:id="@+id/step_rest_prescribed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="30" />
 
-                <TextView
-                    android:id="@+id/step_rest_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="@string/rest"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/step_rest_barrier"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/step_left_guideline"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/step_rpe_barrier" />
+                    <TextView
+                        android:id="@+id/step_rest_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/rest"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-                <EditText
-                    android:id="@+id/step_rest_performed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/step_rest_title"
-                    android:autofillHints="@null"
-                    android:hint="@null"
-                    android:inputType="number"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/step_rest_barrier"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/step_rpe_barrier"
-                    tools:text="30" />
+                    <EditText
+                        android:id="@+id/step_rest_performed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="@null"
+                        android:hint="@null"
+                        android:inputType="number"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        tools:text="30" />
+
+                </TableRow>
 
 
                 <androidx.constraintlayout.widget.Barrier
@@ -508,7 +381,7 @@
 
                 </LinearLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </TableLayout>
 
         </ScrollView>
 

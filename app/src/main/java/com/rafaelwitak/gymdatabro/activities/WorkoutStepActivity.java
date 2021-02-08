@@ -43,6 +43,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         this.database = GymBroDatabase.getDatabase(this);
         this.currentWorkoutStep = getCurrentWorkoutStep();
         if (currentWorkoutStep == null) {

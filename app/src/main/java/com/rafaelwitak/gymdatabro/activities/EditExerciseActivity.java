@@ -82,7 +82,6 @@ public class EditExerciseActivity extends AppCompatActivity {
         HashMap<String, EditText> map = new HashMap<>();
 
         map.put("Name", binding.editExerciseNameEdit);
-        map.put("PR", binding.editExercisePrEdit);
         map.put("Cues", binding.editExerciseCuesEdit);
         map.put("Links", binding.editExerciseLinksEdit);
         map.put("Equipment", binding.editExerciseEquipmentEdit);
