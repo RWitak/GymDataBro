@@ -83,6 +83,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:textAlignment">textEnd</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Display1</item>
+        <item name="android:textSize">28sp</item>
         <item name="android:layout_width">0dp</item>
     </style>
 

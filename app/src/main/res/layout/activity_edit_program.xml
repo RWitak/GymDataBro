@@ -46,9 +46,7 @@
                 android:isScrollContainer="true"
                 android:orientation="vertical"
                 android:stretchColumns="*">
-                <!--
-                TODO: smaller label font
-                    -->
+
                 <TableRow
                     style="@style/TableRow">
 
@@ -129,7 +127,6 @@
 
         </ScrollView>
 
-        <!-- TODO: Extract unified Button style -->
         <Button
             android:id="@+id/edit_program_button_edit"
             style="@style/PrimaryButton"
