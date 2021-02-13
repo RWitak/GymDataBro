@@ -20,6 +20,9 @@ public interface ProgramDAO {
     @Query("SELECT * FROM programs WHERE id=:id")
     Program getProgramByID(int id);
 
+    @Query("SELECT COUNT(*) FROM programs")
+    int getTotalNumberOfPrograms();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insertProgram(Program program);
 

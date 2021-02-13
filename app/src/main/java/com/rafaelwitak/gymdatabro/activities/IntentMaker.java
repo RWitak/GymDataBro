@@ -22,7 +22,7 @@ public class IntentMaker {
     private final Context context;
     private final MasterDao dao;
 
-    IntentMaker(Context context) {
+    public IntentMaker(Context context) {
         this.context = context;
         this.dao = GymBroDatabase.getDatabase(context).masterDao();
     }

@@ -56,8 +56,6 @@
     <string name="edit_workout_step_button_save_exit_text">Save WorkoutStep &amp; Exit</string>
     <string name="edit_workout_step_label_number_sets">Number of Sets</string>
     <string name="edit_workout_step_button_save_add_more_text">Save &amp; Add More</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="gym_bro">Gym\nBro</string>
     <string name="cont_descr_main_bg">A gym bro showing his abs.</string>
     <string name="main_resume_button_text">Start Workout</string>

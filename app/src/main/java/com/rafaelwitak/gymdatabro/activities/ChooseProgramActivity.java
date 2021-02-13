@@ -4,26 +4,21 @@
 
 package com.rafaelwitak.gymdatabro.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
-import com.rafaelwitak.gymdatabro.database.Program;
-import com.rafaelwitak.gymdatabro.programHandling.ChooseProgramRow;
-
-//import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.rafaelwitak.gymdatabro.programHandling.ChooseProgramAdapter;
 
 public class ChooseProgramActivity extends AppCompatActivity {
     GymBroDatabase database;
-    LinearLayout programList;
     Toolbar chooseProgramToolbar;
-//    FloatingActionButton createProgramFAB;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,58 +27,28 @@ public class ChooseProgramActivity extends AppCompatActivity {
         database = GymBroDatabase.getDatabase(this);
         setContentView(R.layout.activity_choose_program);
         chooseProgramToolbar = findViewById(R.id.choose_program_toolbar);
-        // createProgramFAB = findViewById(R.id.choose_program_button_create);
-        programList = findViewById(R.id.main_list);
+        recyclerView = findViewById(R.id.choose_program_recycler);
 
         setupViews();
     }
 
     private void setupViews() {
         setupToolbar();
-        setupRows();
-//        setupFAB(this);
+        setupRecyclerView();
     }
-
-/*
-    private void setupFAB(Context context) {
-        createProgramFAB.setOnClickListener(view -> {
-            Intent intent = new Intent(context, EditProgramActivity.class);
-            startActivity(intent);
-        });
-    }
-*/
 
     private void setupToolbar() {
         chooseProgramToolbar.setTitle(R.string.choose_program_toolbar_title);
     }
 
-    private void setupRows() {
-        for (Program program : database.programDAO().getAllPrograms()) {
-            ChooseProgramRow chooseProgramRow = new ChooseProgramRow(this);
-            chooseProgramRow.setTextViewText(getProgramName(program));
-            chooseProgramRow.setOnClickListener(getRowOnClickListener(program));
-            chooseProgramRow.setOnLongClickListener(getRowOnLongClickListener(program));
-            programList.addView(chooseProgramRow);
-        }
-    }
+    private void setupRecyclerView() {
+        LinearLayoutManager layoutManager =
+                new LinearLayoutManager(
+                        this,
+                        RecyclerView.VERTICAL,
+                        false);
 
-    private View.OnClickListener getRowOnClickListener(Program program) {
-        return view -> {
-                startActivity(new IntentMaker(this).getIntentToResumeProgram(program.getId()));
-            finishAndRemoveTask();
-        };
-    }
-
-    private View.OnLongClickListener getRowOnLongClickListener(Program program) {
-        return view -> {
-            Intent intent = new Intent(getApplicationContext(), EditProgramActivity.class);
-            intent.putExtra("programID", program.getId());
-            startActivity(intent);
-            return true;
-        };
-    }
-
-    private String getProgramName(Program program) {
-        return program.getName();
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(new ChooseProgramAdapter(database.masterDao().getAllPrograms()));
     }
 }
