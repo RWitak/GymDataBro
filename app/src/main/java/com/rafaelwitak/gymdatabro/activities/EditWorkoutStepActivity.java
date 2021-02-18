@@ -30,10 +30,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-import static com.rafaelwitak.gymdatabro.EditTextHelper.getTextAsNullableFloat;
-import static com.rafaelwitak.gymdatabro.EditTextHelper.getTextAsNullableInteger;
-import static com.rafaelwitak.gymdatabro.EditTextHelper.getTextAsTrimmedStringOrNull;
-import static com.rafaelwitak.gymdatabro.StringHelper.getNonNullString;
+import static com.rafaelwitak.gymdatabro.util.EditTextHelper.getTextAsNullableFloat;
+import static com.rafaelwitak.gymdatabro.util.EditTextHelper.getTextAsNullableInteger;
+import static com.rafaelwitak.gymdatabro.util.EditTextHelper.getTextAsTrimmedStringOrNull;
+import static com.rafaelwitak.gymdatabro.util.StringHelper.getNonNullString;
 
 public class EditWorkoutStepActivity extends AppCompatActivity {
 

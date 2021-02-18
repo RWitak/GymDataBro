@@ -14,19 +14,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.rafaelwitak.gymdatabro.StringHelper;
 import com.rafaelwitak.gymdatabro.database.Exercise;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditExerciseBinding;
 import com.rafaelwitak.gymdatabro.exerciseHandling.ExerciseSanityChecker;
 import com.rafaelwitak.gymdatabro.exerciseHandling.ExerciseSaveHandler;
+import com.rafaelwitak.gymdatabro.util.StringHelper;
 
 import java.util.HashMap;
 import java.util.Objects;
 
-import static com.rafaelwitak.gymdatabro.EditTextHelper.getTextAsNullableFloat;
-import static com.rafaelwitak.gymdatabro.EditTextHelper.getTextAsTrimmedStringOrNull;
-import static com.rafaelwitak.gymdatabro.StringHelper.getNonNullString;
+import static com.rafaelwitak.gymdatabro.util.EditTextHelper.getTextAsNullableFloat;
+import static com.rafaelwitak.gymdatabro.util.EditTextHelper.getTextAsTrimmedStringOrNull;
+import static com.rafaelwitak.gymdatabro.util.StringHelper.getNonNullString;
 
 public class EditExerciseActivity extends AppCompatActivity {
 

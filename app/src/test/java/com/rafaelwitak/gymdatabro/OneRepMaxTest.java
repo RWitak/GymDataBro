@@ -4,6 +4,8 @@
 
 package com.rafaelwitak.gymdatabro;
 
+import com.rafaelwitak.gymdatabro.util.OneRepMax;
+
 import org.junit.Test;
 
 import static com.google.common.truth.Truth.assertThat;

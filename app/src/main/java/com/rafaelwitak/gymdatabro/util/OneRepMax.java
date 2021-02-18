@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2020, Rafael Witak.
+ * Copyright (c) 2021, Rafael Witak.
  */
 
-package com.rafaelwitak.gymdatabro;
+package com.rafaelwitak.gymdatabro.util;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

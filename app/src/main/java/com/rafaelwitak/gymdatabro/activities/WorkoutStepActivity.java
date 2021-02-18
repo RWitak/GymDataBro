@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.rafaelwitak.gymdatabro.OneRepMax;
 import com.rafaelwitak.gymdatabro.database.Exercise;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.MasterDao;
@@ -24,12 +23,13 @@ import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetDataProviderHolder;
 import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetMaker;
+import com.rafaelwitak.gymdatabro.util.OneRepMax;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRowHolder;
 
 import java.util.Locale;
 
-import static com.rafaelwitak.gymdatabro.OneRepMax.getMaxNumberOfReps;
-import static com.rafaelwitak.gymdatabro.OneRepMax.getWeightFromOrm;
+import static com.rafaelwitak.gymdatabro.util.OneRepMax.getMaxNumberOfReps;
+import static com.rafaelwitak.gymdatabro.util.OneRepMax.getWeightFromOrm;
 
 public class WorkoutStepActivity extends AppCompatActivity {
     private GymBroDatabase database;

@@ -6,10 +6,10 @@ package com.rafaelwitak.gymdatabro.programHandling;
 
 import android.widget.EditText;
 
-import com.rafaelwitak.gymdatabro.EditRow;
-import com.rafaelwitak.gymdatabro.EditRowTextGetter;
 import com.rafaelwitak.gymdatabro.database.Program;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditProgramBinding;
+import com.rafaelwitak.gymdatabro.util.EditRow;
+import com.rafaelwitak.gymdatabro.util.EditRowTextGetter;
 
 public abstract class EditProgramRow
         extends EditRow

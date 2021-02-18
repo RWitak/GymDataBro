@@ -6,7 +6,6 @@ package com.rafaelwitak.gymdatabro.programHandling;
 
 import android.content.Context;
 
-import com.rafaelwitak.gymdatabro.EditRowHolder;
 import com.rafaelwitak.gymdatabro.database.Program;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditProgramBinding;
 import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.InfoRow;
@@ -14,6 +13,7 @@ import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.LinksRow;
 import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.NameRow;
 import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.NotesRow;
 import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.SourceRow;
+import com.rafaelwitak.gymdatabro.util.EditRowHolder;
 
 import java.util.Arrays;
 import java.util.List;

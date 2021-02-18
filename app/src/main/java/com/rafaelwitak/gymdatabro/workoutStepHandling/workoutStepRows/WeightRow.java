@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.rafaelwitak.gymdatabro.ConvertToFourths;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
+import com.rafaelwitak.gymdatabro.util.ConvertToFourths;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepTextInputRow;
 
 public class WeightRow extends WorkoutStepTextInputRow {
