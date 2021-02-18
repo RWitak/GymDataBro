@@ -16,7 +16,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.rafaelwitak.gymdatabro.database.Exercise;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
-import com.rafaelwitak.gymdatabro.database.MasterDao;
 import com.rafaelwitak.gymdatabro.database.PerformanceSet;
 import com.rafaelwitak.gymdatabro.database.Workout;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
@@ -24,6 +23,7 @@ import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetDataProviderHolder;
 import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetMaker;
 import com.rafaelwitak.gymdatabro.util.OneRepMax;
+import com.rafaelwitak.gymdatabro.util.WeightProvider;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRowHolder;
 
 import java.util.Locale;
@@ -96,7 +96,10 @@ public class WorkoutStepActivity extends AppCompatActivity {
             return;
         }
 
-        Float recentWeight = getRecentStrengthBasedWeight();
+        Float recentWeight = WeightProvider.getRecentStrengthBasedWeight(
+                database.masterDao()
+                        .getLatestWeightRepsRpeForExercise(currentExercise.getId()),
+                currentWorkoutStep);
         if (recentWeight != null) {
             currentWorkoutStep.setWeight(recentWeight);
             return;
@@ -114,43 +117,6 @@ public class WorkoutStepActivity extends AppCompatActivity {
         if (ormBasedWeight != null) {
             currentWorkoutStep.setWeight(ormBasedWeight);
         }
-    }
-
-    @Nullable
-    private Float getRecentStrengthBasedWeight() {
-        MasterDao.WeightRepsRpe recent =
-                database.masterDao()
-                        .getLatestWeightRepsRpeForExercise(currentExercise.getId());
-        if (recent == null || recent.weight == null) {
-            return null;
-        }
-        if (recent.reps == null) {
-            if (currentWorkoutStep.getReps() == null) {
-                // for exercises not based on reps, the previous weight may be used...
-                // TODO: ...for now! But that's not representative,
-                //  eg. a duration based exercise requires different weight
-                //  for different durations to be considered equally fatiguing.
-                return recent.weight;
-            } else {
-                return null;
-            }
-        }
-
-        Integer maxReps = getMaxNumberOfReps( recent.reps, recent.rpe);
-
-        // Previous set failed? Try again with less weight.
-        if (recent.reps == 0) {
-            return recent.weight * .75f;
-        }
-
-        float recentOrm = OneRepMax.getFormula().getOrm(recent.weight, maxReps);
-
-        return getWeightFromOrm(
-                currentWorkoutStep.getWeight(),
-                getMaxNumberOfReps(currentWorkoutStep.getReps(), currentWorkoutStep.getRpe()),
-                recentOrm,
-                OneRepMax.getFormula()
-        );
     }
 
 
