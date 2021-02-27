@@ -54,7 +54,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
             return; // DO NOT DELETE: Method will try to continue without a proper WorkoutStep!
         }
         this.currentExercise = getCurrentExercise();
-        updateCurrentWorkoutStepWeight();
+        updateWeightIfPossible();
         this.currentWorkout = getCurrentWorkout();
 
         // automatically bind all Views with IDs
@@ -68,10 +68,11 @@ public class WorkoutStepActivity extends AppCompatActivity {
         int workoutID = getWorkoutIdFromIntent();
         int stepNumber = getStepNumberFromIntent();
 
-        Log.d("GymDataBro", "Fetching Workout " +
-                + workoutID
-                + ", Step "
-                + stepNumber);
+        Log.d("GymDataBro",
+                "Fetching Workout "
+                        + workoutID
+                        + ", Step "
+                        + stepNumber);
 
         WorkoutStep step =
                 database.workoutStepDAO()
@@ -91,32 +92,41 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return getIntent().getIntExtra("nextStepNumber", 0);
     }
 
-    private void updateCurrentWorkoutStepWeight() {
-        if (currentWorkoutStep.getWeight() == null) {
+    private void updateWeightIfPossible() {
+        if (!currentWorkoutStep.usesWeight()) {
             return;
         }
 
-        Float recentWeight = WeightProvider.getRecentStrengthBasedWeight(
+        Float recentWeight = getRecentStrengthBasedWeight();
+        if (recentWeight != null) {
+            currentWorkoutStep.setWeight(recentWeight);
+        } else {
+            Float ormBasedWeight = getOrmBasedWeight();
+            if (ormBasedWeight != null) {
+                currentWorkoutStep.setWeight(ormBasedWeight);
+            }
+        }
+        // ...else keep the original value.
+    }
+
+    @Nullable
+    private Float getOrmBasedWeight() {
+        return getWeightFromOrm(
+                currentWorkoutStep.getWeight(),
+                getMaxNumberOfReps(
+                        currentWorkoutStep.getReps(),
+                        currentWorkoutStep.getRpe()
+                ),
+                currentExercise.getPr(),
+                OneRepMax.getFormula());
+    }
+
+    @Nullable
+    private Float getRecentStrengthBasedWeight() {
+        return WeightProvider.getRecentStrengthBasedWeight(
                 database.masterDao()
                         .getLatestWeightRepsRpeForExercise(currentExercise.getId()),
                 currentWorkoutStep);
-        if (recentWeight != null) {
-            currentWorkoutStep.setWeight(recentWeight);
-            return;
-        }
-
-        Float ormBasedWeight =
-                getWeightFromOrm(
-                        currentWorkoutStep.getWeight(),
-                        getMaxNumberOfReps(
-                                currentWorkoutStep.getReps(),
-                                currentWorkoutStep.getRpe()
-                        ),
-                        currentExercise.getPr(),
-                        OneRepMax.getFormula());
-        if (ormBasedWeight != null) {
-            currentWorkoutStep.setWeight(ormBasedWeight);
-        }
     }
 
 
@@ -181,14 +191,16 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     private void setUpButton() {
         binding.stepBtnNext.setOnClickListener(v ->
-            wrapUpCurrentPerformanceSet()
+                wrapUpCurrentPerformanceSet()
         );
     }
 
     private void wrapUpCurrentPerformanceSet() {
         PerformanceSet performedSet = getPerformedSet();
         savePerformanceSet(performedSet);
-        handleNewRecords(performedSet);
+        if (currentWorkoutStep.usesWeight()) {
+            handleNewRecords(performedSet);
+        }
 
         if (isLastWorkoutStep(currentWorkoutStep)) {
             congratulateAndFinish();
@@ -202,7 +214,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
         return PerformanceSetMaker.getPerformanceSet(getPerformanceSetDataProviderHolder());
     }
 
-    private void savePerformanceSet(PerformanceSet performanceSet) {
+    private void savePerformanceSet(@NonNull PerformanceSet performanceSet) {
         long savedSetRowId = database.performanceSetDAO().insertSet(performanceSet);
 
         Log.d("GymDataBro", "PerformanceSet successfully saved to database by "
@@ -211,6 +223,8 @@ public class WorkoutStepActivity extends AppCompatActivity {
                 + database.performanceSetDAO().getSetByRowId(savedSetRowId).toString());
     }
 
+    // TODO: 27.02.2021 Improve null handling in whole file.
+    //  (Optionals don't work with curring minSDK!)
     private void handleNewRecords(@NonNull PerformanceSet performedSet) {
         @Nullable Float previousOrm = currentExercise.getPr();
         @Nullable Float currentOrm = getOneRepMaxValue(

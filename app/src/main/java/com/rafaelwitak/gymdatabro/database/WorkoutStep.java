@@ -35,7 +35,6 @@ import androidx.room.PrimaryKey;
                         unique = true)
         })
 public class WorkoutStep {
-// TODO: Use optionals instead of Nullables in Getters/Setters. Possible?
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -79,6 +78,28 @@ public class WorkoutStep {
 
     @ColumnInfo
     private String notes;
+
+
+    public boolean usesWeight() {
+        return weight != null;
+    }
+
+    public boolean usesReps() {
+        return reps != null;
+    }
+
+    public boolean usesRpe() {
+        return rpe != null;
+    }
+
+    public boolean usesDuration() {
+        return durationSeconds != null;
+    }
+
+    public boolean usesRest() {
+        return restSeconds != null;
+    }
+
 
     public int getId() {
         return id;

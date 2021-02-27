@@ -6,10 +6,13 @@ package com.rafaelwitak.gymdatabro.performanceSetHandling;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.rafaelwitak.gymdatabro.database.PerformanceSet;
 
 public class PerformanceSetMaker {
 
+    @NonNull
     public static PerformanceSet getPerformanceSet(PerformanceSetDataProviderHolder dpHolder) {
         PerformanceSet performanceSet = new PerformanceSet();
 
