@@ -6,16 +6,16 @@ package com.rafaelwitak.gymdatabro.util;
 
 import androidx.annotation.Nullable;
 
-import com.rafaelwitak.gymdatabro.database.MasterDao;
+import com.rafaelwitak.gymdatabro.database.MasterDao.WeightRepsRpe;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 
 import static com.rafaelwitak.gymdatabro.util.OneRepMax.getMaxNumberOfReps;
-import static com.rafaelwitak.gymdatabro.util.OneRepMax.getWeightFromOrm;
+import static com.rafaelwitak.gymdatabro.util.OneRepMax.getWeightRecommendationFromOrm;
 
 public class WeightProvider {
     @Nullable
     public static Float getRecentStrengthBasedWeight(
-            MasterDao.WeightRepsRpe recentPerformance,
+            WeightRepsRpe recentPerformance,
             WorkoutStep currentWorkoutStep) {
 
         if (recentPerformance == null || recentPerformance.weight == null) {
@@ -42,7 +42,7 @@ public class WeightProvider {
 
         float recentOrm = OneRepMax.getFormula().getOrm(recentPerformance.weight, maxReps);
 
-        return getWeightFromOrm(
+        return getWeightRecommendationFromOrm(
                 currentWorkoutStep.getWeight(),
                 getMaxNumberOfReps(currentWorkoutStep.getReps(), currentWorkoutStep.getRpe()),
                 recentOrm,

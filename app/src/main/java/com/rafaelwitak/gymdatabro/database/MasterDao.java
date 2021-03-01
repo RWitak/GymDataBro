@@ -12,7 +12,7 @@ import androidx.room.Query;
 
 @Dao
 public abstract class MasterDao extends WorkoutInstanceDAO
-        implements WorkoutStepDAO, WorkoutDAO, PerformanceSetDAO, ProgramDAO  {
+        implements WorkoutStepDAO, WorkoutDAO, PerformanceSetDAO, ProgramDAO, ExerciseDAO  {
     @Nullable
     @Query(
             "SELECT * FROM workout_instances WHERE workout_instances.id = (" +

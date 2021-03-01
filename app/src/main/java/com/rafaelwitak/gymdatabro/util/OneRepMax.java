@@ -56,10 +56,10 @@ public abstract class OneRepMax {
      * for the expected maximum reps.
      */
     @Nullable
-    public static Float getWeightFromOrm(Float weight,
-                                   Integer maxReps,
-                                   Float orm,
-                                   @NonNull OrmFormula formula) {
+    public static Float getWeightRecommendationFromOrm(Float weight,
+                                                       Integer maxReps,
+                                                       Float orm,
+                                                       @NonNull OrmFormula formula) {
         if (orm == null || weight == null) {
             return null;
         }

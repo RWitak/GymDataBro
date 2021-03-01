@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.rafaelwitak.gymdatabro.database.Exercise;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
+import com.rafaelwitak.gymdatabro.database.MasterDao;
 import com.rafaelwitak.gymdatabro.database.PerformanceSet;
 import com.rafaelwitak.gymdatabro.database.Workout;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
@@ -29,10 +30,10 @@ import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRowHolder;
 import java.util.Locale;
 
 import static com.rafaelwitak.gymdatabro.util.OneRepMax.getMaxNumberOfReps;
-import static com.rafaelwitak.gymdatabro.util.OneRepMax.getWeightFromOrm;
+import static com.rafaelwitak.gymdatabro.util.OneRepMax.getWeightRecommendationFromOrm;
 
 public class WorkoutStepActivity extends AppCompatActivity {
-    private GymBroDatabase database;
+    private MasterDao dao;
 
     private Workout currentWorkout;
     private WorkoutStep currentWorkoutStep;
@@ -44,7 +45,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-        this.database = GymBroDatabase.getDatabase(this);
+        this.dao = GymBroDatabase.getDatabase(this).masterDao();
         this.currentWorkoutStep = getCurrentWorkoutStep();
         if (currentWorkoutStep == null) {
             Toast.makeText(this,
@@ -53,6 +54,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
             finish();
             return; // DO NOT DELETE: Method will try to continue without a proper WorkoutStep!
         }
+
         this.currentExercise = getCurrentExercise();
         updateWeightIfPossible();
         this.currentWorkout = getCurrentWorkout();
@@ -74,9 +76,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
                         + ", Step "
                         + stepNumber);
 
-        WorkoutStep step =
-                database.workoutStepDAO()
-                        .getWorkoutStep(workoutID, stepNumber);
+        WorkoutStep step = dao.getWorkoutStep(workoutID, stepNumber);
 
         if (step == null) {
             Log.d("GymDataBro", "This WorkoutStep doesn't exist.");
@@ -106,12 +106,12 @@ public class WorkoutStepActivity extends AppCompatActivity {
                 currentWorkoutStep.setWeight(ormBasedWeight);
             }
         }
-        // ...else keep the original value.
+        // ...else keep the original weight.
     }
 
     @Nullable
     private Float getOrmBasedWeight() {
-        return getWeightFromOrm(
+        return getWeightRecommendationFromOrm(
                 currentWorkoutStep.getWeight(),
                 getMaxNumberOfReps(
                         currentWorkoutStep.getReps(),
@@ -124,8 +124,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     @Nullable
     private Float getRecentStrengthBasedWeight() {
         return WeightProvider.getRecentStrengthBasedWeight(
-                database.masterDao()
-                        .getLatestWeightRepsRpeForExercise(currentExercise.getId()),
+                dao.getLatestWeightRepsRpeForExercise(currentExercise.getId()),
                 currentWorkoutStep);
     }
 
@@ -133,7 +132,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
     @NonNull
     private Workout getCurrentWorkout() {
         Workout currentWorkout =
-                database.workoutDAO().getWorkoutByID(currentWorkoutStep.getWorkoutID());
+                dao.getWorkoutByID(currentWorkoutStep.getWorkoutID());
 
         if (currentWorkout == null) {
             return new Workout();
@@ -144,7 +143,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     @NonNull
     private Exercise getCurrentExercise() {
-        return database.exerciseDAO().getExerciseByID(currentWorkoutStep.getExerciseID());
+        return dao.getExerciseByID(currentWorkoutStep.getExerciseID());
     }
 
 
@@ -177,14 +176,14 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private String getWorkoutInstanceName(Integer workoutInstanceId) {
-        return database.workoutInstanceDAO().getNameByInstanceId(workoutInstanceId);
+        return dao.getNameByInstanceId(workoutInstanceId);
     }
 
     @Nullable
     private String getCurrentProgramName() {
         Integer id = currentWorkout.getProgramID();
         if (id != null) {
-            return database.programDAO().getProgramByID(id).getName();
+            return dao.getProgramByID(id).getName();
         }
         return null;
     }
@@ -215,12 +214,12 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private void savePerformanceSet(@NonNull PerformanceSet performanceSet) {
-        long savedSetRowId = database.performanceSetDAO().insertSet(performanceSet);
+        long savedSetRowId = dao.insertSet(performanceSet);
 
         Log.d("GymDataBro", "PerformanceSet successfully saved to database by "
                 + "WorkoutStepActivity.savePerformanceSet():"
                 + "\n"
-                + database.performanceSetDAO().getSetByRowId(savedSetRowId).toString());
+                + dao.getSetByRowId(savedSetRowId).toString());
     }
 
     // TODO: 27.02.2021 Improve null handling in whole file.
@@ -234,7 +233,7 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
         if (isNewPr(previousOrm, currentOrm)) {
             currentExercise.setPr(currentOrm);
-            database.exerciseDAO().updateExercise(currentExercise);
+            dao.updateExercise(currentExercise);
 
             showNewOrmMessage(performedSet, currentOrm);
         }
@@ -275,10 +274,9 @@ public class WorkoutStepActivity extends AppCompatActivity {
     }
 
     private boolean isLastWorkoutStep(@NonNull WorkoutStep currentWorkoutStep) {
-        return database.masterDao()
-                .isLastStepOfWorkout(
-                        currentWorkoutStep.getWorkoutID(),
-                        currentWorkoutStep.getNumber());
+        return dao.isLastStepOfWorkout(
+                currentWorkoutStep.getWorkoutID(),
+                currentWorkoutStep.getNumber());
     }
 
     @NonNull
@@ -315,8 +313,10 @@ public class WorkoutStepActivity extends AppCompatActivity {
 
     @Nullable
     private Integer getNextWorkoutStepNumber() {
-        WorkoutStep nextStep = database.masterDao()
-                .getNextStepInWorkout(currentWorkoutStep.getId(), currentWorkout.getId());
+        WorkoutStep nextStep =
+                dao.getNextStepInWorkout(
+                        currentWorkoutStep.getId(),
+                        currentWorkout.getId());
         if (nextStep == null) {
             return null;
         }
