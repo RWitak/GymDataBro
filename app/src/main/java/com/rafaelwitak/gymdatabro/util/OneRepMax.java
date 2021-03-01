@@ -45,7 +45,7 @@ public abstract class OneRepMax {
         if (rpe == null) {
             return reps;
         }
-        if (reps == null) { // FIXME: This is a hotfix for having this called without reps
+        if (reps == null) { // FIXME: This is a hotfix for having this somehow called without reps
             return 0;
         }
         return (reps + Math.round(10 - rpe));

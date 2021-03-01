@@ -30,7 +30,6 @@ import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRowHolder;
 import java.util.Locale;
 
 import static com.rafaelwitak.gymdatabro.util.OneRepMax.getMaxNumberOfReps;
-import static com.rafaelwitak.gymdatabro.util.OneRepMax.getWeightRecommendationFromOrm;
 
 public class WorkoutStepActivity extends AppCompatActivity {
     private MasterDao dao;
@@ -97,36 +96,17 @@ public class WorkoutStepActivity extends AppCompatActivity {
             return;
         }
 
-        Float recentWeight = getRecentStrengthBasedWeight();
-        if (recentWeight != null) {
-            currentWorkoutStep.setWeight(recentWeight);
-        } else {
-            Float ormBasedWeight = getOrmBasedWeight();
-            if (ormBasedWeight != null) {
-                currentWorkoutStep.setWeight(ormBasedWeight);
-            }
+        Float recommendation = WeightProvider.getRecommendationOrNull(
+                currentWorkoutStep,
+                dao.getLatestWeightRepsRpeForExercise(currentExercise.getId()),
+                currentExercise.getPr());
+
+        if (recommendation != null) {
+            currentWorkoutStep.setWeight(recommendation);
         }
         // ...else keep the original weight.
     }
 
-    @Nullable
-    private Float getOrmBasedWeight() {
-        return getWeightRecommendationFromOrm(
-                currentWorkoutStep.getWeight(),
-                getMaxNumberOfReps(
-                        currentWorkoutStep.getReps(),
-                        currentWorkoutStep.getRpe()
-                ),
-                currentExercise.getPr(),
-                OneRepMax.getFormula());
-    }
-
-    @Nullable
-    private Float getRecentStrengthBasedWeight() {
-        return WeightProvider.getRecentStrengthBasedWeight(
-                dao.getLatestWeightRepsRpeForExercise(currentExercise.getId()),
-                currentWorkoutStep);
-    }
 
 
     @NonNull
