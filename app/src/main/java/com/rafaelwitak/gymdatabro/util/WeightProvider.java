@@ -23,6 +23,7 @@ public class WeightProvider {
             WeightRepsRpe recentPerformance,
             Float pr) {
 
+
         Float recommendation = null;
 
         if (recentPerformance != null) {
@@ -33,15 +34,32 @@ public class WeightProvider {
         }
 
         if (recommendation == null) {
-            recommendation = getWeightRecommendationFromOrm(
+            recommendation =
+                    tryGettingOrmBasedRecommendation(
+                            currentWorkoutStep,
+                            pr);
+        }
+        return recommendation;
+    }
+
+    private static Float tryGettingOrmBasedRecommendation(
+            @NonNull WorkoutStep currentWorkoutStep,
+            Float pr) {
+
+        if (currentWorkoutStep.getReps() != null
+                || currentWorkoutStep.getWeight() != null) {
+
+            int maxReps = getMaxNumberOfReps(
+                    currentWorkoutStep.getReps(),
+                    currentWorkoutStep.getRpe());
+
+            return getWeightRecommendationFromOrm(
                     currentWorkoutStep.getWeight(),
-                    getMaxNumberOfReps(
-                            currentWorkoutStep.getReps(),
-                            currentWorkoutStep.getRpe()),
+                    maxReps,
                     pr,
                     OneRepMax.getFormula());
         }
-        return recommendation;
+        return null;
     }
 
     @Nullable
@@ -68,14 +86,25 @@ public class WeightProvider {
 
         // Previous set failed? Try again with less weight.
         if (recentPerformance.reps == 0) {
-            return recentPerformance.weight * REDUCING_WEIGHT_FACTOR;
+            return getReducedWeight(recentPerformance.weight);
         }
 
         return getRecentStrengthBasedRecommendation(currentWorkoutStep, recentPerformance);
     }
 
+    private static float getReducedWeight(float weight) {
+        return weight * REDUCING_WEIGHT_FACTOR;
+    }
+
     @Nullable
-    private static Float getRecentStrengthBasedRecommendation(WorkoutStep currentWorkoutStep, @NonNull WeightRepsRpe recentPerformance) {
+    private static Float getRecentStrengthBasedRecommendation(
+            WorkoutStep currentWorkoutStep,
+            @NonNull WeightRepsRpe recentPerformance) {
+
+        if (recentPerformance.reps == null || currentWorkoutStep.getReps() == null) {
+            return null;
+        }
+
         Integer recentMaxReps =
                 getMaxNumberOfReps(
                         recentPerformance.reps,

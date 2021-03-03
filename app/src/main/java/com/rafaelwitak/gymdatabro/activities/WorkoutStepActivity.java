@@ -223,9 +223,6 @@ public class WorkoutStepActivity extends AppCompatActivity {
         if (reps == null || weight == null) {
             return null;
         }
-        if (rpe == null) {
-            rpe = 10f; // If no RPE is given, maximum exertion is assumed.
-        }
         return OneRepMax.getFormula().getOrm(weight, getMaxNumberOfReps(reps, rpe));
     }
 

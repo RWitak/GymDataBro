@@ -40,20 +40,15 @@ public abstract class OneRepMax {
      * @param reps Repetitions
      * @param rpe Rate of Perceived Exertion
      */
-    @NonNull
-    public static Integer getMaxNumberOfReps(Integer reps, Float rpe) { // FIXME: Hotfix!
+    public static int getMaxNumberOfReps(int reps, Float rpe) {
         if (rpe == null) {
             return reps;
-        }
-        if (reps == null) { // FIXME: This is a hotfix for having this somehow called without reps
-            return 0;
         }
         return (reps + Math.round(10 - rpe));
     }
 
     /**
-     * Calculate the expected maximum weight
-     * for the expected maximum reps.
+     * @return Weight that will result in muscular failure after given reps.
      */
     @Nullable
     public static Float getWeightRecommendationFromOrm(Float weight,
@@ -66,9 +61,10 @@ public abstract class OneRepMax {
         if (maxReps == null) {
             return weight;
         }
-        if (maxReps == 0) { // FIXME: maxReps == 0 is hotfix!
+        if (maxReps <= 0) {
             return null;
         }
+
         return formula.getWeight(maxReps, orm);
     }
 
