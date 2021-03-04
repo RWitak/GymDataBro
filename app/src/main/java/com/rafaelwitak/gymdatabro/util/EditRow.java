@@ -7,18 +7,17 @@ package com.rafaelwitak.gymdatabro.util;
 import android.text.Editable;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+
 public abstract class EditRow {
     protected EditText editText;
 
-    public Editable getEditTextValue() {
+    private Editable getEditTextValue() {
         return editText.getText();
     }
 
+    @NonNull
     public String getEditTextValueAsString() {
-        if (getEditTextValue().toString().isEmpty()) {
-            return ""; // FIXME
-            // TODO: 16.01.2021 Find out why this needs fixing.
-        }
         return getEditTextValue().toString().trim();
     }
 
