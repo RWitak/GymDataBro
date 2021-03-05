@@ -11,7 +11,6 @@ import org.junit.Test;
 import static com.google.common.truth.Truth.assertThat;
 
 public class ProgramDAOTest extends DaoTest {
-    // TODO: Add Test for NULL vs "" fields! (Empty form gets eval'd as "" values)
     private static final int TEST_SIZE = 69;
     private ProgramDAO dao;
 

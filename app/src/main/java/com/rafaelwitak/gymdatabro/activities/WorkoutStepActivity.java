@@ -39,6 +39,11 @@ public class WorkoutStepActivity extends AppCompatActivity {
     private ActivityWorkoutStepBinding binding;
     private Exercise currentExercise;
 
+    //  Note 05.03.2021:
+    //  Improvement of null-handling probably unfeasible.
+    //  (Optionals don't work with current minSDK!
+    //   Steps are instantiated by DAO, probably can't be forced into separate subclasses etc)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -202,8 +207,6 @@ public class WorkoutStepActivity extends AppCompatActivity {
                 + dao.getSetByRowId(savedSetRowId).toString());
     }
 
-    // TODO: 27.02.2021 Improve null handling in whole file.
-    //  (Optionals don't work with curring minSDK!)
     private void handleNewRecords(@NonNull PerformanceSet performedSet) {
         @Nullable Float previousOrm = currentExercise.getPr();
         @Nullable Float currentOrm = getOneRepMaxValue(

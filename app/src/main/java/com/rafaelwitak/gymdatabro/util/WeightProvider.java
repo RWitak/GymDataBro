@@ -74,9 +74,9 @@ public class WeightProvider {
         if (!currentWorkoutStep.usesReps()) {
             return recentPerformance.weight;
             // for exercises not based on reps, the previous weight may be used...
-            // TODO: ...for now! But that's not representative,
-            //  eg. a duration based exercise requires different weight
-            //  for different durations to be considered equally fatiguing.
+            // ...for now! But that's not representative,
+            // eg. a duration based exercise requires different weight
+            // for different durations to be considered equally fatiguing.
         }
 
         // If the exercise has since been altered to include reps:
