@@ -11,22 +11,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.rafaelwitak.gymdatabro.database.Exercise;
-import com.rafaelwitak.gymdatabro.database.ExerciseDAO;
+import com.rafaelwitak.gymdatabro.database.MasterDao;
 
 public class ExerciseSaveHandler {
 
     private final Activity activity;
 
     private final Exercise exercise;
-    private final ExerciseDAO exerciseDAO;
+    private final MasterDao dao;
     private final boolean isExistingExercise;
 
     public ExerciseSaveHandler(@NonNull Activity activity,
-                               @NonNull ExerciseDAO exerciseDAO,
+                               @NonNull MasterDao dao,
                                @NonNull Exercise exercise,
                                boolean isExistingExercise) {
         this.activity = activity;
-        this.exerciseDAO = exerciseDAO;
+        this.dao = dao;
         this.exercise = exercise;
         this.isExistingExercise = isExistingExercise;
     }
@@ -56,9 +56,9 @@ public class ExerciseSaveHandler {
 
     public void saveExerciseToDatabase(Exercise exercise) {
         if (isExistingExercise) {
-            exerciseDAO.updateExercise(exercise);
+            dao.updateExercise(exercise);
         } else {
-            exerciseDAO.insertNewExercise(exercise);
+            dao.insertNewExercise(exercise);
         }
     }
 }

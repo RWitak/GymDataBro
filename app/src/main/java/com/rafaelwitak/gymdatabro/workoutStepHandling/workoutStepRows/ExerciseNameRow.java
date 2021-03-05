@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
+import com.rafaelwitak.gymdatabro.database.MasterDao;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRow;
@@ -16,7 +17,7 @@ import com.rafaelwitak.gymdatabro.workoutStepHandling.WorkoutStepRow;
 import java.util.List;
 
 public class ExerciseNameRow extends WorkoutStepRow {
-    private final GymBroDatabase database;
+    private final MasterDao dao;
 
     private final TextView nameView;
     private final TextView progressView;
@@ -30,7 +31,7 @@ public class ExerciseNameRow extends WorkoutStepRow {
             Context context) {
         super(binding, workoutStep);
 
-        this.database = GymBroDatabase.getDatabase(context);
+        this.dao = GymBroDatabase.getDatabase(context).masterDao();
 
         this.nameView = getStepExerciseNameTitle();
         this.progressView = getStepExerciseNameProgressRatio();
@@ -72,9 +73,8 @@ public class ExerciseNameRow extends WorkoutStepRow {
         String name = currentWorkoutStep.getName();
 
         if (name == null || name.isEmpty()) {
-            return database.exerciseDAO()
-                    .getExerciseByID(
-                            currentWorkoutStep.getExerciseID())
+            return dao
+                    .getExerciseByID(currentWorkoutStep.getExerciseID())
                     .getName();
         }
         return name;
@@ -107,16 +107,15 @@ public class ExerciseNameRow extends WorkoutStepRow {
 
     private int getCurrentProgressNumber() {
         List<Integer> numbers =
-                database.workoutDAO()
-                        .getNumbersOfExerciseInWorkout(
-                                currentWorkoutStep.getExerciseID(),
-                                currentWorkoutStep.getWorkoutID());
+                dao.getNumbersOfExerciseInWorkout(
+                        currentWorkoutStep.getExerciseID(),
+                        currentWorkoutStep.getWorkoutID());
 
         return numbers.indexOf(currentWorkoutStep.getNumber()) + 1;
     }
 
     private Integer getTotalProgressNumber() {
-        return database.workoutDAO().getOccurrencesOfExerciseInWorkout(
+        return dao.getOccurrencesOfExerciseInWorkout(
                 currentWorkoutStep.getExerciseID(), currentWorkoutStep.getWorkoutID());
     }
 }

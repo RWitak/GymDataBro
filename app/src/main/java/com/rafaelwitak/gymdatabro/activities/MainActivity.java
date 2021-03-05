@@ -19,11 +19,9 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rafaelwitak.gymdatabro.R;
-import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-    public static GymBroDatabase database;
     private IntentMaker intentMaker;
     private OnBackPressedCallback backPressedCallback;
     private ActivityMainBinding binding;
@@ -34,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
         this.intentMaker = new IntentMaker(this);
         this.binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        database = GymBroDatabase.getDatabase(this);
 
         setStatusBarColor();
         setInfoText();

@@ -5,18 +5,18 @@
 package com.rafaelwitak.gymdatabro.exerciseHandling;
 
 import com.rafaelwitak.gymdatabro.database.Exercise;
-import com.rafaelwitak.gymdatabro.database.ExerciseDAO;
+import com.rafaelwitak.gymdatabro.database.MasterDao;
 
 import java.util.List;
 
 public class ExerciseSanityChecker {
 
-public static int getStatus(Exercise exercise, ExerciseDAO exerciseDAO) {
+public static int getStatus(Exercise exercise, MasterDao dao) {
     if (exercise.getName() == null)
         return Status.NAME_MISSING;
     if (exercise.getName().length() <= 2)
         return Status.NAME_TOO_SHORT;
-    if (isExistingExerciseName(exercise, exerciseDAO))
+    if (isExistingExerciseName(exercise, dao))
         return Status.NAME_ALREADY_EXISTS;
 
     return Status.SAVABLE;
@@ -25,10 +25,10 @@ public static int getStatus(Exercise exercise, ExerciseDAO exerciseDAO) {
     @SuppressWarnings("RedundantIfStatement")
     private static boolean isExistingExerciseName(
             Exercise exercise,
-            ExerciseDAO exerciseDAO) {
+            MasterDao dao) {
 
     List<Exercise> savedExercisesWithName =
-            exerciseDAO.getExercisesByName(exercise.getName());
+            dao.getExercisesByName(exercise.getName());
 
         if (savedExercisesWithName.isEmpty()) {
             return false;

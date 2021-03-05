@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.rafaelwitak.gymdatabro.database.Exercise;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
+import com.rafaelwitak.gymdatabro.database.MasterDao;
 import com.rafaelwitak.gymdatabro.database.Workout;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditWorkoutStepBinding;
@@ -38,7 +39,7 @@ import static com.rafaelwitak.gymdatabro.util.StringHelper.getNonNullString;
 public class EditWorkoutStepActivity extends AppCompatActivity {
 
     private final HashMap<String, EditText> editTextMap = new HashMap<>();
-    private GymBroDatabase database;
+    private MasterDao dao;
     private ActivityEditWorkoutStepBinding binding;
     private WorkoutStep workoutStep;
     private boolean isExistingWorkoutStep;
@@ -47,7 +48,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.database = GymBroDatabase.getDatabase(this);
+        this.dao = GymBroDatabase.getDatabase(this).masterDao();
 
         this.isExistingWorkoutStep = getIsExistingWorkoutStep(getIntent());
         this.workoutStep = getWorkoutStep();
@@ -73,7 +74,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
     private WorkoutStep getWorkoutStepFromIntent(@NonNull Intent intent) {
         int workoutId = intent.getIntExtra("workoutId", -1);
         int stepNumber = intent.getIntExtra("stepNumber", -1);
-        return database.workoutStepDAO().getWorkoutStep(workoutId, stepNumber);
+        return dao.getWorkoutStep(workoutId, stepNumber);
     }
 
 
@@ -197,8 +198,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
 
         if (!isExistingWorkoutStep) {
             workoutStep.setNumber(
-                    database.workoutStepDAO()
-                            .getNumberOfStepsInWorkout(workoutStep.getWorkoutID()));
+                    dao.getNumberOfStepsInWorkout(workoutStep.getWorkoutID()));
         }
     }
 
@@ -226,8 +226,8 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
     private int getSanityStatus() {
         return WorkoutStepSanityChecker.getStatus(
                     workoutStep,
-                    database.workoutStepDAO(),
-                    database.exerciseDAO(),
+                    dao,
+                    dao,
                     isExistingWorkoutStep);
     }
 
@@ -235,7 +235,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
     private WorkoutStepSaveHandler getSaveHandler() {
         return new WorkoutStepSaveHandler(
                 this,
-                this.database.workoutStepDAO(),
+                dao,
                 this.workoutStep,
                 this.isExistingWorkoutStep);
     }
@@ -317,7 +317,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
                         View view,
                         int i,
                         long l) {
-                    Workout workout = database.workoutDAO().getWorkoutByName(
+                    Workout workout = dao.getWorkoutByName(
                             (String) adapterView.getItemAtPosition(i));
                     binding.editWorkoutStepWorkoutIdEdit.setText(String.valueOf(workout.getId()));
                 }
@@ -333,7 +333,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         private ArrayList<CharSequence> getWorkoutNamesArray() {
             ArrayList<CharSequence> workoutNames = new ArrayList<>();
 
-            for (Workout workout : database.workoutDAO().getAllWorkouts()) {
+            for (Workout workout : dao.getAllWorkouts()) {
                 workoutNames.add(workout.getName());
             }
             return workoutNames;
@@ -346,7 +346,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
                 @Override
                 public void onItemSelected(
                         @NonNull AdapterView<?> adapterView, View view, int i, long l) {
-                    Exercise exercise = database.exerciseDAO().getExercisesByName(
+                    Exercise exercise = dao.getExercisesByName(
                             adapterView.getItemAtPosition(i).toString()).get(0);
                     binding.editWorkoutStepExerciseIdEdit.setText(String.valueOf(exercise.getId()));
                 }
@@ -362,7 +362,7 @@ public class EditWorkoutStepActivity extends AppCompatActivity {
         private ArrayList<CharSequence> getExerciseNamesArray() {
             ArrayList<CharSequence> exerciseNames = new ArrayList<>();
 
-            for (Exercise exercise : database.exerciseDAO().getAllExercises()) {
+            for (Exercise exercise : dao.getAllExercises()) {
                 exerciseNames.add(exercise.getName());
             }
             return exerciseNames;

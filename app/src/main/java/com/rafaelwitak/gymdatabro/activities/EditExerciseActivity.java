@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.rafaelwitak.gymdatabro.database.Exercise;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
+import com.rafaelwitak.gymdatabro.database.MasterDao;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditExerciseBinding;
 import com.rafaelwitak.gymdatabro.exerciseHandling.ExerciseSanityChecker;
 import com.rafaelwitak.gymdatabro.exerciseHandling.ExerciseSaveHandler;
@@ -30,7 +31,7 @@ import static com.rafaelwitak.gymdatabro.util.StringHelper.getNonNullString;
 
 public class EditExerciseActivity extends AppCompatActivity {
 
-    private GymBroDatabase database;
+    private MasterDao dao;
     private ActivityEditExerciseBinding binding;
     private Exercise exercise;
     private boolean isExistingExercise;
@@ -41,7 +42,7 @@ public class EditExerciseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.database = GymBroDatabase.getDatabase(this);
+        this.dao = GymBroDatabase.getDatabase(this).masterDao();
 
         Intent intent = getIntent();
         this.isExistingExercise = getIsExistingExercise(intent);
@@ -55,7 +56,7 @@ public class EditExerciseActivity extends AppCompatActivity {
 
         this.saveHandler =
                 new ExerciseSaveHandler(this,
-                        this.database.exerciseDAO(),
+                        this.dao,
                         this.exercise,
                         this.isExistingExercise);
     }
@@ -73,7 +74,7 @@ public class EditExerciseActivity extends AppCompatActivity {
 
     private Exercise getExerciseFromIntent(@NonNull Intent intent) {
         int exerciseId = intent.getIntExtra("ExerciseId", -1);
-        return database.exerciseDAO().getExerciseByID(exerciseId);
+        return dao.getExerciseByID(exerciseId);
     }
 
     @NonNull
@@ -130,7 +131,7 @@ public class EditExerciseActivity extends AppCompatActivity {
                 ExerciseSanityChecker
                         .getStatus(
                                 updatedExercise,
-                                this.database.exerciseDAO());
+                                this.dao);
 
         if (sanityStatus == ExerciseSanityChecker.Status.SAVABLE) {
             this.saveHandler.saveAndFinish();

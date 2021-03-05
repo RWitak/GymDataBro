@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
+import com.rafaelwitak.gymdatabro.database.MasterDao;
 import com.rafaelwitak.gymdatabro.database.Program;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditProgramBinding;
 import com.rafaelwitak.gymdatabro.programHandling.EditProgramRowHolder;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class EditProgramActivity extends AppCompatActivity {
 
-    private GymBroDatabase database;
+    private MasterDao dao;
     private ActivityEditProgramBinding binding;
     private Program program;
     private boolean isNewProgram;
@@ -30,7 +31,7 @@ public class EditProgramActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.database = GymBroDatabase.getDatabase(this);
+        this.dao = GymBroDatabase.getDatabase(this).masterDao();
 
         int programID = getIntent().getIntExtra("programID", -1);
         isNewProgram = (programID == -1);
@@ -48,7 +49,7 @@ public class EditProgramActivity extends AppCompatActivity {
         if (isNewProgram) {
             return new Program();
         }
-        return database.programDAO().getProgramByID(programID);
+        return dao.getProgramByID(programID);
     }
 
     private EditProgramRowHolder getEditProgramRowHolder() {
@@ -102,7 +103,7 @@ public class EditProgramActivity extends AppCompatActivity {
 
     private boolean isUniqueProgramName(Program currentProgram) {
         String name = currentProgram.getName();
-        List<Program> programs = database.programDAO().getAllPrograms();
+        List<Program> programs = dao.getAllPrograms();
 
         for ( Program program : programs) {
             if (name.equalsIgnoreCase(program.getName())) {
@@ -124,6 +125,6 @@ public class EditProgramActivity extends AppCompatActivity {
     }
 
     private void saveProgramToDatabase(Program program) {
-        database.programDAO().insertProgram(program);
+        dao.insertProgram(program);
     }
 }
