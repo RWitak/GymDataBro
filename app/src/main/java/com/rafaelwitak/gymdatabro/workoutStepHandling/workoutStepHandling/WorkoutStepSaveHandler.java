@@ -32,8 +32,10 @@ public class WorkoutStepSaveHandler {
     }
 
     public void save(int numberSets) {
-        // TODO: refactor update part
-        for (int i = 0; i < numberSets; i++, workoutStep.setNumber(workoutStep.getNumber() + 1)) {
+        int stepNumber = workoutStep.getNumber();
+
+        for (int i = 0; i < numberSets; i++, stepNumber++) {
+            workoutStep.setNumber(stepNumber);
             saveChangesToDb();
         }
     }
