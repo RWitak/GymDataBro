@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/scrollView2"/>
 
+    <!--TODO: 2021-03-08 transfer constrainedHeight to style, test in all layouts -->
     <ScrollView
         android:id="@+id/scrollView2"
         style="@style/BasicForeground"
@@ -26,13 +27,15 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/choose_program_toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0">
+        app:layout_constraintVertical_bias="0"
+        app:layout_constrainedHeight="true">
 
-        <!--TODO: 2021-02-13 Test scrolling with many rows -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/choose_program_recycler"
+            tools:itemCount="55"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            app:layout_constrainedHeight="true"
+            android:layout_height="0dp"/>
 
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
