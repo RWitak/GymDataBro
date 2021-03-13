@@ -54,19 +54,10 @@
         <item name="android:layout_margin">10dp</item>
     </style>
 
-    <style name="NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="titleTextAppearance">@style/ToolbarTitleTextAppearance</item>
         <item name="subtitleTextAppearance">@style/ToolbarSubtitleTextAppearance</item>
     </style>
-
-    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="ChooseProgramRow" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width">match_parent</item>
@@ -94,10 +85,6 @@
 
     <style name="ToolbarSubtitleTextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
         <item name="android:fontFamily">@font/montserrat</item>
-    </style>
-
-    <style name="ResponsiveForegroundWide" parent="ResponsiveForeground">
-        <item name="android:layout_margin">8dp</item>
     </style>
 
     <style name="PrimaryButton">

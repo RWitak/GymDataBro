@@ -4,22 +4,10 @@
 
 <resources>
     <string name="app_name">GymDataBro</string>
-    <string name="tab1">Tab1</string>
-    <string name="tab2">Tab2</string>
-    <string name="tab3">Tab3</string>
-    <string name="title_activity_workout_step">Next Step</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="kg">kg</string>
     <string name="rpe">RPE</string>
     <string name="duration">Duration (s)</string>
-    <string name="s">s</string>
     <string name="rest">Rest (s)</string>
     <string name="notes">Notes</string>
     <string name="pain_level">Pain Level</string>
@@ -34,16 +22,13 @@
     <string name="edit_program_label_links">Links</string>
     <string name="edit_program_label_info">Info</string>
     <string name="edit_program_label_notes">Notes</string>
-    <string name="edit_program_label_number_of_workouts">Number of Workouts</string>
     <string name="edit_program_button_save_text">Save Program</string>
     <string name="edit_exercise_button_save_text">Save Exercise</string>
     <string name="edit_exercise_label_name">Name</string>
     <string name="edit_exercise_label_cues">Cues</string>
     <string name="edit_exercise_label_links">Links</string>
     <string name="edit_exercise_label_equipment">Equipment</string>
-    <string name="edit_exercise_label_pr">OneRepMax</string>
     <string name="edit_workout_step_label_name">Name</string>
-    <string name="edit_workout_step_label_number">Number</string>
     <string name="edit_workout_step_label_workout_id">WorkoutID</string>
     <string name="edit_workout_step_label_exercise_id">ExerciseID</string>
     <string name="edit_workout_step_label_reps">Reps</string>
@@ -56,14 +41,10 @@
     <string name="edit_workout_step_button_save_exit_text">Save WorkoutStep &amp; Exit</string>
     <string name="edit_workout_step_label_number_sets">Number of Sets</string>
     <string name="edit_workout_step_button_save_add_more_text">Save &amp; Add More</string>
-    <string name="gym_bro">Gym\nBro</string>
     <string name="cont_descr_main_bg">A gym bro showing his abs.</string>
     <string name="main_resume_button_text">Start Workout</string>
     <string name="main_choose_program_button_text">Choose Program</string>
     <string name="cont_desc_main_info_button">Info</string>
-    <string name="logo_text_gym_bro">GYM\nBRO</string>
-    <string name="logo_text_data">Data</string>
-    <string name="workout_step_expectation"><![CDATA[Expectation ]]></string>
     <string name="workout_step_reality"><![CDATA[Reality ]]></string>
     <string name="step_explanation_goal"><![CDATA[Goal ]]></string>
     <string name="gymdatabro_logo">GymDataBro Logo</string>
