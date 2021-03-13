@@ -4,21 +4,19 @@
 
 package com.rafaelwitak.gymdatabro.programHandling;
 
-import android.content.Context;
-
 import com.rafaelwitak.gymdatabro.database.Program;
+import com.rafaelwitak.gymdatabro.database.WorkoutDAO;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditProgramBinding;
 import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.InfoRow;
 import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.LinksRow;
 import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.NameRow;
 import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.NotesRow;
 import com.rafaelwitak.gymdatabro.programHandling.editProgramRows.SourceRow;
-import com.rafaelwitak.gymdatabro.util.EditRowHolder;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class EditProgramRowHolder extends EditRowHolder {
+public class EditProgramRowHolder {
     private final Program program;
 
     private final NameRow nameRow;
@@ -26,12 +24,13 @@ public class EditProgramRowHolder extends EditRowHolder {
     private final LinksRow linksRow;
     private final InfoRow infoRow;
     private final NotesRow notesRow;
+    private final WorkoutDAO dao;
 
     public EditProgramRowHolder(
-            Context context,
+            WorkoutDAO workoutDAO,
             ActivityEditProgramBinding binding,
             Program program) {
-        super(context);
+        this.dao = workoutDAO;
         this.program = program;
 
         this.nameRow = new NameRow(binding);
@@ -66,8 +65,7 @@ public class EditProgramRowHolder extends EditRowHolder {
     }
 
     private void setNumberOfWorkouts() {
-        program.setNumber_workouts(database.workoutDAO()
-                .getNumberOfWorkoutsByProgram(program.getId()));
+        program.setNumber_workouts(dao.getNumberOfWorkoutsByProgram(program.getId()));
     }
 
     public void setupRowTexts(Program program) {
