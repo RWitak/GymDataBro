@@ -55,6 +55,10 @@ public class IntentMaker {
         return new Intent(context, ChooseProgramActivity.class);
     }
 
+    public Intent getCreateProgramIntent() {
+        return new Intent(context, EditProgramActivity.class);
+    }
+
     @NonNull
     private Intent createWorkoutStepIntentWithExtras(
             WorkoutInstance workoutInstance,

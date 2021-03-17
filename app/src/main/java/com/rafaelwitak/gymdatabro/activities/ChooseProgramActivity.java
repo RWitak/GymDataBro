@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.programHandling.ChooseProgramAdapter;
@@ -32,9 +33,22 @@ public class ChooseProgramActivity extends AppCompatActivity {
         setupViews();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupRecyclerView();
+    }
+
     private void setupViews() {
         setupToolbar();
         setupRecyclerView();
+        setupFab();
+    }
+
+    private void setupFab() {
+        FloatingActionButton fabAdd = findViewById(R.id.choose_program_fab_add);
+        fabAdd.setOnClickListener(v ->
+                startActivity(new IntentMaker(getBaseContext()).getCreateProgramIntent()));
     }
 
     private void setupToolbar() {

@@ -53,7 +53,7 @@ public class EditProgramActivity extends AppCompatActivity {
     }
 
     private EditProgramRowHolder getEditProgramRowHolder() {
-        return new EditProgramRowHolder(this, binding, program);
+        return new EditProgramRowHolder(dao, binding, program);
     }
 
     private Program getProgramFromRowHolder() {
@@ -76,6 +76,7 @@ public class EditProgramActivity extends AppCompatActivity {
     private void setupToolbar() {
         Toolbar toolbar = binding.editProgramToolbar.getRoot();
         setSupportActionBar(toolbar);
+        // FIXME: 17.03.2021 Title not changing
         toolbar.setTitle(isNewProgram ? "Create Program" : "Edit Program");
     }
 

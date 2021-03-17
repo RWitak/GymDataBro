@@ -34,10 +34,11 @@
             android:layout_width="match_parent"
             app:layout_constrainedHeight="true"
             android:layout_height="0dp"/>
-
+<!-- FIXME 2021-03-17: Save Button gives wrong impression of shorter list when keyboard active -->
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/choose_program_fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
