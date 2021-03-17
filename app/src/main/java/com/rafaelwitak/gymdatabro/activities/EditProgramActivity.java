@@ -11,6 +11,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.MasterDao;
 import com.rafaelwitak.gymdatabro.database.Program;
@@ -75,9 +76,10 @@ public class EditProgramActivity extends AppCompatActivity {
 
     private void setupToolbar() {
         Toolbar toolbar = binding.editProgramToolbar.getRoot();
+        toolbar.setTitle(isNewProgram
+                ? getString(R.string.create_program)
+                : getString(R.string.edit_program));
         setSupportActionBar(toolbar);
-        // FIXME: 17.03.2021 Title not changing
-        toolbar.setTitle(isNewProgram ? "Create Program" : "Edit Program");
     }
 
     private void setupEditButton() {

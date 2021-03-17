@@ -49,5 +49,5 @@
         app:maxImageSize="36dp"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="@string/create_program" />
+        android:contentDescription="@string/create_program_fab_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>

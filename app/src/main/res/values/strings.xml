@@ -48,5 +48,7 @@
     <string name="workout_step_reality"><![CDATA[Reality ]]></string>
     <string name="step_explanation_goal"><![CDATA[Goal ]]></string>
     <string name="gymdatabro_logo">GymDataBro Logo</string>
-    <string name="create_program">Create new Program</string>
+    <string name="create_program_fab_content">Create new Program</string>
+    <string name="create_program">Create Program</string>
+    <string name="edit_program">Edit Program</string>
 </resources>
