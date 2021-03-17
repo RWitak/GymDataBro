@@ -45,12 +45,6 @@ public class ChooseProgramActivity extends AppCompatActivity {
         setupFab();
     }
 
-    private void setupFab() {
-        FloatingActionButton fabAdd = findViewById(R.id.choose_program_fab_add);
-        fabAdd.setOnClickListener(v ->
-                startActivity(new IntentMaker(getBaseContext()).getCreateProgramIntent()));
-    }
-
     private void setupToolbar() {
         chooseProgramToolbar.setTitle(R.string.choose_program_toolbar_title);
     }
@@ -64,5 +58,11 @@ public class ChooseProgramActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new ChooseProgramAdapter(database.masterDao().getAllPrograms()));
+    }
+
+    private void setupFab() {
+        FloatingActionButton fabAdd = findViewById(R.id.choose_program_fab_add);
+        fabAdd.setOnClickListener(v ->
+                startActivity(new IntentMaker(getBaseContext()).getCreateProgramIntent()));
     }
 }
