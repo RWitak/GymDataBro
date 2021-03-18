@@ -127,6 +127,7 @@
 
         </ScrollView>
 
+        <!-- FIXME 2021-03-18: Save Button gives wrong impression of shorter list when keyboard active -->
         <Button
             android:id="@+id/edit_program_button_edit"
             style="@style/PrimaryButton"
