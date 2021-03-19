@@ -24,12 +24,13 @@
         android:id="@+id/edit_program_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_program_toolbar"
-        android:fillViewport="true">
+        app:layout_constraintTop_toBottomOf="@id/edit_program_toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/edit_program_body"
@@ -38,19 +39,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_program_toolbar"
-            app:layout_constraintVertical_chainStyle="spread_inside">
+            app:layout_constraintTop_toBottomOf="@+id/edit_program_toolbar" >
 
             <LinearLayout
                 android:id="@+id/edit_program_table_foreground"
                 style="@style/ResponsiveForeground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/edit_program_button_edit"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="spread_inside">
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintVertical_chainStyle="spread">
 
                 <TableLayout
                     android:id="@+id/edit_program_table"
@@ -139,12 +140,39 @@
                 android:id="@+id/edit_program_button_edit"
                 style="@style/PrimaryButton"
                 android:text="@string/edit_program_button_save_text"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/edit_program_button_add_workout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_program_table_foreground"
-                app:layout_constraintWidth_percent="0.75"
-                app:layout_constraintVertical_chainStyle="spread_inside"/>
+                app:layout_constraintVertical_bias="1.0"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintWidth_percent="0.75" />
+
+            <Button
+                android:id="@+id/edit_program_button_add_workout"
+                style="@style/PrimaryButton"
+                android:text="@string/add_workout"
+                app:layout_constraintBottom_toTopOf="@+id/edit_program_button_delete_program"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_program_button_edit"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintWidth_percent="0.75" />
+
+            <Button
+                android:id="@+id/edit_program_button_delete_program"
+                style="@style/PrimaryButton"
+                android:background="@color/colorBad"
+                android:textColor="@color/colorLightBackground"
+                android:text="@string/delete_program"
+                android:layout_marginTop="48dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_program_button_add_workout"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintWidth_percent="0.75" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

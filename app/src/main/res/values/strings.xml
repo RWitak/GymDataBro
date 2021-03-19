@@ -51,4 +51,6 @@
     <string name="create_program_fab_content">Create new Program</string>
     <string name="create_program">Create Program</string>
     <string name="edit_program">Edit Program</string>
+    <string name="add_workout">Add Workout</string>
+    <string name="delete_program">Delete Program</string>
 </resources>
