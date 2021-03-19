@@ -53,4 +53,8 @@
     <string name="edit_program">Edit Program</string>
     <string name="add_workout">Add Workout</string>
     <string name="delete_program">Delete Program</string>
+    <string name="delete_warning_message">Deleting this can not be undone!</string>
+    <string name="delete_warning_title">WARNING</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 </resources>

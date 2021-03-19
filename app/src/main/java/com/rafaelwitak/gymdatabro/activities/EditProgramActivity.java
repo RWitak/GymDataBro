@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 
 import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
@@ -17,10 +18,13 @@ import com.rafaelwitak.gymdatabro.database.MasterDao;
 import com.rafaelwitak.gymdatabro.database.Program;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditProgramBinding;
 import com.rafaelwitak.gymdatabro.programHandling.EditProgramRowHolder;
+import com.rafaelwitak.gymdatabro.util.DeletionWarningDialogFragment;
 
 import java.util.List;
 
-public class EditProgramActivity extends AppCompatActivity {
+public class EditProgramActivity
+        extends AppCompatActivity
+        implements DeletionWarningDialogFragment.WarningDialogListener {
 
     private MasterDao dao;
     private ActivityEditProgramBinding binding;
@@ -66,6 +70,17 @@ public class EditProgramActivity extends AppCompatActivity {
         setupToolbar();
         setupRows();
         setupEditButton();
+        setupDeleteButton();
+        // TODO: 19.03.2021 only show this and Add Workout for existing programs.
+        // TODO: 19.03.2021 for new programs show Cancel Button instead
+    }
+
+    private void setupDeleteButton() {
+        Button deleteButton = binding.editProgramButtonDeleteProgram;
+        deleteButton.setOnClickListener(v -> {
+            DeletionWarningDialogFragment warning = new DeletionWarningDialogFragment();
+            warning.show(getSupportFragmentManager(), "ProgramDeletionWarningDialogFragment");
+        });
     }
 
     private void setupRows() {
@@ -120,6 +135,7 @@ public class EditProgramActivity extends AppCompatActivity {
     }
 
 
+
     private void saveAndReturn(Program program) {
         saveProgramToDatabase(program);
 
@@ -129,5 +145,17 @@ public class EditProgramActivity extends AppCompatActivity {
 
     private void saveProgramToDatabase(Program program) {
         dao.insertProgram(program);
+    }
+
+    @Override
+    public void onPositiveClick(DialogFragment dialog) {
+        dao.deleteProgram(program);
+        finish();
+    }
+
+    // TODO: 19.03.2021 Refactor whole file, beginning here
+    @Override
+    public void onNegativeClick(DialogFragment dialog) {
+        dialog.dismiss();
     }
 }

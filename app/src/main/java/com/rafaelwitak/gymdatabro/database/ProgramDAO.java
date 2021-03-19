@@ -5,6 +5,7 @@
 package com.rafaelwitak.gymdatabro.database;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -28,4 +29,8 @@ public interface ProgramDAO {
 
     @Update
     void updateProgram(Program program);
+
+    @Delete
+    void deleteProgram(Program program);
+    // TODO: 19.03.2021 Test with program that already has Workouts / W-Instances / ... referencing it.
 }
