@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
@@ -19,6 +20,8 @@ import com.rafaelwitak.gymdatabro.database.Program;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditProgramBinding;
 import com.rafaelwitak.gymdatabro.programHandling.EditProgramRowHolder;
 import com.rafaelwitak.gymdatabro.util.DeletionWarningDialogFragment;
+
+import org.jetbrains.annotations.Contract;
 
 import java.util.List;
 
@@ -38,12 +41,12 @@ public class EditProgramActivity
 
         this.dao = GymBroDatabase.getDatabase(this).masterDao();
 
-        int programID = getIntent().getIntExtra("programID", -1);
-        isNewProgram = (programID == -1);
-
+        final int NEW_PROGRAM_ID = -1;
+        int programID = getIntent().getIntExtra("programID", NEW_PROGRAM_ID);
+        this.isNewProgram = (programID == NEW_PROGRAM_ID);
         this.program = getProgramByID(programID);
 
-        binding = ActivityEditProgramBinding.inflate(getLayoutInflater());
+        this.binding = ActivityEditProgramBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         this.holder = getEditProgramRowHolder();
         setupViews();
@@ -57,6 +60,8 @@ public class EditProgramActivity
         return dao.getProgramByID(programID);
     }
 
+    @NonNull
+    @Contract(" -> new")
     private EditProgramRowHolder getEditProgramRowHolder() {
         return new EditProgramRowHolder(dao, binding, program);
     }
@@ -69,6 +74,10 @@ public class EditProgramActivity
     private void setupViews() {
         setupToolbar();
         setupRows();
+        setupButtons();
+    }
+
+    private void setupButtons() {
         setupEditButton();
         setupDeleteButton();
         // TODO: 19.03.2021 only show this and Add Workout for existing programs.
@@ -77,10 +86,15 @@ public class EditProgramActivity
 
     private void setupDeleteButton() {
         Button deleteButton = binding.editProgramButtonDeleteProgram;
-        deleteButton.setOnClickListener(v -> {
-            DeletionWarningDialogFragment warning = new DeletionWarningDialogFragment();
-            warning.show(getSupportFragmentManager(), "ProgramDeletionWarningDialogFragment");
-        });
+
+        if (isNewProgram) {
+            deleteButton.setText(R.string.cancel);
+        } else {
+            deleteButton.setOnClickListener(v ->
+                    new DeletionWarningDialogFragment().show(
+                            getSupportFragmentManager(),
+                            "ProgramDeletionWarningDialogFragment"));
+        }
     }
 
     private void setupRows() {
@@ -105,35 +119,28 @@ public class EditProgramActivity
                 saveAndReturn(program);
             }
             else {
-                holder.displayNameError("Enter a unique and meaningful name!");
+                holder.displayNameError(getString(R.string.unique_name_error));
             }
         });
     }
 
 
-    private boolean isSavableProgram(Program program) {
-        return (isValidProgramName(program) && isUniqueProgramName(program));
-    }
-
-    private boolean isValidProgramName(Program currentProgram) {
-        return currentProgram.getName().length() > 2;
-    }
-
-    private boolean isUniqueProgramName(Program currentProgram) {
+    private boolean isSavableProgram(@NonNull Program currentProgram) {
         String name = currentProgram.getName();
-        List<Program> programs = dao.getAllPrograms();
+        if (name.length() < 3) {
+            return false;
+        }
 
-        for ( Program program : programs) {
+        List<Program> programs = dao.getAllPrograms();
+        for (Program program : programs) {
             if (name.equalsIgnoreCase(program.getName())) {
                 if (currentProgram.getId() != program.getId()) {
                     return false;
                 }
             }
         }
-
         return true;
     }
-
 
 
     private void saveAndReturn(Program program) {
@@ -148,14 +155,14 @@ public class EditProgramActivity
     }
 
     @Override
-    public void onPositiveClick(DialogFragment dialog) {
+    public void onPositiveClick(@NonNull DialogFragment dialog) {
         dao.deleteProgram(program);
         finish();
     }
 
     // TODO: 19.03.2021 Refactor whole file, beginning here
     @Override
-    public void onNegativeClick(DialogFragment dialog) {
+    public void onNegativeClick(@NonNull DialogFragment dialog) {
         dialog.dismiss();
     }
 }

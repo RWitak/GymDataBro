@@ -2,15 +2,15 @@
   ~ Copyright (c) 2020, Rafael Witak.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BasicBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.EditProgramActivity">
+    tools:context=".activities.EditProgramActivity"
+    tools:visibility="visible">
 
     <include
         android:id="@+id/edit_program_toolbar"
@@ -39,7 +39,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_program_toolbar" >
+            app:layout_constraintTop_toBottomOf="@+id/edit_program_toolbar">
 
             <LinearLayout
                 android:id="@+id/edit_program_table_foreground"
@@ -139,8 +139,8 @@
             <Button
                 android:id="@+id/edit_program_button_edit"
                 style="@style/PrimaryButton"
-                android:text="@string/edit_program_button_save_text"
                 android:layout_marginTop="32dp"
+                android:text="@string/edit_program_button_save_text"
                 app:layout_constraintBottom_toTopOf="@+id/edit_program_button_add_workout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -163,10 +163,10 @@
             <Button
                 android:id="@+id/edit_program_button_delete_program"
                 style="@style/PrimaryButton"
-                android:background="@color/colorBad"
-                android:textColor="@color/colorLightBackground"
-                android:text="@string/delete_program"
                 android:layout_marginTop="48dp"
+                android:background="@color/colorBad"
+                android:text="@string/delete_program"
+                android:textColor="@color/colorLightBackground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
