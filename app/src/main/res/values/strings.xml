@@ -22,7 +22,7 @@
     <string name="edit_program_label_links">Links</string>
     <string name="edit_program_label_info">Info</string>
     <string name="edit_program_label_notes">Notes</string>
-    <string name="edit_program_button_save_text">Save Program</string>
+    <string name="edit_program_button_save_text">Save &amp; Exit</string>
     <string name="edit_exercise_button_save_text">Save Exercise</string>
     <string name="edit_exercise_label_name">Name</string>
     <string name="edit_exercise_label_cues">Cues</string>
@@ -58,4 +58,7 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="unique_name_error">Enter a unique and meaningful name!</string>
+    <string name="create_exit"><![CDATA[Create & Exit]]></string>
+    <string name="save_exit"><![CDATA[Save & Exit]]></string>
+    <string name="create_add_workout"><![CDATA[Create & Add Workout]]></string>
 </resources>

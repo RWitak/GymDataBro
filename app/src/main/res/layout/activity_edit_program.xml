@@ -137,7 +137,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/edit_program_button_edit"
+                android:id="@+id/edit_program_button_save"
                 style="@style/PrimaryButton"
                 android:layout_marginTop="32dp"
                 android:text="@string/edit_program_button_save_text"
@@ -156,7 +156,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/edit_program_button_delete_program"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_program_button_edit"
+                app:layout_constraintTop_toBottomOf="@+id/edit_program_button_save"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintWidth_percent="0.75" />
 

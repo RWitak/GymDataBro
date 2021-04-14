@@ -4,7 +4,6 @@
 
 package com.rafaelwitak.gymdatabro.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -20,8 +19,6 @@ import com.rafaelwitak.gymdatabro.database.Program;
 import com.rafaelwitak.gymdatabro.databinding.ActivityEditProgramBinding;
 import com.rafaelwitak.gymdatabro.programHandling.EditProgramRowHolder;
 import com.rafaelwitak.gymdatabro.util.DeletionWarningDialogFragment;
-
-import org.jetbrains.annotations.Contract;
 
 import java.util.List;
 
@@ -48,7 +45,7 @@ public class EditProgramActivity
 
         this.binding = ActivityEditProgramBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        this.holder = getEditProgramRowHolder();
+        this.holder = new EditProgramRowHolder(dao, binding, program);
         setupViews();
     }
 
@@ -60,47 +57,10 @@ public class EditProgramActivity
         return dao.getProgramByID(programID);
     }
 
-    @NonNull
-    @Contract(" -> new")
-    private EditProgramRowHolder getEditProgramRowHolder() {
-        return new EditProgramRowHolder(dao, binding, program);
-    }
-
-    private Program getProgramFromRowHolder() {
-        return this.holder.getProgram();
-    }
-
-
     private void setupViews() {
         setupToolbar();
         setupRows();
         setupButtons();
-    }
-
-    private void setupButtons() {
-        setupEditButton();
-        setupDeleteButton();
-        // TODO: 19.03.2021 only show this and Add Workout for existing programs.
-        // TODO: 19.03.2021 for new programs show Cancel Button instead
-    }
-
-    private void setupDeleteButton() {
-        Button deleteButton = binding.editProgramButtonDeleteProgram;
-
-        if (isNewProgram) {
-            deleteButton.setText(R.string.cancel);
-        } else {
-            deleteButton.setOnClickListener(v ->
-                    new DeletionWarningDialogFragment().show(
-                            getSupportFragmentManager(),
-                            "ProgramDeletionWarningDialogFragment"));
-        }
-    }
-
-    private void setupRows() {
-        if (!isNewProgram) {
-            this.holder.setupRowTexts(this.program);
-        }
     }
 
     private void setupToolbar() {
@@ -111,19 +71,40 @@ public class EditProgramActivity
         setSupportActionBar(toolbar);
     }
 
-    private void setupEditButton() {
-        Button editButton = binding.editProgramButtonEdit;
+    private void setupRows() {
+        if (!isNewProgram) {
+            this.holder.setupRowTexts(this.program);
+        }
+    }
+
+    private void setupButtons() {
+        setupSaveButton();
+        setupAddWorkoutButton();
+        setupDeleteButton();
+    }
+
+    private void setupSaveButton() {
+        Button editButton = binding.editProgramButtonSave;
+
+        if (isNewProgram) {
+            editButton.setText(R.string.create_exit);
+        } else {
+            editButton.setText(R.string.save_exit);
+        }
+
         editButton.setOnClickListener(view -> {
             Program program = getProgramFromRowHolder();
             if (isSavableProgram(program)) {
                 saveAndReturn(program);
-            }
-            else {
+            } else {
                 holder.displayNameError(getString(R.string.unique_name_error));
             }
         });
     }
 
+    private Program getProgramFromRowHolder() {
+        return this.holder.getProgram();
+    }
 
     private boolean isSavableProgram(@NonNull Program currentProgram) {
         String name = currentProgram.getName();
@@ -142,16 +123,36 @@ public class EditProgramActivity
         return true;
     }
 
-
     private void saveAndReturn(Program program) {
         saveProgramToDatabase(program);
-
-        Intent intent = new Intent(this, ChooseProgramActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     private void saveProgramToDatabase(Program program) {
         dao.insertProgram(program);
+    }
+
+    private void setupAddWorkoutButton() {
+        Button addWorkoutButton = binding.editProgramButtonAddWorkout;
+        if (isNewProgram) {
+            addWorkoutButton.setText(R.string.create_add_workout);
+        } else {
+            addWorkoutButton.setText(R.string.add_workout);
+        }
+    }
+
+    private void setupDeleteButton() {
+        Button deleteButton = binding.editProgramButtonDeleteProgram;
+
+        if (isNewProgram) {
+            deleteButton.setText(R.string.cancel);
+            deleteButton.setOnClickListener(v -> finish());
+        } else {
+            deleteButton.setOnClickListener(v ->
+                    new DeletionWarningDialogFragment().show(
+                            getSupportFragmentManager(),
+                            "ProgramDeletionWarningDialogFragment"));
+        }
     }
 
     @Override
