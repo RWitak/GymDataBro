@@ -5,10 +5,11 @@
 package com.rafaelwitak.gymdatabro.database;
 
 import android.util.Log;
-
 import androidx.annotation.Nullable;
 import androidx.room.Dao;
 import androidx.room.Query;
+
+import java.util.List;
 
 @Dao
 public abstract class MasterDao extends WorkoutInstanceDAO
@@ -107,6 +108,11 @@ public abstract class MasterDao extends WorkoutInstanceDAO
                     "WHERE exercise_id = :exerciseId)"
     )
     public abstract WeightRepsRpe getLatestWeightRepsRpeForExercise(int exerciseId);
+
+    @Query(
+            "SELECT * FROM workouts WHERE program_id = :programId"
+    )
+    public abstract List<Workout> getWorkoutsForProgramId(int programId);
 
     public static class WeightRepsRpe {
         public Float weight;

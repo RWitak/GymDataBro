@@ -7,15 +7,9 @@ package com.rafaelwitak.gymdatabro.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
-import com.rafaelwitak.gymdatabro.database.MasterDao;
-import com.rafaelwitak.gymdatabro.database.PerformanceSet;
-import com.rafaelwitak.gymdatabro.database.WorkoutInstance;
-import com.rafaelwitak.gymdatabro.database.WorkoutStep;
+import com.rafaelwitak.gymdatabro.database.*;
 
 public class IntentMaker {
 
@@ -154,5 +148,10 @@ public class IntentMaker {
                     latestInstance.getWorkoutNumber());
         }
         return latestInstance;
+    }
+
+    public Intent getWorkoutListIntent(Program program) {
+        return new Intent(context, WorkoutListActivity.class)
+                .putExtra("programId", program.getId());
     }
 }

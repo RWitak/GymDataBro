@@ -4,14 +4,13 @@
 
 package com.rafaelwitak.gymdatabro.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
-
 import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.MasterDao;
@@ -139,6 +138,10 @@ public class EditProgramActivity
         } else {
             addWorkoutButton.setText(R.string.add_workout);
         }
+        addWorkoutButton.setOnClickListener(view -> {
+                Intent intent = new IntentMaker(this).getWorkoutListIntent(program);
+                startActivity(intent);
+        });
     }
 
     private void setupDeleteButton() {
