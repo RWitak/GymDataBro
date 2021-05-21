@@ -164,7 +164,6 @@ public class EditProgramActivity
         finish();
     }
 
-    // TODO: 19.03.2021 Refactor whole file, beginning here
     @Override
     public void onNegativeClick(@NonNull DialogFragment dialog) {
         dialog.dismiss();
