@@ -4,6 +4,7 @@
 
 package com.rafaelwitak.gymdatabro.activities;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -104,6 +105,17 @@ public class WorkoutListActivity extends AppCompatActivity {
                 }
             }
         };
+        private final View.OnLongClickListener mOnLongClickListener = v -> {
+            String content = ((Workout) v.getTag()).getName();
+            ClipData dragData = ClipData.newPlainText(content, content);
+
+            v.startDrag(dragData,
+                    new View.DragShadowBuilder(v),
+                    null,
+                    0
+            );
+            return true;
+        };
 
         SimpleItemRecyclerViewAdapter(WorkoutListActivity parent,
                                       List<Workout> items,
@@ -128,6 +140,8 @@ public class WorkoutListActivity extends AppCompatActivity {
 
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);
+            holder.itemView.setOnLongClickListener(mOnLongClickListener);
+
         }
 
         @Override
