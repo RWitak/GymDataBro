@@ -8,7 +8,9 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.room.Dao;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
+import java.util.Collection;
 import java.util.List;
 
 @Dao
@@ -113,6 +115,17 @@ public abstract class MasterDao extends WorkoutInstanceDAO
             "SELECT * FROM workouts WHERE program_id = :programId"
     )
     public abstract List<Workout> getWorkoutsForProgramId(int programId);
+
+    @Transaction
+    public void changeWorkouts(Collection<Workout> workouts){
+        for (Workout workout : workouts) {
+            // TODO: 08.06.2021 :
+    //            insert
+    //            update WO-Step reference
+    //            if duplicate copy WO-Steps too!
+    //            recreating WO-Steps necessary for correct order in WO?
+        }
+    };
 
     public static class WeightRepsRpe {
         public Float weight;

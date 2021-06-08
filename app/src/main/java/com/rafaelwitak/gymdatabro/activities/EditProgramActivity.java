@@ -136,7 +136,7 @@ public class EditProgramActivity
         if (isNewProgram) {
             addWorkoutButton.setText(R.string.create_add_workout);
         } else {
-            addWorkoutButton.setText(R.string.add_workout);
+            addWorkoutButton.setText(R.string.go_to_workouts);
         }
         addWorkoutButton.setOnClickListener(view -> {
                 Intent intent = new IntentMaker(this).getWorkoutListIntent(program);
