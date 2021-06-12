@@ -10,8 +10,7 @@ import androidx.room.Dao;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Dao
 public abstract class MasterDao extends WorkoutInstanceDAO
@@ -117,15 +116,29 @@ public abstract class MasterDao extends WorkoutInstanceDAO
     public abstract List<Workout> getWorkoutsForProgramId(int programId);
 
     @Transaction
-    public void changeWorkouts(Collection<Workout> workouts){
-        for (Workout workout : workouts) {
-            // TODO: 08.06.2021 :
-    //            insert
-    //            update WO-Step reference
-    //            if duplicate copy WO-Steps too!
-    //            recreating WO-Steps necessary for correct order in WO?
+    public void updateWorkoutsOfProgram(Collection<Workout> editedWorkoutList) throws CloneNotSupportedException {
+        final List<Workout> oldOrder = null;// TODO: 12.06.2021 Get old Workouts. Order by ID!
+        final ArrayList<Workout> newOrder = new ArrayList<>();
+        final Set<Integer> ids = new TreeSet<>();
+
+        for (Workout workout : editedWorkoutList) {
+            int id = workout.getId();
+            newOrder.add(workout.duplicateWithIdZero());
+            if (ids.contains(id)) {
+                getAllStepsForWorkout(id);
+                // TODO: 12.06.2021 duplicate WO-Steps
+            } else {
+                ids.add(id);
+            }
         }
-    };
+
+        // TODO: 08.06.2021 :
+        //            insert
+        //            update WO-Step reference
+        //            if duplicate copy WO-Steps too!
+        //            recreating WO-Steps necessary for correct order in WO?
+        //            delete WOs in oldOrder one-by-one
+    }
 
     public static class WeightRepsRpe {
         public Float weight;

@@ -136,10 +136,10 @@ public class WorkoutListActivity extends AppCompatActivity {
         //  * delete WO-Steps for deleted Workouts
 
         try {
-            dao.updateWorkouts(workouts);
+            dao.updateWorkoutsOfProgram(workouts);
             Log.d("GDB", "Workouts updated!");
         } catch (Exception e) {
-            throw new RuntimeException("Saving failed! ", e);
+            throw new RuntimeException("Updating workout failed! ", e);
         }
         finishAfterTransition();
     }

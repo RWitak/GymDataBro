@@ -18,7 +18,7 @@ import androidx.room.*;
                 @Index(value = "program_id")
         }
 )
-public class Workout {
+public class Workout implements Cloneable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -80,5 +80,17 @@ public class Workout {
 
     public void setNotes(@Nullable String notes) {
         this.notes = notes;
+    }
+
+    @NonNull
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public Workout duplicateWithIdZero() throws CloneNotSupportedException {
+        Workout duplicate = (Workout) this.clone();
+        duplicate.setId(0); // auto-incremented id sets next value
+        return duplicate;
     }
 }
