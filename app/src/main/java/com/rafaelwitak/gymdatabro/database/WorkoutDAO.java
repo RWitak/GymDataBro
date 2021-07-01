@@ -35,8 +35,11 @@ public interface WorkoutDAO {
     List<Integer> getNumbersOfExerciseInWorkout(int exerciseID, int workoutID);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertWorkout(Workout workout);
+    long insertWorkoutForId(Workout workout);
 
     @Update
     void updateWorkout(Workout workout);
+
+    @Delete
+    void deleteWorkout(Workout workout);
 }

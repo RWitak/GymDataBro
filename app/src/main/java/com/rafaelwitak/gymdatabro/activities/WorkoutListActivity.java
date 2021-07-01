@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -48,6 +49,7 @@ public class WorkoutListActivity extends AppCompatActivity {
     private ActivityWorkoutListBinding binding;
     private RecyclerView recyclerView;
     private List<Workout> workouts;
+    private int programId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,7 @@ public class WorkoutListActivity extends AppCompatActivity {
         this.dao = GymBroDatabase.getDatabase(this).masterDao();
 
         final int ID_ALL_PROGRAMS = -1;
-        int programId = getIntent().getIntExtra("programId", ID_ALL_PROGRAMS);
+        programId = getIntent().getIntExtra("programId", ID_ALL_PROGRAMS);
 
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
@@ -126,17 +128,11 @@ public class WorkoutListActivity extends AppCompatActivity {
     }
 
     private <T extends Collection<Workout>> void saveAndExit(@NonNull T workouts) {
-        // TODO: 05.06.2021 test
-        // TODO: 08.06.2021 :
-        //  * Treat changed Program as new Program entry!
-        //  * reenter all Workouts into DB with new primary key (PK is used for ordering...)
-        //  * link WO-Steps to new ids
-        //  * delete old Workouts
-        //  * for duplicates, copy all data (except PK! but including linked WO-Steps!) to new Workout
-        //  * delete WO-Steps for deleted Workouts
-
+        // TODO: 01.07.2021 implement using the new ordering field of workouts
         try {
-            dao.updateWorkoutsOfProgram(workouts);
+            dao.updateWorkoutsOfProgram(programId,
+                    workouts,
+                    new AlertDialog.Builder(this).setCancelable(true).create());
             Log.d("GDB", "Workouts updated!");
         } catch (Exception e) {
             throw new RuntimeException("Updating workout failed! ", e);

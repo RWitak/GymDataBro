@@ -41,7 +41,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:contentDescription="TODO"
+        android:contentDescription="@string/add_workout"
         app:srcCompat="@drawable/fab_plus"/>
+
+
+    <Button
+        android:id="@+id/workout_list_button_save"
+        style="@style/PrimaryButton"
+        android:layout_width="match_parent"
+        android:layout_marginTop="32dp"
+        android:text="@string/edit_program_button_save_text"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

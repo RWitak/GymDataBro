@@ -5,11 +5,7 @@
 package com.rafaelwitak.gymdatabro.database;
 
 import androidx.annotation.Nullable;
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-import androidx.room.Update;
+import androidx.room.*;
 
 import java.util.List;
 
@@ -17,7 +13,7 @@ import java.util.List;
 public interface WorkoutStepDAO {
     @Nullable
     @Query("SELECT * FROM workout_steps WHERE workout_id=:workoutID")
-    List<WorkoutStep> getAllStepsForWorkout(int workoutID);
+    List<WorkoutStep> getAllStepsForWorkoutId(int workoutID);
 
     @Nullable
     @Query("SELECT * FROM workout_steps WHERE workout_id=:workoutID "
@@ -64,4 +60,7 @@ public interface WorkoutStepDAO {
 
     @Update
     void updateWorkoutStep(WorkoutStep workoutStep);
+
+    @Delete
+    void deleteWorkoutStep(WorkoutStep workoutStep);
 }

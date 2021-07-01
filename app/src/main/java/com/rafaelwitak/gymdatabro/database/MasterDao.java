@@ -5,12 +5,21 @@
 package com.rafaelwitak.gymdatabro.database;
 
 import android.util.Log;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.room.Dao;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import com.rafaelwitak.gymdatabro.BuildConfig;
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+
 
 @Dao
 public abstract class MasterDao extends WorkoutInstanceDAO
@@ -111,33 +120,78 @@ public abstract class MasterDao extends WorkoutInstanceDAO
     public abstract WeightRepsRpe getLatestWeightRepsRpeForExercise(int exerciseId);
 
     @Query(
-            "SELECT * FROM workouts WHERE program_id = :programId"
+            "SELECT * FROM workouts WHERE program_id = :programId ORDER BY id;"
     )
     public abstract List<Workout> getWorkoutsForProgramId(int programId);
 
     @Transaction
-    public void updateWorkoutsOfProgram(Collection<Workout> editedWorkoutList) throws CloneNotSupportedException {
-        final List<Workout> oldOrder = null;// TODO: 12.06.2021 Get old Workouts. Order by ID!
-        final ArrayList<Workout> newOrder = new ArrayList<>();
-        final Set<Integer> ids = new TreeSet<>();
+    public void updateWorkoutsOfProgram(int programId,
+                                        @NonNull Collection<Workout> editedWorkoutList,
+                                        AlertDialog alertDialog)
+            throws CloneNotSupportedException {
 
-        for (Workout workout : editedWorkoutList) {
-            int id = workout.getId();
-            newOrder.add(workout.duplicateWithIdZero());
-            if (ids.contains(id)) {
-                getAllStepsForWorkout(id);
-                // TODO: 12.06.2021 duplicate WO-Steps
-            } else {
-                ids.add(id);
+        final List<Workout> oldOrder = getWorkoutsForProgramId(programId);
+
+        // TODO: 01.07.2021 Re-evaluate as soon as new Workout field for order is implemented
+        // EASY CASES
+
+        if (editedWorkoutList.equals(oldOrder)){
+            return;
+        }
+
+        if (editedWorkoutList.isEmpty()) {
+            for (Workout w : oldOrder) {
+                deleteWorkout(w);
+                return;
             }
         }
 
-        // TODO: 08.06.2021 :
-        //            insert
-        //            update WO-Step reference
-        //            if duplicate copy WO-Steps too!
-        //            recreating WO-Steps necessary for correct order in WO?
-        //            delete WOs in oldOrder one-by-one
+        // REGULAR CASE
+
+        // Rebuild necessary Workouts and their WorkoutSteps with new IDs
+        for (Workout workout : editedWorkoutList) {
+            final List<WorkoutStep> workoutSteps =
+                    getAllStepsForWorkoutId(workout.getId());
+
+            long id = insertWorkoutForId(workout.duplicateWithIdZero());
+            if (BuildConfig.DEBUG && id >= Integer.MAX_VALUE) {
+                throw new AssertionError("Too many entries for Workouts!");
+            }
+            assert workoutSteps != null;
+            rebuildWorkoutSteps(workoutSteps, (int) id);
+        }
+
+        // Collect obsolete Workouts
+        final HashSet<Integer> obsoleteWorkoutEntries = new HashSet<>();
+        obsoleteWorkoutEntries.addAll(StreamSupport.stream(oldOrder)
+                .map(Workout::getId)
+                .collect(Collectors.toSet()));
+        obsoleteWorkoutEntries.addAll(StreamSupport.stream(editedWorkoutList)
+                .map(Workout::getId)
+                .collect(Collectors.toSet()));
+
+        // Delete WorkoutSteps for obsolete Workouts
+        StreamSupport.stream(obsoleteWorkoutEntries)
+                .flatMap(workoutId -> StreamSupport.stream(Objects.requireNonNull(
+                        getAllStepsForWorkoutId(workoutId))))
+                .distinct()
+                .forEach(this::deleteWorkoutStep);
+
+        // delete all obsolete workouts and steps
+        StreamSupport.stream(obsoleteWorkoutEntries)
+                .map(this::getWorkoutByID)
+                .forEach(this::deleteWorkout);
+    }
+
+    private void rebuildWorkoutSteps(List<WorkoutStep> workoutSteps,
+                                     int workoutId)
+            throws CloneNotSupportedException {
+
+        for (WorkoutStep workoutStep : workoutSteps) {
+            WorkoutStep duplicate = workoutStep.duplicateWithIdZero();
+            duplicate.setWorkoutID(workoutId);
+            insertNewWorkoutStep(duplicate);
+        }
     }
 
     public static class WeightRepsRpe {

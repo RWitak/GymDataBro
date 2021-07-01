@@ -38,6 +38,8 @@ public class Workout implements Cloneable {
     @Nullable
     private String notes;
 
+    // TODO: 01.07.2021 Add persisted field with cardinal ordering no within Program
+
     public int getId() {
         return id;
     }
