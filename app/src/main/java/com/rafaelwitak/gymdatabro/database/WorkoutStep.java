@@ -6,11 +6,7 @@ package com.rafaelwitak.gymdatabro.database;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
+import androidx.room.*;
 
 @Entity(
         tableName = "workout_steps",
@@ -34,7 +30,7 @@ import androidx.room.PrimaryKey;
                         value = {"workout_id", "number"},
                         unique = true)
         })
-public class WorkoutStep {
+public class WorkoutStep implements Cloneable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -203,5 +199,17 @@ public class WorkoutStep {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    @NonNull
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public WorkoutStep duplicateWithIdZero() throws CloneNotSupportedException {
+        WorkoutStep clone = (WorkoutStep) this.clone();
+        clone.setId(0);
+        return clone;
     }
 }
