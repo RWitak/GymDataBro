@@ -63,4 +63,5 @@
     <string name="create_add_workout"><![CDATA[Create & Add Workout]]></string>
     <string name="title_workout_list">Workouts</string>
     <string name="title_workout_detail">Workout Detail</string>
+    <string name="go_to_workouts">Go To Workouts</string>
 </resources>
