@@ -24,10 +24,9 @@ import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.activities.dummy.DummyContent;
 import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
 import com.rafaelwitak.gymdatabro.database.MasterDao;
-import com.rafaelwitak.gymdatabro.database.Workout;
+import com.rafaelwitak.gymdatabro.database.WorkoutInstance;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutListBinding;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,6 +37,9 @@ import java.util.Objects;
  * lead to a {@link WorkoutDetailActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
+ *
+ * ATTENTION: Despite the name, this mostly deals with WorkoutInstances,
+ * not Workouts themselves!
  */
 public class WorkoutListActivity extends AppCompatActivity {
     /**
@@ -48,7 +50,7 @@ public class WorkoutListActivity extends AppCompatActivity {
     private MasterDao dao;
     private ActivityWorkoutListBinding binding;
     private RecyclerView recyclerView;
-    private List<Workout> workouts;
+    private List<WorkoutInstance> workoutInstances;
     private int programId;
 
     @Override
@@ -78,13 +80,13 @@ public class WorkoutListActivity extends AppCompatActivity {
             mTwoPane = true;
         }
 
-        workouts = dao.getWorkoutsForProgramId(programId);
+        workoutInstances = dao.getAllWorkoutInstancesForProgram(programId);
 
         this.recyclerView = binding.workoutListLayout.workoutList;
         setupRecyclerView(recyclerView);
 
         Button button = binding.workoutListButtonSave;
-        button.setOnClickListener(v -> saveAndExit(workouts));
+        button.setOnClickListener(v -> saveAndExit(workoutInstances));
 
         final ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.UP | ItemTouchHelper.DOWN,
@@ -107,11 +109,11 @@ public class WorkoutListActivity extends AppCompatActivity {
 
                 switch (direction) {
                     case ItemTouchHelper.LEFT:
-                        adapter.getWorkouts().add(position, adapter.getWorkouts().get(position));
+                        adapter.getWorkoutInstances().add(position, adapter.getWorkoutInstances().get(position));
                         adapter.notifyDataSetChanged();
                         break;
                     case ItemTouchHelper.RIGHT:
-                        adapter.getWorkouts().remove(position);
+                        adapter.getWorkoutInstances().remove(position);
                         adapter.notifyItemRemoved(position);
                         break;
                 }
@@ -122,16 +124,16 @@ public class WorkoutListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        assert workouts != null;
+        assert workoutInstances != null;
         recyclerView.setAdapter(
-                new SimpleItemRecyclerViewAdapter(this, workouts, mTwoPane));
+                new SimpleItemRecyclerViewAdapter(this, workoutInstances, mTwoPane));
     }
 
-    private <T extends Collection<Workout>> void saveAndExit(@NonNull T workouts) {
-        // TODO: 01.07.2021 implement using the new ordering field of workouts
+    private <T extends List<WorkoutInstance>> void saveAndExit(
+            @NonNull T workoutInstances) {
         try {
-            dao.updateWorkoutsOfProgram(programId,
-                    workouts,
+            dao.updateWorkoutInstancesOfProgram(programId,
+                    workoutInstances,
                     new AlertDialog.Builder(this).setCancelable(true).create());
             Log.d("GDB", "Workouts updated!");
         } catch (Exception e) {
@@ -146,7 +148,7 @@ public class WorkoutListActivity extends AppCompatActivity {
 
         private final WorkoutListActivity mParentActivity;
         private final boolean mTwoPane;
-        private final List<Workout> workouts;
+        private final List<WorkoutInstance> workoutInstances;
 
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
             // TODO: 08.06.2021 Replace DummyContent
@@ -172,9 +174,9 @@ public class WorkoutListActivity extends AppCompatActivity {
         };
 
         SimpleItemRecyclerViewAdapter(WorkoutListActivity parent,
-                                      @NonNull List<Workout> workouts,
+                                      @NonNull List<WorkoutInstance> workoutInstances,
                                       boolean twoPane) {
-            this.workouts = workouts;
+            this.workoutInstances = workoutInstances;
             mParentActivity = parent;
             mTwoPane = twoPane;
         }
@@ -189,21 +191,23 @@ public class WorkoutListActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-            holder.mIdView.setText(workouts.get(position).getName());
-            holder.mContentView.setText(workouts.get(position).getDetails());
+            // TODO: 02.07.2021 Receive Workouts from Activity to get inherited names if null.
+            holder.mIdView.setText(workoutInstances.get(position).getName());
+            // TODO: 02.07.2021 use something like a UniqueWorkout class to have all info in one object!
+            holder.mContentView.setText(workoutInstances.get(position).getName());
 
-            holder.itemView.setTag(workouts.get(position));
+            holder.itemView.setTag(workoutInstances.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);
         }
 
         @Override
         public int getItemCount() {
-            return workouts.size();
+            return workoutInstances.size();
         }
 
         public @NonNull
-        List<Workout> getWorkouts() {
-            return workouts;
+        List<WorkoutInstance> getWorkoutInstances() {
+            return workoutInstances;
         }
 
         static class ViewHolder extends RecyclerView.ViewHolder {

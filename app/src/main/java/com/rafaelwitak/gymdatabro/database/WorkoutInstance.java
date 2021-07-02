@@ -4,15 +4,14 @@
 
 package com.rafaelwitak.gymdatabro.database;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
+import androidx.annotation.NonNull;
+import androidx.room.*;
 
 @Entity(
         tableName = "workout_instances",
         foreignKeys = {
+                // TODO: 02.07.2021 Consider changing FKs to CASCADE onDelete/onUpdate
+                //  (will probably change DB scheme!)
                 @ForeignKey(
                         entity = Program.class,
                         parentColumns = "id",
@@ -31,7 +30,7 @@ import androidx.room.PrimaryKey;
                         unique = true)
         }
 )
-public class WorkoutInstance {
+public class WorkoutInstance implements Cloneable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -85,5 +84,22 @@ public class WorkoutInstance {
 
     public void setWorkoutNumber(int workoutNumber) {
         this.workoutNumber = workoutNumber;
+    }
+
+    @NonNull
+    @Override
+    public WorkoutInstance clone() throws CloneNotSupportedException {
+        return (WorkoutInstance) super.clone();
+    }
+
+    public WorkoutInstance duplicateWithIdZero() {
+        WorkoutInstance duplicate;
+        try {
+            duplicate = this.clone();
+            duplicate.setId(0);
+            return duplicate;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -5,11 +5,9 @@
 package com.rafaelwitak.gymdatabro.database;
 
 import androidx.annotation.Nullable;
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-import androidx.room.Update;
+import androidx.room.*;
+
+import java.util.List;
 
 @Dao
 public abstract class WorkoutInstanceDAO {
@@ -35,7 +33,8 @@ public abstract class WorkoutInstanceDAO {
     @Nullable
     @Query("SELECT * FROM workout_instances " +
             "WHERE program_id=:programId AND workout_number=:workoutNumber")
-    public abstract WorkoutInstance getWorkoutInstance(int programId, int workoutNumber);
+    public abstract WorkoutInstance getWorkoutInstance(int programId,
+                                                       int workoutNumber);
 
     @Nullable
     @Query(
@@ -56,7 +55,8 @@ public abstract class WorkoutInstanceDAO {
             "AND workout_number = (" +
                 "SELECT MIN(workout_number) FROM workout_instances " +
                 "WHERE program_id=:programId)")
-    public abstract WorkoutInstance getFirstWorkoutInstanceForProgram(Integer programId);
+    public abstract WorkoutInstance
+            getFirstWorkoutInstanceForProgram(Integer programId);
 
     @Query(
             "SELECT :instanceId = (" +
@@ -66,12 +66,20 @@ public abstract class WorkoutInstanceDAO {
                         "WHERE program_id = :programId)" +
                     "AND program_id = :programId)"
     )
-    public abstract boolean isLastInstanceOfProgram(int instanceId, Integer programId);
+    public abstract boolean isLastInstanceOfProgram(
+            int instanceId,
+            Integer programId);
 
+    @Query("SELECT * FROM workout_instances WHERE program_id = :programId;")
+    public abstract List<WorkoutInstance>
+            getAllWorkoutInstancesForProgram(Integer programId);
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    public abstract long insertWorkoutInstance(WorkoutInstance workoutInstance);
+    @Insert
+    public abstract long insertWorkoutInstanceForId(WorkoutInstance workoutInstance);
 
-    @Update(onConflict = OnConflictStrategy.ABORT)
+    @Update
     public abstract void updateWorkoutInstance(WorkoutInstance workoutInstance);
+
+    @Delete
+    public abstract void deleteWorkoutInstance(WorkoutInstance workoutInstance);
 }
