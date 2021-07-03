@@ -12,12 +12,15 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 @Entity(
         tableName = "workouts",
         foreignKeys = @ForeignKey(
                 entity = Program.class,
                 parentColumns = "id",
-                childColumns = "program_id"),
+                childColumns = "program_id",
+                onDelete = CASCADE),
         indices = {
                 @Index(value = "program_id")
         }

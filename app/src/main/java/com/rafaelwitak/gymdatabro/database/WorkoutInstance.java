@@ -10,17 +10,21 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 @Entity(
         tableName = "workout_instances",
         foreignKeys = {
                 @ForeignKey(
                         entity = Program.class,
                         parentColumns = "id",
-                        childColumns = "program_id"),
+                        childColumns = "program_id",
+                        onDelete = CASCADE),
                 @ForeignKey(
                         entity = Workout.class,
                         parentColumns = "id",
-                        childColumns = "workout_id")
+                        childColumns = "workout_id",
+                        onDelete = CASCADE)
         },
         indices = {
                 @Index(
