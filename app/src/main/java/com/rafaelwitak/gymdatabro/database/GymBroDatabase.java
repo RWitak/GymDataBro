@@ -5,7 +5,6 @@
 package com.rafaelwitak.gymdatabro.database;
 
 import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -24,9 +23,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
                 WorkoutInstance.class,
                 WorkoutStep.class
         },
-        version = 18
+        version = 19
 )
 @TypeConverters({Converters.class})
+@SuppressWarnings("unused") // Keep DAOs available until fully migrated to MasterDao
 public abstract class GymBroDatabase extends RoomDatabase {
     public abstract ExerciseDAO exerciseDAO();
     public abstract MuscleGroupDAO muscleGroupDAO();
@@ -60,7 +60,8 @@ public abstract class GymBroDatabase extends RoomDatabase {
                                     MIGRATION_14_15,
                                     MIGRATION_15_16,
                                     MIGRATION_16_17,
-                                    MIGRATION_17_18
+                                    MIGRATION_17_18,
+                                    MIGRATION_18_19
                                     )
                             .build();
                 }
@@ -68,6 +69,68 @@ public abstract class GymBroDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    static final Migration MIGRATION_18_19 = new Migration(18, 19) {
+        // Deletions of programs/workouts propagate to workouts/instances
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS workouts_backup (" +
+                            "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                            "`program_id` INTEGER, " +
+                            "`name` TEXT NOT NULL, " +
+                            "`details` TEXT, " +
+                            "`notes` TEXT, " +
+                            "FOREIGN KEY(`program_id`) REFERENCES `programs`(`id`) " +
+                            "ON UPDATE NO ACTION ON DELETE CASCADE);"
+            );
+            database.execSQL(
+                    "INSERT INTO workouts_backup SELECT * FROM workouts;"
+            );
+            database.execSQL(
+                    "DROP TABLE workouts;"
+            );
+            database.execSQL(
+                    "ALTER TABLE workouts_backup RENAME TO workouts;"
+            );
+            database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS `index_workouts_program_id` " +
+                            "ON `workouts` (`program_id`)"
+            );
+
+            database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS workout_instances_backup (" +
+                            "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                            "`name` TEXT, " +
+                            "`program_id` INTEGER NOT NULL, " +
+                            "`workout_id` INTEGER NOT NULL, " +
+                            "`workout_number` INTEGER NOT NULL, " +
+                            "FOREIGN KEY(`program_id`) REFERENCES `programs`(`id`) " +
+                                "ON UPDATE NO ACTION ON DELETE CASCADE, " +
+                            "FOREIGN KEY(`workout_id`) REFERENCES `workouts`(`id`) " +
+                                "ON UPDATE NO ACTION ON DELETE CASCADE);"
+            );
+            database.execSQL(
+                    "INSERT INTO workout_instances_backup " +
+                            "SELECT * FROM workout_instances;"
+            );
+            database.execSQL(
+                    "DROP TABLE IF EXISTS workout_instances;"
+            );
+            database.execSQL(
+                    "ALTER TABLE workout_instances_backup " +
+                            "RENAME TO workout_instances;"
+            );
+            database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS `index_workout_instances_program_id` " +
+                            "ON `workout_instances` (`program_id`);"
+            );
+            database.execSQL(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS `index_workout_instances_workout_id_workout_number` " +
+                            "ON `workout_instances` (`workout_id`, `workout_number`)"
+            );
+        }
+    };
 
     static final Migration MIGRATION_17_18 = new Migration(17, 18) {
         // Add indices for foreign keys.

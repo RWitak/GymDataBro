@@ -8,12 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.*;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 @Entity(
         tableName = "workouts",
         foreignKeys = @ForeignKey(
                 entity = Program.class,
                 parentColumns = "id",
-                childColumns = "program_id"),
+                childColumns = "program_id",
+                onDelete = CASCADE),
         indices = {
                 @Index(value = "program_id")
         }

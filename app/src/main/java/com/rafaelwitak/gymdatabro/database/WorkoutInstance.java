@@ -7,6 +7,8 @@ package com.rafaelwitak.gymdatabro.database;
 import androidx.annotation.NonNull;
 import androidx.room.*;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 @Entity(
         tableName = "workout_instances",
         foreignKeys = {
@@ -15,11 +17,13 @@ import androidx.room.*;
                 @ForeignKey(
                         entity = Program.class,
                         parentColumns = "id",
-                        childColumns = "program_id"),
+                        childColumns = "program_id",
+                        onDelete = CASCADE),
                 @ForeignKey(
                         entity = Workout.class,
                         parentColumns = "id",
-                        childColumns = "workout_id")
+                        childColumns = "workout_id",
+                        onDelete = CASCADE)
         },
         indices = {
                 @Index(
