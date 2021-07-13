@@ -4,6 +4,7 @@
 
 package com.rafaelwitak.gymdatabro.database;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.*;
 
@@ -82,4 +83,15 @@ public abstract class WorkoutInstanceDAO {
 
     @Delete
     public abstract void deleteWorkoutInstance(WorkoutInstance workoutInstance);
+
+    @Nullable
+    protected WorkoutInstance newPersistedInstanceFromClone(
+            @NonNull WorkoutInstance instance) {
+        final WorkoutInstance duplicate = instance.duplicateWithIdZero();
+        final long id = insertWorkoutInstanceForId(duplicate);
+        if (id >= Integer.MAX_VALUE) {
+            throw new IndexOutOfBoundsException("ID of WorkoutInstance too large.");
+        }
+        return getWorkoutInstance(duplicate.getProgramId(), (int) id);
+    }
 }

@@ -11,9 +11,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.room.Dao;
 import androidx.room.Query;
 import androidx.room.Transaction;
-import java8.util.stream.StreamSupport;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -122,47 +121,36 @@ public abstract class MasterDao extends WorkoutInstanceDAO
 
     @Transaction
     public void updateWorkoutInstancesOfProgram(int programId,
-                                                @NonNull List<WorkoutInstance> editedWorkoutInstances,
+                                                @NonNull List<WorkoutInstance> editedInstances,
                                                 AlertDialog alertDialog) {
-
-        final List<WorkoutInstance> oldOrder = getAllWorkoutInstancesForProgram(programId);
-
-        // TODO: 02.07.2021 Check for safety and completeness.
+        final List<WorkoutInstance> oldOrder =
+                getAllWorkoutInstancesForProgram(programId);
 
         // no changes
-        if (editedWorkoutInstances.equals(oldOrder)){
+        if (editedInstances.equals(oldOrder)){
             return;
         }
 
-        // persist new duplicates
-        final List<WorkoutInstance> finalWorkoutInstanceList =
-                StreamSupport.stream(editedWorkoutInstances)
-                        .sequential()
-                        .map((WorkoutInstance instance) -> {
-                            if (Collections.frequency(editedWorkoutInstances, instance) > 1) {
-                                final WorkoutInstance duplicate =
-                                        instance.duplicateWithIdZero();
-                                final long id = insertWorkoutInstanceForId(duplicate);
-                                if (id >= Integer.MAX_VALUE) {
-                                    throw new AssertionError("ID of WorkoutInstance too large.");
-                                }
-                                return getWorkoutInstance(duplicate.getProgramId(), (int) id);
-                            }
-                            return instance;
-                        })
-                        .toList();
-
-        // set order to list indices
-        for (WorkoutInstance instance : finalWorkoutInstanceList) {
-            instance.setWorkoutNumber(finalWorkoutInstanceList.indexOf(instance));
-            updateWorkoutInstance(instance);
-        }
-
-        // handle deletions
-        oldOrder.removeAll(finalWorkoutInstanceList);
+        // handle deletions of unused instances
+        oldOrder.removeAll(editedInstances);
         for (WorkoutInstance instance : oldOrder) {
             deleteWorkoutInstance(instance);
             // FIXME: 02.07.2021 Leaves orphans if deletion doesn't cascade.
+        }
+
+        // persist new duplicates
+        List<WorkoutInstance> newInstanceOrder = new ArrayList<>();
+        for (WorkoutInstance instance : editedInstances) {
+            if (newInstanceOrder.contains(instance)) {
+                instance = newPersistedInstanceFromClone(instance);
+            }
+            newInstanceOrder.add(instance);
+        }
+
+        // set order according to list indices and update WO-Instance in DB
+        for (WorkoutInstance instance : newInstanceOrder) {
+            instance.setWorkoutNumber(newInstanceOrder.indexOf(instance));
+            updateWorkoutInstance(instance);
         }
     }
 
