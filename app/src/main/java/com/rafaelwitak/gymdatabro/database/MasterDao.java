@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.room.Dao;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import com.rafaelwitak.gymdatabro.util.UniqueWorkout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,6 +154,28 @@ public abstract class MasterDao extends WorkoutInstanceDAO
             updateWorkoutInstance(instance);
         }
     }
+
+    @Query("SELECT " +
+            "instance_id, " +
+            "workout_number, " +
+            "workout_id, " +
+            "program_id, " +
+            "COALESCE(instance_name, name) AS name," +
+            "details, " +
+            "notes " +
+            "FROM (" +
+            "SELECT " +
+            "id AS instance_id, " +
+            "name AS instance_name, " +
+            "program_id AS instance_program_id," +
+            "workout_id, " +
+            "workout_number " +
+            "FROM workout_instances WHERE id = :instanceId)" +
+            "INNER JOIN workouts " +
+            "ON workout_id = workouts.id " +
+            "AND instance_program_id = workouts.program_id;")
+    public abstract UniqueWorkout getUniqueWorkoutFromInstanceId(int instanceId);
+    // TODO: 16.07.2021 Find out what happens when both name fields are null?
 
     public static class WeightRepsRpe {
         public Float weight;
