@@ -7,8 +7,11 @@ package com.rafaelwitak.gymdatabro.util;
 import androidx.room.ColumnInfo;
 import com.rafaelwitak.gymdatabro.database.Workout;
 import com.rafaelwitak.gymdatabro.database.WorkoutInstance;
+import java8.util.Comparators;
 
-public class UniqueWorkout {
+import java.util.Comparator;
+
+public class UniqueWorkout implements Comparable<UniqueWorkout>{
     @ColumnInfo(name = "instance_id")
     private final int instanceId;
     @ColumnInfo(name = "workout_number")
@@ -24,6 +27,33 @@ public class UniqueWorkout {
     @ColumnInfo(name = "notes")
     private final String notes;
 
+    public int getInstanceId() {
+        return instanceId;
+    }
+
+    public int getWorkoutNumber() {
+        return workoutNumber;
+    }
+
+    public int getWorkoutId() {
+        return workoutId;
+    }
+
+    public Integer getProgramId() {
+        return programId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
 
     public UniqueWorkout(Workout workout, WorkoutInstance instance) {
         if (workout.getId() != instance.getWorkoutId()) {
@@ -58,5 +88,18 @@ public class UniqueWorkout {
         this.name = name;
         this.details = details;
         this.notes = notes;
+    }
+
+    @Override
+    public int compareTo(UniqueWorkout o) {
+        final Comparator<UniqueWorkout> byWorkoutId =
+                Comparators.comparing(UniqueWorkout::getWorkoutId);
+        final Comparator<UniqueWorkout> byWorkoutNumber =
+                Comparators.comparing(UniqueWorkout::getWorkoutNumber);
+
+            return Comparators.thenComparing(
+                    byWorkoutId,
+                    byWorkoutNumber)
+                    .compare(this, o);
     }
 }
