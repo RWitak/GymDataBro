@@ -20,8 +20,10 @@ public class UniqueWorkout implements Comparable<UniqueWorkout>{
     private final int workoutId;
     @ColumnInfo(name = "program_id")
     private final Integer programId;
-    @ColumnInfo(name = "name")
-    private final String name;
+    @ColumnInfo(name = "instance_name")
+    private final String instanceName;
+    @ColumnInfo(name = "workout_name")
+    private final String workoutName;
     @ColumnInfo(name = "details")
     private final String details;
     @ColumnInfo(name = "notes")
@@ -43,8 +45,8 @@ public class UniqueWorkout implements Comparable<UniqueWorkout>{
         return programId;
     }
 
-    public String getName() {
-        return name;
+    public String computeName() {
+        return instanceName != null ? instanceName : workoutName;
     }
 
     public String getDetails() {
@@ -59,17 +61,12 @@ public class UniqueWorkout implements Comparable<UniqueWorkout>{
         if (workout.getId() != instance.getWorkoutId()) {
             throw new AssertionError("WorkoutID doesn't match.");
         }
-
-        String name = instance.getName();
-        if (name == null) {
-            name = workout.getName();
-        }
-        this.name = name;
-
         this.instanceId = instance.getId();
         this.workoutNumber = instance.getWorkoutNumber();
         this.workoutId = workout.getId();
         this.programId = workout.getProgramID();
+        this.instanceName = instance.getName();
+        this.workoutName = workout.getName();
         this.details = workout.getDetails();
         this.notes = workout.getNotes();
     }
@@ -78,14 +75,16 @@ public class UniqueWorkout implements Comparable<UniqueWorkout>{
                          int workoutNumber,
                          int workoutId,
                          Integer programId,
-                         String name,
+                         String instanceName,
+                         String workoutName,
                          String details,
                          String notes) {
         this.instanceId = instanceId;
         this.workoutNumber = workoutNumber;
         this.workoutId = workoutId;
         this.programId = programId;
-        this.name = name;
+        this.instanceName = instanceName;
+        this.workoutName = workoutName;
         this.details = details;
         this.notes = notes;
     }
@@ -101,5 +100,15 @@ public class UniqueWorkout implements Comparable<UniqueWorkout>{
                     byWorkoutId,
                     byWorkoutNumber)
                     .compare(this, o);
+    }
+
+    public WorkoutInstance toInstance() {
+        return new WorkoutInstance(
+                instanceId,
+                instanceName,
+                programId,
+                workoutId,
+                workoutNumber
+                );
     }
 }

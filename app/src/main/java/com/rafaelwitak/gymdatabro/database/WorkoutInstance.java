@@ -7,6 +7,8 @@ package com.rafaelwitak.gymdatabro.database;
 import androidx.annotation.NonNull;
 import androidx.room.*;
 
+import java.util.Objects;
+
 import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(
@@ -37,6 +39,23 @@ import static androidx.room.ForeignKey.CASCADE;
 public class WorkoutInstance implements Cloneable {
     @PrimaryKey(autoGenerate = true)
     private int id;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WorkoutInstance instance = (WorkoutInstance) o;
+        return id == instance.id
+                && programId == instance.programId
+                && workoutId == instance.workoutId
+                && workoutNumber == instance.workoutNumber
+                && name.equals(instance.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, programId, workoutId, workoutNumber);
+    }
 
     @ColumnInfo
     private String name;
@@ -87,6 +106,14 @@ public class WorkoutInstance implements Cloneable {
     }
 
     public void setWorkoutNumber(int workoutNumber) {
+        this.workoutNumber = workoutNumber;
+    }
+
+    public WorkoutInstance(int id, String name, int programId, int workoutId, int workoutNumber) {
+        this.id = id;
+        this.name = name;
+        this.programId = programId;
+        this.workoutId = workoutId;
         this.workoutNumber = workoutNumber;
     }
 

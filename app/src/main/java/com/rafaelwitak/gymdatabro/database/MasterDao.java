@@ -12,6 +12,8 @@ import androidx.room.Dao;
 import androidx.room.Query;
 import androidx.room.Transaction;
 import com.rafaelwitak.gymdatabro.util.UniqueWorkout;
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,7 +162,8 @@ public abstract class MasterDao extends WorkoutInstanceDAO
             "workout_number, " +
             "workout_id, " +
             "program_id, " +
-            "COALESCE(instance_name, name) AS name," +
+            "instance_name, " +
+            "name AS workout_name," +
             "details, " +
             "notes " +
             "FROM (" +
@@ -175,7 +178,13 @@ public abstract class MasterDao extends WorkoutInstanceDAO
             "ON workout_id = workouts.id " +
             "AND instance_program_id = workouts.program_id;")
     public abstract UniqueWorkout getUniqueWorkoutFromInstanceId(int instanceId);
-    // TODO: 16.07.2021 Find out what happens when both name fields are null?
+
+    public List<UniqueWorkout> getUniqueWorkoutsOfProgram(int programId) {
+        return StreamSupport.stream(getAllWorkoutInstancesForProgram(programId))
+                .map(inst -> getUniqueWorkoutFromInstanceId(inst.getId()))
+                .sorted()
+                .collect(Collectors.toList());
+    }
 
     public static class WeightRepsRpe {
         public Float weight;
