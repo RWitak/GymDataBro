@@ -163,7 +163,7 @@
         android:onClick="chooseProgram"
         android:text="@string/main_choose_program_button_text"
         android:textColor="@color/colorAccent"
-        android:theme="@style/Theme.MaterialComponents"
+        app:theme="@style/Theme.MaterialComponents"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -84,14 +84,8 @@ public abstract class WorkoutInstanceDAO {
     @Delete
     public abstract void deleteWorkoutInstance(WorkoutInstance workoutInstance);
 
-    @Nullable
-    protected WorkoutInstance newPersistedInstanceFromClone(
-            @NonNull WorkoutInstance instance) {
+    void insertDuplicate(@NonNull WorkoutInstance instance) {
         final WorkoutInstance duplicate = instance.duplicateWithIdZero();
-        final long id = insertWorkoutInstanceForId(duplicate);
-        if (id >= Integer.MAX_VALUE) {
-            throw new IndexOutOfBoundsException("ID of WorkoutInstance too large.");
-        }
-        return getWorkoutInstance(duplicate.getProgramId(), (int) id);
+        insertWorkoutInstanceForId(duplicate);
     }
 }

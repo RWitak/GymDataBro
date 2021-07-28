@@ -10,8 +10,6 @@ import androidx.room.*;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-import static androidx.room.ForeignKey.CASCADE;
-
 @Entity(
         tableName = "workouts",
         foreignKeys = @ForeignKey(

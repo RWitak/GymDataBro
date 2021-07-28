@@ -11,8 +11,6 @@ import java.util.Objects;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-import static androidx.room.ForeignKey.CASCADE;
-
 @Entity(
         tableName = "workout_instances",
         foreignKeys = {
@@ -51,7 +49,8 @@ public class WorkoutInstance implements Cloneable {
                 && programId == instance.programId
                 && workoutId == instance.workoutId
                 && workoutNumber == instance.workoutNumber
-                && name.equals(instance.name);
+                && ((name == null && instance.name == null)
+                    || Objects.requireNonNull(name).equals(instance.name));
     }
 
     @Override
@@ -121,18 +120,20 @@ public class WorkoutInstance implements Cloneable {
 
     @NonNull
     @Override
-    public WorkoutInstance clone() throws CloneNotSupportedException {
-        return (WorkoutInstance) super.clone();
-    }
-
-    public WorkoutInstance duplicateWithIdZero() {
-        WorkoutInstance duplicate;
+    public WorkoutInstance clone() {
         try {
-            duplicate = this.clone();
-            duplicate.setId(0);
-            return duplicate;
+            return (WorkoutInstance) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
     }
+
+    public WorkoutInstance duplicateWithIdZero() {
+        WorkoutInstance duplicate;
+        duplicate = this.clone();
+        duplicate.setId(0);
+    return duplicate;
+    }
+
+
 }

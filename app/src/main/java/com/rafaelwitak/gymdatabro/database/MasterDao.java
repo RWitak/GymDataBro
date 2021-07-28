@@ -15,7 +15,6 @@ import com.rafaelwitak.gymdatabro.util.UniqueWorkout;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -123,39 +122,16 @@ public abstract class MasterDao extends WorkoutInstanceDAO
     public abstract List<Workout> getWorkoutsForProgramId(int programId);
 
     @Transaction
-    public void updateWorkoutInstancesOfProgram(int programId,
-                                                @NonNull List<WorkoutInstance> editedInstances,
-                                                AlertDialog alertDialog) {
-        final List<WorkoutInstance> oldOrder =
-                getAllWorkoutInstancesForProgram(programId);
+    public void updateWorkoutInstancesOfProgram(
+            int programId,
+            @NonNull List<WorkoutInstance> editedInstances,
+            AlertDialog alertDialog) {
 
-        // no changes
-        if (editedInstances.equals(oldOrder)){
-            return;
-        }
-
-        // handle deletions of unused instances
-        oldOrder.removeAll(editedInstances);
-        for (WorkoutInstance instance : oldOrder) {
-            deleteWorkoutInstance(instance);
-            // FIXME: 02.07.2021 Leaves orphans if deletion doesn't cascade.
-        }
-
-        // persist new duplicates
-        List<WorkoutInstance> newInstanceOrder = new ArrayList<>();
-        for (WorkoutInstance instance : editedInstances) {
-            if (newInstanceOrder.contains(instance)) {
-                instance = newPersistedInstanceFromClone(instance);
-            }
-            newInstanceOrder.add(instance);
-        }
-
-        // set order according to list indices and update WO-Instance in DB
-        for (WorkoutInstance instance : newInstanceOrder) {
-            instance.setWorkoutNumber(newInstanceOrder.indexOf(instance));
-            updateWorkoutInstance(instance);
-        }
+        new WorkoutInstanceUpdater(
+                this, programId, editedInstances)
+                .update();
     }
+
 
     @Query("SELECT " +
             "instance_id, " +
@@ -197,4 +173,5 @@ public abstract class MasterDao extends WorkoutInstanceDAO
             this.rpe = rpe;
         }
     }
+
 }
