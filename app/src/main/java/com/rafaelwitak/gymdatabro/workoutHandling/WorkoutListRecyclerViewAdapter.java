@@ -17,7 +17,6 @@ import com.rafaelwitak.gymdatabro.R;
 import com.rafaelwitak.gymdatabro.activities.WorkoutDetailActivity;
 import com.rafaelwitak.gymdatabro.activities.WorkoutDetailFragment;
 import com.rafaelwitak.gymdatabro.activities.WorkoutListActivity;
-import com.rafaelwitak.gymdatabro.activities.dummy.DummyContent;
 import com.rafaelwitak.gymdatabro.util.UniqueWorkout;
 
 import java.util.List;
@@ -33,10 +32,11 @@ public class WorkoutListRecyclerViewAdapter
         // TODO: 08.06.2021 Replace DummyContent
         @Override
         public void onClick(@NonNull View view) {
-            DummyContent.DummyItem item = (DummyContent.DummyItem) view.getTag();
+            UniqueWorkout item = (UniqueWorkout) view.getTag();
             if (mTwoPane) {
                 Bundle arguments = new Bundle();
-                arguments.putString(WorkoutDetailFragment.ARG_ITEM_ID, item.id);
+                arguments.putInt(WorkoutDetailFragment.ARG_ITEM_ID,
+                        item.getInstanceId());
                 WorkoutDetailFragment fragment = new WorkoutDetailFragment();
                 fragment.setArguments(arguments);
                 mParentActivity.getSupportFragmentManager().beginTransaction()
@@ -45,7 +45,8 @@ public class WorkoutListRecyclerViewAdapter
             } else {
                 Context context = view.getContext();
                 Intent intent = new Intent(context, WorkoutDetailActivity.class);
-                intent.putExtra(WorkoutDetailFragment.ARG_ITEM_ID, item.id);
+                intent.putExtra(WorkoutDetailFragment.ARG_ITEM_ID,
+                        item.getInstanceId());
 
                 context.startActivity(intent);
             }
