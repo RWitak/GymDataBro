@@ -71,7 +71,8 @@ public class WorkoutListRecyclerViewAdapter
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         holder.mIdView.setText(uniqueWorkouts.get(position).computeName());
-        holder.mContentView.setText(uniqueWorkouts.get(position).computeName());
+//        YAGNI details...
+//        holder.mContentView.setText(uniqueWorkouts.get(position).computeName());
 
         holder.itemView.setTag(uniqueWorkouts.get(position));
         holder.itemView.setOnClickListener(mOnClickListener);
