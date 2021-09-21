@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.rafaelwitak.gymdatabro.database.*;
+import java8.util.Optional;
 
 public class IntentMaker {
 
@@ -153,5 +154,16 @@ public class IntentMaker {
     public Intent getWorkoutListIntent(Program program) {
         return new Intent(context, WorkoutListActivity.class)
                 .putExtra("programId", program.getId());
+    }
+
+    public Intent getEditWorkoutIntent(Optional<Integer> workoutId,
+                                       Integer programId) {
+        int actualWorkoutId = workoutId.orElse(-1);
+
+        Intent intent = new Intent(context, EditWorkoutActivity.class);
+        intent.putExtra(EditWorkoutActivity.WORKOUT_ID, actualWorkoutId);
+        intent.putExtra(EditWorkoutActivity.PROGRAM_ID, programId);
+
+        return intent;
     }
 }

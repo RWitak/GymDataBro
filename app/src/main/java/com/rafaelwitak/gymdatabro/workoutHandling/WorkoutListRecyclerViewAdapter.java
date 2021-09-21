@@ -29,7 +29,6 @@ public class WorkoutListRecyclerViewAdapter
     private final List<UniqueWorkout> uniqueWorkouts;
 
     private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        // TODO: 08.06.2021 Replace DummyContent
         @Override
         public void onClick(@NonNull View view) {
             UniqueWorkout item = (UniqueWorkout) view.getTag();

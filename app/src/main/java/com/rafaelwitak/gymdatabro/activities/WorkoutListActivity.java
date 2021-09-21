@@ -4,6 +4,7 @@
 
 package com.rafaelwitak.gymdatabro.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import com.rafaelwitak.gymdatabro.database.WorkoutInstance;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutListBinding;
 import com.rafaelwitak.gymdatabro.util.UniqueWorkout;
 import com.rafaelwitak.gymdatabro.workoutHandling.WorkoutListRecyclerViewAdapter;
+import java8.util.Optional;
 import java8.util.stream.StreamSupport;
 
 import java.util.List;
@@ -65,7 +67,13 @@ public class WorkoutListActivity extends AppCompatActivity {
 
         FloatingActionButton fab = binding.fab;
         fab.setOnClickListener(view -> {
-        }); // TODO: 17.04.2021 Add listener.
+            IntentMaker intentMaker = new IntentMaker(getBaseContext());
+            Intent editWorkoutIntent =
+                    intentMaker.getEditWorkoutIntent(
+                        Optional.empty(),
+                        programId);
+            startActivity(editWorkoutIntent);
+        });
 
         if (binding.workoutListLayout.workoutDetailContainer != null) {
             // The detail container view will be present only in the
@@ -140,7 +148,8 @@ public class WorkoutListActivity extends AppCompatActivity {
         try {
             dao.updateWorkoutInstancesOfProgram(programId,
                     workoutInstances,
-                    new AlertDialog.Builder(this).setCancelable(true).create());
+                    new AlertDialog.Builder(this)
+                            .setCancelable(true).create());
             Log.i("GDB", "WorkoutInstances updated!");
         } catch (Exception e) {
             throw new RuntimeException("Updating workout failed! ", e);

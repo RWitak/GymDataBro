@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021, Rafael Witak.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BasicBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.EditWorkoutActivity"
+    tools:visibility="visible">
+
+    <include
+        android:id="@+id/edit_workout_toolbar"
+        layout="@layout/toolbar"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_workout_scrollview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent" />
+
+    <ScrollView
+        android:id="@+id/edit_workout_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_workout_toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/edit_workout_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_workout_toolbar">
+
+            <LinearLayout
+                android:id="@+id/edit_workout_table_foreground"
+                style="@style/ResponsiveForeground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintVertical_chainStyle="spread">
+
+                <TableLayout
+                    android:id="@+id/edit_workout_table"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:isScrollContainer="true"
+                    android:orientation="vertical"
+                    android:stretchColumns="*">
+
+                    <TableRow style="@style/TableRow">
+
+                        <TextView
+                            android:id="@+id/edit_workout_name_label"
+                            style="@style/TableRowLabel"
+                            android:labelFor="@+id/edit_workout_name_edit"
+                            android:text="@string/edit_workout_label_name"
+                            android:textAllCaps="false" />
+
+                        <EditText
+                            android:id="@+id/edit_workout_name_edit"
+                            style="@style/TableRowEditText"
+                            android:autofillHints="@null"
+                            android:inputType="textMultiLine|textCapWords" />
+                    </TableRow>
+
+
+                    <TableRow style="@style/TableRow">
+
+                        <TextView
+                            android:id="@+id/edit_workout_details_label"
+                            style="@style/TableRowLabel"
+                            android:labelFor="@+id/edit_workout_details_edit"
+                            android:text="@string/edit_workout_label_details" />
+
+                        <EditText
+                            android:id="@+id/edit_workout_details_edit"
+                            style="@style/TableRowEditText"
+                            android:labelFor="@+id/edit_workout_details_edit"
+                            android:autofillHints="@null" />
+                    </TableRow>
+
+                    <TableRow style="@style/TableRow">
+
+                        <TextView
+                            android:id="@+id/edit_workout_notes_label"
+                            style="@style/TableRowLabel"
+                            android:labelFor="@+id/edit_workout_notes_edit"
+                            android:text="@string/edit_workout_label_notes" />
+
+                        <EditText
+                            android:id="@+id/edit_workout_notes_edit"
+                            style="@style/TableRowEditText"
+                            android:autofillHints="@null" />
+                    </TableRow>
+
+                </TableLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/edit_workout_button_save"
+                style="@style/PrimaryButton"
+                android:layout_marginTop="32dp"
+                android:text="@string/edit_workout_button_save_text"
+                app:layout_constraintBottom_toTopOf="@+id/edit_workout_button_delete_workout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_workout_table_foreground"
+                app:layout_constraintVertical_bias="1.0"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintWidth_percent="0.75" />
+
+
+            <Button
+                android:id="@+id/edit_workout_button_delete_workout"
+                style="@style/PrimaryButton"
+                android:background="@color/colorBad"
+                android:text="@string/delete_workout"
+                android:textColor="@color/colorLightBackground"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_workout_button_save"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintWidth_percent="0.75" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

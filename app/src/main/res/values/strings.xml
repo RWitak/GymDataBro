@@ -64,4 +64,11 @@
     <string name="title_workout_list">Workouts</string>
     <string name="title_workout_detail">Workout Detail</string>
     <string name="go_to_workouts">Go To Workouts</string>
+    <string name="edit_workout_label_name">Name</string>
+    <string name="edit_workout_label_details">Details</string>
+    <string name="edit_workout_label_notes">Notes</string>
+    <string name="edit_workout_button_save_text">Save &amp; Exit</string>
+    <string name="delete_workout">Delete Workout</string>
+    <string name="create_workout">Create Workout</string>
+    <string name="edit_workout">Edit Workout</string>
 </resources>
