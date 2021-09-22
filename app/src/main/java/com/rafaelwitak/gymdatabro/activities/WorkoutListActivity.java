@@ -113,6 +113,7 @@ public class WorkoutListActivity extends AppCompatActivity {
                         (WorkoutListRecyclerViewAdapter) Objects.requireNonNull(
                                 recyclerView.getAdapter());
 
+                // TODO: 22.09.2021 Add visual cues for deletion & duplication.
                 switch (direction) {
                     case ItemTouchHelper.LEFT:
                         adapter.getUniqueWorkouts()

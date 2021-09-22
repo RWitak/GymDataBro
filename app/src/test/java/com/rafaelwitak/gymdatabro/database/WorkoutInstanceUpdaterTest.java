@@ -20,6 +20,7 @@ import static com.google.common.truth.Truth.assertWithMessage;
 
 public class WorkoutInstanceUpdaterTest {
     WorkoutInstanceDAO mockDao;
+
     @Test
     public void unchangedListDoesNothing() {
         final List<WorkoutInstance> mockList = mockDao.getAllWorkoutInstancesForProgram(1);
@@ -42,7 +43,36 @@ public class WorkoutInstanceUpdaterTest {
 
     @Test
     public void multipleInsertedDuplicates() {
+        final List<WorkoutInstance> mockList = mockDao.getAllWorkoutInstancesForProgram(1);
+        final List<WorkoutInstance> newInstances = StreamSupport.stream(mockList)
+                .map(WorkoutInstance::clone)
+                .collect(Collectors.toList());
+        newInstances.add(0, newInstances.get(0).clone());
+        newInstances.add(newInstances.size()-1, newInstances.get(newInstances.size()-1).clone());
+        newInstances.add(0, newInstances.get(0).clone());
+        newInstances.add(newInstances.size()-1, newInstances.get(newInstances.size()-1).clone());
 
+        new WorkoutInstanceUpdater(mockDao, 1, newInstances).update();
+        final List<WorkoutInstance> result = mockDao.getAllWorkoutInstancesForProgram(1);
+        final int[] woNumbers = StreamSupport.stream(result).mapToInt(WorkoutInstance::getWorkoutNumber).sorted().toArray();
+        assertThat(woNumbers).isEqualTo(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9});
+    }
+
+    @Test
+    public void deleteElements() {
+        // FIXME: 22.09.2021
+        final List<WorkoutInstance> mockList = mockDao.getAllWorkoutInstancesForProgram(1);
+        final List<WorkoutInstance> newInstances = StreamSupport.stream(mockList)
+                .map(WorkoutInstance::clone)
+                .collect(Collectors.toList());
+        newInstances.remove(newInstances.size()-1);
+        newInstances.remove(0);
+        newInstances.remove(newInstances.size()/2);
+
+        new WorkoutInstanceUpdater(mockDao, 1, newInstances).update();
+        final List<WorkoutInstance> result = mockDao.getAllWorkoutInstancesForProgram(1);
+        final int[] woNumbers = StreamSupport.stream(result).mapToInt(WorkoutInstance::getWorkoutNumber).sorted().toArray();
+        assertThat(woNumbers).isEqualTo(new int[]{1, 2});
     }
 
     @Before

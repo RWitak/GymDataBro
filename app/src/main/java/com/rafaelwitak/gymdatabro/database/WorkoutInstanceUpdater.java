@@ -114,7 +114,8 @@ class WorkoutInstanceUpdater {
     }
 
     private void deleteUnusedInstancesInDatabase() {
-        StreamSupport.stream(previousInstances)
+        // TODO: 22.09.2021 Does this change make sense? Tests apart from deletion still work.
+        StreamSupport.stream(newInstances)
                 .filter(this::isObsolete)
                 .forEach(dao::deleteWorkoutInstance);
         // FIXME: 02.07.2021 Leaves orphans if deletion doesn't cascade.
