@@ -6,6 +6,7 @@ package com.rafaelwitak.gymdatabro.database;
 
 import androidx.annotation.NonNull;
 import java8.util.function.Consumer;
+import java8.util.function.Predicates;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
 
@@ -25,15 +26,14 @@ class WorkoutInstanceUpdater {
                                   List<WorkoutInstance> newInstances) {
         this.dao = workoutInstanceDAO;
 
-        this.previousInstances = dao.getAllWorkoutInstancesForProgram(programId);
+        this.previousInstances = StreamSupport
+                .stream(dao.getAllWorkoutInstancesForProgram(programId))
+                .map(WorkoutInstance::clone)
+                .toList();
         this.newInstances = newInstances;
         this.oldIds = StreamSupport.stream(previousInstances)
                 .map(WorkoutInstance::getId)
                 .toList();
-    }
-
-    private boolean isObsolete(@NonNull WorkoutInstance instance) {
-        return !oldIds.contains(instance.getId());
     }
 
     private boolean isPreexistingInstance(WorkoutInstance instance) {
@@ -76,7 +76,9 @@ class WorkoutInstanceUpdater {
     }
 
     @NonNull
-    private Map<WorkoutInstance, Consumer<WorkoutInstance>> assignDbProceduresToInstances() {
+    private Map<WorkoutInstance,
+                Consumer<WorkoutInstance>> assignDbProceduresToInstances() {
+
         final Set<Map.Entry<Integer, List<WorkoutInstance>>> instancesById =
                 instancesGroupedById().entrySet();
 
@@ -114,9 +116,13 @@ class WorkoutInstanceUpdater {
     }
 
     private void deleteUnusedInstancesInDatabase() {
-        // TODO: 22.09.2021 Does this change make sense? Tests apart from deletion still work.
-        StreamSupport.stream(newInstances)
-                .filter(this::isObsolete)
+        final List<Integer> newIds = StreamSupport.stream(newInstances)
+                .map(WorkoutInstance::getId)
+                .map(Integer::intValue)
+                .toList();
+
+        StreamSupport.stream(oldIds)
+                .filter(Predicates.negate(newIds::contains))
                 .forEach(dao::deleteWorkoutInstance);
         // FIXME: 02.07.2021 Leaves orphans if deletion doesn't cascade.
     }

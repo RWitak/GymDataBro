@@ -81,8 +81,8 @@ public abstract class WorkoutInstanceDAO {
     @Update
     public abstract void updateWorkoutInstance(WorkoutInstance workoutInstance);
 
-    @Delete
-    public abstract void deleteWorkoutInstance(WorkoutInstance workoutInstance);
+    @Query("DELETE FROM workout_instances WHERE id = :instanceId;")
+    public abstract void deleteWorkoutInstance(int instanceId);
 
     void insertDuplicate(@NonNull WorkoutInstance instance) {
         final WorkoutInstance duplicate = instance.duplicateWithIdZero();
