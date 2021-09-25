@@ -14,8 +14,6 @@ import static androidx.room.ForeignKey.CASCADE;
 @Entity(
         tableName = "workout_instances",
         foreignKeys = {
-                // TODO: 02.07.2021 Consider changing FKs to CASCADE onDelete/onUpdate
-                //  (will probably change DB scheme!)
                 @ForeignKey(
                         entity = Program.class,
                         parentColumns = "id",

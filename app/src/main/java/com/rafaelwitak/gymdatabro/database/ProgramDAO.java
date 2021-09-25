@@ -4,12 +4,7 @@
 
 package com.rafaelwitak.gymdatabro.database;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-import androidx.room.Update;
+import androidx.room.*;
 
 import java.util.List;
 
@@ -32,5 +27,6 @@ public interface ProgramDAO {
 
     @Delete
     void deleteProgram(Program program);
-    // TODO: 19.03.2021 Test with program that already has Workouts / W-Instances / ... referencing it.
+    // FIXME: 25.09.2021 Works with program that already has Workouts / W-Instances,
+    //  but fails if Steps or PerformanceSets exist.
 }

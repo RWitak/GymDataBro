@@ -12,6 +12,7 @@ import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+// TODO: 25.09.2021 Add a bool field for "deleted" or "active/inactive" EVERYWHERE
 @androidx.room.Database(
         entities={
                 Exercise.class,

@@ -124,6 +124,5 @@ class WorkoutInstanceUpdater {
         StreamSupport.stream(oldIds)
                 .filter(Predicates.negate(newIds::contains))
                 .forEach(dao::deleteWorkoutInstance);
-        // FIXME: 02.07.2021 Leaves orphans if deletion doesn't cascade.
     }
 }
