@@ -75,6 +75,9 @@ public class WorkoutStep implements Cloneable {
     @ColumnInfo
     private String notes;
 
+    @ColumnInfo(defaultValue = "1")
+    private boolean active;
+
 
     public boolean usesWeight() {
         return weight != null;
@@ -211,5 +214,13 @@ public class WorkoutStep implements Cloneable {
         WorkoutStep clone = (WorkoutStep) this.clone();
         clone.setId(0);
         return clone;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active != null ? active : true;
     }
 }

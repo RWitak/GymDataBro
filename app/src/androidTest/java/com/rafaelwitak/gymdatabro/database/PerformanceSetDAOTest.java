@@ -5,7 +5,6 @@
 package com.rafaelwitak.gymdatabro.database;
 
 import android.database.sqlite.SQLiteConstraintException;
-
 import org.junit.Test;
 
 import java.util.Date;
@@ -45,7 +44,8 @@ public class PerformanceSetDAOTest extends DaoTest {
                 30,
                 8.5f,
                 0,
-                "Notes");
+                "Notes",
+                true);
 
         assertThat(dao.insertSet(psAllValues)).isNotNull();
     }
@@ -102,7 +102,8 @@ public class PerformanceSetDAOTest extends DaoTest {
                 null,
                 null,
                 0,
-                null
+                null,
+                true
                 )
         );
 
@@ -182,8 +183,8 @@ public class PerformanceSetDAOTest extends DaoTest {
                         null,
                         null,
                         null,
-                        null
-                ));
+                        null,
+                        true));
     }
 
     private void insertSetWithNullId() {
@@ -198,7 +199,8 @@ public class PerformanceSetDAOTest extends DaoTest {
                 120,
                 8f,
                 0,
-                null));
+                null,
+                true));
     }
 
     private void insertNumberOfEmptySets(int n) {

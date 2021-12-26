@@ -53,7 +53,9 @@ public class WorkoutInstance implements Cloneable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, programId, workoutId, workoutNumber);
+        return Objects.hash(
+                id, name, programId,
+                workoutId, workoutNumber, active);
     }
 
     @ColumnInfo
@@ -67,6 +69,9 @@ public class WorkoutInstance implements Cloneable {
 
     @ColumnInfo(name = "workout_number")
     private int workoutNumber;
+
+    @ColumnInfo(name = "active", defaultValue = "1")
+    private boolean active;
 
     public int getId() {
         return id;
@@ -108,12 +113,18 @@ public class WorkoutInstance implements Cloneable {
         this.workoutNumber = workoutNumber;
     }
 
-    public WorkoutInstance(int id, String name, int programId, int workoutId, int workoutNumber) {
+    public WorkoutInstance(int id,
+                           String name,
+                           int programId,
+                           int workoutId,
+                           int workoutNumber,
+                           boolean active) {
         this.id = id;
         this.name = name;
         this.programId = programId;
         this.workoutId = workoutId;
         this.workoutNumber = workoutNumber;
+        this.setActive(active);
     }
 
     @NonNull
@@ -134,4 +145,11 @@ public class WorkoutInstance implements Cloneable {
     }
 
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active != null ? active : true;
+    }
 }

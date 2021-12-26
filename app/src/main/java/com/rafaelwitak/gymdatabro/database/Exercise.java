@@ -5,11 +5,7 @@
 package com.rafaelwitak.gymdatabro.database;
 
 import androidx.annotation.Nullable;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
+import androidx.room.*;
 
 @Entity(
         tableName = "exercises",
@@ -25,12 +21,14 @@ public class Exercise {
             @Nullable Float pr,
             @Nullable String cues,
             @Nullable String links,
-            @Nullable String equipment) {
+            @Nullable String equipment,
+            @Nullable Boolean active) {
         this.setId(id);
         this.setPr(pr);
         this.setCues(cues);
         this.setLinks(links);
         this.setEquipment(equipment);
+        this.setActive(active);
     }
 
     @Ignore
@@ -39,11 +37,13 @@ public class Exercise {
             @Nullable Float pr,
             @Nullable String cues,
             @Nullable String links,
-            @Nullable String equipment) {
+            @Nullable String equipment,
+            @Nullable Boolean active) {
         this.setPr(pr);
         this.setCues(cues);
         this.setLinks(links);
         this.setEquipment(equipment);
+        this.setActive(active);
     }
 
     @PrimaryKey(autoGenerate = true)
@@ -68,6 +68,9 @@ public class Exercise {
     @ColumnInfo
     @Nullable
     private String equipment;
+
+    @ColumnInfo(defaultValue = "1")
+    private boolean active;
 
     public int getId() {
         return id;
@@ -120,5 +123,13 @@ public class Exercise {
 
     public void setEquipment(@Nullable String equipment) {
         this.equipment = equipment;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active != null ? active : true;
     }
 }

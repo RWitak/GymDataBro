@@ -36,6 +36,8 @@ public class Program {
     @Nullable
     private String notes;
 
+    @ColumnInfo(defaultValue = "1")
+    private boolean active;
 
     @Ignore
     private Integer number_workouts;
@@ -99,5 +101,14 @@ public class Program {
 
     public void setNumber_workouts(Integer number_workouts) {
         this.number_workouts = number_workouts;
+    }
+
+    @Nullable
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active != null ? active : true;
     }
 }

@@ -28,6 +28,26 @@ public class UniqueWorkout implements Comparable<UniqueWorkout>{
     private final String details;
     @ColumnInfo(name = "notes")
     private final String notes;
+    @ColumnInfo(name = "active", defaultValue = "true")
+    private Boolean active;
+
+    // TODO: 26.12.2021: Is this better/different than Instances?
+    //  Why is it not in the schema?
+
+    public UniqueWorkout(Workout workout, WorkoutInstance instance) {
+        if (workout.getId() != instance.getWorkoutId()) {
+            throw new AssertionError("WorkoutID doesn't match.");
+        }
+        this.instanceId = instance.getId();
+        this.workoutNumber = instance.getWorkoutNumber();
+        this.workoutId = workout.getId();
+        this.programId = workout.getProgramID();
+        this.instanceName = instance.getName();
+        this.workoutName = workout.getName();
+        this.details = workout.getDetails();
+        this.notes = workout.getNotes();
+        this.active = workout.isActive();
+    }
 
     public int getInstanceId() {
         return instanceId;
@@ -57,20 +77,6 @@ public class UniqueWorkout implements Comparable<UniqueWorkout>{
         return notes;
     }
 
-    public UniqueWorkout(Workout workout, WorkoutInstance instance) {
-        if (workout.getId() != instance.getWorkoutId()) {
-            throw new AssertionError("WorkoutID doesn't match.");
-        }
-        this.instanceId = instance.getId();
-        this.workoutNumber = instance.getWorkoutNumber();
-        this.workoutId = workout.getId();
-        this.programId = workout.getProgramID();
-        this.instanceName = instance.getName();
-        this.workoutName = workout.getName();
-        this.details = workout.getDetails();
-        this.notes = workout.getNotes();
-    }
-
     public UniqueWorkout(int instanceId,
                          int workoutNumber,
                          int workoutId,
@@ -78,7 +84,8 @@ public class UniqueWorkout implements Comparable<UniqueWorkout>{
                          String instanceName,
                          String workoutName,
                          String details,
-                         String notes) {
+                         String notes,
+                         Boolean active) {
         this.instanceId = instanceId;
         this.workoutNumber = workoutNumber;
         this.workoutId = workoutId;
@@ -87,6 +94,7 @@ public class UniqueWorkout implements Comparable<UniqueWorkout>{
         this.workoutName = workoutName;
         this.details = details;
         this.notes = notes;
+        this.active = active;
     }
 
     @Override
@@ -108,7 +116,15 @@ public class UniqueWorkout implements Comparable<UniqueWorkout>{
                 instanceName,
                 programId,
                 workoutId,
-                workoutNumber
+                workoutNumber,
+                active
                 );
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+    public void setActive(Boolean active) {
+        this.active = active != null ? active : true;
     }
 }

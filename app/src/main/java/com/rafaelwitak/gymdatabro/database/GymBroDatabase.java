@@ -12,7 +12,6 @@ import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-// TODO: 25.09.2021 Add a bool field for "deleted" or "active/inactive" EVERYWHERE
 @androidx.room.Database(
         entities={
                 Exercise.class,
@@ -24,7 +23,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
                 WorkoutInstance.class,
                 WorkoutStep.class
         },
-        version = 19
+        version = 20
 )
 @TypeConverters({Converters.class})
 @SuppressWarnings("unused") // Keep DAOs available until fully migrated to MasterDao
@@ -62,7 +61,8 @@ public abstract class GymBroDatabase extends RoomDatabase {
                                     MIGRATION_15_16,
                                     MIGRATION_16_17,
                                     MIGRATION_17_18,
-                                    MIGRATION_18_19
+                                    MIGRATION_18_19,
+                                    MIGRATION_19_20
                                     )
                             .build();
                 }
@@ -70,6 +70,49 @@ public abstract class GymBroDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    static final Migration MIGRATION_19_20 = new Migration(19, 20) {
+        // Adding flag for active/inactive to many tables
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL(
+                    "ALTER TABLE exercises " +
+                            "ADD active INTEGER NOT NULL " +
+                            "CHECK (active IN (0, 1)) " +
+                            "DEFAULT 1;"
+            );
+            database.execSQL(
+                    "ALTER TABLE performance_sets " +
+                            "ADD active INTEGER NOT NULL " +
+                            "CHECK (active IN (0, 1)) " +
+                            "DEFAULT 1;"
+            );
+            database.execSQL(
+                    "ALTER TABLE programs " +
+                            "ADD active INTEGER NOT NULL " +
+                            "CHECK (active IN (0, 1)) " +
+                            "DEFAULT 1;"
+            );
+            database.execSQL(
+                    "ALTER TABLE workout_instances " +
+                            "ADD active INTEGER NOT NULL " +
+                            "CHECK (active IN (0, 1)) " +
+                            "DEFAULT 1;"
+            );
+            database.execSQL(
+                    "ALTER TABLE workout_steps " +
+                            "ADD active INTEGER NOT NULL " +
+                            "CHECK (active IN (0, 1)) " +
+                            "DEFAULT 1;"
+            );
+            database.execSQL(
+                    "ALTER TABLE workouts " +
+                            "ADD active INTEGER NOT NULL " +
+                            "CHECK (active IN (0, 1)) " +
+                            "DEFAULT 1;"
+            );
+        }
+    };
 
     static final Migration MIGRATION_18_19 = new Migration(18, 19) {
         // Deletions of programs/workouts propagate to workouts/instances

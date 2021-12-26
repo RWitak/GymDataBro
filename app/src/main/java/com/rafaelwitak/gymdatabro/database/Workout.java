@@ -41,6 +41,9 @@ public class Workout implements Cloneable {
     @Nullable
     private String notes;
 
+    @ColumnInfo(defaultValue = "1")
+    private boolean active;
+
     public int getId() {
         return id;
     }
@@ -95,5 +98,13 @@ public class Workout implements Cloneable {
         Workout duplicate = (Workout) this.clone();
         duplicate.setId(0); // auto-incremented id sets next value
         return duplicate;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active != null ? active : true;
     }
 }

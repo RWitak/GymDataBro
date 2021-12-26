@@ -22,8 +22,8 @@ public class ExerciseDAOTest extends DaoTest {
                 7.125f,
                 "Cues",
                 "Links",
-                "Equipment"
-        );
+                "Equipment",
+                true);
         exercises.add(regularCase);
 
         Exercise idIsZero = new Exercise();

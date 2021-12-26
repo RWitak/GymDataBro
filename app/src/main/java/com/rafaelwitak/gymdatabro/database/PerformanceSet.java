@@ -6,12 +6,7 @@ package com.rafaelwitak.gymdatabro.database;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.Ignore;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
+import androidx.room.*;
 
 import java.util.Date;
 
@@ -78,6 +73,9 @@ public class PerformanceSet {
     @Nullable
     private String notes;
 
+    @ColumnInfo(defaultValue = "1")
+    private boolean active;
+
     @Ignore
     public PerformanceSet(@Nullable Integer id,
                           @Nullable Integer workoutStepId,
@@ -89,7 +87,9 @@ public class PerformanceSet {
                           @Nullable Integer secondsRested,
                           @Nullable Float rpe,
                           @NonNull Integer painLevel,
-                          @Nullable String notes) {
+                          @Nullable String notes,
+                          @Nullable Boolean active) {
+        this.setActive(active);
         this.setId(id);
         this.setWorkoutStepId(workoutStepId);
         this.setWorkoutInstanceId(workoutInstanceId);
@@ -115,6 +115,7 @@ public class PerformanceSet {
                 null,
                 null,
                 0,
+                null,
                 null
         );
     }
@@ -240,4 +241,11 @@ public class PerformanceSet {
     public String getNotes() {
         return notes;
     }
-}
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active != null ? active : true;
+    }}

@@ -21,11 +21,11 @@ public class WorkoutInstanceUpdaterTest {
     public void setupMockDao() {
         this.mockDao = new WorkoutInstanceDaoMock(
                 StreamSupport.stream(Arrays.asList(
-                                new WorkoutInstance(1, "one", 1, 1, 1),
-                                new WorkoutInstance(2, "two", 1, 1, 2),
-                                new WorkoutInstance(3, "three", 1, 1, 3),
-                                new WorkoutInstance(4, "four", 1, 1, 4),
-                                new WorkoutInstance(5, "five", 1, 1, 5)))
+                                new WorkoutInstance(1, "one", 1, 1, 1, true),
+                                new WorkoutInstance(2, "two", 1, 1, 2, true),
+                                new WorkoutInstance(3, "three", 1, 1, 3, true),
+                                new WorkoutInstance(4, "four", 1, 1, 4, true),
+                                new WorkoutInstance(5, "five", 1, 1, 5, true)))
                         .collect(Collectors.toList()));
     }
 
