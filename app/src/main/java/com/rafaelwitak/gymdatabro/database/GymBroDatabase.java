@@ -71,6 +71,7 @@ public abstract class GymBroDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
+    // TODO: 27.12.2021 Integrate 'active' flag in all related logic.
     static final Migration MIGRATION_19_20 = new Migration(19, 20) {
         // Adding flag for active/inactive to many tables
         @Override
