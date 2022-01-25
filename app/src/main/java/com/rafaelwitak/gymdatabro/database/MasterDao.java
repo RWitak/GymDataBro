@@ -12,6 +12,7 @@ import androidx.room.Dao;
 import androidx.room.Query;
 import androidx.room.Transaction;
 import com.rafaelwitak.gymdatabro.util.UniqueWorkout;
+import java8.util.Comparators;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
 
@@ -158,7 +159,7 @@ public abstract class MasterDao extends WorkoutInstanceDAO
     public List<UniqueWorkout> getUniqueWorkoutsOfProgram(int programId) {
         return StreamSupport.stream(getAllWorkoutInstancesForProgram(programId))
                 .map(inst -> getUniqueWorkoutFromInstanceId(inst.getId()))
-                .sorted()
+                .sorted(Comparators.comparing(UniqueWorkout::getWorkoutNumber))
                 .collect(Collectors.toList());
     }
 
