@@ -12,3 +12,6 @@
 /captures
 .externalNativeBuild
 .cxx
+/py_utils/output/
+/py_utils/output/
+/py_utils/output/
