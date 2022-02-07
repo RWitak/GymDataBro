@@ -6,7 +6,6 @@ package com.rafaelwitak.gymdatabro.util;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.rafaelwitak.gymdatabro.database.MasterDao.WeightRepsRpe;
 import com.rafaelwitak.gymdatabro.database.WorkoutStep;
 
@@ -47,7 +46,7 @@ public class WeightProvider {
             Float pr) {
 
         if (currentWorkoutStep.getReps() != null
-                || currentWorkoutStep.getWeight() != null) {
+                && currentWorkoutStep.getWeight() != null) {
 
             int maxReps = getMaxNumberOfReps(
                     currentWorkoutStep.getReps(),
