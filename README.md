@@ -1,5 +1,13 @@
 # GymDataBro
 
+| [![Presentation Video](./assets/video_thumbnail.jpg)](https://youtu.be/Ga11Z7OrIp0 "Introduction to GymDataBro") |
+|-----------------------------------------------------------------------------------------------------------------:|
+|                                                                    _Click image for a short video introduction._ |
+
+| ![Main Screen](./assets/main_screen.jpg "The Main Screen") | ![Program Selection Screen](./assets/choose_program.jpg "Program Selection Screen") | ![Workout Step Screen](./assets/exercise.jpg "Workout Step Screen") |
+|------------------------------------------------------------|-------------------------------------------------------------------------------------|---------------------------------------------------------------------|
+
+
 ## How to use
 
 **GymDataBro** is your companion in the gym and helps you track various kinds of strength training programs.
