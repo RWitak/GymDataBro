@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Android/StudioProjects/GymDataBro/app/src/main/res/layout/activity_choose_program.xml" value="0.1757188498402556" />
+        <entry key="..\:/Android/StudioProjects/GymDataBro/app/src/main/res/layout/activity_edit_program.xml" value="0.13303341902313626" />
+        <entry key="..\:/Android/StudioProjects/GymDataBro/app/src/main/res/layout/activity_workout_detail.xml" value="0.13881748071979436" />
+        <entry key="..\:/Android/StudioProjects/GymDataBro/app/src/main/res/layout/activity_workout_list.xml" value="0.13881748071979436" />
+        <entry key="..\:/Android/StudioProjects/GymDataBro/app/src/main/res/layout/activity_workout_step.xml" value="0.13303341902313626" />
+        <entry key="..\:/Android/StudioProjects/GymDataBro/app/src/main/res/layout/row_choose_program.xml" value="0.13303341902313626" />
+        <entry key="..\:/Android/StudioProjects/GymDataBro/app/src/main/res/layout/toolbar.xml" value="0.2723684210526316" />
+        <entry key="..\:/Android/StudioProjects/GymDataBro/app/src/main/res/layout/workout_detail.xml" value="0.13881748071979436" />
+        <entry key="..\:/Android/StudioProjects/GymDataBro/app/src/main/res/layout/workout_list.xml" value="0.13881748071979436" />
+      </map>
+    </option>
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="androidx.annotation.Nullable" />
     <option name="myDefaultNotNull" value="androidx.annotation.NonNull" />
@@ -44,7 +59,7 @@
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

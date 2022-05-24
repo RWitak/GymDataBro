@@ -55,6 +55,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorAccent"
             tools:text="1/3" />
+
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

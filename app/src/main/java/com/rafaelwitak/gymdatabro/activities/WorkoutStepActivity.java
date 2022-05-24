@@ -8,18 +8,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import com.rafaelwitak.gymdatabro.database.Exercise;
-import com.rafaelwitak.gymdatabro.database.GymBroDatabase;
-import com.rafaelwitak.gymdatabro.database.MasterDao;
-import com.rafaelwitak.gymdatabro.database.PerformanceSet;
-import com.rafaelwitak.gymdatabro.database.Workout;
-import com.rafaelwitak.gymdatabro.database.WorkoutStep;
+import com.rafaelwitak.gymdatabro.database.*;
 import com.rafaelwitak.gymdatabro.databinding.ActivityWorkoutStepBinding;
 import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetDataProviderHolder;
 import com.rafaelwitak.gymdatabro.performanceSetHandling.PerformanceSetMaker;
@@ -147,6 +140,19 @@ public class WorkoutStepActivity extends AppCompatActivity {
         if (programName != null) {
             toolbar.setSubtitle(programName);
         }
+        toolbar.setOnClickListener(v -> showWorkoutSteps());
+    }
+
+    /**
+     * Show {@link WorkoutDetailFragment}
+     * (a list of all {@link WorkoutStep}s
+     * associated with this {@link WorkoutInstance}).
+     */
+    private void showWorkoutSteps() {
+        Intent intent = new Intent(this, WorkoutDetailActivity.class);
+        intent.putExtra(WorkoutDetailFragment.ARG_ITEM_ID,
+                this.getWorkoutInstanceId());
+        startActivity(intent);
     }
 
     private String getToolbarTitle() {
